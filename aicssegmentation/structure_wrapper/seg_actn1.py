@@ -1,5 +1,4 @@
 import numpy as np
-import os
 from skimage.morphology import remove_small_objects
 from ..core.pre_processing_utils import (
     intensity_normalization,
