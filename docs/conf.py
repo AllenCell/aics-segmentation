@@ -69,7 +69,7 @@ source_suffix = {
 master_doc = "index"
 
 # General information about the project.
-project = u"aics-segmentation"
+project = u"aicssegmentation"
 copyright = u'2020, Jianxu Chen'
 author = u"Jianxu Chen"
 
@@ -154,7 +154,7 @@ latex_elements = {
 # [howto, manual, or own class]).
 latex_documents = [
     (master_doc, "aicssegmentation.tex",
-     u"aics-segmentation Documentation",
+     u"aicssegmentation Documentation",
      u"Jianxu Chen", "manual"),
 ]
 
@@ -165,7 +165,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc, "aicssegmentation",
-     u"aics-segmentation Documentation",
+     u"aicssegmentation Documentation",
      [author], 1)
 ]
 
@@ -177,7 +177,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, "aicssegmentation",
-     u"aics-segmentation Documentation",
+     u"aicssegmentation Documentation",
      author,
      "aicssegmentation",
      "One line description of project.",

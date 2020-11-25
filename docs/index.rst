@@ -1,4 +1,4 @@
-Welcome to aics-segmentation's documentation!
+Welcome to aicssegmentation's documentation!
 ======================================
 
 .. toctree::

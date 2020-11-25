@@ -1,4 +1,4 @@
-# aics-segmentation
+# aicssegmentation
 
 [![Build Status](https://github.com/AllenCell/aicssegmentation/workflows/Build%20Master/badge.svg)](https://github.com/AllenCell/aicssegmentation/actions)
 [![Documentation](https://github.com/AllenCell/aicssegmentation/workflows/Documentation/badge.svg)](https://AllenCell.github.io/aicssegmentation)

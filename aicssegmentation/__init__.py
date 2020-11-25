@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Top-level package for aics-segmentation."""
+"""Top-level package for aicssegmentation."""
 
 __author__ = "Jianxu Chen"
 __email__ = "jianxuc@alleninstitute.org"
