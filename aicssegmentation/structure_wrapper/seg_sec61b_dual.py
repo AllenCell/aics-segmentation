@@ -1,8 +1,8 @@
 import numpy as np
 from typing import Union
 from pathlib import Path
-from ..core.vessel import vesselnessSliceBySlice
-from ..core.pre_processing_utils import (
+from aicssegmentation.core.vessel import vesselnessSliceBySlice
+from aicssegmentation.core.pre_processing_utils import (
     intensity_normalization,
     edge_preserving_smoothing_3d,
 )

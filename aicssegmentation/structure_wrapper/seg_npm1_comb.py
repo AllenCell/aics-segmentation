@@ -3,7 +3,7 @@ from typing import Union
 from pathlib import Path
 import os
 from skimage.morphology import remove_small_objects, ball, dilation
-from ..core.pre_processing_utils import (
+from aicssegmentation.core.pre_processing_utils import (
     intensity_normalization,
     image_smoothing_gaussian_3d,
 )

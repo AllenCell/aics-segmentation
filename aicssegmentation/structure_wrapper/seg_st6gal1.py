@@ -2,11 +2,11 @@ import numpy as np
 from typing import Union
 from pathlib import Path
 from skimage.morphology import remove_small_objects, ball, dilation
-from ..core.pre_processing_utils import (
+from aicssegmentation.core.pre_processing_utils import (
     intensity_normalization,
     image_smoothing_gaussian_3d,
 )
-from ..core.seg_dot import dot_3d
+from aicssegmentation.core.seg_dot import dot_3d
 from skimage.measure import label
 from skimage.filters import threshold_triangle, threshold_otsu
 from aicssegmentation.core.utils import topology_preserving_thinning
