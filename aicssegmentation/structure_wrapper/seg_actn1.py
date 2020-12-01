@@ -9,7 +9,6 @@ from ..core.pre_processing_utils import (
 from ..core.vessel import vesselness3D
 from aicssegmentation.core.output_utils import (
     save_segmentation,
-    ACTN1_output,
     generate_segmentation_contour,
 )
 from scipy.ndimage import zoom
@@ -106,9 +105,8 @@ def Workflow_actn1(
 
     # rescale if needed
     if rescale_ratio > 0:
-        struct_img = zoom(
-            struct_img, [1, rescale_ratio, rescale_ratio], method="cubic"
-        )
+        struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
+
         struct_img = (struct_img - struct_img.min() + 1e-8) / (
             struct_img.max() - struct_img.min() + 1e-8
         )
