@@ -1,17 +1,16 @@
-###### import functions ####
 import numpy as np
-import os
-from skimage.morphology import remove_small_objects, watershed, dilation, ball
+from typing import Union
+from pathlib import Path
+from skimage.morphology import remove_small_objects
 from ..core.pre_processing_utils import (
     intensity_normalization,
     image_smoothing_gaussian_3d,
 )
-from ..core.seg_dot import dot_slice_by_slice, dot_2d_slice_by_slice_wrapper
+from ..core.seg_dot import dot_2d_slice_by_slice_wrapper
 from skimage.filters import threshold_triangle, threshold_otsu
 from skimage.measure import label
-from aicsimageprocessing import resize
 
-#### do not remove ####
+#  do not remove ####
 from aicssegmentation.core.output_utils import (
     save_segmentation,
     generate_segmentation_contour,
@@ -19,8 +18,34 @@ from aicssegmentation.core.output_utils import (
 
 
 def Workflow_npm_labelfree_4dn(
-    struct_img, rescale_ratio, output_type, output_path, fn, output_func=None
+    struct_img: np.ndarray,
+    rescale_ratio: float = -1,
+    output_type: str = "default",
+    output_path: Union[str, Path] = None,
+    fn: Union[str, Path] = None,
+    output_func=None
 ):
+    """
+    classic segmentation workflow wrapper for structure NPM Labelfree 4dn
+
+    Parameter:
+    -----------
+    struct_img: np.ndarray
+        the 3D image to be segmented
+    rescale_ratio: float
+        an optional parameter to allow rescale the image before running the
+        segmentation functions, default is no rescaling
+    output_type: str
+        select how to handle output. Currently, four types are supported:
+        1. default: the result will be saved at output_path whose filename is
+            original name without extention + "_struct_segmentaiton.tiff"
+        2. array: the segmentation result will be simply returned as a numpy array
+        3. array_with_contour: segmentation result will be returned together with
+            the contour of the segmentation
+        4. customize: pass in an extra output_func to do a special save. All the 
+            intermediate results, names of these results, the output_path, and the
+            original filename (without extension) will be passed in to output_func.
+    """
     ##########################################################################
     # PARAMETERS:
     minArea = 5
@@ -31,6 +56,9 @@ def Workflow_npm_labelfree_4dn(
 
     ##########################################################################
 
+    out_img_list = []
+    out_name_list = []
+
     ###################
     # PRE_PROCESSING
     ###################
@@ -39,10 +67,16 @@ def Workflow_npm_labelfree_4dn(
         struct_img, scaling_param=intensity_scaling_param
     )
 
+    out_img_list.append(struct_norm.copy())
+    out_name_list.append("im_norm")
+
     # smoothing
     struct_smooth = image_smoothing_gaussian_3d(
         struct_norm, sigma=gaussian_smoothing_sigma
     )
+
+    out_img_list.append(struct_smooth.copy())
+    out_name_list.append("im_smooth")
 
     ###################
     # core algorithm
@@ -88,13 +122,20 @@ def Workflow_npm_labelfree_4dn(
     seg = seg.astype(np.uint8)
     seg[seg > 0] = 255
 
+    out_img_list.append(seg.copy())
+    out_name_list.append("bw_final")
+
     if output_type == "default":
-        # the default final output
+        # the default final output, simply save it to the output path
         save_segmentation(seg, False, output_path, fn)
+    elif output_type == "customize":
+        # the hook for passing in a customized output function
+        # use "out_img_list" and "out_name_list" in your hook to 
+        # customize your output functions
+        output_func(out_img_list, out_name_list, output_path, fn)
     elif output_type == "array":
         return seg
     elif output_type == "array_with_contour":
         return (seg, generate_segmentation_contour(seg))
     else:
-        print("your can implement your output hook here, but not yet")
-        quit()
+        raise NotImplementedError('invalid output type: {output_type}') 

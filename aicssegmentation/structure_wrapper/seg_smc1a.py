@@ -1,4 +1,6 @@
 import numpy as np
+from typing import Union
+from pathlib import Path
 from ..core.pre_processing_utils import (
     intensity_normalization,
     edge_preserving_smoothing_3d,
@@ -9,12 +11,38 @@ from aicssegmentation.core.output_utils import (
     save_segmentation,
     generate_segmentation_contour,
 )
-from aicsimageprocessing import resize
+from scipy.ndimage import zoom
 
 
 def Workflow_smc1a(
-    struct_img, rescale_ratio, output_type, output_path, fn, output_func=None
+    struct_img: np.ndarray,
+    rescale_ratio: float = -1,
+    output_type: str = "default",
+    output_path: Union[str, Path] = None,
+    fn: Union[str, Path] = None,
+    output_func=None
 ):
+    """
+    classic segmentation workflow wrapper for structure SMC1A
+
+    Parameter:
+    -----------
+    struct_img: np.ndarray
+        the 3D image to be segmented
+    rescale_ratio: float
+        an optional parameter to allow rescale the image before running the
+        segmentation functions, default is no rescaling
+    output_type: str
+        select how to handle output. Currently, four types are supported:
+        1. default: the result will be saved at output_path whose filename is
+            original name without extention + "_struct_segmentaiton.tiff"
+        2. array: the segmentation result will be simply returned as a numpy array
+        3. array_with_contour: segmentation result will be returned together with
+            the contour of the segmentation
+        4. customize: pass in an extra output_func to do a special save. All the 
+            intermediate results, names of these results, the output_path, and the
+            original filename (without extension) will be passed in to output_func.
+    """
     ##########################################################################
     # PARAMETERS:
     #   note that these parameters are supposed to be fixed for the structure
@@ -39,9 +67,8 @@ def Workflow_smc1a(
 
     # rescale if needed
     if rescale_ratio > 0:
-        struct_img = resize(
-            struct_img, [1, rescale_ratio, rescale_ratio], method="cubic"
-        )
+        struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
+
         struct_img = (struct_img - struct_img.min() + 1e-8) / (
             struct_img.max() - struct_img.min() + 1e-8
         )
@@ -72,22 +99,16 @@ def Workflow_smc1a(
     out_name_list.append("bw_final")
 
     if output_type == "default":
-        # the default final output
+        # the default final output, simply save it to the output path
         save_segmentation(seg, False, output_path, fn)
-    elif output_type == "AICS_pipeline":
-        # pre-defined output function for pipeline data
-        save_segmentation(seg, True, output_path, fn)
     elif output_type == "customize":
         # the hook for passing in a customized output function
-        output_fun(out_img_list, out_name_list, output_path, fn)
+        # use "out_img_list" and "out_name_list" in your hook to 
+        # customize your output functions
+        output_func(out_img_list, out_name_list, output_path, fn)
     elif output_type == "array":
         return seg
     elif output_type == "array_with_contour":
         return (seg, generate_segmentation_contour(seg))
     else:
-        # the hook for pre-defined RnD output functions (AICS internal)
-        img_list, name_list = FBL_output(
-            out_img_list, out_name_list, output_type, output_path, fn
-        )
-        if output_type == "QCB":
-            return img_list, name_list
+        raise NotImplementedError('invalid output type: {output_type}') 

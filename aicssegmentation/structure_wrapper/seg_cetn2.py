@@ -79,13 +79,19 @@ def Workflow_cetn2(
 
     # rescale if needed
     if rescale_ratio > 0:
-        struct_img_for_seg = zoom(struct_img_for_seg, (1, rescale_ratio, rescale_ratio), order=2)
+        struct_img_for_seg = zoom(struct_img_for_seg, 
+            (1, rescale_ratio, rescale_ratio), 
+            order=2
+        )
 
         struct_img_for_seg = (struct_img_for_seg - struct_img_for_seg.min() + 1e-8) / (
             struct_img_for_seg.max() - struct_img_for_seg.min() + 1e-8
         )
 
-        struct_img_for_peak = zoom(struct_img_for_peak, (1, rescale_ratio, rescale_ratio), order=2)
+        struct_img_for_peak = zoom(struct_img_for_peak, 
+            (1, rescale_ratio, rescale_ratio), 
+            order=2
+        )
 
         struct_img_for_peak = (struct_img_for_peak - struct_img_for_peak.min() + 1e-8) / (
             struct_img_for_peak.max() - struct_img_for_peak.min() + 1e-8

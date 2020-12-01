@@ -9,7 +9,7 @@ from aicssegmentation.core.pre_processing_utils import (
 from aicssegmentation.core.vessel import vesselness3D
 from aicssegmentation.core.output_utils import (
     save_segmentation,
-    generate_segmentation_contour,
+    generate_segmentation_contour
 )
 from scipy.ndimage import zoom
 
