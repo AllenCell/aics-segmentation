@@ -1,11 +1,11 @@
 import os
-
+from pathlib import Path
 import numpy as np
 from skimage.morphology import erosion, ball
 from aicsimageio.writers import OmeTiffWriter
 
 
-def save_segmentation(bw, contour_flag, output_path, fn):
+def save_segmentation(bw, contour_flag, output_path: Path, fn):
     with OmeTiffWriter(str(output_path / (fn + "_struct_segmentation.tiff"))) as writer:
         writer.save(bw)
 

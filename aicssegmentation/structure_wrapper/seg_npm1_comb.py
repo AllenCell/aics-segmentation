@@ -10,6 +10,7 @@ from aicssegmentation.core.pre_processing_utils import (
 from aicssegmentation.core.output_utils import (
     save_segmentation,
     generate_segmentation_contour
+)
 
 from skimage.io import imread, imsave
 from scipy.ndimage.measurements import center_of_mass as com
@@ -159,12 +160,12 @@ def Workflow_npm1_comb(
 
     if output_type == "default":
         # the default final output, simply save it to the output path
-        save_segmentation(seg, False, output_path, fn)
+        save_segmentation(seg, False, Path(output_path), fn)
     elif output_type == "customize":
         # the hook for passing in a customized output function
         # use "out_img_list" and "out_name_list" in your hook to 
         # customize your output functions
-        output_func(out_img_list, out_name_list, output_path, fn)
+        output_func(out_img_list, out_name_list, Path(output_path), fn)
     elif output_type == "array":
         return seg
     elif output_type == "array_with_contour":
