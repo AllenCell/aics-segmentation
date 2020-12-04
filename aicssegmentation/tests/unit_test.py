@@ -7,29 +7,55 @@ from aicsimageio.writers import OmeTiffWriter
 
 DEFAULT_MODULE_PATH = "aicssegmentation.structure_wrapper.seg_"
 
-ALL_STRUCTURE_NAMES = ['actb', 'actn1', 'atp2a2', 'cardio_actn2', 'cardio_atp2a2', 
-                       'cardio_fbl', 'cardio_fbl_100x', 'cardio_myl7', 
-                       'cardio_npm1', 'cardio_npm1_100x', 'cardio_tnni1',
-                       'cardio_ttn', 'cetn2', 'ctnnb1', 'drug_npm1', 'dsp', 
-                       'fbl', 'fbl_labelfree_4dn', 
-                       'gja1', 'h2b', 'lamp1', 
-                       # 'lmnb1_interphase',
-                       'lmnb1_mitotic', 
-                       'myh10', 'npm1', 
-                       # 'npm1_SR',
-                       'npm_labelfree_4dn', 'nup153', 'pxn', 'rab5a', 'sec61b', 
-                       'sec61b_dual', 'slc25a17', 'smc1a', 'son', 'st6gal1', 
-                       'tjp1', 'tomm20', 'tuba1b', 'ubtf']
+ALL_STRUCTURE_NAMES = [
+    "actb",
+    "actn1",
+    "atp2a2",
+    "cardio_actn2",
+    "cardio_atp2a2",
+    "cardio_fbl",
+    "cardio_fbl_100x",
+    "cardio_myl7",
+    "cardio_npm1",
+    "cardio_npm1_100x",
+    "cardio_tnni1",
+    "cardio_ttn",
+    "cetn2",
+    "ctnnb1",
+    "drug_npm1",
+    "dsp",
+    "fbl",
+    "fbl_labelfree_4dn",
+    "gja1",
+    "h2b",
+    "lamp1",
+    # 'lmnb1_interphase',
+    "lmnb1_mitotic",
+    "myh10",
+    "npm1",
+    # 'npm1_SR',
+    "npm_labelfree_4dn",
+    "nup153",
+    "pxn",
+    "rab5a",
+    "sec61b",
+    "sec61b_dual",
+    "slc25a17",
+    "smc1a",
+    "son",
+    "st6gal1",
+    "tjp1",
+    "tomm20",
+    "tuba1b",
+    "ubtf",
+]
 
 
 BASE_IMAGE_DIM = (128, 128, 128)
 RESCALE_RATIO = 0.7
 
 
-def create_test_image(
-    structure_name : str,
-    output_type: str = 'default'
-):
+def create_test_image(structure_name: str, output_type: str = "default"):
     # load structure wrapper for specified structure
     structure_name = structure_name.lower()
     module_name = DEFAULT_MODULE_PATH + structure_name
@@ -42,16 +68,18 @@ def create_test_image(
         raise e
 
     # load stock random image
-    random_array = imread(
-        Path('expected_output_images/random_input.tiff')
-    ).reshape(*BASE_IMAGE_DIM)
+    random_array = imread(Path("expected_output_images/random_input.tiff")).reshape(
+        *BASE_IMAGE_DIM
+    )
 
     # conduct segmentation
-    output_array = SegModuleFunction(struct_img=random_array, 
-                                     rescale_ratio=RESCALE_RATIO,
-                                     output_type=output_type, 
-                                     output_path='expected_output_images',
-                                     fn='expected_' + structure_name)
+    output_array = SegModuleFunction(
+        struct_img=random_array,
+        rescale_ratio=RESCALE_RATIO,
+        output_type=output_type,
+        output_path="expected_output_images",
+        fn="expected_" + structure_name,
+    )
     return output_array
 
 
@@ -64,32 +92,38 @@ def create_random_source_image():
 
 
 def create_all_test_images():
-    # create random input image to base segmentations on 
+    # create random input image to base segmentations on
     create_random_source_image()
     for structure_name in ALL_STRUCTURE_NAMES:
-        print("Creating expected image for", structure_name, '...')
-        create_test_image(structure_name, 'default')
+        print("Creating expected image for", structure_name, "...")
+        create_test_image(structure_name, "default")
 
 
-def unit_test(structure_name : str):
+def unit_test(structure_name: str):
     structure_name = structure_name.lower()
-    # segment stock random image with current semgentation versions 
-    output_array = create_test_image(structure_name, output_type='array').ravel()
+    # segment stock random image with current semgentation versions
+    output_array = create_test_image(structure_name, output_type="array").ravel()
 
     # get rid of STC dimensions from AICSImage format, resized to resize_ratio
     expected_output = imread(
-        Path('expected_output_images/expected_' + structure_name + '_struct_segmentation.tiff')
+        Path(
+            "expected_output_images/expected_"
+            + structure_name
+            + "_struct_segmentation.tiff"
+        )
     ).ravel()
 
-    assert np.allclose(output_array, expected_output), 'Tested and expected outputs differ for ' + structure_name
+    assert np.allclose(output_array, expected_output), (
+        "Tested and expected outputs differ for " + structure_name
+    )
 
 
 def test_all_structures():
     for structure_name in ALL_STRUCTURE_NAMES:
-        print("Testing", structure_name, '...')
+        print("Testing", structure_name, "...")
         unit_test(structure_name)
 
 
 # unit_test('ACTB')
 # create_all_test_images()
-# test_all_structures() 
+# test_all_structures()
