@@ -8,21 +8,20 @@ from aicsimageio.writers import OmeTiffWriter
 DEFAULT_MODULE_PATH = "aicssegmentation.structure_wrapper.seg_"
 
 ALL_STRUCTURE_NAMES = ['actb', 'actn1', 'atp2a2', 'cardio_actn2', 'cardio_atp2a2', 
-                            'cardio_fbl', 'cardio_fbl_100x', 'cardio_myl7', 
-                            'cardio_npm1', 'cardio_npm1_100x', 'cardio_tnni1',
-                            'cardio_ttn', 'cetn2', 'ctnnb1', 'drug_npm1', 'dsp', 
-                            'fbl', 'fbl_labelfree_4dn', 
-                            'gja1', 'h2b', 'lamp1', 
-                            # 'lmnb1_interphase',
-                             'lmnb1_mitotic', 
-                            'myh10', 'npm1', 
-                            # 'npm1_SR',
-                            'npm_labelfree_4dn', 'nup153', 'pxn', 'rab5a', 'sec61b', 
-                            'sec61b_dual', 'slc25a17', 'smc1a', 'son', 'st6gal1', 
-                            'tjp1', 'tomm20', 'tuba1b', 'ubtf']
+                       'cardio_fbl', 'cardio_fbl_100x', 'cardio_myl7', 
+                       'cardio_npm1', 'cardio_npm1_100x', 'cardio_tnni1',
+                       'cardio_ttn', 'cetn2', 'ctnnb1', 'drug_npm1', 'dsp', 
+                       'fbl', 'fbl_labelfree_4dn', 
+                       'gja1', 'h2b', 'lamp1', 
+                       # 'lmnb1_interphase',
+                       'lmnb1_mitotic', 
+                       'myh10', 'npm1', 
+                       # 'npm1_SR',
+                       'npm_labelfree_4dn', 'nup153', 'pxn', 'rab5a', 'sec61b', 
+                       'sec61b_dual', 'slc25a17', 'smc1a', 'son', 'st6gal1', 
+                       'tjp1', 'tomm20', 'tuba1b', 'ubtf']
 
 
-BASE_IMAGE_SIZE = 128
 BASE_IMAGE_DIM = (128, 128, 128)
 RESCALE_RATIO = 0.7
 
@@ -43,7 +42,9 @@ def create_test_image(
         raise e
 
     # load stock random image
-    random_array = imread(Path('expected_output_images/random_input.tiff')).reshape(*BASE_IMAGE_DIM)
+    random_array = imread(
+        Path('expected_output_images/random_input.tiff')
+    ).reshape(*BASE_IMAGE_DIM)
 
     # conduct segmentation
     output_array = SegModuleFunction(struct_img=random_array, 
@@ -76,7 +77,9 @@ def unit_test(structure_name : str):
     output_array = create_test_image(structure_name, output_type='array').ravel()
 
     # get rid of STC dimensions from AICSImage format, resized to resize_ratio
-    expected_output = imread(Path('expected_output_images/expected_' + structure_name + '_struct_segmentation.tiff')).ravel()
+    expected_output = imread(
+        Path('expected_output_images/expected_' + structure_name + '_struct_segmentation.tiff')
+    ).ravel()
 
     assert np.allclose(output_array, expected_output), 'Tested and expected outputs differ for ' + structure_name
 
@@ -89,8 +92,4 @@ def test_all_structures():
 
 # unit_test('ACTB')
 # create_all_test_images()
-# test_all_structures()
-
-
-# DOUBLE CHECK 
-# cetn2,  pxn, lmnb1_interphase,           fbl_bright_v3, fbl_comb,  npm1_bright_v3,npm1_comb
+# test_all_structures() 
