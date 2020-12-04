@@ -106,7 +106,6 @@ def Workflow_actn1(
     # rescale if needed
     if rescale_ratio > 0:
         struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
-
         struct_img = (struct_img - struct_img.min() + 1e-8) / (
             struct_img.max() - struct_img.min() + 1e-8
         )
