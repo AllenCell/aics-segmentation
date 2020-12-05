@@ -26,7 +26,7 @@ def Workflow_drug_npm1(
     output_func=None,
 ):
     """
-    classic segmentation workflow wrapper for structure NPM1
+    classic segmentation workflow wrapper for drug treated NPM1
 
     Parameter:
     -----------
@@ -119,14 +119,13 @@ def Workflow_drug_npm1(
     out_name_list.append("interm_high")
 
     # step 3: finer segmentation
-    # response2d = dot_slice_by_slice(structure_img_smooth, log_sigma=dot_2d_sigma)
-    # bw_finer = remove_small_objects(response2d>dot_2d_cutoff, min_size=minArea, connectivity=1, in_place=True)
     bw_finer = dot_3d_wrapper(structure_img_smooth, s3_param=[[1, 0.015]])
 
     out_img_list.append(bw_finer.copy())
     out_name_list.append("bw_fine")
 
-    # merge finer level detection into high level coarse segmentation to include outside dim parts
+    # merge finer level detection into high level coarse segmentation to 
+    # include outside dim parts
     bw_high_level[bw_finer > 0] = 1
 
     ###################

@@ -2,7 +2,6 @@ import numpy as np
 from skimage.morphology import medial_axis
 from scipy.ndimage import distance_transform_edt
 from skimage.morphology import erosion, ball
-import aicsimageio
 from skimage.measure import label, regionprops
 
 
@@ -110,7 +109,8 @@ def absolute_eigenvaluesh(nd_array):
     """
     Computes the eigenvalues sorted by absolute value from the symmetrical matrix.
     :param nd_array: array from which the eigenvalues will be calculated.
-    :return: A list with the eigenvalues sorted in absolute ascending order (e.g. [eigenvalue1, eigenvalue2, ...])
+    :return: A list with the eigenvalues sorted in absolute ascending order 
+    (e.g. [eigenvalue1, eigenvalue2, ...])
     """
     # print(nd_array)
     # print('up:array, below:eigen')

@@ -82,7 +82,6 @@ def Workflow_nup153(
 
     # smoothing with edge_preserving_smoothing filter
     structure_img_smooth = edge_preserving_smoothing_3d(struct_img)
-    # structure_img_smooth = image_smoothing_gaussian_slice_by_slice(struct_img, sigma=gaussian_smoothing_sigma, truncate_range=gaussian_smoothing_truncate_range)
 
     out_img_list.append(structure_img_smooth.copy())
     out_name_list.append("im_smooth")

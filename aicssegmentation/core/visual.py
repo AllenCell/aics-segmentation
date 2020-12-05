@@ -1,23 +1,23 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-import ipywidgets as widgets
-from ipywidgets import interact, fixed
-from IPython.display import display
 
-
-def sliceViewer(im, zz):
+def sliceViewer(im: np.ndarray, zz: int):
+    """simple wrapper to view one slice of a z-stack"""
     plt.imshow(im[zz, :, :])
     plt.show()
 
 
-def random_colormap(nn=10000):
+def random_colormap(nn: int = 10000):
+    """generate a random colormap with nn different colors"""
     from matplotlib import cm
 
     viridis = cm.get_cmap("viridis", nn)
     for ii in range(nn):
         for jj in range(3):
             viridis.colors[ii][jj] = np.random.rand()
+
+    # always set first color index as black
     viridis.colors[0][0] = 0
     viridis.colors[0][1] = 0
     viridis.colors[0][2] = 0
@@ -70,7 +70,7 @@ def explore_vesselness_2d(im, sigma, th, roi=[-1]):
 
 
 def blob2dExplorer_single(im, sigma, th):
-    from .seg_dot import logSlice
+    from aicssegmentation.core.seg_dot import logSlice
 
     bw = logSlice(im, (sigma[0], sigma[1], 1), th)
     plt.imshow(im)
@@ -146,11 +146,6 @@ def img_seg_combine(img, seg, roi=["Full", None]):
 
     # combine
     combined = np.concatenate((seg, img), axis=2)
-
-    ## overlay
-    # ovelay = img.copy()
-    # ovelay[seg>0]=1
-    # combined = np.concatenate((combined, ovelay), axis=2)
 
     #  view
     return combined

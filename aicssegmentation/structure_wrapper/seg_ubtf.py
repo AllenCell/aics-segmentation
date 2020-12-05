@@ -133,7 +133,8 @@ def Workflow_ubtf(
         seg[seg > 0] = 255
         return seg
 
-    # merge finer level detection into high level coarse segmentation to include outside dim parts
+    # merge finer level detection into high level coarse segmentation 
+    # to include outside dim parts
     bw_high_level[bw_finer > 0] = 1
 
     ###################

@@ -134,23 +134,6 @@ def Workflow_cardio_npm1(
 
     response_bright = dot_slice_by_slice(structure_img_smooth, log_sigma=dot_2d_sigma)
 
-    # imsave('res_bright.tiff',response_bright)
-
-    """
-    response_dark = dot_slice_by_slice(1 - structure_img_smooth, log_sigma=dot_2d_sigma)
-    response_dark_extra = dot_slice_by_slice(1 - structure_img_smooth, log_sigma=dot_2d_sigma_extra)
-
-    imsave('res_dark_1.tiff', response_dark)
-    imsave('res_dark_2.tiff', response_dark_extra)
-
-    #inner_mask = bw_high_level.copy()
-    #for zz in range(inner_mask.shape[0]):
-    #    inner_mask[zz,:,:] = binary_fill_holes(inner_mask[zz,:,:])
-
-    holes = np.logical_or(response_dark>dot_2d_cutoff , response_dark_extra>dot_2d_cutoff)
-    #holes[~inner_mask] = 0
-    """
-
     bw_extra = response_bright > 0.07  # dot_2d_cutoff
     bw_extra[~bw_low_level] = 0
 
