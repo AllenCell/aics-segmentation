@@ -66,7 +66,7 @@ def compute_3d_hessian_matrix(nd_array, sigma=1, scale=True, whiteonblack=True):
 
 def absolute_3d_hessian_eigenvalues(nd_array, sigma=1, scale=True, whiteonblack=True):
     """
-    Eigenvalues of the hessian matrix calculated from the input array sorted by 
+    Eigenvalues of the hessian matrix calculated from the input array sorted by
     absolute value.
     :param nd_array: input array from which to calculate hessian eigenvalues.
     :param sigma: gaussian smoothing parameter.

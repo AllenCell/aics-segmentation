@@ -8,7 +8,7 @@ def intensity_normalization(struct_img, scaling_param):
     """
     Mode 1:  scaling_param = [0]
     Mode 2:  scaling_param = [lower std range, upper std range]
-    Mode 3:  scaling_param = [lower std range, upper std range, 
+    Mode 3:  scaling_param = [lower std range, upper std range,
              lower abs intensity, higher abs intensity]
     """
     assert len(scaling_param) > 0
@@ -20,9 +20,7 @@ def intensity_normalization(struct_img, scaling_param):
                 + "intensity upper bound"
             )
         else:
-            print(
-                f"intensity norm: min-max norm with upper bound {scaling_param[0]}"
-            )
+            print(f"intensity norm: min-max norm with upper bound {scaling_param[0]}")
             struct_img[struct_img > scaling_param[0]] = struct_img.min()
         strech_min = struct_img.min()
         strech_max = struct_img.max()

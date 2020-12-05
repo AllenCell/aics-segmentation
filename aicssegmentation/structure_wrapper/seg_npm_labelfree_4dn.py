@@ -106,7 +106,7 @@ def Workflow_npm_labelfree_4dn(
         response2d, min_size=minArea, connectivity=1, in_place=True
     )
 
-    # merge finer level detection into high level coarse segmentation 
+    # merge finer level detection into high level coarse segmentation
     # to include outside dim parts
     bw_high_level[bw_finer > 0] = 1
 

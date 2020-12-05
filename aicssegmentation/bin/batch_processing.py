@@ -66,8 +66,8 @@ class Args(object):
         This is used to print out the help if no arguments are provided.
         Note:
         - You need to remove it's usage if your script truly doesn't want arguments.
-        - It exits with 1 because it's an error if this is used in a script with 
-          no args. That's a non-interactive use scenario - typically you don't want 
+        - It exits with 1 because it's an error if this is used in a script with
+          no args. That's a non-interactive use scenario - typically you don't want
           help there.
         """
         if len(sys.argv) == 1:
