@@ -4,13 +4,13 @@ from pathlib import Path
 from skimage.morphology import remove_small_objects
 from aicssegmentation.core.pre_processing_utils import (
     intensity_normalization,
-    edge_preserving_smoothing_3d
+    edge_preserving_smoothing_3d,
 )
 from aicssegmentation.core.seg_dot import dot_slice_by_slice
 from skimage.filters import threshold_otsu
 from aicssegmentation.core.output_utils import (
     save_segmentation,
-    generate_segmentation_contour
+    generate_segmentation_contour,
 )
 from skimage.io import imread
 from aicssegmentation.core.vessel import vesselnessSliceBySlice
@@ -23,7 +23,7 @@ def Workflow_npm1_bright_v3_single(
     output_type: str = "default",
     output_path: Union[str, Path] = None,
     fn: Union[str, Path] = None,
-    output_func=None
+    output_func=None,
 ):
     """
     classic segmentation workflow wrapper for structure NPM1 bright v3 single
@@ -42,7 +42,7 @@ def Workflow_npm1_bright_v3_single(
         2. array: the segmentation result will be simply returned as a numpy array
         3. array_with_contour: segmentation result will be returned together with
             the contour of the segmentation
-        4. customize: pass in an extra output_func to do a special save. All the 
+        4. customize: pass in an extra output_func to do a special save. All the
             intermediate results, names of these results, the output_path, and the
             original filename (without extension) will be passed in to output_func.
 
@@ -195,7 +195,7 @@ def Workflow_npm1_bright_v3_single(
         save_segmentation(seg, False, Path(output_path), fn)
     elif output_type == "customize":
         # the hook for passing in a customized output function
-        # use "out_img_list" and "out_name_list" in your hook to 
+        # use "out_img_list" and "out_name_list" in your hook to
         # customize your output functions
         output_func(out_img_list, out_name_list, Path(output_path), fn)
     elif output_type == "array":
@@ -203,6 +203,6 @@ def Workflow_npm1_bright_v3_single(
     elif output_type == "array_with_contour":
         return (seg, generate_segmentation_contour(seg))
     else:
-        raise NotImplementedError('invalid output type: {output_type}')
+        raise NotImplementedError("invalid output type: {output_type}")
 
     # pdb.set_trace()

@@ -11,7 +11,7 @@ from skimage.filters import threshold_triangle, threshold_otsu
 from skimage.measure import label
 from aicssegmentation.core.output_utils import (
     save_segmentation,
-    generate_segmentation_contour
+    generate_segmentation_contour,
 )
 from scipy.ndimage import zoom
 
@@ -22,7 +22,7 @@ def Workflow_npm1(
     output_type: str = "default",
     output_path: Union[str, Path] = None,
     fn: Union[str, Path] = None,
-    output_func=None
+    output_func=None,
 ):
     """
     classic segmentation workflow wrapper for structure NPM1
@@ -41,7 +41,7 @@ def Workflow_npm1(
         2. array: the segmentation result will be simply returned as a numpy array
         3. array_with_contour: segmentation result will be returned together with
             the contour of the segmentation
-        4. customize: pass in an extra output_func to do a special save. All the 
+        4. customize: pass in an extra output_func to do a special save. All the
             intermediate results, names of these results, the output_path, and the
             original filename (without extension) will be passed in to output_func.
     """
@@ -167,7 +167,7 @@ def Workflow_npm1(
         save_segmentation(seg, False, Path(output_path), fn)
     elif output_type == "customize":
         # the hook for passing in a customized output function
-        # use "out_img_list" and "out_name_list" in your hook to 
+        # use "out_img_list" and "out_name_list" in your hook to
         # customize your output functions
         output_func(out_img_list, out_name_list, Path(output_path), fn)
     elif output_type == "array":
@@ -175,4 +175,4 @@ def Workflow_npm1(
     elif output_type == "array_with_contour":
         return (seg, generate_segmentation_contour(seg))
     else:
-        raise NotImplementedError('invalid output type: {output_type}') 
+        raise NotImplementedError("invalid output type: {output_type}")

@@ -22,7 +22,7 @@ def Workflow_cardio_fbl_100x(
     output_type: str = "default",
     output_path: Union[str, Path] = None,
     fn: Union[str, Path] = None,
-    output_func=None
+    output_func=None,
 ):
     """
     classic segmentation workflow wrapper for structure Cardio FBL 100x
@@ -41,7 +41,7 @@ def Workflow_cardio_fbl_100x(
         2. array: the segmentation result will be simply returned as a numpy array
         3. array_with_contour: segmentation result will be returned together with
             the contour of the segmentation
-        4. customize: pass in an extra output_func to do a special save. All the 
+        4. customize: pass in an extra output_func to do a special save. All the
             intermediate results, names of these results, the output_path, and the
             original filename (without extension) will be passed in to output_func.
     """
@@ -132,7 +132,7 @@ def Workflow_cardio_fbl_100x(
     out_img_list.append(bw_finer.copy())
     out_name_list.append("bw_fine")
 
-    # merge finer level detection into high level coarse segmentation 
+    # merge finer level detection into high level coarse segmentation
     # to include outside dim parts
     bw_high_level[bw_finer > 0] = 1
 
@@ -156,7 +156,7 @@ def Workflow_cardio_fbl_100x(
         save_segmentation(seg, False, Path(output_path), fn)
     elif output_type == "customize":
         # the hook for passing in a customized output function
-        # use "out_img_list" and "out_name_list" in your hook to 
+        # use "out_img_list" and "out_name_list" in your hook to
         # customize your output functions
         output_func(out_img_list, out_name_list, Path(output_path), fn)
     elif output_type == "array":
@@ -164,4 +164,4 @@ def Workflow_cardio_fbl_100x(
     elif output_type == "array_with_contour":
         return (seg, generate_segmentation_contour(seg))
     else:
-        raise NotImplementedError('invalid output type: {output_type}') 
+        raise NotImplementedError("invalid output type: {output_type}")
