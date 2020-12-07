@@ -4,6 +4,7 @@ from pathlib import Path
 import importlib
 from aicsimageio.writers import OmeTiffWriter
 import os
+import pytest
 
 
 DEFAULT_MODULE_PATH = "aicssegmentation.structure_wrapper.seg_"
@@ -52,10 +53,20 @@ ALL_STRUCTURE_NAMES = [
 ]
 
 # changes rootdir in pytest to pass
+output = [
+    dI for dI in os.listdir(os.getcwd()) if os.path.isdir(os.path.join(os.getcwd(), dI))
+]
+print(output)
+print(Path(__file__).parent)
 print("cwd:", os.getcwd())
 if not os.getcwd().endswith("tests"):
     os.chdir(os.getcwd() + "/tests")
 TEST_IMG_DIR = "expected_output_images/"
+
+
+@pytest.fixture
+def data_dir() -> Path:
+    return Path(__file__).parent / "tests"
 
 
 BASE_IMAGE_DIM = (128, 128, 128)
@@ -127,4 +138,4 @@ def test_all_structures():
         unit_test(structure_name)
 
 
-# test_all_structures()
+test_all_structures()
