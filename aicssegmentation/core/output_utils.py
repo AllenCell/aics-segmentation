@@ -1,11 +1,10 @@
-import os
-
+from pathlib import Path
 import numpy as np
 from skimage.morphology import erosion, ball
 from aicsimageio.writers import OmeTiffWriter
 
 
-def save_segmentation(bw, contour_flag, output_path, fn):
+def save_segmentation(bw, contour_flag, output_path: Path, fn):
     with OmeTiffWriter(str(output_path / (fn + "_struct_segmentation.tiff"))) as writer:
         writer.save(bw)
 
@@ -26,7 +25,7 @@ def generate_segmentation_contour(im):
     return bd
 
 
-#### general hook for cutomized output ######
+# ### general hook for cutomized output ######
 def output_hook(im, names, out_flag, output_path, fn):
     assert len(im) == len(names) and len(names) == len(out_flag)
 
@@ -102,13 +101,6 @@ def QCB_granularity(out_img_list, out_name_list, output_path, fn):
 
     output_hook(out_img_list, out_name_list, out_flag, output_path, fn)
     return img_list, name_list
-
-
-def template_output(out_img_list, out_name_list, output_type, output_path, fn):
-
-    out_flag[-1] = True  # also output the last one (always the final result)
-    out_name_list[-1] = "struct_segmentation"  # use default name
-    output_hook(out_img_list, out_name_list, out_flag, output_path, fn)
 
 
 def FBL_output(out_img_list, out_name_list, output_type, output_path, fn):
@@ -253,19 +245,6 @@ def RAB5A_output(out_img_list, out_name_list, output_type, output_path, fn):
 
 
 def SLC25A17_output(out_img_list, out_name_list, output_type, output_path, fn):
-
-    if output_type == "AICS_RnD":
-        paperFigure(out_img_list, out_name_list, output_type, output_path, fn)
-        return None, None
-    elif output_type == "QCB":
-        img_list, name_list = QCB_simple(out_img_list, out_name_list, output_path, fn)
-        return img_list, name_list
-    else:
-        print("unrecognized output type")
-        quit()
-
-
-def ACTB_output(out_img_list, out_name_list, output_type, output_path, fn):
 
     if output_type == "AICS_RnD":
         paperFigure(out_img_list, out_name_list, output_type, output_path, fn)

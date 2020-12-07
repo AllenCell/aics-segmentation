@@ -2,26 +2,25 @@ import numpy as np
 from typing import Union
 from pathlib import Path
 from skimage.morphology import remove_small_objects
-from ..core.pre_processing_utils import (
+from aicssegmentation.core.pre_processing_utils import (
     intensity_normalization,
     edge_preserving_smoothing_3d,
 )
-from ..core.vessel import vesselness3D
+from aicssegmentation.core.vessel import vesselness3D
 from aicssegmentation.core.output_utils import (
     save_segmentation,
-    ACTN1_output,
     generate_segmentation_contour,
 )
 from scipy.ndimage import zoom
 
 
 def Workflow_atcn1(
-    struct_img: np.ndarray, 
-    rescale_ratio: float = -1, 
-    output_type: str = "default", 
+    struct_img: np.ndarray,
+    rescale_ratio: float = -1,
+    output_type: str = "default",
     output_path: Union[str, Path] = None,
     fn: Union[str, Path] = None,
-    output_func=None
+    output_func=None,
 ):
     """
     classic segmentation workflow wrapper for structure ACTN1 accounting for typo
@@ -40,7 +39,7 @@ def Workflow_atcn1(
         2. array: the segmentation result will be simply returned as a numpy array
         3. array_with_contour: segmentation result will be returned together with
             the contour of the segmentation
-        4. customize: pass in an extra output_func to do a special save. All the 
+        4. customize: pass in an extra output_func to do a special save. All the
             intermediate results, names of these results, the output_path, and the
             original filename (without extension) will be passed in to output_func.
     """
@@ -56,7 +55,7 @@ def Workflow_actn1(
     output_type: str = "default",
     output_path: Union[str, Path] = None,
     fn: Union[str, Path] = None,
-    output_func=None
+    output_func=None,
 ):
     """
     classic segmentation workflow wrapper for structure ACTN1
@@ -75,7 +74,7 @@ def Workflow_actn1(
         2. array: the segmentation result will be simply returned as a numpy array
         3. array_with_contour: segmentation result will be returned together with
             the contour of the segmentation
-        4. customize: pass in an extra output_func to do a special save. All the 
+        4. customize: pass in an extra output_func to do a special save. All the
             intermediate results, names of these results, the output_path, and the
             original filename (without extension) will be passed in to output_func.
     """
@@ -106,9 +105,7 @@ def Workflow_actn1(
 
     # rescale if needed
     if rescale_ratio > 0:
-        struct_img = zoom(
-            struct_img, [1, rescale_ratio, rescale_ratio], method="cubic"
-        )
+        struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
         struct_img = (struct_img - struct_img.min() + 1e-8) / (
             struct_img.max() - struct_img.min() + 1e-8
         )
@@ -149,15 +146,15 @@ def Workflow_actn1(
 
     if output_type == "default":
         # the default final output, simply save it to the output path
-        save_segmentation(seg, False, output_path, fn)
+        save_segmentation(seg, False, Path(output_path), fn)
     elif output_type == "customize":
         # the hook for passing in a customized output function
-        # use "out_img_list" and "out_name_list" in your hook to 
+        # use "out_img_list" and "out_name_list" in your hook to
         # customize your output functions
-        output_func(out_img_list, out_name_list, output_path, fn)
+        output_func(out_img_list, out_name_list, Path(output_path), fn)
     elif output_type == "array":
         return seg
     elif output_type == "array_with_contour":
         return (seg, generate_segmentation_contour(seg))
     else:
-        raise NotImplementedError('invalid output type: {output_type}')
+        raise NotImplementedError("invalid output type: {output_type}")

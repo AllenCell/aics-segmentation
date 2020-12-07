@@ -1,6 +1,6 @@
 from scipy import ndimage as ndi
 import numpy as np
-from scipy.ndimage.filters import gaussian_laplace, minimum_filter, convolve
+from scipy.ndimage.filters import gaussian_laplace
 
 
 def dot_3d(struct_img, log_sigma):

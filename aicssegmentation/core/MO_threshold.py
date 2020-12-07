@@ -1,5 +1,5 @@
 import numpy as np
-from skimage.morphology import remove_small_objects, binary_closing, ball, dilation
+from skimage.morphology import remove_small_objects, ball, dilation
 from skimage.filters import threshold_triangle, threshold_otsu
 from skimage.measure import label
 

@@ -8,29 +8,25 @@ def intensity_normalization(struct_img, scaling_param):
     """
     Mode 1:  scaling_param = [0]
     Mode 2:  scaling_param = [lower std range, upper std range]
-    Mode 3:  scaling_param = [lower std range, upper std range, lower abs intensity, higher abs intensity]
+    Mode 3:  scaling_param = [lower std range, upper std range,
+             lower abs intensity, higher abs intensity]
     """
     assert len(scaling_param) > 0
 
     if len(scaling_param) == 1:
         if scaling_param[0] < 1:
             print(
-                "intensity normalization: using min-max normalization with NO absolute intensity upper bound"
+                "intensity normalization: min-max normalization with NO absolute"
+                + "intensity upper bound"
             )
         else:
-            print(
-                f"intensity normalization: using min-max normalization with absolute intensity upper bound {scaling_param[0]}"
-            )
+            print(f"intensity norm: min-max norm with upper bound {scaling_param[0]}")
             struct_img[struct_img > scaling_param[0]] = struct_img.min()
         strech_min = struct_img.min()
         strech_max = struct_img.max()
         struct_img = (struct_img - strech_min + 1e-8) / (strech_max - strech_min + 1e-8)
     elif len(scaling_param) == 2:
-        # print(f'intensity normalization: normalize into [mean - {scaling_param[0]} x std, mean + {scaling_param[1]} x std] ')
         m, s = norm.fit(struct_img.flat)
-        # print(m,s)
-        # import numpy as np
-        # import pdb; pdb.set_trace()
         strech_min = max(m - scaling_param[0] * s, struct_img.min())
         strech_max = min(m + scaling_param[1] * s, struct_img.max())
         struct_img[struct_img > strech_max] = strech_max
@@ -129,9 +125,11 @@ def suggest_normalization_param(structure_img0):
 
     print(f"So, suggested parameter for normalization is [{low_ratio}, {up_ratio}]")
     print(
-        "To further enhance the contrast: You may increase the first value (may loss some dim parts), or decrease the second value"
+        "To further enhance the contrast: You may increase the first value "
+        + "(may loss some dim parts), or decrease the second value"
         + "(may loss some texture in super bright regions)"
     )
     print(
-        "To slightly reduce the contrast: You may decrease the first value, or increase the second value"
+        "To slightly reduce the contrast: You may decrease the first value, or "
+        + "increase the second value"
     )

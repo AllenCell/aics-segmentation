@@ -1,25 +1,50 @@
 import numpy as np
-import os
-from skimage.morphology import remove_small_objects, watershed, dilation, ball
-from ..core.pre_processing_utils import (
+from typing import Union
+from pathlib import Path
+from skimage.morphology import remove_small_objects
+from aicssegmentation.core.pre_processing_utils import (
     intensity_normalization,
     image_smoothing_gaussian_3d,
 )
-from ..core.seg_dot import dot_slice_by_slice
 from skimage.filters import threshold_triangle, threshold_otsu
 from skimage.measure import label
 from aicssegmentation.core.output_utils import (
     save_segmentation,
-    FBL_output,
     generate_segmentation_contour,
 )
-from aicsimageprocessing import resize
+from scipy.ndimage import zoom
+
 from aicssegmentation.core.seg_dot import dot_3d_wrapper
 
 
 def Workflow_drug_npm1(
-    struct_img, rescale_ratio, output_type, output_path, fn, output_func=None
+    struct_img: np.ndarray,
+    rescale_ratio: float = -1,
+    output_type: str = "default",
+    output_path: Union[str, Path] = None,
+    fn: Union[str, Path] = None,
+    output_func=None,
 ):
+    """
+    classic segmentation workflow wrapper for drug treated NPM1
+
+    Parameter:
+    -----------
+    struct_img: np.ndarray
+        the 3D image to be segmented
+    rescale_ratio: float
+        an optional parameter to allow rescale the image before running the
+        segmentation functions, default is no rescaling
+    output_type: str
+        select how to handle output. Currently, four types are supported:
+        1. default: the result will be saved at output_path whose filename is
+            original name without extention + "_struct_segmentaiton.tiff"
+        2. array: the segmentation result will be simply returned as a numpy array
+        3. array_with_contour: segmentation result will be returned together with
+            the contour of the segmentation
+        4. customize: pass in an extra output_func to do a special save. All the
+            intermediate results, names of these results, the output_path, and the
+    """
     ##########################################################################
     # PARAMETERS:
     #   note that these parameters are supposed to be fixed for the structure
@@ -28,8 +53,8 @@ def Workflow_drug_npm1(
     intensity_norm_param = [0.5, 25]
     gaussian_smoothing_sigma = 1
     gaussian_smoothing_truncate_range = 3.0
-    dot_2d_sigma = 1
-    dot_2d_cutoff = 0.01
+    # dot_2d_sigma = 1
+    # dot_2d_cutoff = 0.01
     minArea = 5
     low_level_min_size = 700
     ##########################################################################
@@ -48,9 +73,8 @@ def Workflow_drug_npm1(
 
     # rescale if needed
     if rescale_ratio > 0:
-        struct_img = resize(
-            struct_img, [1, rescale_ratio, rescale_ratio], method="cubic"
-        )
+        struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
+
         struct_img = (struct_img - struct_img.min() + 1e-8) / (
             struct_img.max() - struct_img.min() + 1e-8
         )
@@ -95,14 +119,13 @@ def Workflow_drug_npm1(
     out_name_list.append("interm_high")
 
     # step 3: finer segmentation
-    # response2d = dot_slice_by_slice(structure_img_smooth, log_sigma=dot_2d_sigma)
-    # bw_finer = remove_small_objects(response2d>dot_2d_cutoff, min_size=minArea, connectivity=1, in_place=True)
     bw_finer = dot_3d_wrapper(structure_img_smooth, s3_param=[[1, 0.015]])
 
     out_img_list.append(bw_finer.copy())
     out_name_list.append("bw_fine")
 
-    # merge finer level detection into high level coarse segmentation to include outside dim parts
+    # merge finer level detection into high level coarse segmentation to
+    # include outside dim parts
     bw_high_level[bw_finer > 0] = 1
 
     ###################
@@ -121,22 +144,16 @@ def Workflow_drug_npm1(
     out_name_list.append("bw_coarse")
 
     if output_type == "default":
-        # the default final output
-        save_segmentation(seg, False, output_path, fn)
-    elif output_type == "AICS_pipeline":
-        # pre-defined output function for pipeline data
-        save_segmentation(seg, True, output_path, fn)
+        # the default final output, simply save it to the output path
+        save_segmentation(seg, False, Path(output_path), fn)
     elif output_type == "customize":
         # the hook for passing in a customized output function
-        output_fun(out_img_list, out_name_list, output_path, fn)
+        # use "out_img_list" and "out_name_list" in your hook to
+        # customize your output functions
+        output_func(out_img_list, out_name_list, Path(output_path), fn)
     elif output_type == "array":
         return seg
     elif output_type == "array_with_contour":
         return (seg, generate_segmentation_contour(seg))
     else:
-        # the hook for pre-defined RnD output functions (AICS internal)
-        img_list, name_list = FBL_output(
-            out_img_list, out_name_list, output_type, output_path, fn
-        )
-        if output_type == "QCB":
-            return img_list, name_list
+        raise NotImplementedError("invalid output type: {output_type}")
