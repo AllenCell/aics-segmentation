@@ -59,7 +59,7 @@ def create_random_source_image():
     random_array = np.random.rand(*BASE_IMAGE_DIM)
 
     # write numpy array to .tiff file
-    with OmeTiffWriter("./expected_output_images/random_input.tiff") as writer:
+    with OmeTiffWriter("../tests/expected_output_images/random_input.tiff") as writer:
         writer.save(random_array)
 
 
@@ -84,16 +84,16 @@ def create_test_image(structure_name: str, output_type: str = "default"):
         raise e
 
     # load stock random image
-    random_array = imread(Path("./expected_output_images/random_input.tiff")).reshape(
-        *BASE_IMAGE_DIM
-    )
+    random_array = imread(
+        Path("../tests/expected_output_images/random_input.tiff")
+    ).reshape(*BASE_IMAGE_DIM)
 
     # conduct segmentation
     output_array = SegModuleFunction(
         struct_img=random_array,
         rescale_ratio=RESCALE_RATIO,
         output_type=output_type,
-        output_path="./expected_output_images",
+        output_path="../tests/expected_output_images",
         fn="expected_" + structure_name,
     )
     return output_array
@@ -107,7 +107,7 @@ def unit_test(structure_name: str):
     # get rid of STC dimensions from AICSImage format, resized to resize_ratio
     expected_output = imread(
         Path(
-            "./expected_output_images/expected_"
+            "../tests/expected_output_images/expected_"
             + structure_name
             + "_struct_segmentation.tiff"
         )
@@ -122,3 +122,6 @@ def test_all_structures():
     for structure_name in ALL_STRUCTURE_NAMES:
         print("Testing", structure_name, "...")
         unit_test(structure_name)
+
+
+test_all_structures()
