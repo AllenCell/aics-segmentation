@@ -3,6 +3,7 @@ from aicsimageio import imread
 from pathlib import Path
 import importlib
 from aicsimageio.writers import OmeTiffWriter
+import os
 
 
 DEFAULT_MODULE_PATH = "aicssegmentation.structure_wrapper.seg_"
@@ -50,6 +51,12 @@ ALL_STRUCTURE_NAMES = [
     "ubtf",
 ]
 
+# changes rootdir in pytest to pass
+print("cwd:", os.getcwd())
+if not os.getcwd().endswith("tests"):
+    os.chdir(os.getcwd() + "/tests")
+TEST_IMG_DIR = "expected_output_images/"
+
 
 BASE_IMAGE_DIM = (128, 128, 128)
 RESCALE_RATIO = 0.7
@@ -59,7 +66,7 @@ def create_random_source_image():
     random_array = np.random.rand(*BASE_IMAGE_DIM)
 
     # write numpy array to .tiff file
-    with OmeTiffWriter("../tests/expected_output_images/random_input.tiff") as writer:
+    with OmeTiffWriter(TEST_IMG_DIR + "random_input.tiff") as writer:
         writer.save(random_array)
 
 
@@ -84,16 +91,16 @@ def create_test_image(structure_name: str, output_type: str = "default"):
         raise e
 
     # load stock random image
-    random_array = imread(
-        Path("../tests/expected_output_images/random_input.tiff")
-    ).reshape(*BASE_IMAGE_DIM)
+    random_array = imread(Path(TEST_IMG_DIR + "random_input.tiff")).reshape(
+        *BASE_IMAGE_DIM
+    )
 
     # conduct segmentation
     output_array = SegModuleFunction(
         struct_img=random_array,
         rescale_ratio=RESCALE_RATIO,
         output_type=output_type,
-        output_path="../tests/expected_output_images",
+        output_path=TEST_IMG_DIR,
         fn="expected_" + structure_name,
     )
     return output_array
@@ -106,11 +113,7 @@ def unit_test(structure_name: str):
 
     # get rid of STC dimensions from AICSImage format, resized to resize_ratio
     expected_output = imread(
-        Path(
-            "../tests/expected_output_images/expected_"
-            + structure_name
-            + "_struct_segmentation.tiff"
-        )
+        Path(TEST_IMG_DIR + "expected_" + structure_name + "_struct_segmentation.tiff")
     ).ravel()
 
     assert np.allclose(output_array, expected_output), (
@@ -124,4 +127,4 @@ def test_all_structures():
         unit_test(structure_name)
 
 
-test_all_structures()
+# test_all_structures()
