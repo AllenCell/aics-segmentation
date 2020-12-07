@@ -77,16 +77,7 @@ cd /aics-segmentation/aicssegmentation/bin/
 
 #### OF1: By default, only the final segmentation output will be saved into the specified output path. There is an option for you to output intermediate results or anything is a customized way. To do this, you can
 
-1. Go to line 55 in /aicssegmentation/core/output_utils.py. Customize the function `template_output()`. All intermediate results are saved in `out_img_list` with their corresponding name in `out_name_list`. You simply select which variable to save using the corresponding default name or the name you prefer. 
-
-2. Rename `template_output()` into a specific name, like `RAB5_output()`.
-
-3. Go back to your `seg_RAB5A.py` 
-    * line 9, change `from aicssegmentation.core.output_utils import template_output` into your cutomized name `from aicssegmentation.core.output_utils import RAB5_output`
-    * line 69, change `elif output_type == 'TEMPLATE':` into a new name, e.g. `elif output_type == 'MyLab':`
-    * line 71, change `template_output( ... )` into your new customized function `RAB5_output( ... )`
-
-4. Then, before you run your script `./run_toolkit.sh`, make sure you set your `output_type` as your new name, e.g. `MyLab`.
+TBA
 
 
 #### OF2: By defalt, your input image (orginal file, like .czi) will not be resized. But, when you process different images of the same intracellular structure and the images are of slighlty different resolution, you may need to first resize all the image into the same resolution as the images you tuned your parameters on. The reason is that parameters tuned on image of one resolution may yield different results on images of a very different resolution. 

@@ -1,7 +1,8 @@
-###### import functions ####
+# flake8: noqa
+# ##### import functions ####
 
 
-#### do not remove ####
+# ### do not remove ####
 from aicssegmentation.core.output_utils import (
     save_segmentation,
     generate_segmentation_contour,
@@ -34,7 +35,7 @@ def Workflow_template(
     ###################
 
     ##########################################################################
-    ### no need to change below
+    # ## no need to change below
     ##########################################################################
     # output
     seg = seg > 0

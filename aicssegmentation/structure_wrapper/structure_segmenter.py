@@ -24,7 +24,7 @@ class StructureSegmenter:
             logging.info(f"loading module {module_name}")
             seg_module = importlib.import_module(module_name)
             function_name = "Workflow_" + lower_gene
-            logging.info(f"getting function " + function_name)
+            logging.info("getting function " + function_name)
             SegModuleFunction = getattr(seg_module, function_name)
         except Exception as e:
             logging.error(

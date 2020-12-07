@@ -17,35 +17,6 @@ import aicsimageio
 PER_IMAGE = "per_img"
 PER_DIR = "per_dir"
 
-"""
-STRUCTURE_MAPPING = {
-    'DSP': {'module': 'aicssegmentation.structure_wrapper.seg_dsp', 'class': 'DSP_HiPSC_Pipeline'},             # version 1.1.1
-    'SEC61B': {'module': 'aicssegmentation.structure_wrapper.seg_sec61b', 'class': 'SEC61B_HiPSC_Pipeline'},    # version 1.1.2
-    'ST6GAL1': {'module': 'aicssegmentation.structure_wrapper.seg_st6gal1', 'class': 'ST6GAL1_HiPSC_Pipeline'},  # version 1.2.0
-    'TUBA1B': {'module': 'aicssegmentation.structure_wrapper.seg_tuba1b', 'class': 'TUBA1B_HiPSC_Pipeline'},    # version 1.1.2
-    'TOMM20': {'module': 'aicssegmentation.structure_wrapper.seg_tomm20', 'class': 'TOMM20_HiPSC_Pipeline'},    # version 1.1.2
-    'CETN2': {'module': 'aicssegmentation.structure_wrapper.seg_cetn2', 'class': 'CETN2_HiPSC_Pipeline'},   # version 1.1.0
-    'FBL': {'module': 'aicssegmentation.structure_wrapper.seg_fbl', 'class': 'FBL_HiPSC_Pipeline'},         # version 1.1.3
-    'ACTN1': {'module': 'aicssegmentation.structure_wrapper.seg_actn1', 'class': 'ACTN1_HiPSC_Pipeline'},   # version 1.1.3  
-    'TJP1': {'module': 'aicssegmentation.structure_wrapper.seg_tjp1', 'class': 'TJP1_HiPSC_Pipeline'},   # version 1.1.1
-    'ACTB': {'module': 'aicssegmentation.structure_wrapper.seg_actb', 'class': 'ACTB_HiPSC_Pipeline'},   # version 1.2.0
-    'MYH10': {'module': 'aicssegmentation.structure_wrapper.seg_myh10', 'class': 'MYH10_HiPSC_Pipeline'}, # version 1.2.0
-    'CTNNB1': {'module': 'aicssegmentation.structure_wrapper.seg_ctnnb1', 'class': 'CTNNB1_HiPSC_Pipeline'}, # version 1.1.0
-    'GJA1': {'module': 'aicssegmentation.structure_wrapper.seg_gja1', 'class': 'GJA1_HiPSC_Pipeline'}, # version 1.1.0
-    'NPM1': {'module': 'aicssegmentation.structure_wrapper.seg_npm1', 'class': 'NPM1_HiPSC_Pipeline'}, # version 1.1.0
-    'LAMP1': {'module': 'aicssegmentation.structure_wrapper.seg_lamp1', 'class': 'LAMP1_HiPSC_Pipeline'}, # version 1.1.0
-    'RAB5A': {'module': 'aicssegmentation.structure_wrapper.seg_rab5a', 'class': 'RAB5A_HiPSC_Pipeline'}, # version 1.0.0
-    'SLC25A17': {'module': 'aicssegmentation.structure_wrapper.seg_slc25a17', 'class': 'SLC25A17_HiPSC_Pipeline'}, # version 1.2.0
-    'PXN': {'module': 'aicssegmentation.structure_wrapper.seg_pxn', 'class': 'PXN_HiPSC_Pipeline'}, # version 1.0.0
-    'TNNI1_Cardio': {'module': 'aicssegmentation.structure_wrapper.seg_cardio_tnni1', 'class': 'TNNI1_Cardio_Pipeline'},
-    'TTN_Cardio': {'module': 'aicssegmentation.structure_wrapper.seg_cardio_ttn', 'class': 'TTN_Cardio_Pipeline'},
-    'ATP2A2_Cardio': {'module': 'aicssegmentation.structure_wrapper.seg_cardio_atp2a2', 'class': 'ATP2A2_Cardio_Pipeline'},
-    'MYL7_Cardio': {'module': 'aicssegmentation.structure_wrapper.seg_cardio_myl7', 'class': 'MYL7_Cardio_Pipeline'},
-    'ACTN2_Cardio': {'module': 'aicssegmentation.structure_wrapper.seg_cardio_actn2', 'class': 'ACTN2_Cardio_Pipeline'}
-}
-"""
-
-
 log = logging.getLogger()
 logging.basicConfig(
     level=logging.INFO, format="[%(levelname)4s:%(lineno)4s %(asctime)s] %(message)s"
@@ -95,8 +66,9 @@ class Args(object):
         This is used to print out the help if no arguments are provided.
         Note:
         - You need to remove it's usage if your script truly doesn't want arguments.
-        - It exits with 1 because it's an error if this is used in a script with no args.
-          That's a non-interactive use scenario - typically you don't want help there.
+        - It exits with 1 because it's an error if this is used in a script with
+          no args. That's a non-interactive use scenario - typically you don't want
+          help there.
         """
         if len(sys.argv) == 1:
             parser.print_help()
@@ -157,7 +129,7 @@ class Args(object):
             "--use",
             dest="output_type",
             default="default",
-            help="how to output the results, options are default, AICS_pipeline, AICS_QCB, AICS_RnD",
+            help="how to output the results, mostly used options are default or array",
         )
         p.add_argument(
             "--mitotic_stage", dest="mitotic_stage", default=None, help="mitotic_stage"
@@ -175,7 +147,7 @@ class Args(object):
             "--data_type",
             default=".czi",
             dest="data_type",
-            help="the image type to be processed, e.g., .czi (default) or .tiff or .ome.tif",
+            help="the image type to be processed, e.g., .czi (default) or .tiff",
         )
 
         self.__no_args_print_help(p)
@@ -329,7 +301,7 @@ class Executor(object):
                 # Check if the segmenation is mitotic stage specific
                 if args.mitotic_stage is None:
                     SegModule(
-                        struct_img=struct_img,
+                        struct_img,
                         self.rescale_ratio,
                         args.output_type,
                         output_path,

@@ -9,7 +9,7 @@ def blobness3D(nd_array, scale_range=(1, 10), scale_step=2, tau=0.5, whiteonblac
     if not nd_array.ndim == 3:
         raise (ValueError("Only 3 dimensions is currently supported"))
 
-    # from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74
+    # from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74  # noqa E501
     sigmas = np.arange(scale_range[0], scale_range[1], scale_step)
     if np.any(np.asarray(sigmas) < 0.0):
         raise ValueError("Sigma values less than zero are not valid")
@@ -78,7 +78,7 @@ def vesselness3D(nd_array, sigmas, tau=0.5, whiteonblack=True):
     if not nd_array.ndim == 3:
         raise (ValueError("Only 3 dimensions is currently supported"))
 
-    # adapted from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74
+    # adapted from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74  # noqa E501
     if np.any(np.asarray(sigmas) < 0.0):
         raise ValueError("Sigma values less than zero are not valid")
 
@@ -140,7 +140,7 @@ def vesselness2D(nd_array, sigmas, tau=0.5, whiteonblack=True):
     if not nd_array.ndim == 2:
         raise (ValueError("Only 2 dimensions is currently supported"))
 
-    # adapted from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74
+    # adapted from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74  # noqa E501
     if np.any(np.asarray(sigmas) < 0.0):
         raise ValueError("Sigma values less than zero are not valid")
 
@@ -171,7 +171,7 @@ def vesselness2D_range(
     if not nd_array.ndim == 2:
         raise (ValueError("Only 2 dimensions is currently supported"))
 
-    # from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74
+    # from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74  # noqa E501
     sigmas = np.arange(scale_range[0], scale_range[1], scale_step)
     if np.any(np.asarray(sigmas) < 0.0):
         raise ValueError("Sigma values less than zero are not valid")

@@ -37,7 +37,17 @@ dev_requirements = [
     "wheel>=0.34.2",
 ]
 
-requirements = []
+requirements = [
+    "aicsimageio>3.3.0",
+    "scipy>=1.1.0",
+    "numpy>=1.15.1",
+    "scikit-image>=0.15.0",
+    "pandas>=0.23.4",
+    "itk",
+    "itkwidgets",
+    "jupyter",
+    "matplotlib"
+]
 
 extra_requirements = {
     "setup": setup_requirements,
