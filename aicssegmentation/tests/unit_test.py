@@ -55,6 +55,22 @@ BASE_IMAGE_DIM = (128, 128, 128)
 RESCALE_RATIO = 0.7
 
 
+def create_random_source_image():
+    random_array = np.random.rand(*BASE_IMAGE_DIM)
+
+    # write numpy array to .tiff file
+    with OmeTiffWriter("./expected_output_images/random_input.tiff") as writer:
+        writer.save(random_array)
+
+
+def create_all_test_images():
+    # create random input image to base segmentations on
+    create_random_source_image()
+    for structure_name in ALL_STRUCTURE_NAMES:
+        print("Creating expected image for", structure_name, "...")
+        create_test_image(structure_name, "default")
+
+
 def create_test_image(structure_name: str, output_type: str = "default"):
     # load structure wrapper for specified structure
     structure_name = structure_name.lower()
@@ -83,22 +99,6 @@ def create_test_image(structure_name: str, output_type: str = "default"):
     return output_array
 
 
-def create_random_source_image():
-    random_array = np.random.rand(*BASE_IMAGE_DIM)
-
-    # write numpy array to .tiff file
-    with OmeTiffWriter("./expected_output_images/random_input.tiff") as writer:
-        writer.save(random_array)
-
-
-def create_all_test_images():
-    # create random input image to base segmentations on
-    create_random_source_image()
-    for structure_name in ALL_STRUCTURE_NAMES:
-        print("Creating expected image for", structure_name, "...")
-        create_test_image(structure_name, "default")
-
-
 def unit_test(structure_name: str):
     structure_name = structure_name.lower()
     # segment stock random image with current semgentation versions
@@ -122,8 +122,3 @@ def test_all_structures():
     for structure_name in ALL_STRUCTURE_NAMES:
         print("Testing", structure_name, "...")
         unit_test(structure_name)
-
-
-# unit_test('ACTB')
-# create_all_test_images()
-# test_all_structures()
