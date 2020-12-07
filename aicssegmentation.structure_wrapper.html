@@ -1,0 +1,1745 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>aicssegmentation.structure_wrapper package &mdash; aicssegmentation 0.1.20 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="aicssegmentation.core package" href="aicssegmentation.core.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> aicssegmentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.20
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Package modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="aicssegmentation.html">aicssegmentation package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="aicssegmentation.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="aicssegmentation.bin.html">aicssegmentation.bin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aicssegmentation.core.html">aicssegmentation.core package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">aicssegmentation.structure_wrapper package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">aicssegmentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">aicssegmentation</a> &raquo;</li>
+        
+          <li><a href="aicssegmentation.html">aicssegmentation package</a> &raquo;</li>
+        
+      <li>aicssegmentation.structure_wrapper package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/aicssegmentation.structure_wrapper.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="aicssegmentation.core.html" class="btn btn-neutral float-left" title="aicssegmentation.core package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="aicssegmentation-structure-wrapper-package">
+<h1>aicssegmentation.structure_wrapper package<a class="headerlink" href="#aicssegmentation-structure-wrapper-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_actb">
+<span id="aicssegmentation-structure-wrapper-seg-actb-module"></span><h2>aicssegmentation.structure_wrapper.seg_actb module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_actb" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_actb.Workflow_actb">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_actb.</code><code class="sig-name descname">Workflow_actb</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_actb.html#Workflow_actb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_actb.Workflow_actb" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure ACTB</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+<p>fn: filename without extension</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_actn1">
+<span id="aicssegmentation-structure-wrapper-seg-actn1-module"></span><h2>aicssegmentation.structure_wrapper.seg_actn1 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_actn1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_actn1.Workflow_actn1">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_actn1.</code><code class="sig-name descname">Workflow_actn1</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_actn1.html#Workflow_actn1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_actn1.Workflow_actn1" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure ACTN1</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_actn1.Workflow_atcn1">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_actn1.</code><code class="sig-name descname">Workflow_atcn1</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_actn1.html#Workflow_atcn1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_actn1.Workflow_atcn1" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure ACTN1 accounting for typo</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentation.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_atp2a2">
+<span id="aicssegmentation-structure-wrapper-seg-atp2a2-module"></span><h2>aicssegmentation.structure_wrapper.seg_atp2a2 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_atp2a2" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_atp2a2.Workflow_atp2a2">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_atp2a2.</code><code class="sig-name descname">Workflow_atp2a2</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_atp2a2.html#Workflow_atp2a2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_atp2a2.Workflow_atp2a2" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure ATP2A2</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_cardio_actn2">
+<span id="aicssegmentation-structure-wrapper-seg-cardio-actn2-module"></span><h2>aicssegmentation.structure_wrapper.seg_cardio_actn2 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_cardio_actn2" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_cardio_actn2.Workflow_cardio_actn2">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_cardio_actn2.</code><code class="sig-name descname">Workflow_cardio_actn2</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_cardio_actn2.html#Workflow_cardio_actn2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_cardio_actn2.Workflow_cardio_actn2" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure Cardio ACTN2</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_cardio_atp2a2">
+<span id="aicssegmentation-structure-wrapper-seg-cardio-atp2a2-module"></span><h2>aicssegmentation.structure_wrapper.seg_cardio_atp2a2 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_cardio_atp2a2" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_cardio_atp2a2.Workflow_cardio_atp2a2">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_cardio_atp2a2.</code><code class="sig-name descname">Workflow_cardio_atp2a2</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_cardio_atp2a2.html#Workflow_cardio_atp2a2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_cardio_atp2a2.Workflow_cardio_atp2a2" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure Cardio ATP2A2</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_cardio_fbl">
+<span id="aicssegmentation-structure-wrapper-seg-cardio-fbl-module"></span><h2>aicssegmentation.structure_wrapper.seg_cardio_fbl module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_cardio_fbl" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_cardio_fbl.Workflow_cardio_fbl">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_cardio_fbl.</code><code class="sig-name descname">Workflow_cardio_fbl</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_cardio_fbl.html#Workflow_cardio_fbl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_cardio_fbl.Workflow_cardio_fbl" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure Cardio FBL</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_cardio_fbl_100x">
+<span id="aicssegmentation-structure-wrapper-seg-cardio-fbl-100x-module"></span><h2>aicssegmentation.structure_wrapper.seg_cardio_fbl_100x module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_cardio_fbl_100x" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_cardio_fbl_100x.Workflow_cardio_fbl_100x">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_cardio_fbl_100x.</code><code class="sig-name descname">Workflow_cardio_fbl_100x</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_cardio_fbl_100x.html#Workflow_cardio_fbl_100x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_cardio_fbl_100x.Workflow_cardio_fbl_100x" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure Cardio FBL 100x</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_cardio_myl7">
+<span id="aicssegmentation-structure-wrapper-seg-cardio-myl7-module"></span><h2>aicssegmentation.structure_wrapper.seg_cardio_myl7 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_cardio_myl7" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_cardio_myl7.Workflow_cardio_myl7">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_cardio_myl7.</code><code class="sig-name descname">Workflow_cardio_myl7</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_cardio_myl7.html#Workflow_cardio_myl7"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_cardio_myl7.Workflow_cardio_myl7" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure Cardio MYL7</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_cardio_npm1">
+<span id="aicssegmentation-structure-wrapper-seg-cardio-npm1-module"></span><h2>aicssegmentation.structure_wrapper.seg_cardio_npm1 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_cardio_npm1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_cardio_npm1.Workflow_cardio_npm1">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_cardio_npm1.</code><code class="sig-name descname">Workflow_cardio_npm1</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_cardio_npm1.html#Workflow_cardio_npm1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_cardio_npm1.Workflow_cardio_npm1" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure Cardio NPM1</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_cardio_npm1_100x">
+<span id="aicssegmentation-structure-wrapper-seg-cardio-npm1-100x-module"></span><h2>aicssegmentation.structure_wrapper.seg_cardio_npm1_100x module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_cardio_npm1_100x" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_cardio_npm1_100x.Workflow_cardio_npm1_100x">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_cardio_npm1_100x.</code><code class="sig-name descname">Workflow_cardio_npm1_100x</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_cardio_npm1_100x.html#Workflow_cardio_npm1_100x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_cardio_npm1_100x.Workflow_cardio_npm1_100x" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure Cardio NPM1 100x</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_cardio_tnni1">
+<span id="aicssegmentation-structure-wrapper-seg-cardio-tnni1-module"></span><h2>aicssegmentation.structure_wrapper.seg_cardio_tnni1 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_cardio_tnni1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_cardio_tnni1.Workflow_cardio_tnni1">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_cardio_tnni1.</code><code class="sig-name descname">Workflow_cardio_tnni1</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_cardio_tnni1.html#Workflow_cardio_tnni1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_cardio_tnni1.Workflow_cardio_tnni1" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure Cardio TNNI1</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_cardio_ttn">
+<span id="aicssegmentation-structure-wrapper-seg-cardio-ttn-module"></span><h2>aicssegmentation.structure_wrapper.seg_cardio_ttn module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_cardio_ttn" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_cardio_ttn.Workflow_cardio_ttn">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_cardio_ttn.</code><code class="sig-name descname">Workflow_cardio_ttn</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_cardio_ttn.html#Workflow_cardio_ttn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_cardio_ttn.Workflow_cardio_ttn" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure Cardio TTN</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_cetn2">
+<span id="aicssegmentation-structure-wrapper-seg-cetn2-module"></span><h2>aicssegmentation.structure_wrapper.seg_cetn2 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_cetn2" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_cetn2.Workflow_cetn2">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_cetn2.</code><code class="sig-name descname">Workflow_cetn2</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_cetn2.html#Workflow_cetn2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_cetn2.Workflow_cetn2" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure CETN2</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_ctnnb1">
+<span id="aicssegmentation-structure-wrapper-seg-ctnnb1-module"></span><h2>aicssegmentation.structure_wrapper.seg_ctnnb1 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_ctnnb1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_ctnnb1.Workflow_ctnnb1">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_ctnnb1.</code><code class="sig-name descname">Workflow_ctnnb1</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_ctnnb1.html#Workflow_ctnnb1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_ctnnb1.Workflow_ctnnb1" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure CTNNB1</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_drug_npm1">
+<span id="aicssegmentation-structure-wrapper-seg-drug-npm1-module"></span><h2>aicssegmentation.structure_wrapper.seg_drug_npm1 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_drug_npm1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_drug_npm1.Workflow_drug_npm1">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_drug_npm1.</code><code class="sig-name descname">Workflow_drug_npm1</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_drug_npm1.html#Workflow_drug_npm1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_drug_npm1.Workflow_drug_npm1" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for drug treated NPM1</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_dsp">
+<span id="aicssegmentation-structure-wrapper-seg-dsp-module"></span><h2>aicssegmentation.structure_wrapper.seg_dsp module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_dsp" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_dsp.Workflow_dsp">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_dsp.</code><code class="sig-name descname">Workflow_dsp</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_dsp.html#Workflow_dsp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_dsp.Workflow_dsp" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure DSP</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_fbl">
+<span id="aicssegmentation-structure-wrapper-seg-fbl-module"></span><h2>aicssegmentation.structure_wrapper.seg_fbl module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_fbl" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_fbl.Workflow_fbl">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_fbl.</code><code class="sig-name descname">Workflow_fbl</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_fbl.html#Workflow_fbl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_fbl.Workflow_fbl" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure FBL</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_fbl_labelfree_4dn">
+<span id="aicssegmentation-structure-wrapper-seg-fbl-labelfree-4dn-module"></span><h2>aicssegmentation.structure_wrapper.seg_fbl_labelfree_4dn module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_fbl_labelfree_4dn" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_fbl_labelfree_4dn.Workflow_fbl_labelfree_4dn">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_fbl_labelfree_4dn.</code><code class="sig-name descname">Workflow_fbl_labelfree_4dn</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_fbl_labelfree_4dn.html#Workflow_fbl_labelfree_4dn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_fbl_labelfree_4dn.Workflow_fbl_labelfree_4dn" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure FBL Labelfree 4dn</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_gja1">
+<span id="aicssegmentation-structure-wrapper-seg-gja1-module"></span><h2>aicssegmentation.structure_wrapper.seg_gja1 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_gja1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_gja1.Workflow_gja1">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_gja1.</code><code class="sig-name descname">Workflow_gja1</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_gja1.html#Workflow_gja1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_gja1.Workflow_gja1" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure GJA1</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_h2b">
+<span id="aicssegmentation-structure-wrapper-seg-h2b-module"></span><h2>aicssegmentation.structure_wrapper.seg_h2b module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_h2b" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_h2b.Workflow_h2b">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_h2b.</code><code class="sig-name descname">Workflow_h2b</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_h2b.html#Workflow_h2b"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_h2b.Workflow_h2b" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure H2B</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_lamp1">
+<span id="aicssegmentation-structure-wrapper-seg-lamp1-module"></span><h2>aicssegmentation.structure_wrapper.seg_lamp1 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_lamp1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_lamp1.Workflow_lamp1">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_lamp1.</code><code class="sig-name descname">Workflow_lamp1</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_lamp1.html#Workflow_lamp1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_lamp1.Workflow_lamp1" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure LAMP1</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_lmnb1_interphase">
+<span id="aicssegmentation-structure-wrapper-seg-lmnb1-interphase-module"></span><h2>aicssegmentation.structure_wrapper.seg_lmnb1_interphase module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_lmnb1_interphase" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_lmnb1_interphase.Workflow_lmnb1_interphase">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_lmnb1_interphase.</code><code class="sig-name descname">Workflow_lmnb1_interphase</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_lmnb1_interphase.html#Workflow_lmnb1_interphase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_lmnb1_interphase.Workflow_lmnb1_interphase" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure LMNB1 interphase</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_lmnb1_mitotic">
+<span id="aicssegmentation-structure-wrapper-seg-lmnb1-mitotic-module"></span><h2>aicssegmentation.structure_wrapper.seg_lmnb1_mitotic module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_lmnb1_mitotic" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_lmnb1_mitotic.Workflow_lmnb1_mitotic">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_lmnb1_mitotic.</code><code class="sig-name descname">Workflow_lmnb1_mitotic</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_lmnb1_mitotic.html#Workflow_lmnb1_mitotic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_lmnb1_mitotic.Workflow_lmnb1_mitotic" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure LMNB1 mitotic</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_myh10">
+<span id="aicssegmentation-structure-wrapper-seg-myh10-module"></span><h2>aicssegmentation.structure_wrapper.seg_myh10 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_myh10" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_myh10.Workflow_myh10">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_myh10.</code><code class="sig-name descname">Workflow_myh10</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_myh10.html#Workflow_myh10"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_myh10.Workflow_myh10" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure MYH10</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_npm1">
+<span id="aicssegmentation-structure-wrapper-seg-npm1-module"></span><h2>aicssegmentation.structure_wrapper.seg_npm1 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_npm1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_npm1.Workflow_npm1">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_npm1.</code><code class="sig-name descname">Workflow_npm1</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_npm1.html#Workflow_npm1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_npm1.Workflow_npm1" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure NPM1</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_npm1_SR">
+<span id="aicssegmentation-structure-wrapper-seg-npm1-sr-module"></span><h2>aicssegmentation.structure_wrapper.seg_npm1_SR module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_npm1_SR" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_npm1_SR.Workflow_npm1_SR">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_npm1_SR.</code><code class="sig-name descname">Workflow_npm1_SR</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_npm1_SR.html#Workflow_npm1_SR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_npm1_SR.Workflow_npm1_SR" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure NPM1 SR</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_npm_labelfree_4dn">
+<span id="aicssegmentation-structure-wrapper-seg-npm-labelfree-4dn-module"></span><h2>aicssegmentation.structure_wrapper.seg_npm_labelfree_4dn module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_npm_labelfree_4dn" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_npm_labelfree_4dn.Workflow_npm_labelfree_4dn">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_npm_labelfree_4dn.</code><code class="sig-name descname">Workflow_npm_labelfree_4dn</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_npm_labelfree_4dn.html#Workflow_npm_labelfree_4dn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_npm_labelfree_4dn.Workflow_npm_labelfree_4dn" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure NPM Labelfree 4dn</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_nup153">
+<span id="aicssegmentation-structure-wrapper-seg-nup153-module"></span><h2>aicssegmentation.structure_wrapper.seg_nup153 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_nup153" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_nup153.Workflow_nup153">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_nup153.</code><code class="sig-name descname">Workflow_nup153</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_nup153.html#Workflow_nup153"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_nup153.Workflow_nup153" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure NUP153</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_pxn">
+<span id="aicssegmentation-structure-wrapper-seg-pxn-module"></span><h2>aicssegmentation.structure_wrapper.seg_pxn module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_pxn" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_pxn.Workflow_pxn">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_pxn.</code><code class="sig-name descname">Workflow_pxn</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_pxn.html#Workflow_pxn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_pxn.Workflow_pxn" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure PXN</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_rab5a">
+<span id="aicssegmentation-structure-wrapper-seg-rab5a-module"></span><h2>aicssegmentation.structure_wrapper.seg_rab5a module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_rab5a" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_rab5a.Workflow_rab5a">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_rab5a.</code><code class="sig-name descname">Workflow_rab5a</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_rab5a.html#Workflow_rab5a"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_rab5a.Workflow_rab5a" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure RAB5A</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_sec61b">
+<span id="aicssegmentation-structure-wrapper-seg-sec61b-module"></span><h2>aicssegmentation.structure_wrapper.seg_sec61b module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_sec61b" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_sec61b.Workflow_sec61b">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_sec61b.</code><code class="sig-name descname">Workflow_sec61b</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_sec61b.html#Workflow_sec61b"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_sec61b.Workflow_sec61b" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure SEC61B</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_sec61b_dual">
+<span id="aicssegmentation-structure-wrapper-seg-sec61b-dual-module"></span><h2>aicssegmentation.structure_wrapper.seg_sec61b_dual module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_sec61b_dual" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_sec61b_dual.Workflow_sec61b_dual">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_sec61b_dual.</code><code class="sig-name descname">Workflow_sec61b_dual</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_sec61b_dual.html#Workflow_sec61b_dual"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_sec61b_dual.Workflow_sec61b_dual" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure SEC61B dual</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_slc25a17">
+<span id="aicssegmentation-structure-wrapper-seg-slc25a17-module"></span><h2>aicssegmentation.structure_wrapper.seg_slc25a17 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_slc25a17" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_slc25a17.Workflow_slc25a17">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_slc25a17.</code><code class="sig-name descname">Workflow_slc25a17</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_slc25a17.html#Workflow_slc25a17"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_slc25a17.Workflow_slc25a17" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure SLC25A17</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_smc1a">
+<span id="aicssegmentation-structure-wrapper-seg-smc1a-module"></span><h2>aicssegmentation.structure_wrapper.seg_smc1a module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_smc1a" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_smc1a.Workflow_smc1a">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_smc1a.</code><code class="sig-name descname">Workflow_smc1a</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_smc1a.html#Workflow_smc1a"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_smc1a.Workflow_smc1a" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure SMC1A</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_son">
+<span id="aicssegmentation-structure-wrapper-seg-son-module"></span><h2>aicssegmentation.structure_wrapper.seg_son module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_son" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_son.Workflow_son">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_son.</code><code class="sig-name descname">Workflow_son</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_son.html#Workflow_son"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_son.Workflow_son" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure SON</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_st6gal1">
+<span id="aicssegmentation-structure-wrapper-seg-st6gal1-module"></span><h2>aicssegmentation.structure_wrapper.seg_st6gal1 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_st6gal1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_st6gal1.Workflow_st6gal1">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_st6gal1.</code><code class="sig-name descname">Workflow_st6gal1</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_st6gal1.html#Workflow_st6gal1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_st6gal1.Workflow_st6gal1" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure ST6GAL1</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_template">
+<span id="aicssegmentation-structure-wrapper-seg-template-module"></span><h2>aicssegmentation.structure_wrapper.seg_template module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_template" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_template.Workflow_template">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_template.</code><code class="sig-name descname">Workflow_template</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">rescale_ratio</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_template.html#Workflow_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_template.Workflow_template" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_tjp1">
+<span id="aicssegmentation-structure-wrapper-seg-tjp1-module"></span><h2>aicssegmentation.structure_wrapper.seg_tjp1 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_tjp1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_tjp1.Workflow_tjp1">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_tjp1.</code><code class="sig-name descname">Workflow_tjp1</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_tjp1.html#Workflow_tjp1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_tjp1.Workflow_tjp1" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure TJP1</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_tomm20">
+<span id="aicssegmentation-structure-wrapper-seg-tomm20-module"></span><h2>aicssegmentation.structure_wrapper.seg_tomm20 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_tomm20" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_tomm20.Workflow_tomm20">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_tomm20.</code><code class="sig-name descname">Workflow_tomm20</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_tomm20.html#Workflow_tomm20"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_tomm20.Workflow_tomm20" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure TOMM20</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_tuba1b">
+<span id="aicssegmentation-structure-wrapper-seg-tuba1b-module"></span><h2>aicssegmentation.structure_wrapper.seg_tuba1b module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_tuba1b" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_tuba1b.Workflow_tuba1b">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_tuba1b.</code><code class="sig-name descname">Workflow_tuba1b</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_tuba1b.html#Workflow_tuba1b"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_tuba1b.Workflow_tuba1b" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure TUBA1B</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_ubtf">
+<span id="aicssegmentation-structure-wrapper-seg-ubtf-module"></span><h2>aicssegmentation.structure_wrapper.seg_ubtf module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_ubtf" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_ubtf.Workflow_ubtf">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_ubtf.</code><code class="sig-name descname">Workflow_ubtf</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_ubtf.html#Workflow_ubtf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_ubtf.Workflow_ubtf" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure UBTF</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.structure_segmenter">
+<span id="aicssegmentation-structure-wrapper-structure-segmenter-module"></span><h2>aicssegmentation.structure_wrapper.structure_segmenter module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.structure_segmenter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="aicssegmentation.structure_wrapper.structure_segmenter.StructureSegmenter">
+<em class="property">class </em><code class="sig-prename descclassname">aicssegmentation.structure_wrapper.structure_segmenter.</code><code class="sig-name descname">StructureSegmenter</code><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/structure_segmenter.html#StructureSegmenter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.structure_segmenter.StructureSegmenter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="aicssegmentation.structure_wrapper.structure_segmenter.StructureSegmenter.process_img">
+<code class="sig-name descname">process_img</code><span class="sig-paren">(</span><em class="sig-param">gene: str</em>, <em class="sig-param">image: numpy.array</em>, <em class="sig-param">rescale_ratio=-1</em>, <em class="sig-param">module_path='aicssegmentation.structure_wrapper.seg_') -&gt; (&lt;built-in function array&gt;</em>, <em class="sig-param">&lt;built-in function array&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/structure_segmenter.html#StructureSegmenter.process_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.structure_segmenter.StructureSegmenter.process_img" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.structure_wrapper">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-aicssegmentation.structure_wrapper" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Jianxu Chen
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

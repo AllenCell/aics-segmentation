@@ -1,0 +1,698 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>aicssegmentation.core package &mdash; aicssegmentation 0.1.20 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="aicssegmentation.structure_wrapper package" href="aicssegmentation.structure_wrapper.html" />
+    <link rel="prev" title="aicssegmentation.bin package" href="aicssegmentation.bin.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> aicssegmentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.20
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Package modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="aicssegmentation.html">aicssegmentation package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="aicssegmentation.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="aicssegmentation.bin.html">aicssegmentation.bin package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">aicssegmentation.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">aicssegmentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">aicssegmentation</a> &raquo;</li>
+        
+          <li><a href="aicssegmentation.html">aicssegmentation package</a> &raquo;</li>
+        
+      <li>aicssegmentation.core package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/aicssegmentation.core.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="aicssegmentation.structure_wrapper.html" class="btn btn-neutral float-right" title="aicssegmentation.structure_wrapper package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="aicssegmentation.bin.html" class="btn btn-neutral float-left" title="aicssegmentation.bin package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="aicssegmentation-core-package">
+<h1>aicssegmentation.core package<a class="headerlink" href="#aicssegmentation-core-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-aicssegmentation.core.MO_threshold">
+<span id="aicssegmentation-core-mo-threshold-module"></span><h2>aicssegmentation.core.MO_threshold module<a class="headerlink" href="#module-aicssegmentation.core.MO_threshold" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.core.MO_threshold.MO">
+<code class="sig-prename descclassname">aicssegmentation.core.MO_threshold.</code><code class="sig-name descname">MO</code><span class="sig-paren">(</span><em class="sig-param">structure_img_smooth</em>, <em class="sig-param">global_thresh_method</em>, <em class="sig-param">object_minArea</em>, <em class="sig-param">extra_criteria=False</em>, <em class="sig-param">local_adjust=0.98</em>, <em class="sig-param">return_object=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/MO_threshold.html#MO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.MO_threshold.MO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.core.hessian">
+<span id="aicssegmentation-core-hessian-module"></span><h2>aicssegmentation.core.hessian module<a class="headerlink" href="#module-aicssegmentation.core.hessian" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.core.hessian.absolute_3d_hessian_eigenvalues">
+<code class="sig-prename descclassname">aicssegmentation.core.hessian.</code><code class="sig-name descname">absolute_3d_hessian_eigenvalues</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">sigma=1</em>, <em class="sig-param">scale=True</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/hessian.html#absolute_3d_hessian_eigenvalues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.hessian.absolute_3d_hessian_eigenvalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Eigenvalues of the hessian matrix calculated from the input array sorted by
+absolute value.
+:param nd_array: input array from which to calculate hessian eigenvalues.
+:param sigma: gaussian smoothing parameter.
+:param scale: if True hessian values will be scaled according to sigma squared.
+:return: list of eigenvalues [eigenvalue1, eigenvalue2, …]</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.hessian.compute_3d_hessian_matrix">
+<code class="sig-prename descclassname">aicssegmentation.core.hessian.</code><code class="sig-name descname">compute_3d_hessian_matrix</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">sigma=1</em>, <em class="sig-param">scale=True</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/hessian.html#compute_3d_hessian_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.hessian.compute_3d_hessian_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the hessian matrix for an nd_array.
+This can be used to detect vesselness as well as other features.
+In 3D the first derivative will contain three directional gradients at each index:
+[ gx,  gy,  gz ]
+The Hessian matrix at each index will then be equal to the second derivative:
+[ gxx, gxy, gxz]
+[ gyx, gyy, gyz]
+[ gzx, gzy, gzz]
+The Hessian matrix is symmetrical, so gyx == gxy, gzx == gxz, and gyz == gzy.
+:param nd_array: n-dimensional array from which to compute the hessian matrix.
+:param sigma: gaussian smoothing to perform on the array.
+:param scale: if True, the hessian elements will be scaled by sigma squared.
+:return: hessian array of shape (…, ndim, ndim)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.core.output_utils">
+<span id="aicssegmentation-core-output-utils-module"></span><h2>aicssegmentation.core.output_utils module<a class="headerlink" href="#module-aicssegmentation.core.output_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.ACTB_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">ACTB_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#ACTB_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.ACTB_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.ACTN1_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">ACTN1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#ACTN1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.ACTN1_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.ACTN2_Cardio_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">ACTN2_Cardio_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#ACTN2_Cardio_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.ACTN2_Cardio_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.ATP2A2_Cardio_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">ATP2A2_Cardio_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#ATP2A2_Cardio_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.ATP2A2_Cardio_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.CETN2_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">CETN2_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#CETN2_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.CETN2_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.CTNNB1_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">CTNNB1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#CTNNB1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.CTNNB1_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.DSP_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">DSP_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#DSP_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.DSP_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.FBL_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">FBL_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#FBL_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.FBL_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.GJA1_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">GJA1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#GJA1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.GJA1_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.LAMP1_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">LAMP1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#LAMP1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.LAMP1_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.MYH10_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">MYH10_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#MYH10_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.MYH10_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.MYL7_Cardio_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">MYL7_Cardio_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#MYL7_Cardio_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.MYL7_Cardio_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.NPM1_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">NPM1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#NPM1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.NPM1_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.PXN_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">PXN_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#PXN_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.PXN_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.QCB_granularity">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">QCB_granularity</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#QCB_granularity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.QCB_granularity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.QCB_simple">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">QCB_simple</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#QCB_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.QCB_simple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.RAB5A_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">RAB5A_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#RAB5A_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.RAB5A_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.SEC61B_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">SEC61B_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#SEC61B_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.SEC61B_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.SLC25A17_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">SLC25A17_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#SLC25A17_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.SLC25A17_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.ST6GAL1_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">ST6GAL1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#ST6GAL1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.ST6GAL1_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.TJP1_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">TJP1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#TJP1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.TJP1_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.TNNI1_Cardio_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">TNNI1_Cardio_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#TNNI1_Cardio_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.TNNI1_Cardio_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.TOMM20_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">TOMM20_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#TOMM20_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.TOMM20_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.TTN_Cardio_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">TTN_Cardio_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#TTN_Cardio_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.TTN_Cardio_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.TUBA1B_output">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">TUBA1B_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#TUBA1B_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.TUBA1B_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.generate_segmentation_contour">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">generate_segmentation_contour</code><span class="sig-paren">(</span><em class="sig-param">im</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#generate_segmentation_contour"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.generate_segmentation_contour" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.output_hook">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">output_hook</code><span class="sig-paren">(</span><em class="sig-param">im</em>, <em class="sig-param">names</em>, <em class="sig-param">out_flag</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#output_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.output_hook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.paperFigure">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">paperFigure</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#paperFigure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.paperFigure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.output_utils.save_segmentation">
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">save_segmentation</code><span class="sig-paren">(</span><em class="sig-param">bw</em>, <em class="sig-param">contour_flag</em>, <em class="sig-param">output_path: pathlib.Path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#save_segmentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.save_segmentation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.core.pre_processing_utils">
+<span id="aicssegmentation-core-pre-processing-utils-module"></span><h2>aicssegmentation.core.pre_processing_utils module<a class="headerlink" href="#module-aicssegmentation.core.pre_processing_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.core.pre_processing_utils.edge_preserving_smoothing_3d">
+<code class="sig-prename descclassname">aicssegmentation.core.pre_processing_utils.</code><code class="sig-name descname">edge_preserving_smoothing_3d</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">numberOfIterations=10</em>, <em class="sig-param">conductance=1.2</em>, <em class="sig-param">timeStep=0.0625</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/pre_processing_utils.html#edge_preserving_smoothing_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.pre_processing_utils.edge_preserving_smoothing_3d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.pre_processing_utils.image_smoothing_gaussian_3d">
+<code class="sig-prename descclassname">aicssegmentation.core.pre_processing_utils.</code><code class="sig-name descname">image_smoothing_gaussian_3d</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">sigma</em>, <em class="sig-param">truncate_range=3.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/pre_processing_utils.html#image_smoothing_gaussian_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.pre_processing_utils.image_smoothing_gaussian_3d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.pre_processing_utils.image_smoothing_gaussian_slice_by_slice">
+<code class="sig-prename descclassname">aicssegmentation.core.pre_processing_utils.</code><code class="sig-name descname">image_smoothing_gaussian_slice_by_slice</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">sigma</em>, <em class="sig-param">truncate_range=3.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/pre_processing_utils.html#image_smoothing_gaussian_slice_by_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.pre_processing_utils.image_smoothing_gaussian_slice_by_slice" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.pre_processing_utils.intensity_normalization">
+<code class="sig-prename descclassname">aicssegmentation.core.pre_processing_utils.</code><code class="sig-name descname">intensity_normalization</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">scaling_param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/pre_processing_utils.html#intensity_normalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.pre_processing_utils.intensity_normalization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mode 1:  scaling_param = [0]
+Mode 2:  scaling_param = [lower std range, upper std range]
+Mode 3:  scaling_param = [lower std range, upper std range,</p>
+<blockquote>
+<div><p>lower abs intensity, higher abs intensity]</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.pre_processing_utils.suggest_normalization_param">
+<code class="sig-prename descclassname">aicssegmentation.core.pre_processing_utils.</code><code class="sig-name descname">suggest_normalization_param</code><span class="sig-paren">(</span><em class="sig-param">structure_img0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/pre_processing_utils.html#suggest_normalization_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.pre_processing_utils.suggest_normalization_param" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.core.seg_dot">
+<span id="aicssegmentation-core-seg-dot-module"></span><h2>aicssegmentation.core.seg_dot module<a class="headerlink" href="#module-aicssegmentation.core.seg_dot" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.core.seg_dot.dot_2d">
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_2d</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">log_sigma</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_2d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.seg_dot.dot_2d_slice_by_slice_wrapper">
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_2d_slice_by_slice_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">s2_param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_2d_slice_by_slice_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_2d_slice_by_slice_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.seg_dot.dot_3d">
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_3d</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">log_sigma</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_3d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.seg_dot.dot_3d_wrapper">
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_3d_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">s3_param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_3d_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_3d_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.seg_dot.dot_slice_by_slice">
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_slice_by_slice</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">log_sigma</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_slice_by_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_slice_by_slice" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.seg_dot.logSlice">
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">logSlice</code><span class="sig-paren">(</span><em class="sig-param">image</em>, <em class="sig-param">sigma_list</em>, <em class="sig-param">threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#logSlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.logSlice" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.core.utils">
+<span id="aicssegmentation-core-utils-module"></span><h2>aicssegmentation.core.utils module<a class="headerlink" href="#module-aicssegmentation.core.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.core.utils.absolute_eigenvaluesh">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">absolute_eigenvaluesh</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#absolute_eigenvaluesh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.absolute_eigenvaluesh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the eigenvalues sorted by absolute value from the symmetrical matrix.
+:param nd_array: array from which the eigenvalues will be calculated.
+:return: A list with the eigenvalues sorted in absolute ascending order
+(e.g. [eigenvalue1, eigenvalue2, …])</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.create_image_like">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">create_image_like</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#create_image_like"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.create_image_like" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.divide_nonzero">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">divide_nonzero</code><span class="sig-paren">(</span><em class="sig-param">array1</em>, <em class="sig-param">array2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#divide_nonzero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.divide_nonzero" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divides two arrays. Returns zero when dividing by zero.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.get_3dseed_from_mid_frame">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">get_3dseed_from_mid_frame</code><span class="sig-paren">(</span><em class="sig-param">bw</em>, <em class="sig-param">stack_shape</em>, <em class="sig-param">mid_frame</em>, <em class="sig-param">hole_min</em>, <em class="sig-param">bg_seed=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#get_3dseed_from_mid_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.get_3dseed_from_mid_frame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.get_middle_frame">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">get_middle_frame</code><span class="sig-paren">(</span><em class="sig-param">struct_img_smooth</em>, <em class="sig-param">method='z'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#get_middle_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.get_middle_frame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.histogram_otsu">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">histogram_otsu</code><span class="sig-paren">(</span><em class="sig-param">hist</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#histogram_otsu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.histogram_otsu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.hole_filling">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">hole_filling</code><span class="sig-paren">(</span><em class="sig-param">bw</em>, <em class="sig-param">hole_min</em>, <em class="sig-param">hole_max</em>, <em class="sig-param">fill_2d=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#hole_filling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.hole_filling" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.sortbyabs">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">sortbyabs</code><span class="sig-paren">(</span><em class="sig-param">a</em>, <em class="sig-param">axis=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#sortbyabs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.sortbyabs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort array along a given axis by the absolute value
+modified from: <a class="reference external" href="http://stackoverflow.com/a/11253931/4067734">http://stackoverflow.com/a/11253931/4067734</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.topology_preserving_thinning">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">topology_preserving_thinning</code><span class="sig-paren">(</span><em class="sig-param">bw</em>, <em class="sig-param">min_thickness=1</em>, <em class="sig-param">thin=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#topology_preserving_thinning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.topology_preserving_thinning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.core.vessel">
+<span id="aicssegmentation-core-vessel-module"></span><h2>aicssegmentation.core.vessel module<a class="headerlink" href="#module-aicssegmentation.core.vessel" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.blobness3D">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">blobness3D</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">scale_range=(1</em>, <em class="sig-param">10)</em>, <em class="sig-param">scale_step=2</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#blobness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.blobness3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.compute_blobness3D">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">compute_blobness3D</code><span class="sig-paren">(</span><em class="sig-param">eigen1</em>, <em class="sig-param">eigen2</em>, <em class="sig-param">eigen3</em>, <em class="sig-param">tau</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#compute_blobness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.compute_blobness3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.compute_plateness3D">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">compute_plateness3D</code><span class="sig-paren">(</span><em class="sig-param">eigen1</em>, <em class="sig-param">eigen2</em>, <em class="sig-param">eigen3</em>, <em class="sig-param">pa</em>, <em class="sig-param">pb</em>, <em class="sig-param">pc</em>, <em class="sig-param">tau</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#compute_plateness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.compute_plateness3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.compute_vesselness2D">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">compute_vesselness2D</code><span class="sig-paren">(</span><em class="sig-param">eigen2</em>, <em class="sig-param">tau</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#compute_vesselness2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.compute_vesselness2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.compute_vesselness3D">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">compute_vesselness3D</code><span class="sig-paren">(</span><em class="sig-param">eigen2</em>, <em class="sig-param">eigen3</em>, <em class="sig-param">tau</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#compute_vesselness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.compute_vesselness3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.filament_2d_wrapper">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">filament_2d_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">f2_param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#filament_2d_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.filament_2d_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.filament_3d_wrapper">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">filament_3d_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">f3_param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#filament_3d_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.filament_3d_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.plateness3D">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">plateness3D</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">scale_range=(1</em>, <em class="sig-param">10)</em>, <em class="sig-param">scale_step=2</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">pa=0.5</em>, <em class="sig-param">pb=0.5</em>, <em class="sig-param">pc=1</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#plateness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.plateness3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.vesselness2D">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselness2D</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">sigmas</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselness2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselness2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.vesselness2D_range">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselness2D_range</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">scale_range=(1</em>, <em class="sig-param">10)</em>, <em class="sig-param">scale_step=2</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselness2D_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselness2D_range" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.vesselness3D">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselness3D</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">sigmas</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselness3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.vesselnessSliceBySlice">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselnessSliceBySlice</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">sigmas</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselnessSliceBySlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselnessSliceBySlice" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.core.visual">
+<span id="aicssegmentation-core-visual-module"></span><h2>aicssegmentation.core.visual module<a class="headerlink" href="#module-aicssegmentation.core.visual" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.core.visual.blob2dExplorer_single">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">blob2dExplorer_single</code><span class="sig-paren">(</span><em class="sig-param">im</em>, <em class="sig-param">sigma</em>, <em class="sig-param">th</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#blob2dExplorer_single"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.blob2dExplorer_single" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.blob2dExplorer_stack">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">blob2dExplorer_stack</code><span class="sig-paren">(</span><em class="sig-param">im_stack</em>, <em class="sig-param">zz</em>, <em class="sig-param">sigma</em>, <em class="sig-param">th</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#blob2dExplorer_stack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.blob2dExplorer_stack" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.explore_dot_3d">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">explore_dot_3d</code><span class="sig-paren">(</span><em class="sig-param">img, sigma, th, roi=[-1]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#explore_dot_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.explore_dot_3d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.explore_vesselness_2d">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">explore_vesselness_2d</code><span class="sig-paren">(</span><em class="sig-param">im, sigma, th, roi=[-1]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#explore_vesselness_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.explore_vesselness_2d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.explore_vesselness_3d">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">explore_vesselness_3d</code><span class="sig-paren">(</span><em class="sig-param">im, sigma, th, roi=[-1]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#explore_vesselness_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.explore_vesselness_3d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.fila2dExplorer_single">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">fila2dExplorer_single</code><span class="sig-paren">(</span><em class="sig-param">im</em>, <em class="sig-param">sigma</em>, <em class="sig-param">th</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#fila2dExplorer_single"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.fila2dExplorer_single" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.img_seg_combine">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">img_seg_combine</code><span class="sig-paren">(</span><em class="sig-param">img, seg, roi=['Full', None]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#img_seg_combine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.img_seg_combine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.mipView">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">mipView</code><span class="sig-paren">(</span><em class="sig-param">im</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#mipView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.mipView" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.random_colormap">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">random_colormap</code><span class="sig-paren">(</span><em class="sig-param">nn: int = 10000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#random_colormap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.random_colormap" title="Permalink to this definition">¶</a></dt>
+<dd><p>generate a random colormap with nn different colors</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.seg_fluo_side_by_side">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">seg_fluo_side_by_side</code><span class="sig-paren">(</span><em class="sig-param">im, seg, roi=['Full', None]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#seg_fluo_side_by_side"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.seg_fluo_side_by_side" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.segmentation_quick_view">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">segmentation_quick_view</code><span class="sig-paren">(</span><em class="sig-param">seg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#segmentation_quick_view"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.segmentation_quick_view" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.single_fluorescent_view">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">single_fluorescent_view</code><span class="sig-paren">(</span><em class="sig-param">im</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#single_fluorescent_view"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.single_fluorescent_view" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.sliceViewer">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">sliceViewer</code><span class="sig-paren">(</span><em class="sig-param">im: numpy.ndarray</em>, <em class="sig-param">zz: int</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#sliceViewer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.sliceViewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>simple wrapper to view one slice of a z-stack</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.visual.vesselness2dExplorer">
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">vesselness2dExplorer</code><span class="sig-paren">(</span><em class="sig-param">im</em>, <em class="sig-param">zz</em>, <em class="sig-param">sigma</em>, <em class="sig-param">th</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#vesselness2dExplorer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.vesselness2dExplorer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aicssegmentation.core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-aicssegmentation.core" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Jianxu Chen
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+aicssegmentation package
+========================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   aicssegmentation.bin
+   aicssegmentation.core
+   aicssegmentation.structure_wrapper
+
+Module contents
+---------------
+
+.. automodule:: aicssegmentation
+   :members:
+   :undoc-members:
+   :show-inheritance:

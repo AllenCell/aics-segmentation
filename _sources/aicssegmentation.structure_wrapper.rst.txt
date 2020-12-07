@@ -1,0 +1,350 @@
+aicssegmentation.structure\_wrapper package
+===========================================
+
+Submodules
+----------
+
+aicssegmentation.structure\_wrapper.seg\_actb module
+----------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_actb
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_actn1 module
+-----------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_actn1
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_atp2a2 module
+------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_atp2a2
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_cardio\_actn2 module
+-------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_cardio_actn2
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_cardio\_atp2a2 module
+--------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_cardio_atp2a2
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_cardio\_fbl module
+-----------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_cardio_fbl
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_cardio\_fbl\_100x module
+-----------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_cardio_fbl_100x
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_cardio\_myl7 module
+------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_cardio_myl7
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_cardio\_npm1 module
+------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_cardio_npm1
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_cardio\_npm1\_100x module
+------------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_cardio_npm1_100x
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_cardio\_tnni1 module
+-------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_cardio_tnni1
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_cardio\_ttn module
+-----------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_cardio_ttn
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_cetn2 module
+-----------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_cetn2
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_ctnnb1 module
+------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_ctnnb1
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_drug\_npm1 module
+----------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_drug_npm1
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_dsp module
+---------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_dsp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_fbl module
+---------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_fbl
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_fbl\_labelfree\_4dn module
+-------------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_fbl_labelfree_4dn
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_gja1 module
+----------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_gja1
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_h2b module
+---------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_h2b
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_lamp1 module
+-----------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_lamp1
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_lmnb1\_interphase module
+-----------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_lmnb1_interphase
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_lmnb1\_mitotic module
+--------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_lmnb1_mitotic
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_myh10 module
+-----------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_myh10
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_npm1 module
+----------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_npm1
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_npm1\_SR module
+--------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_npm1_SR
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_npm\_labelfree\_4dn module
+-------------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_npm_labelfree_4dn
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_nup153 module
+------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_nup153
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_pxn module
+---------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_pxn
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_rab5a module
+-----------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_rab5a
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_sec61b module
+------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_sec61b
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_sec61b\_dual module
+------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_sec61b_dual
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_slc25a17 module
+--------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_slc25a17
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_smc1a module
+-----------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_smc1a
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_son module
+---------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_son
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_st6gal1 module
+-------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_st6gal1
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_template module
+--------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_template
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_tjp1 module
+----------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_tjp1
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_tomm20 module
+------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_tomm20
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_tuba1b module
+------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_tuba1b
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_ubtf module
+----------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_ubtf
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.structure\_segmenter module
+---------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.structure_segmenter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: aicssegmentation.structure_wrapper
+   :members:
+   :undoc-members:
+   :show-inheritance:

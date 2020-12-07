@@ -1,0 +1,22 @@
+aicssegmentation.bin package
+============================
+
+Submodules
+----------
+
+aicssegmentation.bin.batch\_processing module
+---------------------------------------------
+
+.. automodule:: aicssegmentation.bin.batch_processing
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: aicssegmentation.bin
+   :members:
+   :undoc-members:
+   :show-inheritance:

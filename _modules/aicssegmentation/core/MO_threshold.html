@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>aicssegmentation.core.MO_threshold &mdash; aicssegmentation 0.1.20 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> aicssegmentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.20
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../aicssegmentation.html">aicssegmentation package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.bin.html">aicssegmentation.bin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.core.html">aicssegmentation.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">aicssegmentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../aicssegmentation.html">aicssegmentation</a> &raquo;</li>
+        
+      <li>aicssegmentation.core.MO_threshold</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for aicssegmentation.core.MO_threshold</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">remove_small_objects</span><span class="p">,</span> <span class="n">ball</span><span class="p">,</span> <span class="n">dilation</span>
+<span class="kn">from</span> <span class="nn">skimage.filters</span> <span class="kn">import</span> <span class="n">threshold_triangle</span><span class="p">,</span> <span class="n">threshold_otsu</span>
+<span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">label</span>
+
+
+<div class="viewcode-block" id="MO"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.MO_threshold.MO">[docs]</a><span class="k">def</span> <span class="nf">MO</span><span class="p">(</span>
+    <span class="n">structure_img_smooth</span><span class="p">,</span>
+    <span class="n">global_thresh_method</span><span class="p">,</span>
+    <span class="n">object_minArea</span><span class="p">,</span>
+    <span class="n">extra_criteria</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">local_adjust</span><span class="o">=</span><span class="mf">0.98</span><span class="p">,</span>
+    <span class="n">return_object</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">global_thresh_method</span> <span class="o">==</span> <span class="s2">&quot;tri&quot;</span> <span class="ow">or</span> <span class="n">global_thresh_method</span> <span class="o">==</span> <span class="s2">&quot;triangle&quot;</span><span class="p">:</span>
+        <span class="n">th_low_level</span> <span class="o">=</span> <span class="n">threshold_triangle</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">global_thresh_method</span> <span class="o">==</span> <span class="s2">&quot;med&quot;</span> <span class="ow">or</span> <span class="n">global_thresh_method</span> <span class="o">==</span> <span class="s2">&quot;median&quot;</span><span class="p">:</span>
+        <span class="n">th_low_level</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">global_thresh_method</span> <span class="o">==</span> <span class="s2">&quot;ave&quot;</span> <span class="ow">or</span> <span class="n">global_thresh_method</span> <span class="o">==</span> <span class="s2">&quot;ave_tri_med&quot;</span><span class="p">:</span>
+        <span class="n">global_tri</span> <span class="o">=</span> <span class="n">threshold_triangle</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">)</span>
+        <span class="n">global_median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">th_low_level</span> <span class="o">=</span> <span class="p">(</span><span class="n">global_tri</span> <span class="o">+</span> <span class="n">global_median</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">structure_img_smooth</span> <span class="o">&gt;</span> <span class="n">th_low_level</span>
+    <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span>
+        <span class="n">bw_low_level</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">object_minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">dilation</span><span class="p">(</span><span class="n">bw_low_level</span><span class="p">,</span> <span class="n">selem</span><span class="o">=</span><span class="n">ball</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="n">bw_high_level</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">bw_low_level</span><span class="p">)</span>
+    <span class="n">lab_low</span><span class="p">,</span> <span class="n">num_obj</span> <span class="o">=</span> <span class="n">label</span><span class="p">(</span><span class="n">bw_low_level</span><span class="p">,</span> <span class="n">return_num</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">extra_criteria</span><span class="p">:</span>
+        <span class="n">local_cutoff</span> <span class="o">=</span> <span class="mf">0.333</span> <span class="o">*</span> <span class="n">threshold_otsu</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_obj</span><span class="p">):</span>
+            <span class="n">single_obj</span> <span class="o">=</span> <span class="n">lab_low</span> <span class="o">==</span> <span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">local_otsu</span> <span class="o">=</span> <span class="n">threshold_otsu</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">[</span><span class="n">single_obj</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">local_otsu</span> <span class="o">&gt;</span> <span class="n">local_cutoff</span><span class="p">:</span>
+                <span class="n">bw_high_level</span><span class="p">[</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span>
+                        <span class="n">structure_img_smooth</span> <span class="o">&gt;</span> <span class="n">local_otsu</span> <span class="o">*</span> <span class="n">local_adjust</span><span class="p">,</span> <span class="n">single_obj</span>
+                    <span class="p">)</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_obj</span><span class="p">):</span>
+            <span class="n">single_obj</span> <span class="o">=</span> <span class="n">lab_low</span> <span class="o">==</span> <span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">local_otsu</span> <span class="o">=</span> <span class="n">threshold_otsu</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">[</span><span class="n">single_obj</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="n">bw_high_level</span><span class="p">[</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span>
+                    <span class="n">structure_img_smooth</span> <span class="o">&gt;</span> <span class="n">local_otsu</span> <span class="o">*</span> <span class="n">local_adjust</span><span class="p">,</span> <span class="n">single_obj</span>
+                <span class="p">)</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">return_object</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">bw_high_level</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bw_low_level</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">bw_high_level</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Jianxu Chen
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

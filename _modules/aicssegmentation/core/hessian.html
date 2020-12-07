@@ -1,0 +1,307 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>aicssegmentation.core.hessian &mdash; aicssegmentation 0.1.20 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> aicssegmentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.20
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../aicssegmentation.html">aicssegmentation package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.bin.html">aicssegmentation.bin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.core.html">aicssegmentation.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">aicssegmentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../aicssegmentation.html">aicssegmentation</a> &raquo;</li>
+        
+      <li>aicssegmentation.core.hessian</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for aicssegmentation.core.hessian</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations_with_replacement</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">ndimage</span> <span class="k">as</span> <span class="n">ndi</span>
+
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">absolute_eigenvaluesh</span>
+
+
+<div class="viewcode-block" id="compute_3d_hessian_matrix"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.hessian.compute_3d_hessian_matrix">[docs]</a><span class="k">def</span> <span class="nf">compute_3d_hessian_matrix</span><span class="p">(</span><span class="n">nd_array</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the hessian matrix for an nd_array.</span>
+<span class="sd">    This can be used to detect vesselness as well as other features.</span>
+<span class="sd">    In 3D the first derivative will contain three directional gradients at each index:</span>
+<span class="sd">    [ gx,  gy,  gz ]</span>
+<span class="sd">    The Hessian matrix at each index will then be equal to the second derivative:</span>
+<span class="sd">    [ gxx, gxy, gxz]</span>
+<span class="sd">    [ gyx, gyy, gyz]</span>
+<span class="sd">    [ gzx, gzy, gzz]</span>
+<span class="sd">    The Hessian matrix is symmetrical, so gyx == gxy, gzx == gxz, and gyz == gzy.</span>
+<span class="sd">    :param nd_array: n-dimensional array from which to compute the hessian matrix.</span>
+<span class="sd">    :param sigma: gaussian smoothing to perform on the array.</span>
+<span class="sd">    :param scale: if True, the hessian elements will be scaled by sigma squared.</span>
+<span class="sd">    :return: hessian array of shape (..., ndim, ndim)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ndim</span> <span class="o">=</span> <span class="n">nd_array</span><span class="o">.</span><span class="n">ndim</span>
+
+    <span class="c1"># smooth the nd_array</span>
+    <span class="n">smoothed</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">nd_array</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
+
+    <span class="c1"># compute the first order gradients</span>
+    <span class="n">gradient_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">smoothed</span><span class="p">)</span>
+
+    <span class="c1"># compute the hessian elements</span>
+    <span class="n">hessian_elements</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">gradient_list</span><span class="p">[</span><span class="n">ax0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ax0</span><span class="p">,</span> <span class="n">ax1</span> <span class="ow">in</span> <span class="n">combinations_with_replacement</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">sigma</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">scale</span><span class="p">:</span>
+        <span class="c1"># scale the elements of the hessian matrix</span>
+        <span class="k">if</span> <span class="n">whiteonblack</span><span class="p">:</span>
+            <span class="n">hessian_elements</span> <span class="o">=</span> <span class="p">[(</span><span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">element</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">hessian_elements</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">hessian_elements</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">element</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">hessian_elements</span>
+            <span class="p">]</span>
+
+    <span class="c1"># create hessian matrix from hessian elements</span>
+    <span class="n">hessian_full</span> <span class="o">=</span> <span class="p">[[()]</span> <span class="o">*</span> <span class="n">ndim</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">)]</span>
+    <span class="c1"># hessian_full = [[None] * ndim] * ndim</span>
+
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span> <span class="n">ax1</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">combinations_with_replacement</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">),</span> <span class="mi">2</span><span class="p">)):</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="n">hessian_elements</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">hessian_full</span><span class="p">[</span><span class="n">ax0</span><span class="p">][</span><span class="n">ax1</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span>
+        <span class="k">if</span> <span class="n">ax0</span> <span class="o">!=</span> <span class="n">ax1</span><span class="p">:</span>
+            <span class="n">hessian_full</span><span class="p">[</span><span class="n">ax1</span><span class="p">][</span><span class="n">ax0</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span>
+
+    <span class="n">hessian_rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">hessian_full</span><span class="p">:</span>
+        <span class="c1"># print(row.shape)</span>
+        <span class="n">hessian_rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">hessian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">hessian_rows</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hessian</span></div>
+
+
+<div class="viewcode-block" id="absolute_3d_hessian_eigenvalues"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.hessian.absolute_3d_hessian_eigenvalues">[docs]</a><span class="k">def</span> <span class="nf">absolute_3d_hessian_eigenvalues</span><span class="p">(</span><span class="n">nd_array</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Eigenvalues of the hessian matrix calculated from the input array sorted by</span>
+<span class="sd">    absolute value.</span>
+<span class="sd">    :param nd_array: input array from which to calculate hessian eigenvalues.</span>
+<span class="sd">    :param sigma: gaussian smoothing parameter.</span>
+<span class="sd">    :param scale: if True hessian values will be scaled according to sigma squared.</span>
+<span class="sd">    :return: list of eigenvalues [eigenvalue1, eigenvalue2, ...]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">absolute_eigenvaluesh</span><span class="p">(</span>
+        <span class="n">compute_3d_hessian_matrix</span><span class="p">(</span>
+            <span class="n">nd_array</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="n">whiteonblack</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Jianxu Chen
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

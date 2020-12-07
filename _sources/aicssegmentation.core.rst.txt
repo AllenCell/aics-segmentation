@@ -1,0 +1,78 @@
+aicssegmentation.core package
+=============================
+
+Submodules
+----------
+
+aicssegmentation.core.MO\_threshold module
+------------------------------------------
+
+.. automodule:: aicssegmentation.core.MO_threshold
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.core.hessian module
+------------------------------------
+
+.. automodule:: aicssegmentation.core.hessian
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.core.output\_utils module
+------------------------------------------
+
+.. automodule:: aicssegmentation.core.output_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.core.pre\_processing\_utils module
+---------------------------------------------------
+
+.. automodule:: aicssegmentation.core.pre_processing_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.core.seg\_dot module
+-------------------------------------
+
+.. automodule:: aicssegmentation.core.seg_dot
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.core.utils module
+----------------------------------
+
+.. automodule:: aicssegmentation.core.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.core.vessel module
+-----------------------------------
+
+.. automodule:: aicssegmentation.core.vessel
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.core.visual module
+-----------------------------------
+
+.. automodule:: aicssegmentation.core.visual
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: aicssegmentation.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

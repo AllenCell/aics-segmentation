@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>aicssegmentation.core.utils &mdash; aicssegmentation 0.1.20 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> aicssegmentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.20
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../aicssegmentation.html">aicssegmentation package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.bin.html">aicssegmentation.bin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.core.html">aicssegmentation.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">aicssegmentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../aicssegmentation.html">aicssegmentation</a> &raquo;</li>
+        
+      <li>aicssegmentation.core.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for aicssegmentation.core.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">medial_axis</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">distance_transform_edt</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">erosion</span><span class="p">,</span> <span class="n">ball</span>
+<span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">label</span><span class="p">,</span> <span class="n">regionprops</span>
+
+
+<div class="viewcode-block" id="hole_filling"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.utils.hole_filling">[docs]</a><span class="k">def</span> <span class="nf">hole_filling</span><span class="p">(</span><span class="n">bw</span><span class="p">,</span> <span class="n">hole_min</span><span class="p">,</span> <span class="n">hole_max</span><span class="p">,</span> <span class="n">fill_2d</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+    <span class="n">bw</span> <span class="o">=</span> <span class="n">bw</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">background_lab</span> <span class="o">=</span> <span class="n">label</span><span class="p">(</span><span class="o">~</span><span class="n">bw</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">fill_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">background_lab</span><span class="p">)</span>
+        <span class="n">component_sizes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">background_lab</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+        <span class="n">too_big</span> <span class="o">=</span> <span class="n">component_sizes</span> <span class="o">&gt;</span> <span class="n">hole_max</span>
+        <span class="n">too_big_mask</span> <span class="o">=</span> <span class="n">too_big</span><span class="p">[</span><span class="n">background_lab</span><span class="p">]</span>
+        <span class="n">fill_out</span><span class="p">[</span><span class="n">too_big_mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">too_small</span> <span class="o">=</span> <span class="n">component_sizes</span> <span class="o">&lt;</span> <span class="n">hole_min</span>
+        <span class="n">too_small_mask</span> <span class="o">=</span> <span class="n">too_small</span><span class="p">[</span><span class="n">background_lab</span><span class="p">]</span>
+        <span class="n">fill_out</span><span class="p">[</span><span class="n">too_small_mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">fill_2d</span><span class="p">:</span>
+            <span class="n">fill_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">bw</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">zz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="n">background_lab</span> <span class="o">=</span> <span class="n">label</span><span class="p">(</span><span class="o">~</span><span class="n">bw</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">background_lab</span><span class="p">)</span>
+                <span class="n">component_sizes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">background_lab</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+                <span class="n">too_big</span> <span class="o">=</span> <span class="n">component_sizes</span> <span class="o">&gt;</span> <span class="n">hole_max</span>
+                <span class="n">too_big_mask</span> <span class="o">=</span> <span class="n">too_big</span><span class="p">[</span><span class="n">background_lab</span><span class="p">]</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">too_big_mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">too_small</span> <span class="o">=</span> <span class="n">component_sizes</span> <span class="o">&lt;</span> <span class="n">hole_min</span>
+                <span class="n">too_small_mask</span> <span class="o">=</span> <span class="n">too_small</span><span class="p">[</span><span class="n">background_lab</span><span class="p">]</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">too_small_mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">fill_out</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">out</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">background_lab</span> <span class="o">=</span> <span class="n">label</span><span class="p">(</span><span class="o">~</span><span class="n">bw</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">fill_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">background_lab</span><span class="p">)</span>
+            <span class="n">component_sizes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">background_lab</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+            <span class="n">too_big</span> <span class="o">=</span> <span class="n">component_sizes</span> <span class="o">&gt;</span> <span class="n">hole_max</span>
+            <span class="n">too_big_mask</span> <span class="o">=</span> <span class="n">too_big</span><span class="p">[</span><span class="n">background_lab</span><span class="p">]</span>
+            <span class="n">fill_out</span><span class="p">[</span><span class="n">too_big_mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">too_small</span> <span class="o">=</span> <span class="n">component_sizes</span> <span class="o">&lt;</span> <span class="n">hole_min</span>
+            <span class="n">too_small_mask</span> <span class="o">=</span> <span class="n">too_small</span><span class="p">[</span><span class="n">background_lab</span><span class="p">]</span>
+            <span class="n">fill_out</span><span class="p">[</span><span class="n">too_small_mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">bw</span><span class="p">,</span> <span class="n">fill_out</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="topology_preserving_thinning"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.utils.topology_preserving_thinning">[docs]</a><span class="k">def</span> <span class="nf">topology_preserving_thinning</span><span class="p">(</span><span class="n">bw</span><span class="p">,</span> <span class="n">min_thickness</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">thin</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">bw</span> <span class="o">=</span> <span class="n">bw</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">safe_zone</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">bw</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">zz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">bw</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]):</span>
+            <span class="n">ctl</span> <span class="o">=</span> <span class="n">medial_axis</span><span class="p">(</span><span class="n">bw</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="n">distance_transform_edt</span><span class="p">(</span><span class="n">ctl</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">safe_zone</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">&gt;</span> <span class="n">min_thickness</span> <span class="o">+</span> <span class="mf">1e-5</span>
+
+    <span class="n">rm_candidate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">bw</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">erosion</span><span class="p">(</span><span class="n">bw</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ball</span><span class="p">(</span><span class="n">thin</span><span class="p">)))</span>
+
+    <span class="n">bw</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">safe_zone</span><span class="p">,</span> <span class="n">rm_candidate</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">bw</span></div>
+
+
+<div class="viewcode-block" id="divide_nonzero"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.utils.divide_nonzero">[docs]</a><span class="k">def</span> <span class="nf">divide_nonzero</span><span class="p">(</span><span class="n">array1</span><span class="p">,</span> <span class="n">array2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Divides two arrays. Returns zero when dividing by zero.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">denominator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">array2</span><span class="p">)</span>
+    <span class="n">denominator</span><span class="p">[</span><span class="n">denominator</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-10</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">array1</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_image_like"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.utils.create_image_like">[docs]</a><span class="k">def</span> <span class="nf">create_image_like</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">header</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="histogram_otsu"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.utils.histogram_otsu">[docs]</a><span class="k">def</span> <span class="nf">histogram_otsu</span><span class="p">(</span><span class="n">hist</span><span class="p">):</span>
+
+    <span class="c1"># modify the elements in hist to avoid completely zero value in cumsum</span>
+    <span class="n">hist</span> <span class="o">=</span> <span class="n">hist</span> <span class="o">+</span> <span class="mf">1e-5</span>
+
+    <span class="n">bin_size</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">bin_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">bin_size</span><span class="p">,</span> <span class="n">bin_size</span><span class="p">)</span>
+    <span class="n">hist</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="c1"># class probabilities for all possible thresholds</span>
+    <span class="n">weight1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span>
+    <span class="n">weight2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">hist</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># class means for all possible thresholds</span>
+
+    <span class="n">mean1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">hist</span> <span class="o">*</span> <span class="n">bin_centers</span><span class="p">)</span> <span class="o">/</span> <span class="n">weight1</span>
+    <span class="n">mean2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">((</span><span class="n">hist</span> <span class="o">*</span> <span class="n">bin_centers</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">weight2</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Clip ends to align class 1 and class 2 variables:</span>
+    <span class="c1"># The last value of `weight1`/`mean1` should pair with zero values in</span>
+    <span class="c1"># `weight2`/`mean2`, which do not exist.</span>
+    <span class="n">variance12</span> <span class="o">=</span> <span class="n">weight1</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight2</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">*</span> <span class="p">(</span><span class="n">mean1</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">mean2</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">variance12</span><span class="p">)</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="n">bin_centers</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">threshold</span></div>
+
+
+<div class="viewcode-block" id="absolute_eigenvaluesh"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.utils.absolute_eigenvaluesh">[docs]</a><span class="k">def</span> <span class="nf">absolute_eigenvaluesh</span><span class="p">(</span><span class="n">nd_array</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the eigenvalues sorted by absolute value from the symmetrical matrix.</span>
+<span class="sd">    :param nd_array: array from which the eigenvalues will be calculated.</span>
+<span class="sd">    :return: A list with the eigenvalues sorted in absolute ascending order</span>
+<span class="sd">    (e.g. [eigenvalue1, eigenvalue2, ...])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># print(nd_array)</span>
+    <span class="c1"># print(&#39;up:array, below:eigen&#39;)</span>
+    <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">nd_array</span><span class="p">)</span>
+    <span class="c1"># print(eigenvalues)</span>
+    <span class="n">sorted_eigenvalues</span> <span class="o">=</span> <span class="n">sortbyabs</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">eigenvalue</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">eigenvalue</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span>
+            <span class="n">sorted_eigenvalues</span><span class="p">,</span> <span class="n">sorted_eigenvalues</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span>
+        <span class="p">)</span>
+    <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="sortbyabs"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.utils.sortbyabs">[docs]</a><span class="k">def</span> <span class="nf">sortbyabs</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sort array along a given axis by the absolute value</span>
+<span class="sd">    modified from: http://stackoverflow.com/a/11253931/4067734</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">]))</span>
+    <span class="n">index</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_middle_frame"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.utils.get_middle_frame">[docs]</a><span class="k">def</span> <span class="nf">get_middle_frame</span><span class="p">(</span><span class="n">struct_img_smooth</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">):</span>
+
+    <span class="kn">from</span> <span class="nn">skimage.filters</span> <span class="kn">import</span> <span class="n">threshold_otsu</span>
+
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;intensity&quot;</span><span class="p">:</span>
+        <span class="n">bw</span> <span class="o">=</span> <span class="n">struct_img_smooth</span> <span class="o">&gt;</span> <span class="n">threshold_otsu</span><span class="p">(</span><span class="n">struct_img_smooth</span><span class="p">)</span>
+        <span class="n">z_profile</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">zz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">z_profile</span><span class="p">[</span><span class="n">zz</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">bw</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span>
+        <span class="n">mid_frame</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">histogram_otsu</span><span class="p">(</span><span class="n">z_profile</span><span class="p">)</span> <span class="o">*</span> <span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span>
+        <span class="n">mid_frame</span> <span class="o">=</span> <span class="n">struct_img_smooth</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;unsupported method&quot;</span><span class="p">)</span>
+        <span class="n">quit</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">mid_frame</span></div>
+
+
+<div class="viewcode-block" id="get_3dseed_from_mid_frame"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.utils.get_3dseed_from_mid_frame">[docs]</a><span class="k">def</span> <span class="nf">get_3dseed_from_mid_frame</span><span class="p">(</span><span class="n">bw</span><span class="p">,</span> <span class="n">stack_shape</span><span class="p">,</span> <span class="n">mid_frame</span><span class="p">,</span> <span class="n">hole_min</span><span class="p">,</span> <span class="n">bg_seed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">remove_small_objects</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">hole_min</span><span class="p">)</span>
+
+    <span class="n">out1</span> <span class="o">=</span> <span class="n">label</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    <span class="n">stat</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">out1</span><span class="p">)</span>
+
+    <span class="c1"># build the seed for watershed</span>
+    <span class="n">seed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">stack_shape</span><span class="p">)</span>
+    <span class="n">seed_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">bg_seed</span><span class="p">:</span>
+        <span class="n">seed</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">seed_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stat</span><span class="p">)):</span>
+        <span class="n">py</span><span class="p">,</span> <span class="n">px</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
+        <span class="n">seed_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">seed</span><span class="p">[</span><span class="n">mid_frame</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">py</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">px</span><span class="p">)]</span> <span class="o">=</span> <span class="n">seed_count</span>
+
+    <span class="k">return</span> <span class="n">seed</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Jianxu Chen
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
