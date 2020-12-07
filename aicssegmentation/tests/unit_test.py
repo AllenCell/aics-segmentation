@@ -3,8 +3,6 @@ from aicsimageio import imread
 from pathlib import Path
 import importlib
 from aicsimageio.writers import OmeTiffWriter
-
-# import pytest
 import os
 
 
@@ -54,11 +52,6 @@ ALL_STRUCTURE_NAMES = [
 ]
 
 TEST_IMG_DIR = "expected_output_images/"
-
-
-# @pytest.fixture
-# def data_dir() -> Path:
-#     return Path(__file__).parent / "tests"
 
 
 # change directories so pytest can find reference images
