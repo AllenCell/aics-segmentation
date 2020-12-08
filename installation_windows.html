@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation Instruction for Windows &mdash; aicssegmentation 0.1.20 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> aicssegmentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.20
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="aicssegmentation.html">aicssegmentation package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aicssegmentation.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="aicssegmentation.bin.html">aicssegmentation.bin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aicssegmentation.core.html">aicssegmentation.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">aicssegmentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Installation Instruction for Windows</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/installation_windows.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation-instruction-for-windows">
+<h1>Installation Instruction for Windows<a class="headerlink" href="#installation-instruction-for-windows" title="Permalink to this headline">¶</a></h1>
+<p>(tested on Windows 10 with anaconda)</p>
+<div class="section" id="step-0-install-microscoft-build-tools">
+<h2>Step 0: Install Microscoft Build Tools<a class="headerlink" href="#step-0-install-microscoft-build-tools" title="Permalink to this headline">¶</a></h2>
+<p><em>Go to Step 1 if you already have these installed (it is very likely that you already have it, if you have done any python or C++ programming on your machine).</em></p>
+<p><a class="reference external" href="https://visualstudio.microsoft.com/visual-cpp-build-tools/">Download and install the Build Tools from Microsoft</a></p>
+<p>Note 1: Depending on the time you access this page, you may be directed to the download page of “Build Tools for Visual Studio 2017” or “Build Tools for Visual Studio 2018”, etc. In general, as long as the version is at least 2015, any subsequent version should work.</p>
+<p>Note 2: When you install the Build Tool, you may be asked to choose what to install. Only the tool for Visual Studio C++ (e.g, pack name: “MSVC v142 - VC 2019 C++”) is required for the Allen Cell Segmenter. After installing the Build Tool, make sure to reboot your machine.</p>
+</div>
+<div class="section" id="step-1-install-conda">
+<h2>Step 1: Install conda<a class="headerlink" href="#step-1-install-conda" title="Permalink to this headline">¶</a></h2>
+<p><em>Go to Step 2 if you have anaconda or miniconda installed</em></p>
+<p>Go to <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html">Install conda on Windows</a>, choose Anaconda Installer (for Python 3) and then follow the installation instructions.</p>
+<p>Note: <a class="reference external" href="conda_why.md">What is conda and anaconda, and why we need this?</a> Because conda can effectively manage environment and package installation, setting up conda will make the following steps straightforward and help avoid future problems (conda itself is also very easy to set up).</p>
+</div>
+<div class="section" id="step-3-verify-requirement-and-prepare-for-installing-segmenter">
+<h2>Step 3: Verify requirement and prepare for installing segmenter<a class="headerlink" href="#step-3-verify-requirement-and-prepare-for-installing-segmenter" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-3-1-start-conda">
+<h3>Step 3.1: <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html#starting-conda">Start conda</a><a class="headerlink" href="#step-3-1-start-conda" title="Permalink to this headline">¶</a></h3>
+<p>All commands below are typed into Anaconda Prompt window</p>
+</div>
+<div class="section" id="step-2-2-test-conda-version">
+<h3>Step 2.2: Test conda version<a class="headerlink" href="#step-2-2-test-conda-version" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda info
+</pre></div>
+</div>
+<p>You may see somthing like</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda version : <span class="m">4</span>.6.11
+python version : <span class="m">3</span>.7.3.final.0
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">version</span> <span class="pre">&gt;</span> <span class="pre">4.4</span></code> is preferred. To update conda, check out <a class="reference external" href="https://www.anaconda.com/keeping-anaconda-date/">how to update your conda</a>. <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">version</span> <span class="pre">&gt;=3.6</span></code> is required.</p>
+</div>
+<div class="section" id="step-2-3-test-git">
+<h3>Step 2.3: Test git<a class="headerlink" href="#step-2-3-test-git" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git --version
+</pre></div>
+</div>
+<p>If you don’t have git, follow <a class="reference external" href="https://www.atlassian.com/git/tutorials/install-git#windows">Git for Windows</a> to install. It is okay to just use default installation settings. You will need to restart Anaconda Prompt after installing Git.</p>
+</div>
+<div class="section" id="step-2-4-test-pip">
+<h3>Step 2.4: Test pip<a class="headerlink" href="#step-2-4-test-pip" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip show pip
+</pre></div>
+</div>
+<p>A message will be printed out on your screen. If you see a warning, like a newer version is available, you can follow the instruction to upgrade you pip.</p>
+</div>
+<div class="section" id="step-2-5-create-a-new-empty-conda-environment-which-we-will-name-segmentation-you-can-certainly-choose-a-different-name">
+<h3>Step 2.5: Create a new empty conda environment, which we will name “segmentation” (You can certainly choose a different name.)<a class="headerlink" href="#step-2-5-create-a-new-empty-conda-environment-which-we-will-name-segmentation-you-can-certainly-choose-a-different-name" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n segmentation <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6
+</pre></div>
+</div>
+<div class="section" id="step-2-6-activate-your-conda-environment-segmentation">
+<h4>Step 2.6: Activate your conda environment “segmentation”<a class="headerlink" href="#step-2-6-activate-your-conda-environment-segmentation" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate segmentation
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-2-7-install-nb-conda-for-easy-conda-environment-management-in-jupyter-notebook">
+<h4>Step 2.7: Install nb_conda (for easy conda environment management in jupyter notebook)<a class="headerlink" href="#step-2-7-install-nb-conda-for-easy-conda-environment-management-in-jupyter-notebook" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install nb_conda
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-3-install-segmenter">
+<h2>Step 3: Install segmenter<a class="headerlink" href="#step-3-install-segmenter" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-3-1-clone-aics-segmentation-repository-from-github-suppose-you-want-to-save-the-folder-under-c-projects">
+<h3>Step 3.1: Clone aics-segmentation repository from Github (suppose you want to save the folder under ‘C:Projects’)<a class="headerlink" href="#step-3-1-clone-aics-segmentation-repository-from-github-suppose-you-want-to-save-the-folder-under-c-projects" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> C:<span class="se">\P</span>rojects
+git clone https://github.com/AllenInstitute/aics-segmentation.git
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-3-2-install-the-packages">
+<h3>Step 3.2: install the packages<a class="headerlink" href="#step-3-2-install-the-packages" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/Projects/aics-segmentation
+pip install numpy
+pip install <span class="nv">itkwidgets</span><span class="o">==</span><span class="m">0</span>.14.0
+pip install -e .<span class="o">[</span>all<span class="o">]</span>
+</pre></div>
+</div>
+<p>Note 1: Please note that for the users with both python 2 and python 3 installed, use <code class="docutils literal notranslate"><span class="pre">pip3</span></code> instead of <code class="docutils literal notranslate"><span class="pre">pip</span></code> in the commands</p>
+<p>Note 2: We use the packge <code class="docutils literal notranslate"><span class="pre">itkwidgets</span></code> for visualizaiotn within jupyter notebook. Currently, we find version <code class="docutils literal notranslate"><span class="pre">0.14.0</span></code> has slightly better performance in visualizing segmentation results. If you find this viwer keeps crashing in your browser, try <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">itkwidgets</span></code> and then <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">itkwidgets==0.12.2</span></code>. For JupyterLab users, version &gt;= <code class="docutils literal notranslate"><span class="pre">0.17.1</span></code> is needed.</p>
+<p>Note 3: For Jupyter Lab users, the itk viewer requires additionally run:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>jupyter labextension install @jupyter-widgets/jupyterlab-manager itk-jupyter-widgets
+</pre></div>
+</div>
+<p>Note 4: For advanced user to deploy segmenter on cluster, our package is also <a class="reference external" href="https://pypi.org/project/aicssegmentation/">available on PyPi</a></p>
+</div>
+<div class="section" id="step-3-3-test-segmenter">
+<h3>Step 3.3: Test segmenter<a class="headerlink" href="#step-3-3-test-segmenter" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> C:<span class="se">\P</span>rojects<span class="se">\a</span>ics-segmentation<span class="se">\l</span>ookup_table_demo
+jupyter notebook, choose anaconda installer.
+</pre></div>
+</div>
+<p>This will take you to your default browser (e.g., Chrome) and launch Jupyter Notebook App within your browser. Open “test_viewer.ipynb” and test if you can run the notebook from beginning to the end. See more details on <a class="reference external" href="../docs/jupyter_lookup_table.md">How to use Jupyter Notebook to running the workflow in the Look-up Table</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Jianxu Chen
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
