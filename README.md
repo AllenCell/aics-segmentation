@@ -1,13 +1,15 @@
 # aicssegmentation
 
-[![Build Status](https://github.com/AllenCell/aicssegmentation/workflows/Build%20Master/badge.svg)](https://github.com/AllenCell/aics-segmentation/actions)
-[![Documentation](https://github.com/AllenCell/aicssegmentation/workflows/Documentation/badge.svg)](https://AllenCell.github.io/aics-segmentation)
-[![Code Coverage](https://codecov.io/gh/AllenCell/aicssegmentation/branch/main/graph/badge.svg)](https://codecov.io/gh/AllenCell/aic-ssegmentation)
+[![Build Status](https://github.com/AllenCell/aics-segmentation/workflows/Build%20Master/badge.svg)](https://github.com/AllenCell/aics-segmentation/actions)
+[![Documentation](https://github.com/AllenCell/aics-segmentation/workflows/Documentation/badge.svg)](https://AllenCell.github.io/aics-segmentation)
+[![Code Coverage](https://codecov.io/gh/AllenCell/aics-segmentation/branch/main/graph/badge.svg)](https://codecov.io/gh/AllenCell/aic-ssegmentation)
 
 Part 1 of Allen Cell and Structure Segmenter
 
-**This repository only has the code for the "Classic Image Segmentation Workflow" of Segmenter. The deep learning part can be found at [https://github.com/AllenCell/aics-ml-segmentation](https://github.com/AllenCell/aics-ml-segmentation)**
+
 ---
+
+This repository only has the code for the "Classic Image Segmentation Workflow" of Segmenter. The deep learning part can be found at [https://github.com/AllenCell/aics-ml-segmentation](https://github.com/AllenCell/aics-ml-segmentation)
 
 We welcome feedback and submission of issues. Users are encouraged to sign up on our [Allen Cell Discussion Forum](https://forum.allencell.org/) for quesitons and comments.
 
@@ -33,7 +35,7 @@ Visualization is a key component in algorithm development and validation of resu
 After following the installation instructions above, users will find that the classic image segmentation workflow in the toolkit is:
 
 1. formulated as a simple 3-step workflow for solving 3D intracellular structure segmentation problem using restricted number of selectable algorithms and tunable parameters
-2. accompanied by a ["lookup table"](./docs/toolkit_paper_lookup_table_20181206.pdf) with 20 representative structure localization patterns and their results as a reference, as well as the Jupyter notebook for these workflows as a starting point. The [pseudocode of all 20 workflows](./docs/toolkit_paper_SI_vFinalForBioRxiv.pdf) are also provided.
+2. accompanied by a ["lookup table"](https://www.allencell.org/segmenter.html#lookup-table) with 20+ representative structure localization patterns and their results as a reference, as well as the Jupyter notebook for these workflows as a starting point.
 
 Typically, we use Jupyter notebook as a "playground" to explore different algorithms and adjust the parameters. After determining the algorithms and parameters, we use Python scritps to do batch processing/validation on a large number of data. 
 
