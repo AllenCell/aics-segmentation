@@ -190,14 +190,13 @@
 </div>
 <div class="section" id="aicssegmentation">
 <h1>aicssegmentation<a class="headerlink" href="#aicssegmentation" title="Permalink to this headline">¶</a></h1>
-<a class="reference external image-reference" href="https://github.com/AllenCell/aics-segmentation/actions"><img alt="Build Status" src="https://github.com/AllenCell/aicssegmentation/workflows/Build%20Master/badge.svg" /></a>
-<a class="reference external image-reference" href="https://AllenCell.github.io/aics-segmentation"><img alt="Documentation" src="https://github.com/AllenCell/aicssegmentation/workflows/Documentation/badge.svg" /></a>
-<a class="reference external image-reference" href="https://codecov.io/gh/AllenCell/aic-ssegmentation"><img alt="Code Coverage" src="https://codecov.io/gh/AllenCell/aicssegmentation/branch/main/graph/badge.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/AllenCell/aics-segmentation/actions"><img alt="Build Status" src="https://github.com/AllenCell/aics-segmentation/workflows/Build%20Master/badge.svg" /></a>
+<a class="reference external image-reference" href="https://AllenCell.github.io/aics-segmentation"><img alt="Documentation" src="https://github.com/AllenCell/aics-segmentation/workflows/Documentation/badge.svg" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/AllenCell/aic-ssegmentation"><img alt="Code Coverage" src="https://codecov.io/gh/AllenCell/aics-segmentation/branch/main/graph/badge.svg" /></a>
 <p>Part 1 of Allen Cell and Structure Segmenter</p>
-<div class="section" id="this-repository-only-has-the-code-for-the-classic-image-segmentation-workflow-of-segmenter-the-deep-learning-part-can-be-found-at-https-github-com-allencell-aics-ml-segmentation">
-<h2><a href="#id1"><span class="problematic" id="id2">**</span></a>This repository only has the code for the “Classic Image Segmentation Workflow” of Segmenter. The deep learning part can be found at <a class="reference external" href="https://github.com/AllenCell/aics-ml-segmentation">https://github.com/AllenCell/aics-ml-segmentation</a>**<a class="headerlink" href="#this-repository-only-has-the-code-for-the-classic-image-segmentation-workflow-of-segmenter-the-deep-learning-part-can-be-found-at-https-github-com-allencell-aics-ml-segmentation" title="Permalink to this headline">¶</a></h2>
+<hr class="docutils" />
+<p>This repository only has the code for the “Classic Image Segmentation Workflow” of Segmenter. The deep learning part can be found at <a class="reference external" href="https://github.com/AllenCell/aics-ml-segmentation">https://github.com/AllenCell/aics-ml-segmentation</a></p>
 <p>We welcome feedback and submission of issues. Users are encouraged to sign up on our <a class="reference external" href="https://forum.allencell.org/">Allen Cell Discussion Forum</a> for quesitons and comments.</p>
-</div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Our package is implemented in Python 3.6. Detailed instructions as below:</p>
@@ -214,7 +213,7 @@
 <p>After following the installation instructions above, users will find that the classic image segmentation workflow in the toolkit is:</p>
 <ol class="arabic simple">
 <li><p>formulated as a simple 3-step workflow for solving 3D intracellular structure segmentation problem using restricted number of selectable algorithms and tunable parameters</p></li>
-<li><p>accompanied by a <a class="reference external" href="./docs/toolkit_paper_lookup_table_20181206.pdf">“lookup table”</a> with 20 representative structure localization patterns and their results as a reference, as well as the Jupyter notebook for these workflows as a starting point. The <a class="reference external" href="./docs/toolkit_paper_SI_vFinalForBioRxiv.pdf">pseudocode of all 20 workflows</a> are also provided.</p></li>
+<li><p>accompanied by a <a class="reference external" href="https://www.allencell.org/segmenter.html#lookup-table">“lookup table”</a> with 20+ representative structure localization patterns and their results as a reference, as well as the Jupyter notebook for these workflows as a starting point.</p></li>
 </ol>
 <p>Typically, we use Jupyter notebook as a “playground” to explore different algorithms and adjust the parameters. After determining the algorithms and parameters, we use Python scritps to do batch processing/validation on a large number of data.</p>
 <p><strong>You can find a `DEMO on a real example &lt;https://github.com/AllenCell/aics-ml-segmentation/blob/master/docs/demo_1.md&gt;`_ on our tutorial page</strong></p>
@@ -227,8 +226,8 @@
 <div class="section" id="object-identification-bridging-the-gap-between-binary-image-segmentation-and-analysis">
 <h2>Object Identification: Bridging the gap between binary image (segmentation) and analysis<a class="headerlink" href="#object-identification-bridging-the-gap-between-binary-image-segmentation-and-analysis" title="Permalink to this headline">¶</a></h2>
 <p>The current version of the Allen Cell Segmenter is primarily focusing on converting fluorescent images into binary images, i.e., the mask of the target structures separated from the background (a.k.a segmentation). But, the binary images themselves are not always useful, with perhaps the exception of visualization of the entire image, until they are converted into statistically sound numbers that are then used for downstream analysis. Often the desired numbers do not refer to all masked voxels in an entire image but instead to specific “objects” or groups of objects within the image. In our python package, we provide functions to bridge the gap between binary segmentation and downstream analysis via  <strong>object identification</strong>.</p>
-<p><a href="#id3"><span class="problematic" id="id4">**</span></a><a class="reference external" href="https://github.com/AllenCell/aics-segmentation/blob/master/docs/object_identification.md">What is object identification?</a>**</p>
-<p><a href="#id5"><span class="problematic" id="id6">**</span></a><a class="reference external" href="https://github.com/AllenCell/aics-segmentation/blob/master/lookup_table_demo/bridging_the_gap_between_binary_image_and_analysis.ipynb">See a real demo in jupyter notebook to learn how to use the object identification functions</a>**</p>
+<p><a href="#id1"><span class="problematic" id="id2">**</span></a><a class="reference external" href="https://github.com/AllenCell/aics-segmentation/blob/master/docs/object_identification.md">What is object identification?</a>**</p>
+<p><a href="#id3"><span class="problematic" id="id4">**</span></a><a class="reference external" href="https://github.com/AllenCell/aics-segmentation/blob/master/lookup_table_demo/bridging_the_gap_between_binary_image_and_analysis.ipynb">See a real demo in jupyter notebook to learn how to use the object identification functions</a>**</p>
 </div>
 <div class="section" id="citing-segmenter">
 <h2>Citing Segmenter<a class="headerlink" href="#citing-segmenter" title="Permalink to this headline">¶</a></h2>
@@ -242,7 +241,7 @@
 <div class="section" id="development">
 <h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
 <p>See <a class="reference external" href="CONTRIBUTING.md">CONTRIBUTING.md</a> for information related to developing the code.</p>
-<p><a href="#id7"><span class="problematic" id="id8">**</span></a><em>Free software: Allen Institute Software License</em>**</p>
+<p><a href="#id5"><span class="problematic" id="id6">**</span></a><em>Free software: Allen Institute Software License</em>**</p>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
