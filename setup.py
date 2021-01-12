@@ -92,6 +92,6 @@ setup(
     url="https://github.com/AllenCell/aicssegmentation",
     # Do not edit this string manually, always use bumpversion
     # Details in CONTRIBUTING.rst
-    version="0.1.20",
+    version="0.1.21",
     zip_safe=False,
 )
