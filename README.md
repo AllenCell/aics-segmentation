@@ -1,8 +1,8 @@
 # aicssegmentation
 
-[![Build Status](https://github.com/AllenCell/aics-segmentation/workflows/Build%20Master/badge.svg)](https://github.com/AllenCell/aics-segmentation/actions)
+[![Build Status](https://github.com/AllenCell/aics-segmentation/workflows/Build%20Main/badge.svg)](https://github.com/AllenCell/aics-segmentation/actions)
 [![Documentation](https://github.com/AllenCell/aics-segmentation/workflows/Documentation/badge.svg)](https://AllenCell.github.io/aics-segmentation)
-[![Code Coverage](https://codecov.io/gh/AllenCell/aics-segmentation/branch/main/graph/badge.svg)](https://codecov.io/gh/AllenCell/aic-ssegmentation)
+[![Code Coverage](https://codecov.io/gh/AllenCell/aics-segmentation/branch/main/graph/badge.svg)](https://codecov.io/gh/AllenCell/aics-segmentation)
 
 Part 1 of Allen Cell and Structure Segmenter
 
