@@ -50,6 +50,7 @@ class Args(object):
         self.output_dir = "./"
         self.struct_ch = 0
         self.xy = 0.108
+        self.dask = False
 
         #
         self.__parse()
@@ -133,6 +134,11 @@ class Args(object):
         )
         p.add_argument(
             "--mitotic_stage", dest="mitotic_stage", default=None, help="mitotic_stage"
+        )
+        p.add_argument(
+            "--dask",
+            action="store_true",
+            help="if included, use dask. Omit to not use dask for parallelization",
         )
 
         subparsers = p.add_subparsers(dest="mode")
@@ -306,21 +312,26 @@ class Executor(object):
                 )
 
         elif args.mode == PER_DIR:
-            import dask
-
             filenames = glob(args.input_dir + "/*" + args.data_type)
             # [os.path.basename(os.path.splitext(f)[0])
             #             for f in os.listdir(args.input_dir)
             #             if f.endswith(args.data_type)]
             filenames.sort()
 
-            lazy_results = []
-            for _, fn in enumerate(filenames):
-                lazy_result = dask.delayed(self.segment)(fn, args, output_path)
-                lazy_results.append(lazy_result)
+            if args.dask:
+                # using dask offers ~6x speedup on the template segmentation.
+                import dask
 
-            futures = dask.persist(*lazy_results)
-            dask.compute(*futures)
+                lazy_results = []
+                for _, fn in enumerate(filenames):
+                    lazy_result = dask.delayed(self.segment)(fn, args, output_path)
+                    lazy_results.append(lazy_result)
+
+                futures = dask.persist(*lazy_results)
+                dask.compute(*futures)
+            else:
+                for _, fn in enumerate(filenames):
+                    self.segment(fn, args, output_path)
 
 
 ###############################################################################
