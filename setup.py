@@ -46,7 +46,8 @@ requirements = [
     "itk",
     "itkwidgets",
     "jupyter",
-    "matplotlib"
+    "matplotlib",
+    "dask",
 ]
 
 extra_requirements = {
@@ -56,7 +57,7 @@ extra_requirements = {
     "all": [
         *requirements,
         *dev_requirements,
-    ]
+    ],
 }
 
 setup(
@@ -72,9 +73,7 @@ setup(
     ],
     description="Part 1 of Allen Cell and Structure Segmenter",
     entry_points={
-        "console_scripts": [
-            "my_example=aicssegmentation.bin.my_example:main"
-        ],
+        "console_scripts": ["my_example=aicssegmentation.bin.my_example:main"],
     },
     install_requires=requirements,
     license="Allen Institute Software License",
