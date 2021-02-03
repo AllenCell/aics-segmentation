@@ -1,4 +1,5 @@
 import numpy as np
+from typing import List
 from scipy.stats import norm
 from scipy.ndimage import gaussian_filter
 
@@ -68,13 +69,18 @@ def image_smoothing_gaussian_slice_by_slice(struct_img, sigma, truncate_range=3.
 
 
 def edge_preserving_smoothing_3d(
-    struct_img, numberOfIterations=10, conductance=1.2, timeStep=0.0625
+    struct_img: np.ndarray,
+    numberOfIterations: int = 10,
+    conductance: float = 1.2,
+    timeStep: float = 0.0625,
+    spacing: List = [1, 1, 1]
 ):
     import itk
 
-    # numberOfIteration was 5
-
     itk_img = itk.GetImageFromArray(struct_img.astype(np.float32))
+
+    # set spacing
+    itk_img.SetSpacing(spacing)
 
     gradientAnisotropicDiffusionFilter = (
         itk.GradientAnisotropicDiffusionImageFilter.New(itk_img)
