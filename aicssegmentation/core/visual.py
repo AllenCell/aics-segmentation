@@ -26,6 +26,8 @@ def random_colormap(nn: int = 10000):
 
 
 def explore_dot_3d(img, sigma, th, roi=[-1]):
+    """ backend for trying 3D spot filter with diff parameters via a slide bar """
+
     # roi = [x0, y0, x1, y1]
     if roi[0] < 0:
         roi = [0, 0, img.shape[1], img.shape[2]]
@@ -42,6 +44,8 @@ def explore_dot_3d(img, sigma, th, roi=[-1]):
 
 
 def explore_vesselness_3d(im, sigma, th, roi=[-1]):
+    """ backend for trying 3D filament filter with diff parameters via a slide bar """
+
     # roi = [x0, y0, x1, y1]
     if roi[0] < 0:
         roi = [0, 0, im.shape[1], im.shape[2]]
@@ -56,6 +60,8 @@ def explore_vesselness_3d(im, sigma, th, roi=[-1]):
 
 
 def explore_vesselness_2d(im, sigma, th, roi=[-1]):
+    """ backend for trying 2D filament filter with diff parameters via a slide bar """
+
     # roi = [x0, y0, x1, y1]
     if roi[0] < 0:
         roi = [0, 0, im.shape[1], im.shape[2]]
@@ -124,13 +130,14 @@ def vesselness2dExplorer(im, zz, sigma, th):
 
 
 def mipView(im):
+    """simple wrapper to view maximum intensity projection"""
     mip = np.amax(im, axis=0)
     plt.imshow(mip)
     plt.show()
 
 
 def img_seg_combine(img, seg, roi=["Full", None]):
-
+    """ creating raw and segmentation side-by-side for visualizaiton """
     # normalize to 0~1
     img = img.astype(np.float32)
     img = (img - img.min()) / (img.max() - img.min())
@@ -152,6 +159,7 @@ def img_seg_combine(img, seg, roi=["Full", None]):
 
 
 def segmentation_quick_view(seg):
+    """ wrapper for visualizing segmentation in ITK viewer """
     valid_pxl = np.unique(seg[seg > 0])
     if len(valid_pxl) < 1:
         print("segmentation is empty")
