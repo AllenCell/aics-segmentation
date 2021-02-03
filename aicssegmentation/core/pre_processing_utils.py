@@ -73,7 +73,7 @@ def edge_preserving_smoothing_3d(
     numberOfIterations: int = 10,
     conductance: float = 1.2,
     timeStep: float = 0.0625,
-    spacing: List = [1, 1, 1]
+    spacing: List = [1, 1, 1],
 ):
     import itk
 
