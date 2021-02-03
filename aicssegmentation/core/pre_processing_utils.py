@@ -48,6 +48,9 @@ def intensity_normalization(struct_img, scaling_param):
 
 
 def image_smoothing_gaussian_3d(struct_img, sigma, truncate_range=3.0):
+    """
+    wrapper for 3D Guassian smoothing
+    """
 
     structure_img_smooth = gaussian_filter(
         struct_img, sigma=sigma, mode="nearest", truncate=truncate_range
@@ -57,7 +60,9 @@ def image_smoothing_gaussian_3d(struct_img, sigma, truncate_range=3.0):
 
 
 def image_smoothing_gaussian_slice_by_slice(struct_img, sigma, truncate_range=3.0):
-
+    """
+    wrapper for applying 2D Guassian smoothing slice by slice on a 3D image
+    """
     structure_img_smooth = np.zeros_like(struct_img)
     for zz in range(struct_img.shape[0]):
         structure_img_smooth[zz, :, :] = gaussian_filter(
