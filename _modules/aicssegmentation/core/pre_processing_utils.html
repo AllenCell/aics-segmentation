@@ -182,6 +182,7 @@
             
   <h1>Source code for aicssegmentation.core.pre_processing_utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
 <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">gaussian_filter</span>
 
@@ -251,13 +252,18 @@
 
 
 <div class="viewcode-block" id="edge_preserving_smoothing_3d"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.pre_processing_utils.edge_preserving_smoothing_3d">[docs]</a><span class="k">def</span> <span class="nf">edge_preserving_smoothing_3d</span><span class="p">(</span>
-    <span class="n">struct_img</span><span class="p">,</span> <span class="n">numberOfIterations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">conductance</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">timeStep</span><span class="o">=</span><span class="mf">0.0625</span>
+    <span class="n">struct_img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">numberOfIterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">conductance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">,</span>
+    <span class="n">timeStep</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0625</span><span class="p">,</span>
+    <span class="n">spacing</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
 <span class="p">):</span>
     <span class="kn">import</span> <span class="nn">itk</span>
 
-    <span class="c1"># numberOfIteration was 5</span>
-
     <span class="n">itk_img</span> <span class="o">=</span> <span class="n">itk</span><span class="o">.</span><span class="n">GetImageFromArray</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+
+    <span class="c1"># set spacing</span>
+    <span class="n">itk_img</span><span class="o">.</span><span class="n">SetSpacing</span><span class="p">(</span><span class="n">spacing</span><span class="p">)</span>
 
     <span class="n">gradientAnisotropicDiffusionFilter</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">itk</span><span class="o">.</span><span class="n">GradientAnisotropicDiffusionImageFilter</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="n">itk_img</span><span class="p">)</span>
