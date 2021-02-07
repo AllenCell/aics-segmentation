@@ -13,14 +13,14 @@ def MO(
     return_object: bool = False,
 ) -> np.ndarray:
     """
-    Implementation of "Masked Object Thresholding" algorithm. Specifically, the 
+    Implementation of "Masked Object Thresholding" algorithm. Specifically, the
     algorithm is a hybrid thresholding method combining two levels of thresholds.
     The steps are [1] a global threshold is calculated, [2] extract each individual
     connected componet after applying the global threshold, [3] remove small objects,
-    [4] within each remaining object, a local Otsu threshold is calculated and applied 
-    with an optional local threshold adjustment ratio (to make the segmentation more 
-    and less conservative). An extra check can be used in step [4], which requires the 
-    local Otsu threshold larger than 1/3 of global Otsu threhsold and otherwise this 
+    [4] within each remaining object, a local Otsu threshold is calculated and applied
+    with an optional local threshold adjustment ratio (to make the segmentation more
+    and less conservative). An extra check can be used in step [4], which requires the
+    local Otsu threshold larger than 1/3 of global Otsu threhsold and otherwise this
     connected component is discarded.
 
     Parameters:
@@ -28,8 +28,8 @@ def MO(
     structure_img_smooth: np.ndarray
         the image (should have already been smoothed) to apply the method on
     global_thresh_method: str
-        which method to use for calculating global threshold. Options include: 
-        "triangle" (or "tri"), "median" (or "med"), and "ave_tri_med" (or "ave"). 
+        which method to use for calculating global threshold. Options include:
+        "triangle" (or "tri"), "median" (or "med"), and "ave_tri_med" (or "ave").
         "ave" refers the average of "triangle" threshold and "mean" threshold.
     object_minArea: int
         the size filter for excluding small object before applying local threshold
@@ -38,7 +38,7 @@ def MO(
     local_adjust: float
         a ratio to apply on local threshold, default is 0.98
     return_object: bool
-        whether to return the global thresholding results in order to obtain the 
+        whether to return the global thresholding results in order to obtain the
         individual objects the local thresholding is made on
 
     Return:

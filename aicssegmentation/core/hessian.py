@@ -10,7 +10,7 @@ def compute_3d_hessian_matrix(
     nd_array: np.ndarray,
     sigma: float = 1,
     scale: bool = True,
-    whiteonblack: bool = True
+    whiteonblack: bool = True,
 ) -> np.ndarray:
     """
     Computes the hessian matrix for an nd_array. The implementation was adapted from:
@@ -20,7 +20,7 @@ def compute_3d_hessian_matrix(
     ----------
     nd_array: np.ndarray
         nd array from which to compute the hessian matrix.
-    sigma: float 
+    sigma: float
         Standard deviation used for the Gaussian kernel to smooth the array. Defaul is 1
     scale: bool
         whether the hessian elements will be scaled by sigma squared. Default is True
@@ -78,7 +78,7 @@ def absolute_3d_hessian_eigenvalues(
     nd_array: np.ndarray,
     sigma: float = 1,
     scale: bool = True,
-    whiteonblack: bool = True
+    whiteonblack: bool = True,
 ):
     """
     Eigenvalues of the hessian matrix calculated from the input array sorted by
@@ -88,7 +88,7 @@ def absolute_3d_hessian_eigenvalues(
     ------------
     nd_array: np.ndarray
         nd array from which to compute the hessian matrix.
-    sigma: float 
+    sigma: float
         Standard deviation used for the Gaussian kernel to smooth the array. Defaul is 1
     scale: bool
         whether the hessian elements will be scaled by sigma squared. Default is True

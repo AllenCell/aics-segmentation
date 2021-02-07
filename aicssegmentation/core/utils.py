@@ -1,12 +1,33 @@
+from typing import List
+
 import numpy as np
-from skimage.morphology import medial_axis
 from scipy.ndimage import distance_transform_edt
-from skimage.morphology import erosion, ball
 from skimage.measure import label, regionprops
+from skimage.morphology import ball, erosion, medial_axis
 
 
-def hole_filling(bw, hole_min, hole_max, fill_2d=True):
+def hole_filling(
+    bw: np.ndarray, hole_min: int, hole_max: int, fill_2d: bool = True
+) -> np.ndarray:
+    """Fill holes in 2D/3D segmentation
 
+    Parameters:
+    -------------
+    bw: np.ndarray
+        a binary 2D/3D image.
+    hole_min: int
+        the minimum size of the holes to be filled
+    hole_max: int
+        the maximum size of the holes to be filled
+    fill_2d: bool
+        if fill_2d=True, a 3D image will be filled slice by slice.
+        If you think of a hollow tube alone z direction, the inside
+        is not a hole under 3D topology, but the inside on each slice
+        is indeed a hole under 2D topology.
+
+    Return:
+        a binary image after hole filling
+    """
     bw = bw > 0
     if len(bw.shape) == 2:
         background_lab = label(~bw, connectivity=1)
@@ -43,13 +64,34 @@ def hole_filling(bw, hole_min, hole_max, fill_2d=True):
             too_small_mask = too_small[background_lab]
             fill_out[too_small_mask] = 0
     else:
-        print("error")
+        print("error in image shape")
         return
 
     return np.logical_or(bw, fill_out)
 
 
-def topology_preserving_thinning(bw, min_thickness=1, thin=1):
+def topology_preserving_thinning(
+    bw: np.ndarray, min_thickness: int = 1, thin: int = 1
+) -> np.ndarray:
+    """perform thinning on segmentation without breaking topology
+
+    Parameters:
+    --------------
+    bw: np.ndarray
+        the 3D binary image to be thinned
+    min_thinkness: int
+        Half of the minimum width you want to keep from being thinned.
+        For example, when the object width is smaller than 4, you don't
+        want to make this part even thinner (may break the thin object
+        and alter the topology), you can set this value as 2.
+    thin: int
+        the amount to thin (has to be an positive integer). The number of
+         pixels to be removed from outter boundary towards center.
+
+    Return:
+    -------------
+        A binary image after thinning
+    """
     bw = bw > 0
     safe_zone = np.zeros_like(bw)
     for zz in range(bw.shape[0]):
@@ -74,11 +116,8 @@ def divide_nonzero(array1, array2):
     return np.divide(array1, denominator)
 
 
-def create_image_like(data, image):
-    return image.__class__(data, affine=image.affine, header=image.header)
-
-
 def histogram_otsu(hist):
+    """ Apply Otsu thresholding method on 1D histogram """
 
     # modify the elements in hist to avoid completely zero value in cumsum
     hist = hist + 1e-5
@@ -106,16 +145,19 @@ def histogram_otsu(hist):
 
 
 def absolute_eigenvaluesh(nd_array):
+    """Computes the eigenvalues sorted by absolute value from the symmetrical matrix.
+
+    Parameters:
+    -------------
+    nd_array: nd.ndarray
+        array from which the eigenvalues will be calculated.
+
+    Return:
+    -------------
+        A list with the eigenvalues sorted in absolute ascending order (e.g.
+        [eigenvalue1, eigenvalue2, ...])
     """
-    Computes the eigenvalues sorted by absolute value from the symmetrical matrix.
-    :param nd_array: array from which the eigenvalues will be calculated.
-    :return: A list with the eigenvalues sorted in absolute ascending order
-    (e.g. [eigenvalue1, eigenvalue2, ...])
-    """
-    # print(nd_array)
-    # print('up:array, below:eigen')
     eigenvalues = np.linalg.eigvalsh(nd_array)
-    # print(eigenvalues)
     sorted_eigenvalues = sortbyabs(eigenvalues, axis=-1)
     return [
         np.squeeze(eigenvalue, axis=-1)
@@ -134,19 +176,41 @@ def sortbyabs(a, axis=0):
     return a[index]
 
 
-def get_middle_frame(struct_img_smooth, method="z"):
+def get_middle_frame(struct_img: np.ndarray, method: str = "z") -> int:
+    """find the middle z frame of an image stack
+
+    Parameters:
+    ------------
+    struct_img: np.ndarray
+        the 3D image to process
+    method: str
+        which method to use to determine the middle frame. Options
+        are "z" or "intensity". "z" is solely based on the number of z
+        frames. "intensity" method uses Otsu threshod to estimate the
+        volume of foreground signals in the stack, then estimated volume
+        of each z frame forms a z-profile, and finally another Otsu
+        method is apply on the z profile to find the best z frame (with
+        an assumption of two peaks along z profile, one near the bottom
+        of the cells and one near the bottom of the cells, so the optimal
+        separation is the middle of the stack).
+
+    Return:
+    -----------
+    mid_frame: int
+        the z index of the middle z frame
+    """
 
     from skimage.filters import threshold_otsu
 
     if method == "intensity":
-        bw = struct_img_smooth > threshold_otsu(struct_img_smooth)
+        bw = struct_img > threshold_otsu(struct_img)
         z_profile = np.zeros((bw.shape[0],), dtype=int)
         for zz in range(bw.shape[0]):
             z_profile[zz] = np.count_nonzero(bw[zz, :, :])
         mid_frame = round(histogram_otsu(z_profile) * bw.shape[0]).astype(int)
 
     elif method == "z":
-        mid_frame = struct_img_smooth.shape[0] // 2
+        mid_frame = struct_img.shape[0] // 2
 
     else:
         print("unsupported method")
@@ -155,7 +219,30 @@ def get_middle_frame(struct_img_smooth, method="z"):
     return mid_frame
 
 
-def get_3dseed_from_mid_frame(bw, stack_shape, mid_frame, hole_min, bg_seed=True):
+def get_3dseed_from_mid_frame(
+    bw: np.ndarray,
+    stack_shape: List,
+    mid_frame: int,
+    hole_min: int,
+    bg_seed: bool = True,
+) -> np.ndarray:
+    """build a 3D seed image from the binary segmentation of a single slice
+
+    Parameters:
+    ------------
+    bw: np.ndarray
+        the 2d segmentation of a single frame
+    shape_3d: List
+        the shape of original 3d image, e.g. shape_3d = img.shape
+    frame_index: int
+        the index of where bw is from the whole z-stack
+    area_min: int
+        any connected component in bw2d with size smaller than area_min
+        will be excluded from seed image generation
+    bg_seed: bool
+        bg_seed=True will add a background seed at the first frame (z=0).
+
+    """
     from skimage.morphology import remove_small_objects
 
     out = remove_small_objects(bw > 0, hole_min)
