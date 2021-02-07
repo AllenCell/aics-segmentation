@@ -204,188 +204,109 @@
 <span id="aicssegmentation-core-mo-threshold-module"></span><h2>aicssegmentation.core.MO_threshold module<a class="headerlink" href="#module-aicssegmentation.core.MO_threshold" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="aicssegmentation.core.MO_threshold.MO">
-<code class="sig-prename descclassname">aicssegmentation.core.MO_threshold.</code><code class="sig-name descname">MO</code><span class="sig-paren">(</span><em class="sig-param">structure_img_smooth</em>, <em class="sig-param">global_thresh_method</em>, <em class="sig-param">object_minArea</em>, <em class="sig-param">extra_criteria=False</em>, <em class="sig-param">local_adjust=0.98</em>, <em class="sig-param">return_object=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/MO_threshold.html#MO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.MO_threshold.MO" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.MO_threshold.</code><code class="sig-name descname">MO</code><span class="sig-paren">(</span><em class="sig-param">structure_img_smooth: numpy.ndarray</em>, <em class="sig-param">global_thresh_method: str</em>, <em class="sig-param">object_minArea: int</em>, <em class="sig-param">extra_criteria: bool = False</em>, <em class="sig-param">local_adjust: float = 0.98</em>, <em class="sig-param">return_object: bool = False</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/MO_threshold.html#MO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.MO_threshold.MO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of “Masked Object Thresholding” algorithm. Specifically, the
+algorithm is a hybrid thresholding method combining two levels of thresholds.
+The steps are [1] a global threshold is calculated, [2] extract each individual
+connected componet after applying the global threshold, [3] remove small objects,
+[4] within each remaining object, a local Otsu threshold is calculated and applied
+with an optional local threshold adjustment ratio (to make the segmentation more
+and less conservative). An extra check can be used in step [4], which requires the
+local Otsu threshold larger than 1/3 of global Otsu threhsold and otherwise this
+connected component is discarded.</p>
+<dl class="simple">
+<dt>structure_img_smooth: np.ndarray</dt><dd><p>the image (should have already been smoothed) to apply the method on</p>
+</dd>
+<dt>global_thresh_method: str</dt><dd><p>which method to use for calculating global threshold. Options include:
+“triangle” (or “tri”), “median” (or “med”), and “ave_tri_med” (or “ave”).
+“ave” refers the average of “triangle” threshold and “mean” threshold.</p>
+</dd>
+<dt>object_minArea: int</dt><dd><p>the size filter for excluding small object before applying local threshold</p>
+</dd>
+<dt>extra_criteria: bool</dt><dd><p>whether to use the extra check when doing local thresholding, default is False</p>
+</dd>
+<dt>local_adjust: float</dt><dd><p>a ratio to apply on local threshold, default is 0.98</p>
+</dd>
+<dt>return_object: bool</dt><dd><p>whether to return the global thresholding results in order to obtain the
+individual objects the local thresholding is made on</p>
+</dd>
+</dl>
+<p>a binary nd array of the segmentation result</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-aicssegmentation.core.hessian">
 <span id="aicssegmentation-core-hessian-module"></span><h2>aicssegmentation.core.hessian module<a class="headerlink" href="#module-aicssegmentation.core.hessian" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="aicssegmentation.core.hessian.absolute_3d_hessian_eigenvalues">
-<code class="sig-prename descclassname">aicssegmentation.core.hessian.</code><code class="sig-name descname">absolute_3d_hessian_eigenvalues</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">sigma=1</em>, <em class="sig-param">scale=True</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/hessian.html#absolute_3d_hessian_eigenvalues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.hessian.absolute_3d_hessian_eigenvalues" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aicssegmentation.core.hessian.</code><code class="sig-name descname">absolute_3d_hessian_eigenvalues</code><span class="sig-paren">(</span><em class="sig-param">nd_array: numpy.ndarray</em>, <em class="sig-param">sigma: float = 1</em>, <em class="sig-param">scale: bool = True</em>, <em class="sig-param">whiteonblack: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/hessian.html#absolute_3d_hessian_eigenvalues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.hessian.absolute_3d_hessian_eigenvalues" title="Permalink to this definition">¶</a></dt>
 <dd><p>Eigenvalues of the hessian matrix calculated from the input array sorted by
-absolute value.
-:param nd_array: input array from which to calculate hessian eigenvalues.
-:param sigma: gaussian smoothing parameter.
-:param scale: if True hessian values will be scaled according to sigma squared.
-:return: list of eigenvalues [eigenvalue1, eigenvalue2, …]</p>
+absolute value.</p>
+<dl class="simple">
+<dt>nd_array: np.ndarray</dt><dd><p>nd array from which to compute the hessian matrix.</p>
+</dd>
+<dt>sigma: float</dt><dd><p>Standard deviation used for the Gaussian kernel to smooth the array. Defaul is 1</p>
+</dd>
+<dt>scale: bool</dt><dd><p>whether the hessian elements will be scaled by sigma squared. Default is True</p>
+</dd>
+<dt>whiteonblack: boolean</dt><dd><p>image is white objects on black blackground or not. Default is True</p>
+</dd>
+</dl>
+<p>list of eigenvalues [eigenvalue1, eigenvalue2, …]</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.hessian.compute_3d_hessian_matrix">
-<code class="sig-prename descclassname">aicssegmentation.core.hessian.</code><code class="sig-name descname">compute_3d_hessian_matrix</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">sigma=1</em>, <em class="sig-param">scale=True</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/hessian.html#compute_3d_hessian_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.hessian.compute_3d_hessian_matrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes the hessian matrix for an nd_array.
-This can be used to detect vesselness as well as other features.
-In 3D the first derivative will contain three directional gradients at each index:
-[ gx,  gy,  gz ]
-The Hessian matrix at each index will then be equal to the second derivative:
-[ gxx, gxy, gxz]
-[ gyx, gyy, gyz]
-[ gzx, gzy, gzz]
-The Hessian matrix is symmetrical, so gyx == gxy, gzx == gxz, and gyz == gzy.
-:param nd_array: n-dimensional array from which to compute the hessian matrix.
-:param sigma: gaussian smoothing to perform on the array.
-:param scale: if True, the hessian elements will be scaled by sigma squared.
-:return: hessian array of shape (…, ndim, ndim)</p>
+<code class="sig-prename descclassname">aicssegmentation.core.hessian.</code><code class="sig-name descname">compute_3d_hessian_matrix</code><span class="sig-paren">(</span><em class="sig-param">nd_array: numpy.ndarray</em>, <em class="sig-param">sigma: float = 1</em>, <em class="sig-param">scale: bool = True</em>, <em class="sig-param">whiteonblack: bool = True</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/hessian.html#compute_3d_hessian_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.hessian.compute_3d_hessian_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the hessian matrix for an nd_array. The implementation was adapted from:
+<a class="reference external" href="https://github.com/ellisdg/frangi3d/blob/master/frangi/hessian.py">https://github.com/ellisdg/frangi3d/blob/master/frangi/hessian.py</a></p>
+<dl class="simple">
+<dt>nd_array: np.ndarray</dt><dd><p>nd array from which to compute the hessian matrix.</p>
+</dd>
+<dt>sigma: float</dt><dd><p>Standard deviation used for the Gaussian kernel to smooth the array. Defaul is 1</p>
+</dd>
+<dt>scale: bool</dt><dd><p>whether the hessian elements will be scaled by sigma squared. Default is True</p>
+</dd>
+<dt>whiteonblack: boolean</dt><dd><p>image is white objects on black blackground or not. Default is True</p>
+</dd>
+</dl>
+<p>hessian array of shape (…, ndim, ndim)</p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-aicssegmentation.core.output_utils">
 <span id="aicssegmentation-core-output-utils-module"></span><h2>aicssegmentation.core.output_utils module<a class="headerlink" href="#module-aicssegmentation.core.output_utils" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="aicssegmentation.core.output_utils.ACTB_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">ACTB_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#ACTB_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.ACTB_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.ACTN1_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">ACTN1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#ACTN1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.ACTN1_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.ACTN2_Cardio_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">ACTN2_Cardio_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#ACTN2_Cardio_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.ACTN2_Cardio_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.ATP2A2_Cardio_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">ATP2A2_Cardio_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#ATP2A2_Cardio_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.ATP2A2_Cardio_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.CETN2_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">CETN2_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#CETN2_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.CETN2_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.CTNNB1_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">CTNNB1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#CTNNB1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.CTNNB1_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.DSP_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">DSP_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#DSP_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.DSP_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.FBL_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">FBL_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#FBL_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.FBL_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.GJA1_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">GJA1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#GJA1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.GJA1_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.LAMP1_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">LAMP1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#LAMP1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.LAMP1_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.MYH10_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">MYH10_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#MYH10_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.MYH10_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.MYL7_Cardio_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">MYL7_Cardio_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#MYL7_Cardio_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.MYL7_Cardio_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.NPM1_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">NPM1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#NPM1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.NPM1_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.PXN_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">PXN_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#PXN_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.PXN_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.QCB_granularity">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">QCB_granularity</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#QCB_granularity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.QCB_granularity" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.QCB_simple">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">QCB_simple</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#QCB_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.QCB_simple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.RAB5A_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">RAB5A_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#RAB5A_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.RAB5A_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.SEC61B_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">SEC61B_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#SEC61B_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.SEC61B_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.SLC25A17_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">SLC25A17_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#SLC25A17_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.SLC25A17_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.ST6GAL1_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">ST6GAL1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#ST6GAL1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.ST6GAL1_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.TJP1_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">TJP1_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#TJP1_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.TJP1_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.TNNI1_Cardio_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">TNNI1_Cardio_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#TNNI1_Cardio_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.TNNI1_Cardio_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.TOMM20_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">TOMM20_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#TOMM20_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.TOMM20_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.TTN_Cardio_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">TTN_Cardio_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#TTN_Cardio_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.TTN_Cardio_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.TUBA1B_output">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">TUBA1B_output</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#TUBA1B_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.TUBA1B_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
 <dt id="aicssegmentation.core.output_utils.generate_segmentation_contour">
 <code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">generate_segmentation_contour</code><span class="sig-paren">(</span><em class="sig-param">im</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#generate_segmentation_contour"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.generate_segmentation_contour" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>generate the contour of the segmentation</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.output_utils.output_hook">
 <code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">output_hook</code><span class="sig-paren">(</span><em class="sig-param">im</em>, <em class="sig-param">names</em>, <em class="sig-param">out_flag</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#output_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.output_hook" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.output_utils.paperFigure">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">paperFigure</code><span class="sig-paren">(</span><em class="sig-param">out_img_list</em>, <em class="sig-param">out_name_list</em>, <em class="sig-param">output_type</em>, <em class="sig-param">output_path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#paperFigure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.paperFigure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>general hook for cutomized output</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.output_utils.save_segmentation">
-<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">save_segmentation</code><span class="sig-paren">(</span><em class="sig-param">bw</em>, <em class="sig-param">contour_flag</em>, <em class="sig-param">output_path: pathlib.Path</em>, <em class="sig-param">fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#save_segmentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.save_segmentation" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.output_utils.</code><code class="sig-name descname">save_segmentation</code><span class="sig-paren">(</span><em class="sig-param">bw: numpy.ndarray</em>, <em class="sig-param">contour_flag: bool</em>, <em class="sig-param">output_path: pathlib.Path</em>, <em class="sig-param">fn: str</em>, <em class="sig-param">suffix: str = '_struct_segmentation'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/output_utils.html#save_segmentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.output_utils.save_segmentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>save the segmentation into a tiff file</p>
+<dl class="simple">
+<dt>bw: np.ndarray</dt><dd><p>the segmentation to save</p>
+</dd>
+<dt>contour_flag: book</dt><dd><p>whether to also save segmentation contour</p>
+</dd>
+<dt>output_path: Path</dt><dd><p>the path to save</p>
+</dd>
+<dt>fn: str</dt><dd><p>the core file name to use, for example, “img_102”, then
+after a suffix (say “_seg”) is added, the file name of the output
+is “img_101_seg.tiff”</p>
+</dd>
+<dt>suffix: str</dt><dd><p>the suffix to add to the output filename</p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 <div class="section" id="module-aicssegmentation.core.pre_processing_utils">
@@ -393,33 +314,67 @@ The Hessian matrix is symmetrical, so gyx == gxy, gzx == gxz, and gyz == gzy.
 <dl class="function">
 <dt id="aicssegmentation.core.pre_processing_utils.edge_preserving_smoothing_3d">
 <code class="sig-prename descclassname">aicssegmentation.core.pre_processing_utils.</code><code class="sig-name descname">edge_preserving_smoothing_3d</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray, numberOfIterations: int = 10, conductance: float = 1.2, timeStep: float = 0.0625, spacing: List = [1, 1, 1]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/pre_processing_utils.html#edge_preserving_smoothing_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.pre_processing_utils.edge_preserving_smoothing_3d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>perform edge preserving smoothing on a 3D image</p>
+<dl class="simple">
+<dt>struct_img: np.ndarray</dt><dd><p>the image to be smoothed</p>
+</dd>
+<dt>numberOfInterations: int</dt><dd><p>how many smoothing iterations to perform. More iterations give more
+smoothing effect. Default is 10.</p>
+</dd>
+<dt>timeStep: float</dt><dd><p>the time step to be used for each iteration, important for numberical
+stability. Default is 0.0625 for 3D images. Do not suggest to change.</p>
+</dd>
+<dt>spacing: List</dt><dd><p>the spacing of voxels in three dimensions. Default is [1, 1, 1]</p>
+</dd>
+</dl>
+<p><a class="reference external" href="https://itk.org/Doxygen/html/classitk_1_1GradientAnisotropicDiffusionImageFilter.html">https://itk.org/Doxygen/html/classitk_1_1GradientAnisotropicDiffusionImageFilter.html</a></p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.pre_processing_utils.image_smoothing_gaussian_3d">
 <code class="sig-prename descclassname">aicssegmentation.core.pre_processing_utils.</code><code class="sig-name descname">image_smoothing_gaussian_3d</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">sigma</em>, <em class="sig-param">truncate_range=3.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/pre_processing_utils.html#image_smoothing_gaussian_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.pre_processing_utils.image_smoothing_gaussian_3d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>wrapper for 3D Guassian smoothing</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.pre_processing_utils.image_smoothing_gaussian_slice_by_slice">
 <code class="sig-prename descclassname">aicssegmentation.core.pre_processing_utils.</code><code class="sig-name descname">image_smoothing_gaussian_slice_by_slice</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">sigma</em>, <em class="sig-param">truncate_range=3.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/pre_processing_utils.html#image_smoothing_gaussian_slice_by_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.pre_processing_utils.image_smoothing_gaussian_slice_by_slice" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>wrapper for applying 2D Guassian smoothing slice by slice on a 3D image</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.pre_processing_utils.intensity_normalization">
-<code class="sig-prename descclassname">aicssegmentation.core.pre_processing_utils.</code><code class="sig-name descname">intensity_normalization</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">scaling_param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/pre_processing_utils.html#intensity_normalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.pre_processing_utils.intensity_normalization" title="Permalink to this definition">¶</a></dt>
-<dd><p>Mode 1:  scaling_param = [0]
-Mode 2:  scaling_param = [lower std range, upper std range]
-Mode 3:  scaling_param = [lower std range, upper std range,</p>
-<blockquote>
-<div><p>lower abs intensity, higher abs intensity]</p>
-</div></blockquote>
+<code class="sig-prename descclassname">aicssegmentation.core.pre_processing_utils.</code><code class="sig-name descname">intensity_normalization</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">scaling_param: List</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/pre_processing_utils.html#intensity_normalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.pre_processing_utils.intensity_normalization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize the intensity of input image so that the value range is from 0 to 1.</p>
+<dl class="simple">
+<dt>img: np.ndarray</dt><dd><p>a 3d image</p>
+</dd>
+<dt>scaling_param: List</dt><dd><dl class="simple">
+<dt>a list with only one value 0, i.e. [0]: Min-Max normlaizaiton,</dt><dd><p>the max intensity of img will be mapped to 1 and min will
+be mapped to 0</p>
+</dd>
+<dt>a list with a single positive integer v, e.g. [5000]: Min-Max normalization,</dt><dd><p>but first any original intensity value &gt; v will be considered as outlier
+and reset of min intensity of img. After the max will be mapped to 1
+and min will be mapped to 0</p>
+</dd>
+<dt>a list with two float values [a, b], e.g. [1.5, 10.5]: Auto-contrast</dt><dd><p>normalizaiton. First, mean and standard deviaion (std) of the original
+intensity in img are calculated. Next, the intensity is truncated into
+range [mean - a * std, mean + b * std], and then recaled to [0, 1]</p>
+</dd>
+<dt>a list with four float values [a, b, c, d], e.g. [0.5, 15.5, 200, 4000]:</dt><dd><p>Auto-contrast normalization. Similat to above case, but only intensity value
+between c and d will be used to calculated mean and std.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.pre_processing_utils.suggest_normalization_param">
 <code class="sig-prename descclassname">aicssegmentation.core.pre_processing_utils.</code><code class="sig-name descname">suggest_normalization_param</code><span class="sig-paren">(</span><em class="sig-param">structure_img0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/pre_processing_utils.html#suggest_normalization_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.pre_processing_utils.suggest_normalization_param" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>suggest scaling parameter assuming the image is a representative example
+of this cell structure</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-aicssegmentation.core.seg_dot">
@@ -427,32 +382,102 @@ Mode 3:  scaling_param = [lower std range, upper std range,</p>
 <dl class="function">
 <dt id="aicssegmentation.core.seg_dot.dot_2d">
 <code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_2d</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">log_sigma</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>apply 2D spot filter on a 2D image</p>
+<dl class="simple">
+<dt>struct_img: np.ndarray</dt><dd><p>the 2D image to segment</p>
+</dd>
+<dt>log_sigma: float</dt><dd><p>the size of the filter, which can be set based on the estimated radius
+of your target dots. For example, if visually the diameter of the
+dots is usually 3~4 pixels, then you may want to set this as 1
+or something near 1 (like 1.25).</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.seg_dot.dot_2d_slice_by_slice_wrapper">
-<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_2d_slice_by_slice_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">s2_param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_2d_slice_by_slice_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_2d_slice_by_slice_wrapper" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_2d_slice_by_slice_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">s2_param: List</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_2d_slice_by_slice_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_2d_slice_by_slice_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>wrapper for 2D spot filter on 3D image slice by slice</p>
+<dl class="simple">
+<dt>struct_img: np.ndarray</dt><dd><p>a 3d numpy array, usually the image after smoothing</p>
+</dd>
+<dt>s2_param: List</dt><dd><p>[[scale_1, cutoff_1], [scale_2, cutoff_2], ….], e.g. [[1, 0.1]]
+or [[1, 0.12], [3,0.1]]: scale_x is set based on the estimated radius
+of your target dots. For example, if visually the diameter of the
+dots is usually 3~4 pixels, then you may want to set scale_x as 1
+or something near 1 (like 1.25). Multiple scales can be used, if
+you have dots of very different sizes. cutoff_x is a threshold
+applied on the actual filter reponse to get the binary result.
+Smaller cutoff_x may yielf more dots and fatter segmentation,
+while larger cutoff_x could be less permisive and yield less
+dots and slimmer segmentation.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.seg_dot.dot_3d">
-<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_3d</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">log_sigma</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_3d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_3d</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">log_sigma: float</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>apply 3D spot filter on a 3D image</p>
+<dl class="simple">
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to segment</p>
+</dd>
+<dt>log_sigma: float</dt><dd><p>the size of the filter, which can be set based on the estimated radius
+of your target dots. For example, if visually the diameter of the
+dots is usually 3~4 pixels, then you may want to set this as 1
+or something near 1 (like 1.25).</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.seg_dot.dot_3d_wrapper">
-<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_3d_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">s3_param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_3d_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_3d_wrapper" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_3d_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">s3_param: List</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_3d_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_3d_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>wrapper for 3D spot filter</p>
+<dl class="simple">
+<dt>struct_img: np.ndarray</dt><dd><p>a 3d numpy array, usually the image after smoothing</p>
+</dd>
+<dt>s3_param: List</dt><dd><p>[[scale_1, cutoff_1], [scale_2, cutoff_2], ….], e.g. [[1, 0.1]]
+or [[1,0.12], [3,0.1]]. scale_x is set based on the estimated radius of
+your target dots. For example, if visually the diameter of the dots is
+about 3~4 pixels, then you may want to set scale_x as 1 or something
+near 1 (like 1.25). Multiple scales can be used, if you have dots of
+very different sizes. cutoff_x is a threshold applied on the actual filter
+reponse to get the binary result. Smaller cutoff_x may yielf more dots and
+“fatter” segmentation, while larger cutoff_x could be less permisive and
+yield less dots and slimmer segmentation.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.seg_dot.dot_slice_by_slice">
-<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_slice_by_slice</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">log_sigma</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_slice_by_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_slice_by_slice" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_slice_by_slice</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">log_sigma: float</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_slice_by_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_slice_by_slice" title="Permalink to this definition">¶</a></dt>
+<dd><p>apply 2D spot filter on 3D image slice by slice</p>
+<dl class="simple">
+<dt>struct_img: np.ndarray</dt><dd><p>a 3d numpy array, usually the image after smoothing</p>
+</dd>
+<dt>log_sigma: float</dt><dd><p>the size of the filter, which can be set based on the estimated radius
+of your target dots. For example, if visually the diameter of the
+dots is usually 3~4 pixels, then you may want to set this as 1
+or something near 1 (like 1.25).</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.seg_dot.logSlice">
-<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">logSlice</code><span class="sig-paren">(</span><em class="sig-param">image</em>, <em class="sig-param">sigma_list</em>, <em class="sig-param">threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#logSlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.logSlice" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">logSlice</code><span class="sig-paren">(</span><em class="sig-param">image: numpy.ndarray</em>, <em class="sig-param">sigma_list: List</em>, <em class="sig-param">threshold: float</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#logSlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.logSlice" title="Permalink to this definition">¶</a></dt>
+<dd><p>apply multi-scale 2D spot filter on a 2D image and binarize with threshold</p>
+<dl class="simple">
+<dt>image: np.ndarray</dt><dd><p>the 2D image to segment</p>
+</dd>
+<dt>sigma_list: List</dt><dd><p>The list of sigma representing filters in multiple scales</p>
+</dd>
+<dt>threshold: float</dt><dd><p>the cutoff to apply to get the binary output</p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 <div class="section" id="module-aicssegmentation.core.utils">
@@ -460,16 +485,16 @@ Mode 3:  scaling_param = [lower std range, upper std range,</p>
 <dl class="function">
 <dt id="aicssegmentation.core.utils.absolute_eigenvaluesh">
 <code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">absolute_eigenvaluesh</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#absolute_eigenvaluesh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.absolute_eigenvaluesh" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes the eigenvalues sorted by absolute value from the symmetrical matrix.
-:param nd_array: array from which the eigenvalues will be calculated.
-:return: A list with the eigenvalues sorted in absolute ascending order
-(e.g. [eigenvalue1, eigenvalue2, …])</p>
+<dd><p>Computes the eigenvalues sorted by absolute value from the symmetrical matrix.</p>
+<dl class="simple">
+<dt>nd_array: nd.ndarray</dt><dd><p>array from which the eigenvalues will be calculated.</p>
+</dd>
+</dl>
+<blockquote>
+<div><p>A list with the eigenvalues sorted in absolute ascending order (e.g.
+[eigenvalue1, eigenvalue2, …])</p>
+</div></blockquote>
 </dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.utils.create_image_like">
-<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">create_image_like</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#create_image_like"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.create_image_like" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.utils.divide_nonzero">
@@ -479,23 +504,73 @@ Mode 3:  scaling_param = [lower std range, upper std range,</p>
 
 <dl class="function">
 <dt id="aicssegmentation.core.utils.get_3dseed_from_mid_frame">
-<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">get_3dseed_from_mid_frame</code><span class="sig-paren">(</span><em class="sig-param">bw</em>, <em class="sig-param">stack_shape</em>, <em class="sig-param">mid_frame</em>, <em class="sig-param">hole_min</em>, <em class="sig-param">bg_seed=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#get_3dseed_from_mid_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.get_3dseed_from_mid_frame" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">get_3dseed_from_mid_frame</code><span class="sig-paren">(</span><em class="sig-param">bw: numpy.ndarray</em>, <em class="sig-param">stack_shape: List</em>, <em class="sig-param">mid_frame: int</em>, <em class="sig-param">hole_min: int</em>, <em class="sig-param">bg_seed: bool = True</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/utils.html#get_3dseed_from_mid_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.get_3dseed_from_mid_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>build a 3D seed image from the binary segmentation of a single slice</p>
+<dl class="simple">
+<dt>bw: np.ndarray</dt><dd><p>the 2d segmentation of a single frame</p>
+</dd>
+<dt>shape_3d: List</dt><dd><p>the shape of original 3d image, e.g. shape_3d = img.shape</p>
+</dd>
+<dt>frame_index: int</dt><dd><p>the index of where bw is from the whole z-stack</p>
+</dd>
+<dt>area_min: int</dt><dd><p>any connected component in bw2d with size smaller than area_min
+will be excluded from seed image generation</p>
+</dd>
+<dt>bg_seed: bool</dt><dd><p>bg_seed=True will add a background seed at the first frame (z=0).</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.utils.get_middle_frame">
-<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">get_middle_frame</code><span class="sig-paren">(</span><em class="sig-param">struct_img_smooth</em>, <em class="sig-param">method='z'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#get_middle_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.get_middle_frame" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">get_middle_frame</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">method: str = 'z'</em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="_modules/aicssegmentation/core/utils.html#get_middle_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.get_middle_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>find the middle z frame of an image stack</p>
+<dl class="simple">
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to process</p>
+</dd>
+<dt>method: str</dt><dd><p>which method to use to determine the middle frame. Options
+are “z” or “intensity”. “z” is solely based on the number of z
+frames. “intensity” method uses Otsu threshod to estimate the
+volume of foreground signals in the stack, then estimated volume
+of each z frame forms a z-profile, and finally another Otsu
+method is apply on the z profile to find the best z frame (with
+an assumption of two peaks along z profile, one near the bottom
+of the cells and one near the bottom of the cells, so the optimal
+separation is the middle of the stack).</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>mid_frame: int</dt><dd><p>the z index of the middle z frame</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.utils.histogram_otsu">
 <code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">histogram_otsu</code><span class="sig-paren">(</span><em class="sig-param">hist</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#histogram_otsu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.histogram_otsu" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Apply Otsu thresholding method on 1D histogram</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.utils.hole_filling">
-<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">hole_filling</code><span class="sig-paren">(</span><em class="sig-param">bw</em>, <em class="sig-param">hole_min</em>, <em class="sig-param">hole_max</em>, <em class="sig-param">fill_2d=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#hole_filling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.hole_filling" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">hole_filling</code><span class="sig-paren">(</span><em class="sig-param">bw: numpy.ndarray</em>, <em class="sig-param">hole_min: int</em>, <em class="sig-param">hole_max: int</em>, <em class="sig-param">fill_2d: bool = True</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/utils.html#hole_filling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.hole_filling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill holes in 2D/3D segmentation</p>
+<dl class="simple">
+<dt>bw: np.ndarray</dt><dd><p>a binary 2D/3D image.</p>
+</dd>
+<dt>hole_min: int</dt><dd><p>the minimum size of the holes to be filled</p>
+</dd>
+<dt>hole_max: int</dt><dd><p>the maximum size of the holes to be filled</p>
+</dd>
+<dt>fill_2d: bool</dt><dd><p>if fill_2d=True, a 3D image will be filled slice by slice.
+If you think of a hollow tube alone z direction, the inside
+is not a hole under 3D topology, but the inside on each slice
+is indeed a hole under 2D topology.</p>
+</dd>
+<dt>Return:</dt><dd><p>a binary image after hole filling</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.utils.sortbyabs">
@@ -506,71 +581,151 @@ modified from: <a class="reference external" href="http://stackoverflow.com/a/11
 
 <dl class="function">
 <dt id="aicssegmentation.core.utils.topology_preserving_thinning">
-<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">topology_preserving_thinning</code><span class="sig-paren">(</span><em class="sig-param">bw</em>, <em class="sig-param">min_thickness=1</em>, <em class="sig-param">thin=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#topology_preserving_thinning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.topology_preserving_thinning" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">topology_preserving_thinning</code><span class="sig-paren">(</span><em class="sig-param">bw: numpy.ndarray</em>, <em class="sig-param">min_thickness: int = 1</em>, <em class="sig-param">thin: int = 1</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/utils.html#topology_preserving_thinning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.topology_preserving_thinning" title="Permalink to this definition">¶</a></dt>
+<dd><p>perform thinning on segmentation without breaking topology</p>
+<dl class="simple">
+<dt>bw: np.ndarray</dt><dd><p>the 3D binary image to be thinned</p>
+</dd>
+<dt>min_thinkness: int</dt><dd><p>Half of the minimum width you want to keep from being thinned.
+For example, when the object width is smaller than 4, you don’t
+want to make this part even thinner (may break the thin object
+and alter the topology), you can set this value as 2.</p>
+</dd>
+<dt>thin: int</dt><dd><dl class="simple">
+<dt>the amount to thin (has to be an positive integer). The number of</dt><dd><p>pixels to be removed from outter boundary towards center.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<blockquote>
+<div><p>A binary image after thinning</p>
+</div></blockquote>
+</dd></dl>
 
 </div>
 <div class="section" id="module-aicssegmentation.core.vessel">
 <span id="aicssegmentation-core-vessel-module"></span><h2>aicssegmentation.core.vessel module<a class="headerlink" href="#module-aicssegmentation.core.vessel" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="aicssegmentation.core.vessel.blobness3D">
-<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">blobness3D</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">scale_range=(1</em>, <em class="sig-param">10)</em>, <em class="sig-param">scale_step=2</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#blobness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.blobness3D" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.vessel.compute_blobness3D">
-<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">compute_blobness3D</code><span class="sig-paren">(</span><em class="sig-param">eigen1</em>, <em class="sig-param">eigen2</em>, <em class="sig-param">eigen3</em>, <em class="sig-param">tau</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#compute_blobness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.compute_blobness3D" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.vessel.compute_plateness3D">
-<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">compute_plateness3D</code><span class="sig-paren">(</span><em class="sig-param">eigen1</em>, <em class="sig-param">eigen2</em>, <em class="sig-param">eigen3</em>, <em class="sig-param">pa</em>, <em class="sig-param">pb</em>, <em class="sig-param">pc</em>, <em class="sig-param">tau</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#compute_plateness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.compute_plateness3D" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
 <dt id="aicssegmentation.core.vessel.compute_vesselness2D">
 <code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">compute_vesselness2D</code><span class="sig-paren">(</span><em class="sig-param">eigen2</em>, <em class="sig-param">tau</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#compute_vesselness2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.compute_vesselness2D" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>backend for computing 2D filament filter</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.vessel.compute_vesselness3D">
 <code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">compute_vesselness3D</code><span class="sig-paren">(</span><em class="sig-param">eigen2</em>, <em class="sig-param">eigen3</em>, <em class="sig-param">tau</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#compute_vesselness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.compute_vesselness3D" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>backend for computing 3D filament filter</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.vessel.filament_2d_wrapper">
-<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">filament_2d_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">f2_param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#filament_2d_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.filament_2d_wrapper" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">filament_2d_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray, f2_param: List[List]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#filament_2d_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.filament_2d_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>wrapper for 2d filament filter</p>
+<dl class="simple">
+<dt>struct_img: np.ndarray</dt><dd><p>the image (should have been smoothed) to be segmented. The image is
+either 2D or 3D. If 3D, the filter is applied in a slice by slice
+fashion</p>
+</dd>
+<dt>f2_param: List[List]</dt><dd><p>[[scale_1, cutoff_1], [scale_2, cutoff_2], ….], e.g., [[1, 0.01]]
+or [[1,0.05], [0.5, 0.1]]. Here, scale_x is set based on the estimated
+thickness of your target filaments. For example, if visually the thickness
+of the filaments is usually 3~4 pixels, then you may want to set scale_x
+as 1 or something near 1 (like 1.25). Multiple scales can be used, if you
+have filaments of very different thickness. cutoff_x is a threshold applied
+on the actual filter reponse to get the binary result. Smaller cutoff_x may
+yielf more filaments, especially detecting more dim ones and thicker
+segmentation, while larger cutoff_x could be less permisive and yield less
+filaments and slimmer segmentation.</p>
+</dd>
+</dl>
+<p>T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic
+images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.vessel.filament_3d_wrapper">
-<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">filament_3d_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">f3_param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#filament_3d_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.filament_3d_wrapper" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.vessel.plateness3D">
-<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">plateness3D</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">scale_range=(1</em>, <em class="sig-param">10)</em>, <em class="sig-param">scale_step=2</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">pa=0.5</em>, <em class="sig-param">pb=0.5</em>, <em class="sig-param">pc=1</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#plateness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.plateness3D" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">filament_3d_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray, f3_param: List[List]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#filament_3d_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.filament_3d_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>wrapper for 3d filament filter</p>
+<dl class="simple">
+<dt>struct_img: np.ndarray</dt><dd><p>the image (should have been smoothed) to be segmented. The image has to be 3D.</p>
+</dd>
+<dt>f3_param: List[List]</dt><dd><p>[[scale_1, cutoff_1], [scale_2, cutoff_2], ….], e.g., [[1, 0.01]] or
+[[1,0.05], [0.5, 0.1]]. scale_x is set based on the estimated thickness of your
+target filaments. For example, if visually the thickness of the filaments is
+usually 3~4 pixels, then you may want to set scale_x as 1 or something near 1
+(like 1.25). Multiple scales can be used, if you have filaments of very
+different thickness. cutoff_x is a threshold applied on the actual filter
+reponse to get the binary result. Smaller cutoff_x may yielf more filaments,
+especially detecting more dim ones and thicker segmentation, while larger
+cutoff_x could be less permisive and yield less filaments and slimmer
+segmentation.</p>
+</dd>
+</dl>
+<p>T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic
+images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.vessel.vesselness2D">
-<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselness2D</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">sigmas</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselness2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselness2D" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.vessel.vesselness2D_range">
-<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselness2D_range</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">scale_range=(1</em>, <em class="sig-param">10)</em>, <em class="sig-param">scale_step=2</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselness2D_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselness2D_range" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselness2D</code><span class="sig-paren">(</span><em class="sig-param">nd_array: numpy.ndarray</em>, <em class="sig-param">sigmas: List</em>, <em class="sig-param">tau: float = 0.5</em>, <em class="sig-param">whiteonblack: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselness2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselness2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-scale 2D filament filter</p>
+<dl class="simple">
+<dt>nd_array: np.ndarray</dt><dd><p>the 2D image to be filterd on</p>
+</dd>
+<dt>sigmas: List</dt><dd><p>a list of scales to use</p>
+</dd>
+<dt>tau: float</dt><dd><p>parameter that controls response uniformity. The value has to be
+between 0.5 and 1. Lower tau means more intense output response.
+Default is 0.5</p>
+</dd>
+<dt>whiteonblack: bool</dt><dd><p>whether the filamentous structures are bright on dark background
+or dark on bright. Default is True.</p>
+</dd>
+</dl>
+<p>T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic
+images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.vessel.vesselness3D">
 <code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselness3D</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">sigmas</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselness3D" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Multi-scale 3D filament filter</p>
+<dl class="simple">
+<dt>nd_array: np.ndarray</dt><dd><p>the 3D image to be filterd on</p>
+</dd>
+<dt>sigmas: List</dt><dd><p>a list of scales to use</p>
+</dd>
+<dt>tau: float</dt><dd><p>parameter that controls response uniformity. The value has to be
+between 0.5 and 1. Lower tau means more intense output response.
+Default is 0.5</p>
+</dd>
+<dt>whiteonblack: bool</dt><dd><p>whether the filamentous structures are bright on dark background
+or dark on bright. Default is True.</p>
+</dd>
+</dl>
+<p>T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic
+images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.vessel.vesselnessSliceBySlice">
-<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselnessSliceBySlice</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">sigmas</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselnessSliceBySlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselnessSliceBySlice" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselnessSliceBySlice</code><span class="sig-paren">(</span><em class="sig-param">nd_array: numpy.ndarray</em>, <em class="sig-param">sigmas: List</em>, <em class="sig-param">tau: float = 0.5</em>, <em class="sig-param">whiteonblack: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselnessSliceBySlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselnessSliceBySlice" title="Permalink to this definition">¶</a></dt>
+<dd><p>wrapper for applying multi-scale 2D filament filter on 3D images in a
+slice by slice fashion</p>
+<dl class="simple">
+<dt>nd_array: np.ndarray</dt><dd><p>the 3D image to be filterd on</p>
+</dd>
+<dt>sigmas: List</dt><dd><p>a list of scales to use</p>
+</dd>
+<dt>tau: float</dt><dd><p>parameter that controls response uniformity. The value has to be
+between 0.5 and 1. Lower tau means more intense output response.
+Default is 0.5</p>
+</dd>
+<dt>whiteonblack: bool</dt><dd><p>whether the filamentous structures are bright on dark background
+or dark on bright. Default is True.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 <div class="section" id="module-aicssegmentation.core.visual">
@@ -578,74 +733,166 @@ modified from: <a class="reference external" href="http://stackoverflow.com/a/11
 <dl class="function">
 <dt id="aicssegmentation.core.visual.blob2dExplorer_single">
 <code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">blob2dExplorer_single</code><span class="sig-paren">(</span><em class="sig-param">im</em>, <em class="sig-param">sigma</em>, <em class="sig-param">th</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#blob2dExplorer_single"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.blob2dExplorer_single" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.visual.blob2dExplorer_stack">
-<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">blob2dExplorer_stack</code><span class="sig-paren">(</span><em class="sig-param">im_stack</em>, <em class="sig-param">zz</em>, <em class="sig-param">sigma</em>, <em class="sig-param">th</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#blob2dExplorer_stack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.blob2dExplorer_stack" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.visual.explore_dot_3d">
-<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">explore_dot_3d</code><span class="sig-paren">(</span><em class="sig-param">img, sigma, th, roi=[-1]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#explore_dot_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.explore_dot_3d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.visual.explore_vesselness_2d">
-<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">explore_vesselness_2d</code><span class="sig-paren">(</span><em class="sig-param">im, sigma, th, roi=[-1]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#explore_vesselness_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.explore_vesselness_2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.visual.explore_vesselness_3d">
-<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">explore_vesselness_3d</code><span class="sig-paren">(</span><em class="sig-param">im, sigma, th, roi=[-1]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#explore_vesselness_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.explore_vesselness_3d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>backend for trying 2D spot filter on a single Z slice</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>im</strong> (<em>np.ndarray</em>) – 2D image array</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – sigma in the spot filter</p></li>
+<li><p><strong>th</strong> (<em>float</em>) – threshold to be applied as cutoff on filter output</p></li>
+</ul>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">fixed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># define slide bars for trying different parameters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">interact</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">blob2dExplorer_single</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">im</span> <span class="o">=</span> <span class="n">fixed</span><span class="p">(</span><span class="n">img</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">sigma</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatRangeSlider</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">min</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">max</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">continuous_update</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">th</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">value</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">min</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">max</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">step</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">continuous_update</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.visual.fila2dExplorer_single">
 <code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">fila2dExplorer_single</code><span class="sig-paren">(</span><em class="sig-param">im</em>, <em class="sig-param">sigma</em>, <em class="sig-param">th</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#fila2dExplorer_single"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.fila2dExplorer_single" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>backend for trying 2D filament filter on a single Z slice</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>im</strong> (<em>np.ndarray</em>) – 2D image array</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – sigma in the filament filter</p></li>
+<li><p><strong>th</strong> (<em>float</em>) – threshold to be applied as cutoff on filter output</p></li>
+</ul>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">fixed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># define slide bars for trying different parameters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">interact</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">fila2dExplorer_single</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">im</span> <span class="o">=</span> <span class="n">fixed</span><span class="p">(</span><span class="n">img</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">sigma</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatRangeSlider</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">value</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">min</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">max</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">continuous_update</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">th</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">value</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">min</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">max</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">step</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">continuous_update</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.visual.img_seg_combine">
 <code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">img_seg_combine</code><span class="sig-paren">(</span><em class="sig-param">img, seg, roi=['Full', None]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#img_seg_combine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.img_seg_combine" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>creating raw and segmentation side-by-side for visualizaiton</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.visual.mipView">
 <code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">mipView</code><span class="sig-paren">(</span><em class="sig-param">im</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#mipView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.mipView" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>simple wrapper to view maximum intensity projection</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.visual.random_colormap">
 <code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">random_colormap</code><span class="sig-paren">(</span><em class="sig-param">nn: int = 10000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#random_colormap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.random_colormap" title="Permalink to this definition">¶</a></dt>
 <dd><p>generate a random colormap with nn different colors</p>
+<dl class="simple">
+<dt>nn: int</dt><dd><p>the number of random colors needed</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># img_label is output of a label function and represent all connected components</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_label</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">random_colormap</span><span class="p">())</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.visual.seg_fluo_side_by_side">
 <code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">seg_fluo_side_by_side</code><span class="sig-paren">(</span><em class="sig-param">im, seg, roi=['Full', None]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#seg_fluo_side_by_side"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.seg_fluo_side_by_side" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>wrapper for displaying raw and segmentation side by side</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.visual.segmentation_quick_view">
-<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">segmentation_quick_view</code><span class="sig-paren">(</span><em class="sig-param">seg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#segmentation_quick_view"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.segmentation_quick_view" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">segmentation_quick_view</code><span class="sig-paren">(</span><em class="sig-param">seg: numpy.ndarray</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#segmentation_quick_view"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.segmentation_quick_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>wrapper for visualizing segmentation in ITK viewer</p>
+<dl class="simple">
+<dt>seg: np.ndarray</dt><dd><p>3D stack of segmentation to view</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itkwidgets</span> <span class="kn">import</span> <span class="n">view</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">view</span><span class="p">(</span><span class="n">segmentation_quick_view</span><span class="p">(</span><span class="n">seg</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.visual.single_fluorescent_view">
 <code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">single_fluorescent_view</code><span class="sig-paren">(</span><em class="sig-param">im</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#single_fluorescent_view"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.single_fluorescent_view" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>wrapper for visualizing an image stack in ITK viewer</p>
+<dl class="simple">
+<dt>im: np.ndarray</dt><dd><p>3D image stack to view</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itkwidgets</span> <span class="kn">import</span> <span class="n">view</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">view</span><span class="p">(</span><span class="n">single_fluorescent_view</span><span class="p">(</span><span class="n">im</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="function">
 <dt id="aicssegmentation.core.visual.sliceViewer">
 <code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">sliceViewer</code><span class="sig-paren">(</span><em class="sig-param">im: numpy.ndarray</em>, <em class="sig-param">zz: int</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#sliceViewer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.sliceViewer" title="Permalink to this definition">¶</a></dt>
 <dd><p>simple wrapper to view one slice of a z-stack</p>
+<dl class="simple">
+<dt>im: np.ndarray</dt><dd><p>3D image stack to view</p>
+</dd>
+<dt>zz: int</dt><dd><p>the slice to return</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">fixed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">interact</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">sliceViewer</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">im</span> <span class="o">=</span> <span class="n">fixed</span><span class="p">(</span><span class="n">struct_img</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">zz</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">min</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">max</span> <span class="o">=</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">value</span> <span class="o">=</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">continuous_update</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">);</span>
+</pre></div>
+</div>
 </dd></dl>
-
-<dl class="function">
-<dt id="aicssegmentation.core.visual.vesselness2dExplorer">
-<code class="sig-prename descclassname">aicssegmentation.core.visual.</code><code class="sig-name descname">vesselness2dExplorer</code><span class="sig-paren">(</span><em class="sig-param">im</em>, <em class="sig-param">zz</em>, <em class="sig-param">sigma</em>, <em class="sig-param">th</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/visual.html#vesselness2dExplorer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.visual.vesselness2dExplorer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </div>
 <div class="section" id="module-aicssegmentation.core">

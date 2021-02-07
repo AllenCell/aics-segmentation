@@ -183,10 +183,23 @@
   <h1>Source code for aicssegmentation.core.seg_dot</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">ndimage</span> <span class="k">as</span> <span class="n">ndi</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="kn">from</span> <span class="nn">scipy.ndimage.filters</span> <span class="kn">import</span> <span class="n">gaussian_laplace</span>
 
 
-<div class="viewcode-block" id="dot_3d"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.seg_dot.dot_3d">[docs]</a><span class="k">def</span> <span class="nf">dot_3d</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">log_sigma</span><span class="p">):</span>
+<div class="viewcode-block" id="dot_3d"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.seg_dot.dot_3d">[docs]</a><span class="k">def</span> <span class="nf">dot_3d</span><span class="p">(</span><span class="n">struct_img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">log_sigma</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;apply 3D spot filter on a 3D image</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    struct_img: np.ndarray</span>
+<span class="sd">        the 3D image to segment</span>
+<span class="sd">    log_sigma: float</span>
+<span class="sd">        the size of the filter, which can be set based on the estimated radius</span>
+<span class="sd">        of your target dots. For example, if visually the diameter of the</span>
+<span class="sd">        dots is usually 3~4 pixels, then you may want to set this as 1</span>
+<span class="sd">        or something near 1 (like 1.25).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
     <span class="n">responce</span> <span class="o">=</span> <span class="p">(</span>
         <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">log_sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">ndi</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian_laplace</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">log_sigma</span><span class="p">)</span>
@@ -194,7 +207,45 @@
     <span class="k">return</span> <span class="n">responce</span></div>
 
 
-<div class="viewcode-block" id="dot_3d_wrapper"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.seg_dot.dot_3d_wrapper">[docs]</a><span class="k">def</span> <span class="nf">dot_3d_wrapper</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">s3_param</span><span class="p">):</span>
+<div class="viewcode-block" id="dot_2d"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.seg_dot.dot_2d">[docs]</a><span class="k">def</span> <span class="nf">dot_2d</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">log_sigma</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;apply 2D spot filter on a 2D image</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    struct_img: np.ndarray</span>
+<span class="sd">        the 2D image to segment</span>
+<span class="sd">    log_sigma: float</span>
+<span class="sd">        the size of the filter, which can be set based on the estimated radius</span>
+<span class="sd">        of your target dots. For example, if visually the diameter of the</span>
+<span class="sd">        dots is usually 3~4 pixels, then you may want to set this as 1</span>
+<span class="sd">        or something near 1 (like 1.25).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="n">responce</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">log_sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">ndi</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian_laplace</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">log_sigma</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">responce</span></div>
+
+
+<div class="viewcode-block" id="dot_3d_wrapper"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.seg_dot.dot_3d_wrapper">[docs]</a><span class="k">def</span> <span class="nf">dot_3d_wrapper</span><span class="p">(</span><span class="n">struct_img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">s3_param</span><span class="p">:</span> <span class="n">List</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;wrapper for 3D spot filter</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    struct_img: np.ndarray</span>
+<span class="sd">        a 3d numpy array, usually the image after smoothing</span>
+<span class="sd">    s3_param: List</span>
+<span class="sd">        [[scale_1, cutoff_1], [scale_2, cutoff_2], ....], e.g. [[1, 0.1]]</span>
+<span class="sd">        or [[1,0.12], [3,0.1]]. scale_x is set based on the estimated radius of</span>
+<span class="sd">        your target dots. For example, if visually the diameter of the dots is</span>
+<span class="sd">        about 3~4 pixels, then you may want to set scale_x as 1 or something</span>
+<span class="sd">        near 1 (like 1.25). Multiple scales can be used, if you have dots of</span>
+<span class="sd">        very different sizes. cutoff_x is a threshold applied on the actual filter</span>
+<span class="sd">        reponse to get the binary result. Smaller cutoff_x may yielf more dots and</span>
+<span class="sd">        &quot;fatter&quot; segmentation, while larger cutoff_x could be less permisive and</span>
+<span class="sd">        yield less dots and slimmer segmentation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">bw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">fid</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s3_param</span><span class="p">)):</span>
         <span class="n">log_sigma</span> <span class="o">=</span> <span class="n">s3_param</span><span class="p">[</span><span class="n">fid</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
@@ -205,15 +256,18 @@
     <span class="k">return</span> <span class="n">bw</span></div>
 
 
-<div class="viewcode-block" id="dot_2d"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.seg_dot.dot_2d">[docs]</a><span class="k">def</span> <span class="nf">dot_2d</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">log_sigma</span><span class="p">):</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
-    <span class="n">responce</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">log_sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">ndi</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">gaussian_laplace</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">log_sigma</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">responce</span></div>
+<div class="viewcode-block" id="logSlice"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.seg_dot.logSlice">[docs]</a><span class="k">def</span> <span class="nf">logSlice</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sigma_list</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;apply multi-scale 2D spot filter on a 2D image and binarize with threshold</span>
 
-
-<div class="viewcode-block" id="logSlice"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.seg_dot.logSlice">[docs]</a><span class="k">def</span> <span class="nf">logSlice</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">sigma_list</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -------------</span>
+<span class="sd">    image: np.ndarray</span>
+<span class="sd">        the 2D image to segment</span>
+<span class="sd">    sigma_list: List</span>
+<span class="sd">        The list of sigma representing filters in multiple scales</span>
+<span class="sd">    threshold: float</span>
+<span class="sd">        the cutoff to apply to get the binary output</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">gl_images</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">gaussian_laplace</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">s</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sigma_list</span><span class="p">]</span>
 
@@ -225,7 +279,19 @@
     <span class="k">return</span> <span class="n">seg</span></div>
 
 
-<div class="viewcode-block" id="dot_slice_by_slice"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.seg_dot.dot_slice_by_slice">[docs]</a><span class="k">def</span> <span class="nf">dot_slice_by_slice</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">log_sigma</span><span class="p">):</span>
+<div class="viewcode-block" id="dot_slice_by_slice"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.seg_dot.dot_slice_by_slice">[docs]</a><span class="k">def</span> <span class="nf">dot_slice_by_slice</span><span class="p">(</span><span class="n">struct_img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">log_sigma</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;apply 2D spot filter on 3D image slice by slice</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    struct_img: np.ndarray</span>
+<span class="sd">        a 3d numpy array, usually the image after smoothing</span>
+<span class="sd">    log_sigma: float</span>
+<span class="sd">        the size of the filter, which can be set based on the estimated radius</span>
+<span class="sd">        of your target dots. For example, if visually the diameter of the</span>
+<span class="sd">        dots is usually 3~4 pixels, then you may want to set this as 1</span>
+<span class="sd">        or something near 1 (like 1.25).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">struct_img</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">zz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="n">res</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span>
@@ -236,7 +302,25 @@
     <span class="k">return</span> <span class="n">res</span></div>
 
 
-<div class="viewcode-block" id="dot_2d_slice_by_slice_wrapper"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.seg_dot.dot_2d_slice_by_slice_wrapper">[docs]</a><span class="k">def</span> <span class="nf">dot_2d_slice_by_slice_wrapper</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">s2_param</span><span class="p">):</span>
+<div class="viewcode-block" id="dot_2d_slice_by_slice_wrapper"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.seg_dot.dot_2d_slice_by_slice_wrapper">[docs]</a><span class="k">def</span> <span class="nf">dot_2d_slice_by_slice_wrapper</span><span class="p">(</span><span class="n">struct_img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">s2_param</span><span class="p">:</span> <span class="n">List</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;wrapper for 2D spot filter on 3D image slice by slice</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    struct_img: np.ndarray</span>
+<span class="sd">        a 3d numpy array, usually the image after smoothing</span>
+<span class="sd">    s2_param: List</span>
+<span class="sd">        [[scale_1, cutoff_1], [scale_2, cutoff_2], ....], e.g. [[1, 0.1]]</span>
+<span class="sd">        or [[1, 0.12], [3,0.1]]: scale_x is set based on the estimated radius</span>
+<span class="sd">        of your target dots. For example, if visually the diameter of the</span>
+<span class="sd">        dots is usually 3~4 pixels, then you may want to set scale_x as 1</span>
+<span class="sd">        or something near 1 (like 1.25). Multiple scales can be used, if</span>
+<span class="sd">        you have dots of very different sizes. cutoff_x is a threshold</span>
+<span class="sd">        applied on the actual filter reponse to get the binary result.</span>
+<span class="sd">        Smaller cutoff_x may yielf more dots and fatter segmentation,</span>
+<span class="sd">        while larger cutoff_x could be less permisive and yield less</span>
+<span class="sd">        dots and slimmer segmentation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">bw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">fid</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s2_param</span><span class="p">)):</span>
         <span class="n">log_sigma</span> <span class="o">=</span> <span class="n">s2_param</span><span class="p">[</span><span class="n">fid</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>

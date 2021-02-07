@@ -183,38 +183,36 @@
   <h1>Source code for aicssegmentation.core.vessel</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">divide_nonzero</span>
 <span class="kn">from</span> <span class="nn">.hessian</span> <span class="kn">import</span> <span class="n">absolute_3d_hessian_eigenvalues</span>
 
 
-<div class="viewcode-block" id="blobness3D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.blobness3D">[docs]</a><span class="k">def</span> <span class="nf">blobness3D</span><span class="p">(</span><span class="n">nd_array</span><span class="p">,</span> <span class="n">scale_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">scale_step</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="filament_3d_wrapper"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.filament_3d_wrapper">[docs]</a><span class="k">def</span> <span class="nf">filament_3d_wrapper</span><span class="p">(</span><span class="n">struct_img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">f3_param</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;wrapper for 3d filament filter</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">nd_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only 3 dimensions is currently supported&quot;</span><span class="p">))</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    struct_img: np.ndarray</span>
+<span class="sd">        the image (should have been smoothed) to be segmented. The image has to be 3D.</span>
+<span class="sd">    f3_param: List[List]</span>
+<span class="sd">        [[scale_1, cutoff_1], [scale_2, cutoff_2], ....], e.g., [[1, 0.01]] or</span>
+<span class="sd">        [[1,0.05], [0.5, 0.1]]. scale_x is set based on the estimated thickness of your</span>
+<span class="sd">        target filaments. For example, if visually the thickness of the filaments is</span>
+<span class="sd">        usually 3~4 pixels, then you may want to set scale_x as 1 or something near 1</span>
+<span class="sd">        (like 1.25). Multiple scales can be used, if you have filaments of very</span>
+<span class="sd">        different thickness. cutoff_x is a threshold applied on the actual filter</span>
+<span class="sd">        reponse to get the binary result. Smaller cutoff_x may yielf more filaments,</span>
+<span class="sd">        especially detecting more dim ones and thicker segmentation, while larger</span>
+<span class="sd">        cutoff_x could be less permisive and yield less filaments and slimmer</span>
+<span class="sd">        segmentation.</span>
 
-    <span class="c1"># from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74  # noqa E501</span>
-    <span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">scale_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">scale_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">scale_step</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigmas</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Sigma values less than zero are not valid&quot;</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">sigmas</span><span class="p">)</span>
-
-    <span class="n">filtered_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sigmas</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="n">nd_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sigmas</span><span class="p">):</span>
-        <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span>
-            <span class="n">nd_array</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
-        <span class="p">)</span>
-        <span class="c1"># print(eigenvalues[1])</span>
-        <span class="c1"># print(eigenvalues[2])</span>
-        <span class="n">filtered_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_blobness3D</span><span class="p">(</span>
-            <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span>
-        <span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">filtered_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="filament_3d_wrapper"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.filament_3d_wrapper">[docs]</a><span class="k">def</span> <span class="nf">filament_3d_wrapper</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">f3_param</span><span class="p">):</span>
+<span class="sd">    Reference:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic</span>
+<span class="sd">    images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;image has to be 3D&quot;</span>
     <span class="n">bw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">fid</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">f3_param</span><span class="p">)):</span>
         <span class="n">sigma</span> <span class="o">=</span> <span class="n">f3_param</span><span class="p">[</span><span class="n">fid</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
@@ -226,7 +224,32 @@
     <span class="k">return</span> <span class="n">bw</span></div>
 
 
-<div class="viewcode-block" id="filament_2d_wrapper"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.filament_2d_wrapper">[docs]</a><span class="k">def</span> <span class="nf">filament_2d_wrapper</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">f2_param</span><span class="p">):</span>
+<div class="viewcode-block" id="filament_2d_wrapper"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.filament_2d_wrapper">[docs]</a><span class="k">def</span> <span class="nf">filament_2d_wrapper</span><span class="p">(</span><span class="n">struct_img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">f2_param</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;wrapper for 2d filament filter</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    struct_img: np.ndarray</span>
+<span class="sd">        the image (should have been smoothed) to be segmented. The image is</span>
+<span class="sd">        either 2D or 3D. If 3D, the filter is applied in a slice by slice</span>
+<span class="sd">        fashion</span>
+<span class="sd">    f2_param: List[List]</span>
+<span class="sd">        [[scale_1, cutoff_1], [scale_2, cutoff_2], ....], e.g., [[1, 0.01]]</span>
+<span class="sd">        or [[1,0.05], [0.5, 0.1]]. Here, scale_x is set based on the estimated</span>
+<span class="sd">        thickness of your target filaments. For example, if visually the thickness</span>
+<span class="sd">        of the filaments is usually 3~4 pixels, then you may want to set scale_x</span>
+<span class="sd">        as 1 or something near 1 (like 1.25). Multiple scales can be used, if you</span>
+<span class="sd">        have filaments of very different thickness. cutoff_x is a threshold applied</span>
+<span class="sd">        on the actual filter reponse to get the binary result. Smaller cutoff_x may</span>
+<span class="sd">        yielf more filaments, especially detecting more dim ones and thicker</span>
+<span class="sd">        segmentation, while larger cutoff_x could be less permisive and yield less</span>
+<span class="sd">        filaments and slimmer segmentation.</span>
+
+<span class="sd">    Reference:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic</span>
+<span class="sd">    images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">bw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
@@ -257,6 +280,27 @@
 
 
 <div class="viewcode-block" id="vesselness3D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.vesselness3D">[docs]</a><span class="k">def</span> <span class="nf">vesselness3D</span><span class="p">(</span><span class="n">nd_array</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Multi-scale 3D filament filter</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    nd_array: np.ndarray</span>
+<span class="sd">        the 3D image to be filterd on</span>
+<span class="sd">    sigmas: List</span>
+<span class="sd">        a list of scales to use</span>
+<span class="sd">    tau: float</span>
+<span class="sd">        parameter that controls response uniformity. The value has to be</span>
+<span class="sd">        between 0.5 and 1. Lower tau means more intense output response.</span>
+<span class="sd">        Default is 0.5</span>
+<span class="sd">    whiteonblack: bool</span>
+<span class="sd">        whether the filamentous structures are bright on dark background</span>
+<span class="sd">        or dark on bright. Default is True.</span>
+
+<span class="sd">    Reference:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic</span>
+<span class="sd">    images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">nd_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
         <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only 3 dimensions is currently supported&quot;</span><span class="p">))</span>
@@ -278,8 +322,6 @@
         <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span>
             <span class="n">nd_array</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">)</span>
-        <span class="c1"># print(eigenvalues[1])</span>
-        <span class="c1"># print(eigenvalues[2])</span>
         <span class="n">filtered_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_vesselness3D</span><span class="p">(</span>
             <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span>
         <span class="p">)</span>
@@ -287,38 +329,30 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">filtered_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="plateness3D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.plateness3D">[docs]</a><span class="k">def</span> <span class="nf">plateness3D</span><span class="p">(</span>
-    <span class="n">nd_array</span><span class="p">,</span>
-    <span class="n">scale_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-    <span class="n">scale_step</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">pa</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">pb</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">pc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<div class="viewcode-block" id="vesselness2D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.vesselness2D">[docs]</a><span class="k">def</span> <span class="nf">vesselness2D</span><span class="p">(</span>
+    <span class="n">nd_array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">tau</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">nd_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only 3 dimensions is currently supported&quot;</span><span class="p">))</span>
+    <span class="sd">&quot;&quot;&quot;Multi-scale 2D filament filter</span>
 
-    <span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">scale_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">scale_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">scale_step</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigmas</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Sigma values less than zero are not valid&quot;</span><span class="p">)</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    nd_array: np.ndarray</span>
+<span class="sd">        the 2D image to be filterd on</span>
+<span class="sd">    sigmas: List</span>
+<span class="sd">        a list of scales to use</span>
+<span class="sd">    tau: float</span>
+<span class="sd">        parameter that controls response uniformity. The value has to be</span>
+<span class="sd">        between 0.5 and 1. Lower tau means more intense output response.</span>
+<span class="sd">        Default is 0.5</span>
+<span class="sd">    whiteonblack: bool</span>
+<span class="sd">        whether the filamentous structures are bright on dark background</span>
+<span class="sd">        or dark on bright. Default is True.</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">sigmas</span><span class="p">)</span>
-
-    <span class="n">filtered_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sigmas</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="n">nd_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sigmas</span><span class="p">):</span>
-        <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span>
-            <span class="n">nd_array</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
-        <span class="p">)</span>
-        <span class="n">filtered_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_plateness3D</span><span class="p">(</span>
-            <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">pa</span><span class="p">,</span> <span class="n">pb</span><span class="p">,</span> <span class="n">pc</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span>
-        <span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">filtered_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="vesselness2D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.vesselness2D">[docs]</a><span class="k">def</span> <span class="nf">vesselness2D</span><span class="p">(</span><span class="n">nd_array</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="sd">    Reference:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic</span>
+<span class="sd">    images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">nd_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only 2 dimensions is currently supported&quot;</span><span class="p">))</span>
@@ -347,34 +381,27 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">filtered_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="vesselness2D_range"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.vesselness2D_range">[docs]</a><span class="k">def</span> <span class="nf">vesselness2D_range</span><span class="p">(</span>
-    <span class="n">nd_array</span><span class="p">,</span> <span class="n">scale_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">scale_step</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
+<div class="viewcode-block" id="vesselnessSliceBySlice"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.vesselnessSliceBySlice">[docs]</a><span class="k">def</span> <span class="nf">vesselnessSliceBySlice</span><span class="p">(</span>
+    <span class="n">nd_array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">tau</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    wrapper for applying multi-scale 2D filament filter on 3D images in a</span>
+<span class="sd">    slice by slice fashion</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">nd_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only 2 dimensions is currently supported&quot;</span><span class="p">))</span>
-
-    <span class="c1"># from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74  # noqa E501</span>
-    <span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">scale_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">scale_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">scale_step</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigmas</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Sigma values less than zero are not valid&quot;</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">sigmas</span><span class="p">)</span>
-
-    <span class="n">filtered_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sigmas</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="n">nd_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sigmas</span><span class="p">):</span>
-        <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span>
-            <span class="n">nd_array</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
-        <span class="p">)</span>
-        <span class="c1"># print(eigenvalues[1])</span>
-        <span class="c1"># print(eigenvalues[2])</span>
-        <span class="n">filtered_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_vesselness2D</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">filtered_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="vesselnessSliceBySlice"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.vesselnessSliceBySlice">[docs]</a><span class="k">def</span> <span class="nf">vesselnessSliceBySlice</span><span class="p">(</span><span class="n">nd_array</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    nd_array: np.ndarray</span>
+<span class="sd">        the 3D image to be filterd on</span>
+<span class="sd">    sigmas: List</span>
+<span class="sd">        a list of scales to use</span>
+<span class="sd">    tau: float</span>
+<span class="sd">        parameter that controls response uniformity. The value has to be</span>
+<span class="sd">        between 0.5 and 1. Lower tau means more intense output response.</span>
+<span class="sd">        Default is 0.5</span>
+<span class="sd">    whiteonblack: bool</span>
+<span class="sd">        whether the filamentous structures are bright on dark background</span>
+<span class="sd">        or dark on bright. Default is True.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">mip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">nd_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nd_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -386,24 +413,8 @@
     <span class="k">return</span> <span class="n">response</span></div>
 
 
-<div class="viewcode-block" id="compute_blobness3D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.compute_blobness3D">[docs]</a><span class="k">def</span> <span class="nf">compute_blobness3D</span><span class="p">(</span><span class="n">eigen1</span><span class="p">,</span> <span class="n">eigen2</span><span class="p">,</span> <span class="n">eigen3</span><span class="p">,</span> <span class="n">tau</span><span class="p">):</span>
-
-    <span class="n">lambda3m</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">eigen3</span><span class="p">)</span>
-    <span class="n">lambda3m</span><span class="p">[</span><span class="n">eigen3</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">tau</span> <span class="o">*</span> <span class="n">eigen3</span><span class="o">.</span><span class="n">min</span><span class="p">())]</span> <span class="o">=</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">eigen3</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-
-    <span class="n">response</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">eigen1</span><span class="p">),</span> <span class="n">lambda3m</span><span class="p">)</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">divide_nonzero</span><span class="p">(</span><span class="mi">27</span> <span class="o">*</span> <span class="n">response</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">eigen1</span> <span class="o">+</span> <span class="n">lambda3m</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-
-    <span class="n">response</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">less</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">lambda3m</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eigen1</span><span class="p">))]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">response</span><span class="p">[</span><span class="n">eigen1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">response</span><span class="p">[</span><span class="n">eigen2</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">response</span><span class="p">[</span><span class="n">eigen3</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">response</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">response</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="k">return</span> <span class="n">response</span></div>
-
-
 <div class="viewcode-block" id="compute_vesselness3D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.compute_vesselness3D">[docs]</a><span class="k">def</span> <span class="nf">compute_vesselness3D</span><span class="p">(</span><span class="n">eigen2</span><span class="p">,</span> <span class="n">eigen3</span><span class="p">,</span> <span class="n">tau</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; backend for computing 3D filament filter &quot;&quot;&quot;</span>
 
     <span class="n">lambda3m</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">eigen3</span><span class="p">)</span>
     <span class="n">lambda3m</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">eigen3</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">eigen3</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">tau</span> <span class="o">*</span> <span class="n">eigen3</span><span class="o">.</span><span class="n">min</span><span class="p">()))]</span> <span class="o">=</span> <span class="p">(</span>
@@ -423,6 +434,7 @@
 
 
 <div class="viewcode-block" id="compute_vesselness2D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.compute_vesselness2D">[docs]</a><span class="k">def</span> <span class="nf">compute_vesselness2D</span><span class="p">(</span><span class="n">eigen2</span><span class="p">,</span> <span class="n">tau</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; backend for computing 2D filament filter &quot;&quot;&quot;</span>
 
     <span class="n">Lambda3</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">eigen2</span><span class="p">)</span>
     <span class="n">Lambda3</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">Lambda3</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Lambda3</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">tau</span> <span class="o">*</span> <span class="n">Lambda3</span><span class="o">.</span><span class="n">min</span><span class="p">()))]</span> <span class="o">=</span> <span class="p">(</span>
@@ -438,33 +450,6 @@
     <span class="n">response</span><span class="p">[</span><span class="n">eigen2</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">response</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">response</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">return</span> <span class="n">response</span></div>
-
-
-<div class="viewcode-block" id="compute_plateness3D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.compute_plateness3D">[docs]</a><span class="k">def</span> <span class="nf">compute_plateness3D</span><span class="p">(</span><span class="n">eigen1</span><span class="p">,</span> <span class="n">eigen2</span><span class="p">,</span> <span class="n">eigen3</span><span class="p">,</span> <span class="n">pa</span><span class="p">,</span> <span class="n">pb</span><span class="p">,</span> <span class="n">pc</span><span class="p">,</span> <span class="n">tau</span><span class="p">):</span>
-
-    <span class="n">response</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">eigen2</span> <span class="o">-</span> <span class="n">eigen3</span>
-    <span class="p">)</span>  <span class="c1"># -1*(eigen3 - eigen2) # assume eigen3&lt;0, abs(eigen3)&gt;abs(eigen2)</span>
-    <span class="n">response</span><span class="p">[</span><span class="n">eigen3</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mf">0.001</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Ra = divide_nonzero(np.abs(eigen2),np.abs(eigen3))</span>
-<span class="sd">    Rb = divide_nonzero(np.abs(eigen1), np.sqrt(np.abs(np.multiply(eigen2,eigen3))))</span>
-<span class="sd">    SS = np.sqrt(np.square(eigen1)+np.square(eigen2)+np.square(eigen3))</span>
-
-<span class="sd">    aa = 2*pa*pa</span>
-<span class="sd">    bb = 2*pb*pb</span>
-<span class="sd">    cc = 2*pc*pc</span>
-
-<span class="sd">    m1 = np.exp(-1*np.square(Ra)/aa)</span>
-<span class="sd">    m2 = np.exp(-1*np.square(Rb)/bb)</span>
-<span class="sd">    m3 = np.exp(-1*np.square(SS)/cc)</span>
-
-<span class="sd">    response = m1 * m2 * (1-m3)</span>
-<span class="sd">    response[eigen3&gt;0]=0</span>
-<span class="sd">    response[np.isinf(response)]=0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">response</span></div>
 </pre></div>
 

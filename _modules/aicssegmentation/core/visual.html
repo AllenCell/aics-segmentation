@@ -186,13 +186,52 @@
 
 
 <div class="viewcode-block" id="sliceViewer"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.sliceViewer">[docs]</a><span class="k">def</span> <span class="nf">sliceViewer</span><span class="p">(</span><span class="n">im</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">zz</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;simple wrapper to view one slice of a z-stack&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;simple wrapper to view one slice of a z-stack</span>
+
+
+<span class="sd">    Parameter</span>
+<span class="sd">    -----------</span>
+<span class="sd">    im: np.ndarray</span>
+<span class="sd">        3D image stack to view</span>
+<span class="sd">    zz: int</span>
+<span class="sd">        the slice to return</span>
+
+
+<span class="sd">    Example:</span>
+<span class="sd">    ---------</span>
+<span class="sd">    &gt;&gt;&gt; from ipywidgets import interact, fixed</span>
+<span class="sd">    &gt;&gt;&gt; import ipywidgets as widgets</span>
+<span class="sd">    &gt;&gt;&gt; interact(</span>
+<span class="sd">    &gt;&gt;&gt;     sliceViewer,</span>
+<span class="sd">    &gt;&gt;&gt;     im = fixed(struct_img),</span>
+<span class="sd">    &gt;&gt;&gt;     zz = widgets.IntSlider(</span>
+<span class="sd">    &gt;&gt;&gt;         min = 0,</span>
+<span class="sd">    &gt;&gt;&gt;         max = struct_img.shape[0] - 1,</span>
+<span class="sd">    &gt;&gt;&gt;         step = 1,</span>
+<span class="sd">    &gt;&gt;&gt;         value = struct_img.shape[0] // 2,</span>
+<span class="sd">    &gt;&gt;&gt;         continuous_update = False</span>
+<span class="sd">    &gt;&gt;&gt;     )</span>
+<span class="sd">    &gt;&gt;&gt; );</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="random_colormap"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.random_colormap">[docs]</a><span class="k">def</span> <span class="nf">random_colormap</span><span class="p">(</span><span class="n">nn</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;generate a random colormap with nn different colors&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;generate a random colormap with nn different colors</span>
+
+<span class="sd">    Parameter:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    nn: int</span>
+<span class="sd">        the number of random colors needed</span>
+
+
+<span class="sd">    Example:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">    &gt;&gt;&gt; # img_label is output of a label function and represent all connected components</span>
+<span class="sd">    &gt;&gt;&gt; plt.imshow(img_label, cmap=random_colormap())</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
 
     <span class="n">viridis</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">nn</span><span class="p">)</span>
@@ -208,51 +247,43 @@
     <span class="k">return</span> <span class="n">viridis</span></div>
 
 
-<div class="viewcode-block" id="explore_dot_3d"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.explore_dot_3d">[docs]</a><span class="k">def</span> <span class="nf">explore_dot_3d</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-    <span class="c1"># roi = [x0, y0, x1, y1]</span>
-    <span class="k">if</span> <span class="n">roi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">roi</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
-
-    <span class="n">im</span> <span class="o">=</span> <span class="n">img</span><span class="p">[:,</span> <span class="n">roi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">:</span> <span class="n">roi</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">roi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="n">roi</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
-
-    <span class="kn">from</span> <span class="nn">aicssegmentation.core.seg_dot</span> <span class="kn">import</span> <span class="n">dot_3d</span>
-
-    <span class="n">response</span> <span class="o">=</span> <span class="n">dot_3d</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">log_sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
-    <span class="n">bw</span> <span class="o">=</span> <span class="n">response</span> <span class="o">&gt;</span> <span class="n">th</span>
-
-    <span class="n">out</span> <span class="o">=</span> <span class="n">img_seg_combine</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">bw</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span></div>
-
-
-<div class="viewcode-block" id="explore_vesselness_3d"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.explore_vesselness_3d">[docs]</a><span class="k">def</span> <span class="nf">explore_vesselness_3d</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-    <span class="c1"># roi = [x0, y0, x1, y1]</span>
-    <span class="k">if</span> <span class="n">roi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">roi</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
-
-    <span class="kn">from</span> <span class="nn">aicssegmentation.core.vessel</span> <span class="kn">import</span> <span class="n">vesselness3D</span>
-
-    <span class="n">response</span> <span class="o">=</span> <span class="n">vesselness3D</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">sigmas</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">bw</span> <span class="o">=</span> <span class="n">response</span> <span class="o">&gt;</span> <span class="n">th</span>
-
-    <span class="n">out</span> <span class="o">=</span> <span class="n">img_seg_combine</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">roi</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span></div>
-
-
-<div class="viewcode-block" id="explore_vesselness_2d"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.explore_vesselness_2d">[docs]</a><span class="k">def</span> <span class="nf">explore_vesselness_2d</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-    <span class="c1"># roi = [x0, y0, x1, y1]</span>
-    <span class="k">if</span> <span class="n">roi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">roi</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
-
-    <span class="kn">from</span> <span class="nn">aicssegmentation.core.vessel</span> <span class="kn">import</span> <span class="n">vesselnessSliceBySlice</span>
-
-    <span class="n">response</span> <span class="o">=</span> <span class="n">vesselnessSliceBySlice</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">sigmas</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">bw</span> <span class="o">=</span> <span class="n">response</span> <span class="o">&gt;</span> <span class="n">th</span>
-
-    <span class="n">out</span> <span class="o">=</span> <span class="n">img_seg_combine</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">roi</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span></div>
-
-
 <div class="viewcode-block" id="blob2dExplorer_single"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.blob2dExplorer_single">[docs]</a><span class="k">def</span> <span class="nf">blob2dExplorer_single</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">th</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;backend for trying 2D spot filter on a single Z slice</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    im : np.ndarray</span>
+<span class="sd">        2D image array</span>
+<span class="sd">    sigma : float</span>
+<span class="sd">        sigma in the spot filter</span>
+<span class="sd">    th : float</span>
+<span class="sd">        threshold to be applied as cutoff on filter output</span>
+
+
+<span class="sd">    Example:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &gt;&gt;&gt; from ipywidgets import interact, fixed</span>
+<span class="sd">    &gt;&gt;&gt; import ipywidgets as widgets</span>
+<span class="sd">    &gt;&gt;&gt; # define slide bars for trying different parameters</span>
+<span class="sd">    &gt;&gt;&gt; interact(</span>
+<span class="sd">    &gt;&gt;&gt;     blob2dExplorer_single,</span>
+<span class="sd">    &gt;&gt;&gt;     im = fixed(img),</span>
+<span class="sd">    &gt;&gt;&gt;     sigma = widgets.FloatRangeSlider(</span>
+<span class="sd">    &gt;&gt;&gt;         value = (1, 5),</span>
+<span class="sd">    &gt;&gt;&gt;         min = 1,</span>
+<span class="sd">    &gt;&gt;&gt;         max = 15,</span>
+<span class="sd">    &gt;&gt;&gt;         step = 1,</span>
+<span class="sd">    &gt;&gt;&gt;         continuous_update = False</span>
+<span class="sd">    &gt;&gt;&gt;     ),</span>
+<span class="sd">    &gt;&gt;&gt;     th = widgets.FloatSlider(</span>
+<span class="sd">    &gt;&gt;&gt;         value = 0.02,</span>
+<span class="sd">    &gt;&gt;&gt;         min = 0.01,</span>
+<span class="sd">    &gt;&gt;&gt;         max = 0.1,</span>
+<span class="sd">    &gt;&gt;&gt;         step = 0.01,</span>
+<span class="sd">    &gt;&gt;&gt;         continuous_update = False</span>
+<span class="sd">    &gt;&gt;&gt;     )</span>
+<span class="sd">    &gt;&gt;&gt; );</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">aicssegmentation.core.seg_dot</span> <span class="kn">import</span> <span class="n">logSlice</span>
 
     <span class="n">bw</span> <span class="o">=</span> <span class="n">logSlice</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="p">(</span><span class="n">sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sigma</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="n">th</span><span class="p">)</span>
@@ -263,6 +294,42 @@
 
 
 <div class="viewcode-block" id="fila2dExplorer_single"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.fila2dExplorer_single">[docs]</a><span class="k">def</span> <span class="nf">fila2dExplorer_single</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">th</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;backend for trying 2D filament filter on a single Z slice</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    im : np.ndarray</span>
+<span class="sd">        2D image array</span>
+<span class="sd">    sigma : float</span>
+<span class="sd">        sigma in the filament filter</span>
+<span class="sd">    th : float</span>
+<span class="sd">        threshold to be applied as cutoff on filter output</span>
+
+
+<span class="sd">    Example:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &gt;&gt;&gt; from ipywidgets import interact, fixed</span>
+<span class="sd">    &gt;&gt;&gt; import ipywidgets as widgets</span>
+<span class="sd">    &gt;&gt;&gt; # define slide bars for trying different parameters</span>
+<span class="sd">    &gt;&gt;&gt; interact(</span>
+<span class="sd">    &gt;&gt;&gt;     fila2dExplorer_single,</span>
+<span class="sd">    &gt;&gt;&gt;     im = fixed(img),</span>
+<span class="sd">    &gt;&gt;&gt;     sigma = widgets.FloatRangeSlider(</span>
+<span class="sd">    &gt;&gt;&gt;         value = 3,</span>
+<span class="sd">    &gt;&gt;&gt;         min = 1,</span>
+<span class="sd">    &gt;&gt;&gt;         max = 11,</span>
+<span class="sd">    &gt;&gt;&gt;         step = 1,</span>
+<span class="sd">    &gt;&gt;&gt;         continuous_update = False</span>
+<span class="sd">    &gt;&gt;&gt;     ),</span>
+<span class="sd">    &gt;&gt;&gt;     th = widgets.FloatSlider(</span>
+<span class="sd">    &gt;&gt;&gt;         value = 0.05,</span>
+<span class="sd">    &gt;&gt;&gt;         min = 0.01,</span>
+<span class="sd">    &gt;&gt;&gt;         max = 0.5,</span>
+<span class="sd">    &gt;&gt;&gt;         step = 0.01,</span>
+<span class="sd">    &gt;&gt;&gt;         continuous_update = False</span>
+<span class="sd">    &gt;&gt;&gt;     )</span>
+<span class="sd">    &gt;&gt;&gt; );</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">.vessel</span> <span class="kn">import</span> <span class="n">vesselness2D</span>
 
     <span class="n">tmp</span> <span class="o">=</span> <span class="n">vesselness2D</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="p">[</span><span class="n">sigma</span><span class="p">],</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -272,48 +339,15 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="blob2dExplorer_stack"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.blob2dExplorer_stack">[docs]</a><span class="k">def</span> <span class="nf">blob2dExplorer_stack</span><span class="p">(</span><span class="n">im_stack</span><span class="p">,</span> <span class="n">zz</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">th</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">.seg_dot</span> <span class="kn">import</span> <span class="n">logSlice</span>
-
-    <span class="n">im</span> <span class="o">=</span> <span class="n">im_stack</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-    <span class="n">bw</span> <span class="o">=</span> <span class="n">logSlice</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="p">(</span><span class="n">sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sigma</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="n">th</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">bw</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="vesselness2dExplorer"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.vesselness2dExplorer">[docs]</a><span class="k">def</span> <span class="nf">vesselness2dExplorer</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">zz</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">th</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">.vessel</span> <span class="kn">import</span> <span class="n">vesselness2D_range</span>
-
-    <span class="n">mip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">im</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">mip</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">tmp</span> <span class="o">=</span> <span class="n">vesselness2D_range</span><span class="p">(</span>
-        <span class="n">tmp</span><span class="p">,</span>
-        <span class="n">scale_range</span><span class="o">=</span><span class="p">(</span><span class="n">sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sigma</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
-        <span class="n">scale_step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">ves</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mip</span><span class="p">)</span>
-    <span class="n">ves</span><span class="p">[:,</span> <span class="p">:</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[:,</span> <span class="p">:</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ves</span> <span class="o">&gt;</span> <span class="n">th</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
-
-
 <div class="viewcode-block" id="mipView"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.mipView">[docs]</a><span class="k">def</span> <span class="nf">mipView</span><span class="p">(</span><span class="n">im</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;simple wrapper to view maximum intensity projection&quot;&quot;&quot;</span>
     <span class="n">mip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mip</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="img_seg_combine"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.img_seg_combine">[docs]</a><span class="k">def</span> <span class="nf">img_seg_combine</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Full&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]):</span>
-
+    <span class="sd">&quot;&quot;&quot; creating raw and segmentation side-by-side for visualizaiton &quot;&quot;&quot;</span>
     <span class="c1"># normalize to 0~1</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
     <span class="n">img</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span> <span class="o">-</span> <span class="n">img</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">img</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
@@ -334,7 +368,27 @@
     <span class="k">return</span> <span class="n">combined</span></div>
 
 
-<div class="viewcode-block" id="segmentation_quick_view"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.segmentation_quick_view">[docs]</a><span class="k">def</span> <span class="nf">segmentation_quick_view</span><span class="p">(</span><span class="n">seg</span><span class="p">):</span>
+<div class="viewcode-block" id="seg_fluo_side_by_side"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.seg_fluo_side_by_side">[docs]</a><span class="k">def</span> <span class="nf">seg_fluo_side_by_side</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Full&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot; wrapper for displaying raw and segmentation side by side&quot;&quot;&quot;</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">img_seg_combine</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">roi</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+<div class="viewcode-block" id="segmentation_quick_view"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.segmentation_quick_view">[docs]</a><span class="k">def</span> <span class="nf">segmentation_quick_view</span><span class="p">(</span><span class="n">seg</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;wrapper for visualizing segmentation in ITK viewer</span>
+
+<span class="sd">    Parameter:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    seg: np.ndarray</span>
+<span class="sd">        3D stack of segmentation to view</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    &gt;&gt;&gt; from itkwidgets import view</span>
+<span class="sd">    &gt;&gt;&gt; view(segmentation_quick_view(seg))</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">valid_pxl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">seg</span><span class="p">[</span><span class="n">seg</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_pxl</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;segmentation is empty&quot;</span><span class="p">)</span>
@@ -348,6 +402,19 @@
 
 
 <div class="viewcode-block" id="single_fluorescent_view"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.single_fluorescent_view">[docs]</a><span class="k">def</span> <span class="nf">single_fluorescent_view</span><span class="p">(</span><span class="n">im</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;wrapper for visualizing an image stack in ITK viewer</span>
+
+<span class="sd">    Parameter:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    im: np.ndarray</span>
+<span class="sd">        3D image stack to view</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    &gt;&gt;&gt; from itkwidgets import view</span>
+<span class="sd">    &gt;&gt;&gt; view(single_fluorescent_view(im))</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
 
@@ -355,13 +422,6 @@
     <span class="n">im</span> <span class="o">=</span> <span class="p">(</span><span class="n">im</span> <span class="o">-</span> <span class="n">im</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">im</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
 
     <span class="k">return</span> <span class="n">im</span></div>
-
-
-<div class="viewcode-block" id="seg_fluo_side_by_side"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.seg_fluo_side_by_side">[docs]</a><span class="k">def</span> <span class="nf">seg_fluo_side_by_side</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Full&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]):</span>
-
-    <span class="n">out</span> <span class="o">=</span> <span class="n">img_seg_combine</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">roi</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">out</span></div>
 </pre></div>
 
            </div>

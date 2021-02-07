@@ -188,13 +188,46 @@
 
 
 <div class="viewcode-block" id="MO"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.MO_threshold.MO">[docs]</a><span class="k">def</span> <span class="nf">MO</span><span class="p">(</span>
-    <span class="n">structure_img_smooth</span><span class="p">,</span>
-    <span class="n">global_thresh_method</span><span class="p">,</span>
-    <span class="n">object_minArea</span><span class="p">,</span>
-    <span class="n">extra_criteria</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">local_adjust</span><span class="o">=</span><span class="mf">0.98</span><span class="p">,</span>
-    <span class="n">return_object</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="p">):</span>
+    <span class="n">structure_img_smooth</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">global_thresh_method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">object_minArea</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">extra_criteria</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">local_adjust</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.98</span><span class="p">,</span>
+    <span class="n">return_object</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation of &quot;Masked Object Thresholding&quot; algorithm. Specifically, the</span>
+<span class="sd">    algorithm is a hybrid thresholding method combining two levels of thresholds.</span>
+<span class="sd">    The steps are [1] a global threshold is calculated, [2] extract each individual</span>
+<span class="sd">    connected componet after applying the global threshold, [3] remove small objects,</span>
+<span class="sd">    [4] within each remaining object, a local Otsu threshold is calculated and applied</span>
+<span class="sd">    with an optional local threshold adjustment ratio (to make the segmentation more</span>
+<span class="sd">    and less conservative). An extra check can be used in step [4], which requires the</span>
+<span class="sd">    local Otsu threshold larger than 1/3 of global Otsu threhsold and otherwise this</span>
+<span class="sd">    connected component is discarded.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    --------------</span>
+<span class="sd">    structure_img_smooth: np.ndarray</span>
+<span class="sd">        the image (should have already been smoothed) to apply the method on</span>
+<span class="sd">    global_thresh_method: str</span>
+<span class="sd">        which method to use for calculating global threshold. Options include:</span>
+<span class="sd">        &quot;triangle&quot; (or &quot;tri&quot;), &quot;median&quot; (or &quot;med&quot;), and &quot;ave_tri_med&quot; (or &quot;ave&quot;).</span>
+<span class="sd">        &quot;ave&quot; refers the average of &quot;triangle&quot; threshold and &quot;mean&quot; threshold.</span>
+<span class="sd">    object_minArea: int</span>
+<span class="sd">        the size filter for excluding small object before applying local threshold</span>
+<span class="sd">    extra_criteria: bool</span>
+<span class="sd">        whether to use the extra check when doing local thresholding, default is False</span>
+<span class="sd">    local_adjust: float</span>
+<span class="sd">        a ratio to apply on local threshold, default is 0.98</span>
+<span class="sd">    return_object: bool</span>
+<span class="sd">        whether to return the global thresholding results in order to obtain the</span>
+<span class="sd">        individual objects the local thresholding is made on</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">    --------------</span>
+<span class="sd">    a binary nd array of the segmentation result</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">global_thresh_method</span> <span class="o">==</span> <span class="s2">&quot;tri&quot;</span> <span class="ow">or</span> <span class="n">global_thresh_method</span> <span class="o">==</span> <span class="s2">&quot;triangle&quot;</span><span class="p">:</span>
         <span class="n">th_low_level</span> <span class="o">=</span> <span class="n">threshold_triangle</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">)</span>

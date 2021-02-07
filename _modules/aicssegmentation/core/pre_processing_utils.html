@@ -187,13 +187,28 @@
 <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">gaussian_filter</span>
 
 
-<div class="viewcode-block" id="intensity_normalization"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.pre_processing_utils.intensity_normalization">[docs]</a><span class="k">def</span> <span class="nf">intensity_normalization</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">scaling_param</span><span class="p">):</span>
+<div class="viewcode-block" id="intensity_normalization"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.pre_processing_utils.intensity_normalization">[docs]</a><span class="k">def</span> <span class="nf">intensity_normalization</span><span class="p">(</span><span class="n">struct_img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">scaling_param</span><span class="p">:</span> <span class="n">List</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Normalize the intensity of input image so that the value range is from 0 to 1.</span>
 
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Mode 1:  scaling_param = [0]</span>
-<span class="sd">    Mode 2:  scaling_param = [lower std range, upper std range]</span>
-<span class="sd">    Mode 3:  scaling_param = [lower std range, upper std range,</span>
-<span class="sd">             lower abs intensity, higher abs intensity]</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    img: np.ndarray</span>
+<span class="sd">        a 3d image</span>
+<span class="sd">    scaling_param: List</span>
+<span class="sd">        a list with only one value 0, i.e. [0]: Min-Max normlaizaiton,</span>
+<span class="sd">            the max intensity of img will be mapped to 1 and min will</span>
+<span class="sd">            be mapped to 0</span>
+<span class="sd">        a list with a single positive integer v, e.g. [5000]: Min-Max normalization,</span>
+<span class="sd">            but first any original intensity value &gt; v will be considered as outlier</span>
+<span class="sd">            and reset of min intensity of img. After the max will be mapped to 1</span>
+<span class="sd">            and min will be mapped to 0</span>
+<span class="sd">        a list with two float values [a, b], e.g. [1.5, 10.5]: Auto-contrast</span>
+<span class="sd">            normalizaiton. First, mean and standard deviaion (std) of the original</span>
+<span class="sd">            intensity in img are calculated. Next, the intensity is truncated into</span>
+<span class="sd">            range [mean - a * std, mean + b * std], and then recaled to [0, 1]</span>
+<span class="sd">        a list with four float values [a, b, c, d], e.g. [0.5, 15.5, 200, 4000]:</span>
+<span class="sd">            Auto-contrast normalization. Similat to above case, but only intensity value</span>
+<span class="sd">            between c and d will be used to calculated mean and std.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">scaling_param</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
 
@@ -232,6 +247,9 @@
 
 
 <div class="viewcode-block" id="image_smoothing_gaussian_3d"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.pre_processing_utils.image_smoothing_gaussian_3d">[docs]</a><span class="k">def</span> <span class="nf">image_smoothing_gaussian_3d</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">truncate_range</span><span class="o">=</span><span class="mf">3.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    wrapper for 3D Guassian smoothing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">structure_img_smooth</span> <span class="o">=</span> <span class="n">gaussian_filter</span><span class="p">(</span>
         <span class="n">struct_img</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="n">truncate_range</span>
@@ -241,7 +259,9 @@
 
 
 <div class="viewcode-block" id="image_smoothing_gaussian_slice_by_slice"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.pre_processing_utils.image_smoothing_gaussian_slice_by_slice">[docs]</a><span class="k">def</span> <span class="nf">image_smoothing_gaussian_slice_by_slice</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">truncate_range</span><span class="o">=</span><span class="mf">3.0</span><span class="p">):</span>
-
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    wrapper for applying 2D Guassian smoothing slice by slice on a 3D image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">structure_img_smooth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">struct_img</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">zz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="n">structure_img_smooth</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">gaussian_filter</span><span class="p">(</span>
@@ -258,6 +278,25 @@
     <span class="n">timeStep</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0625</span><span class="p">,</span>
     <span class="n">spacing</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
 <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;perform edge preserving smoothing on a 3D image</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -------------</span>
+<span class="sd">    struct_img: np.ndarray</span>
+<span class="sd">        the image to be smoothed</span>
+<span class="sd">    numberOfInterations: int</span>
+<span class="sd">        how many smoothing iterations to perform. More iterations give more</span>
+<span class="sd">        smoothing effect. Default is 10.</span>
+<span class="sd">    timeStep: float</span>
+<span class="sd">         the time step to be used for each iteration, important for numberical</span>
+<span class="sd">         stability. Default is 0.0625 for 3D images. Do not suggest to change.</span>
+<span class="sd">    spacing: List</span>
+<span class="sd">        the spacing of voxels in three dimensions. Default is [1, 1, 1]</span>
+
+<span class="sd">    Reference:</span>
+<span class="sd">    -------------</span>
+<span class="sd">    https://itk.org/Doxygen/html/classitk_1_1GradientAnisotropicDiffusionImageFilter.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">itk</span>
 
     <span class="n">itk_img</span> <span class="o">=</span> <span class="n">itk</span><span class="o">.</span><span class="n">GetImageFromArray</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
@@ -281,6 +320,10 @@
 
 
 <div class="viewcode-block" id="suggest_normalization_param"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.pre_processing_utils.suggest_normalization_param">[docs]</a><span class="k">def</span> <span class="nf">suggest_normalization_param</span><span class="p">(</span><span class="n">structure_img0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    suggest scaling parameter assuming the image is a representative example</span>
+<span class="sd">    of this cell structure</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">m</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">structure_img0</span><span class="o">.</span><span class="n">flat</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mean intensity of the stack: </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;the standard deviation of intensity of the stack: </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
