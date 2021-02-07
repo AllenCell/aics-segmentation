@@ -3,13 +3,52 @@ import matplotlib.pyplot as plt
 
 
 def sliceViewer(im: np.ndarray, zz: int):
-    """simple wrapper to view one slice of a z-stack"""
+    """simple wrapper to view one slice of a z-stack
+
+
+    Parameter
+    -----------
+    im: np.ndarray
+        3D image stack to view
+    zz: int
+        the slice to return
+
+
+    Example:
+    ---------
+    >>> from ipywidgets import interact, fixed
+    >>> import ipywidgets as widgets
+    >>> interact(
+    >>>     sliceViewer,
+    >>>     im = fixed(struct_img),
+    >>>     zz = widgets.IntSlider(
+    >>>         min = 0,
+    >>>         max = struct_img.shape[0] - 1,
+    >>>         step = 1,
+    >>>         value = struct_img.shape[0] // 2,
+    >>>         continuous_update = False
+    >>>     )
+    >>> );
+    """
     plt.imshow(im[zz, :, :])
     plt.show()
 
 
 def random_colormap(nn: int = 10000):
-    """generate a random colormap with nn different colors"""
+    """generate a random colormap with nn different colors
+
+    Parameter:
+    ----------
+    nn: int
+        the number of random colors needed
+
+
+    Example:
+    ----------
+    >>> import matplotlib.pyplot as plt
+    >>> # img_label is output of a label function and represent all connected components
+    >>> plt.imshow(img_label, cmap=random_colormap())
+    """
     from matplotlib import cm
 
     viridis = cm.get_cmap("viridis", nn)
@@ -25,51 +64,43 @@ def random_colormap(nn: int = 10000):
     return viridis
 
 
-def explore_dot_3d(img, sigma, th, roi=[-1]):
-    # roi = [x0, y0, x1, y1]
-    if roi[0] < 0:
-        roi = [0, 0, img.shape[1], img.shape[2]]
-
-    im = img[:, roi[1] : roi[3], roi[0] : roi[2]]
-
-    from aicssegmentation.core.seg_dot import dot_3d
-
-    response = dot_3d(im, log_sigma=sigma)
-    bw = response > th
-
-    out = img_seg_combine(im, bw)
-    return out
-
-
-def explore_vesselness_3d(im, sigma, th, roi=[-1]):
-    # roi = [x0, y0, x1, y1]
-    if roi[0] < 0:
-        roi = [0, 0, im.shape[1], im.shape[2]]
-
-    from aicssegmentation.core.vessel import vesselness3D
-
-    response = vesselness3D(im, sigmas=sigma, tau=1, whiteonblack=True)
-    bw = response > th
-
-    out = img_seg_combine(im, bw, roi)
-    return out
-
-
-def explore_vesselness_2d(im, sigma, th, roi=[-1]):
-    # roi = [x0, y0, x1, y1]
-    if roi[0] < 0:
-        roi = [0, 0, im.shape[1], im.shape[2]]
-
-    from aicssegmentation.core.vessel import vesselnessSliceBySlice
-
-    response = vesselnessSliceBySlice(im, sigmas=sigma, tau=1, whiteonblack=True)
-    bw = response > th
-
-    out = img_seg_combine(im, bw, roi)
-    return out
-
-
 def blob2dExplorer_single(im, sigma, th):
+    """backend for trying 2D spot filter on a single Z slice
+
+    Parameters
+    ----------
+    im : np.ndarray
+        2D image array
+    sigma : float
+        sigma in the spot filter
+    th : float
+        threshold to be applied as cutoff on filter output
+
+
+    Example:
+    ----------
+    >>> from ipywidgets import interact, fixed
+    >>> import ipywidgets as widgets
+    >>> # define slide bars for trying different parameters
+    >>> interact(
+    >>>     blob2dExplorer_single,
+    >>>     im = fixed(img),
+    >>>     sigma = widgets.FloatRangeSlider(
+    >>>         value = (1, 5),
+    >>>         min = 1,
+    >>>         max = 15,
+    >>>         step = 1,
+    >>>         continuous_update = False
+    >>>     ),
+    >>>     th = widgets.FloatSlider(
+    >>>         value = 0.02,
+    >>>         min = 0.01,
+    >>>         max = 0.1,
+    >>>         step = 0.01,
+    >>>         continuous_update = False
+    >>>     )
+    >>> );
+    """
     from aicssegmentation.core.seg_dot import logSlice
 
     bw = logSlice(im, (sigma[0], sigma[1], 1), th)
@@ -80,6 +111,42 @@ def blob2dExplorer_single(im, sigma, th):
 
 
 def fila2dExplorer_single(im, sigma, th):
+    """backend for trying 2D filament filter on a single Z slice
+
+    Parameters
+    ----------
+    im : np.ndarray
+        2D image array
+    sigma : float
+        sigma in the filament filter
+    th : float
+        threshold to be applied as cutoff on filter output
+
+
+    Example:
+    ----------
+    >>> from ipywidgets import interact, fixed
+    >>> import ipywidgets as widgets
+    >>> # define slide bars for trying different parameters
+    >>> interact(
+    >>>     fila2dExplorer_single,
+    >>>     im = fixed(img),
+    >>>     sigma = widgets.FloatRangeSlider(
+    >>>         value = 3,
+    >>>         min = 1,
+    >>>         max = 11,
+    >>>         step = 1,
+    >>>         continuous_update = False
+    >>>     ),
+    >>>     th = widgets.FloatSlider(
+    >>>         value = 0.05,
+    >>>         min = 0.01,
+    >>>         max = 0.5,
+    >>>         step = 0.01,
+    >>>         continuous_update = False
+    >>>     )
+    >>> );
+    """
     from .vessel import vesselness2D
 
     tmp = vesselness2D(im, [sigma], tau=1, whiteonblack=True)
@@ -89,48 +156,15 @@ def fila2dExplorer_single(im, sigma, th):
     plt.show()
 
 
-def blob2dExplorer_stack(im_stack, zz, sigma, th):
-    from .seg_dot import logSlice
-
-    im = im_stack[zz, :, :]
-
-    print(im.shape)
-
-    bw = logSlice(im, (sigma[0], sigma[1], 1), th)
-    plt.imshow(im)
-    plt.show()
-    plt.imshow(bw)
-    plt.show()
-
-
-def vesselness2dExplorer(im, zz, sigma, th):
-    from .vessel import vesselness2D_range
-
-    mip = np.amax(im, axis=0)
-    tmp = np.concatenate((im[zz, :, :], mip), axis=1)
-    tmp = vesselness2D_range(
-        tmp,
-        scale_range=(sigma[0], sigma[1] + 0.5, 0.5),
-        scale_step=1,
-        tau=1,
-        whiteonblack=True,
-    )
-    ves = np.zeros_like(mip)
-    ves[:, : im.shape[2] - 2] = tmp[:, : im.shape[2] - 2]
-    plt.imshow(im[zz, :, :])
-    plt.show()
-    plt.imshow(ves > th)
-    plt.show()
-
-
 def mipView(im):
+    """simple wrapper to view maximum intensity projection"""
     mip = np.amax(im, axis=0)
     plt.imshow(mip)
     plt.show()
 
 
 def img_seg_combine(img, seg, roi=["Full", None]):
-
+    """ creating raw and segmentation side-by-side for visualizaiton """
     # normalize to 0~1
     img = img.astype(np.float32)
     img = (img - img.min()) / (img.max() - img.min())
@@ -151,7 +185,27 @@ def img_seg_combine(img, seg, roi=["Full", None]):
     return combined
 
 
-def segmentation_quick_view(seg):
+def seg_fluo_side_by_side(im, seg, roi=["Full", None]):
+    """ wrapper for displaying raw and segmentation side by side"""
+    out = img_seg_combine(im, seg, roi)
+
+    return out
+
+
+def segmentation_quick_view(seg: np.ndarray):
+    """wrapper for visualizing segmentation in ITK viewer
+
+    Parameter:
+    -----------
+    seg: np.ndarray
+        3D stack of segmentation to view
+
+    Example:
+    -----------
+    >>> from itkwidgets import view
+    >>> view(segmentation_quick_view(seg))
+
+    """
     valid_pxl = np.unique(seg[seg > 0])
     if len(valid_pxl) < 1:
         print("segmentation is empty")
@@ -165,6 +219,19 @@ def segmentation_quick_view(seg):
 
 
 def single_fluorescent_view(im):
+    """wrapper for visualizing an image stack in ITK viewer
+
+    Parameter:
+    -----------
+    im: np.ndarray
+        3D image stack to view
+
+    Example:
+    -----------
+    >>> from itkwidgets import view
+    >>> view(single_fluorescent_view(im))
+
+    """
 
     assert len(im.shape) == 3
 
@@ -172,10 +239,3 @@ def single_fluorescent_view(im):
     im = (im - im.min()) / (im.max() - im.min())
 
     return im
-
-
-def seg_fluo_side_by_side(im, seg, roi=["Full", None]):
-
-    out = img_seg_combine(im, seg, roi)
-
-    return out

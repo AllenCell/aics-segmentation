@@ -6,21 +6,31 @@ from scipy import ndimage as ndi
 from .utils import absolute_eigenvaluesh
 
 
-def compute_3d_hessian_matrix(nd_array, sigma=1, scale=True, whiteonblack=True):
+def compute_3d_hessian_matrix(
+    nd_array: np.ndarray,
+    sigma: float = 1,
+    scale: bool = True,
+    whiteonblack: bool = True,
+) -> np.ndarray:
     """
-    Computes the hessian matrix for an nd_array.
-    This can be used to detect vesselness as well as other features.
-    In 3D the first derivative will contain three directional gradients at each index:
-    [ gx,  gy,  gz ]
-    The Hessian matrix at each index will then be equal to the second derivative:
-    [ gxx, gxy, gxz]
-    [ gyx, gyy, gyz]
-    [ gzx, gzy, gzz]
-    The Hessian matrix is symmetrical, so gyx == gxy, gzx == gxz, and gyz == gzy.
-    :param nd_array: n-dimensional array from which to compute the hessian matrix.
-    :param sigma: gaussian smoothing to perform on the array.
-    :param scale: if True, the hessian elements will be scaled by sigma squared.
-    :return: hessian array of shape (..., ndim, ndim)
+    Computes the hessian matrix for an nd_array. The implementation was adapted from:
+    https://github.com/ellisdg/frangi3d/blob/master/frangi/hessian.py
+
+    Parameters:
+    ----------
+    nd_array: np.ndarray
+        nd array from which to compute the hessian matrix.
+    sigma: float
+        Standard deviation used for the Gaussian kernel to smooth the array. Defaul is 1
+    scale: bool
+        whether the hessian elements will be scaled by sigma squared. Default is True
+    whiteonblack: boolean
+        image is white objects on black blackground or not. Default is True
+
+
+    Return:
+    ----------
+    hessian array of shape (..., ndim, ndim)
     """
     ndim = nd_array.ndim
 
@@ -64,14 +74,30 @@ def compute_3d_hessian_matrix(nd_array, sigma=1, scale=True, whiteonblack=True):
     return hessian
 
 
-def absolute_3d_hessian_eigenvalues(nd_array, sigma=1, scale=True, whiteonblack=True):
+def absolute_3d_hessian_eigenvalues(
+    nd_array: np.ndarray,
+    sigma: float = 1,
+    scale: bool = True,
+    whiteonblack: bool = True,
+):
     """
     Eigenvalues of the hessian matrix calculated from the input array sorted by
     absolute value.
-    :param nd_array: input array from which to calculate hessian eigenvalues.
-    :param sigma: gaussian smoothing parameter.
-    :param scale: if True hessian values will be scaled according to sigma squared.
-    :return: list of eigenvalues [eigenvalue1, eigenvalue2, ...]
+
+    Parameters:
+    ------------
+    nd_array: np.ndarray
+        nd array from which to compute the hessian matrix.
+    sigma: float
+        Standard deviation used for the Gaussian kernel to smooth the array. Defaul is 1
+    scale: bool
+        whether the hessian elements will be scaled by sigma squared. Default is True
+    whiteonblack: boolean
+        image is white objects on black blackground or not. Default is True
+
+    Return:
+    ------------
+    list of eigenvalues [eigenvalue1, eigenvalue2, ...]
     """
     return absolute_eigenvaluesh(
         compute_3d_hessian_matrix(
