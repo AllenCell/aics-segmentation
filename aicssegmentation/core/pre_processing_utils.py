@@ -4,7 +4,7 @@ from scipy.stats import norm
 from scipy.ndimage import gaussian_filter
 
 
-def intensity_normalization(struct_img: np.narray, scaling_param: List):
+def intensity_normalization(struct_img: np.ndarray, scaling_param: List):
     """Normalize the intensity of input image so that the value range is from 0 to 1.
 
     Parameters:
