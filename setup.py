@@ -41,12 +41,12 @@ requirements = [
     "aicsimageio>3.3.0",
     "scipy>=1.1.0",
     "numpy>=1.15.1",
-    "scikit-image>=0.15.0,<0.18.0",
+    "scikit-image>=0.18.0",
     "pandas>=0.23.4",
     "itk",
     "itkwidgets",
     "jupyter",
-    "matplotlib"
+    "matplotlib",
 ]
 
 extra_requirements = {
@@ -56,7 +56,7 @@ extra_requirements = {
     "all": [
         *requirements,
         *dev_requirements,
-    ]
+    ],
 }
 
 setup(
@@ -72,9 +72,7 @@ setup(
     ],
     description="Part 1 of Allen Cell and Structure Segmenter",
     entry_points={
-        "console_scripts": [
-            "my_example=aicssegmentation.bin.my_example:main"
-        ],
+        "console_scripts": ["batch_processing=aicssegmentation.bin.batch_processing:main"],
     },
     install_requires=requirements,
     license="Allen Institute Software License",

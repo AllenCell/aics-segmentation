@@ -15,7 +15,7 @@ We welcome feedback and submission of issues. Users are encouraged to sign up on
 
 ## Installation
 
-Our package is implemented in Python 3.6. Detailed instructions as below:
+Our package is implemented in Python 3.7. Detailed instructions as below:
 
 [Installation on Linux](./docs/installation_linux.md) (Ubuntu 16.04.5 LTS is the OS we used for development)
 
