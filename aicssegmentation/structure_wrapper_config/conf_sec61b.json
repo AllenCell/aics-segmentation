@@ -1,0 +1,14 @@
+{
+    "1": [
+        "name": "Edge Preserving Smoothing",
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "edge_preserving_smoothing_3d",
+        "parent": 0
+    ]
+    "2": [
+        "name": "2D Filament filter (slice by slice)",
+        "module": "aicssegmentation.core.vessel",
+        "function": "vesselnessSliceBySlice",
+        "parent": 1
+    ]
+}
