@@ -1,0 +1,69 @@
+{
+    "Intensity Normalization": {
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "intensity_normalization",
+        "parameter": {
+            "scaling_param": [
+                {
+                    "widge type": "slider",
+                    "data type": "float",
+                    "min": 0.5,
+                    "max": 30,
+                    "increment": 0.5
+                },
+                {
+                    "widge type": "slider",
+                    "data type": "float",
+                    "min": 0.5,
+                    "max": 30,
+                    "increment": 0.5
+                }
+            ]
+        }
+    },
+    "Edge Preserving Smoothing": {
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "edge_preserving_smoothing_3d",
+        "parameter": null
+    },
+    "2D Filament filter (slice by slice)": {
+        "module": "aicssegmentation.core.vessel",
+        "function": "vesselnessSliceBySlice",
+        "parameter": {
+            "sigma": [
+                {
+                    "widge type": "slider",
+                    "data type": "float",
+                    "min": 0.5,
+                    "max": 5,
+                    "increment": 0.5
+                }
+            ],
+            "cutoff": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": 0.05,
+                "max": 0.5,
+                "increment": 0.05
+            }
+        }
+    },
+    "Size Filter": {
+        "module": "aicssegmentation.core.utils",
+        "function": "size_filter",
+        "parameter": {
+            "min_size": {
+                "widge type": "slider",
+                "data type": "int",
+                "min": 0,
+                "max": 50,
+                "increment": 5
+            },
+            "method": {
+                "widge type": "drop-down",
+                "data type": "str",
+                "option": ["3D", "slice_by_slice"]
+            }
+        }
+    }
+}

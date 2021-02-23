@@ -1,4 +1,7 @@
+import numpy as np
+from typing import Dict
 import json
+import importlib
 from pathlib import Path, PurePosixPath
 
 
@@ -18,3 +21,22 @@ def load_workflow_config(workflow_name: str):
         cfg = json.load(read_file)
 
     return cfg
+
+
+def apply_on_single_image_with_config(img: np.ndarray, cfg: Dict):
+
+    module_list = []
+    out_list = [img]
+
+    for (_, step_info) in cfg.items():
+        module_name = importlib.import_module(step_info["module"])
+        step_func = getattr(module_name, step_info["function"])
+        module_list.append(step_func)
+        if "parameter" in step_info:
+            out = step_func(out_list[step_info["parent"]], **step_info["parameter"])
+        else:
+            out = step_func(out_list[step_info["parent"]])
+
+        out_list.append(out)
+
+    return out_list[-1]

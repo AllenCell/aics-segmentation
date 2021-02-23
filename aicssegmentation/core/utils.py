@@ -3,7 +3,7 @@ from typing import List
 import numpy as np
 from scipy.ndimage import distance_transform_edt
 from skimage.measure import label, regionprops
-from skimage.morphology import ball, erosion, medial_axis
+from skimage.morphology import ball, erosion, medial_axis, remove_small_objects
 
 
 def hole_filling(
@@ -68,6 +68,45 @@ def hole_filling(
         return
 
     return np.logical_or(bw, fill_out)
+
+
+def size_filter(
+    img: np.ndarray,
+    min_size: int,
+    method: str = "3D",
+    connectivity: int = 1
+):
+    """ size filter
+
+    Parameters:
+    ------------
+    img: np.ndarray
+        the image to filter on
+    min_size: int
+        the minimum size to keep
+    method: str
+        either "3D" or "slice_by_slice", default is "3D"
+    connnectivity: int
+        the connectivity to use when computing object size
+    """
+    assert len(img.shape) == 3, "image has to be 3D"
+    if method == "3D":
+        return remove_small_objects(
+            img > 0,
+            min_size=min_size,
+            connectivity=connectivity,
+            in_place=False
+        )
+    elif method == "slice_by_slice":
+        for zz in range(img.shape[0]):
+            img[zz, :, :] = remove_small_objects(
+                img[zz, :, :],
+                min_size=min_size,
+                connectivity=connectivity,
+                in_place=False
+            )
+    else:
+        raise NotImplementedError(f"unsupported method {method}")
 
 
 def topology_preserving_thinning(
