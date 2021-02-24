@@ -71,7 +71,11 @@ def hole_filling(
 
 
 def size_filter(
-    img: np.ndarray, min_size: int, method: str = "3D", connectivity: int = 1
+    img: np.ndarray,
+    min_size: int,
+    method: str = "3D",
+    connectivity: int = 1,
+    copy=False,
 ):
     """size filter
 
@@ -92,13 +96,18 @@ def size_filter(
             img > 0, min_size=min_size, connectivity=connectivity, in_place=False
         )
     elif method == "slice_by_slice":
+        if copy:  # for pxn
+            seg = np.zeros_like(img)
+        else:
+            seg = img
         for zz in range(img.shape[0]):
-            img[zz, :, :] = remove_small_objects(
+            seg[zz, :, :] = remove_small_objects(
                 img[zz, :, :],
                 min_size=min_size,
                 connectivity=connectivity,
                 in_place=False,
             )
+        return seg
     else:
         raise NotImplementedError(f"unsupported method {method}")
 
@@ -322,3 +331,68 @@ def watershed_wrapper(bw: np.ndarray, local_maxi: np.ndarray) -> np.ndarray:
         watershed_line=True,
     )
     return im_watershed
+
+
+# TODO replace with MO threshold
+def low_level_threshold(structure_img_smooth: np.ndarray) -> np.ndarray:
+    from skimage.filters import threshold_triangle
+
+    global_tri = threshold_triangle(structure_img_smooth)
+    global_median = np.percentile(structure_img_smooth, 50)
+
+    th_low_level = (global_tri + global_median) / 2
+    bw_low_level = structure_img_smooth > th_low_level
+
+    return bw_low_level
+
+
+def high_level_threshold(
+    bw_low_level: np.ndarray,
+    structure_img_smooth: np.ndarray,
+    local_cutoff=0,
+    otsu_scale=1,
+) -> np.ndarray:
+    from skimage.measure import label
+    from skimage.filters import threshold_otsu
+
+    local_cutoff *= threshold_otsu(structure_img_smooth)
+
+    bw_high_level = np.zeros_like(bw_low_level)
+    lab_low, num_obj = label(bw_low_level, return_num=True, connectivity=1)
+    for idx in range(num_obj):
+        single_obj = lab_low == (idx + 1)
+        local_otsu = threshold_otsu(structure_img_smooth[single_obj])
+        if local_otsu > local_cutoff:
+            bw_high_level[
+                np.logical_and(
+                    structure_img_smooth > otsu_scale * local_otsu, single_obj
+                )
+            ] = 1
+    return bw_high_level
+
+
+def dilation_wrapper(img, ball_size):
+    from skimage.morphology import dilation, ball
+
+    return dilation(img, selem=ball(ball_size))
+
+
+def z_range(bw, seg):
+    bw_z = np.zeros(bw.shape[0], dtype=np.uint16)
+    for zz in range(bw.shape[0]):
+        bw_z[zz] = np.count_nonzero(seg[zz, :, :] > 0)
+
+    mid_z = np.argmax(bw_z)
+    low_z = 0
+    high_z = seg.shape[0] - 2
+    for ii in np.arange(mid_z - 1, 0, -1):
+        if bw_z[ii] < 100:
+            low_z = ii
+            break
+    for ii in range(mid_z + 1, bw.shape[0] - 1, 1):
+        if bw_z[ii] < 100:
+            high_z = ii
+            break
+
+    seg[:low_z, :, :] = 0
+    seg[high_z + 1 :, :, :] = 0
