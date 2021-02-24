@@ -4,7 +4,7 @@ from typing import List
 from scipy.ndimage.filters import gaussian_laplace
 
 
-def dot_3d(struct_img: np.ndarray, log_sigma: float):
+def dot_3d(struct_img: np.ndarray, log_sigma: float, cutoff=-1):
     """apply 3D spot filter on a 3D image
 
     Parameters:
@@ -16,15 +16,21 @@ def dot_3d(struct_img: np.ndarray, log_sigma: float):
         of your target dots. For example, if visually the diameter of the
         dots is usually 3~4 pixels, then you may want to set this as 1
         or something near 1 (like 1.25).
+    cutoff: float
+        the cutoff value to apply on the filter result. If the cutoff is
+        negative, no cutoff will be applied. Default is -1
     """
     assert len(struct_img.shape) == 3
     responce = (
         -1 * (log_sigma ** 2) * ndi.filters.gaussian_laplace(struct_img, log_sigma)
     )
-    return responce
+    if cutoff < 0:
+        return responce
+    else:
+        return responce > cutoff
 
 
-def dot_2d(struct_img, log_sigma):
+def dot_2d(struct_img, log_sigma, cutoff=-1):
     """apply 2D spot filter on a 2D image
 
     Parameters:
@@ -36,12 +42,18 @@ def dot_2d(struct_img, log_sigma):
         of your target dots. For example, if visually the diameter of the
         dots is usually 3~4 pixels, then you may want to set this as 1
         or something near 1 (like 1.25).
+    cutoff: float
+        the cutoff value to apply on the filter result. If the cutoff is
+        negative, no cutoff will be applied. Default is -1
     """
     assert len(struct_img.shape) == 2
     responce = (
         -1 * (log_sigma ** 2) * ndi.filters.gaussian_laplace(struct_img, log_sigma)
     )
-    return responce
+    if cutoff < 0:
+        return responce
+    else:
+        return responce > cutoff
 
 
 def dot_3d_wrapper(struct_img: np.ndarray, s3_param: List):
@@ -96,7 +108,7 @@ def logSlice(image: np.ndarray, sigma_list: List, threshold: float):
     return seg
 
 
-def dot_slice_by_slice(struct_img: np.ndarray, log_sigma: float):
+def dot_slice_by_slice(struct_img: np.ndarray, log_sigma: float, cutoff=-1):
     """apply 2D spot filter on 3D image slice by slice
 
     Parameters:
@@ -108,6 +120,9 @@ def dot_slice_by_slice(struct_img: np.ndarray, log_sigma: float):
         of your target dots. For example, if visually the diameter of the
         dots is usually 3~4 pixels, then you may want to set this as 1
         or something near 1 (like 1.25).
+    cutoff: float
+        the cutoff value to apply on the filter result. If the cutoff is
+        negative, no cutoff will be applied. Default is -1
     """
     res = np.zeros_like(struct_img)
     for zz in range(struct_img.shape[0]):
@@ -116,7 +131,11 @@ def dot_slice_by_slice(struct_img: np.ndarray, log_sigma: float):
             * (log_sigma ** 2)
             * ndi.filters.gaussian_laplace(struct_img[zz, :, :], log_sigma)
         )
-    return res
+
+    if cutoff < 0:
+        return res
+    else:
+        return res > cutoff
 
 
 def dot_2d_slice_by_slice_wrapper(struct_img: np.ndarray, s2_param: List):
