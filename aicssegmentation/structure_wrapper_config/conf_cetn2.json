@@ -1,0 +1,86 @@
+{
+    "1": {
+        "name": "Intensity Normalization for Segmentation",
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "intensity_normalization",
+        "parameter": {
+            "scaling_param": [
+                12,
+                160,
+                300,
+                2000
+            ]
+        },
+        "parent": 0
+    },
+    "2": {
+        "name": "Intensity Normalization for Peak",
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "intensity_normalization",
+        "parameter": {
+            "scaling_param": [
+                5000
+            ]
+        },
+        "parent": 0
+    },
+    "3": {
+        "name": "Image Smoothing Gaussian Slice by Slice",
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "image_smoothing_gaussian_slice_by_slice",
+        "parameter": {
+            "sigma": 1,
+            "truncate_range": 3.0
+        },
+        "parent": 1
+    },
+    "4": {
+        "name": "3D Spot Filter",
+        "module": "aicssegmentation.core.seg_dot",
+        "function": "dot_3d",
+        "parameter": {
+            "log_sigma": 1
+        },
+        "parent": 3
+    },
+    "5": {
+        "name": "Size Filter",
+        "module": "aicssegmentation.core.utils",
+        "function": "size_filter",
+        "parameter": {
+            "min_size": 3,
+            "method": "3D",
+            "connectivity": 1
+        },
+        "parent": 4
+    },
+    "6": {
+        "name": "Find Local Maxima",
+        "module": "aicssegmentation.core.utils",
+        "function": "peak_local_max_wrapper",
+        "parent": [
+            2,
+            5
+        ]
+    },
+    "7": {
+        "name": "Watershed",
+        "module": "aicssegmentation.core.utils",
+        "function": "watershed_wrapper",
+        "parent": [
+            5,
+            6
+        ]
+    },
+    "8": {
+        "name": "Size Filter",
+        "module": "aicssegmentation.core.utils",
+        "function": "size_filter",
+        "parameter": {
+            "min_size": 3,
+            "method": "3D",
+            "connectivity": 1
+        },
+        "parent": 7
+    }
+}

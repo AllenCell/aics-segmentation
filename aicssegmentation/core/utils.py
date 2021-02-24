@@ -71,12 +71,9 @@ def hole_filling(
 
 
 def size_filter(
-    img: np.ndarray,
-    min_size: int,
-    method: str = "3D",
-    connectivity: int = 1
+    img: np.ndarray, min_size: int, method: str = "3D", connectivity: int = 1
 ):
-    """ size filter
+    """size filter
 
     Parameters:
     ------------
@@ -92,10 +89,7 @@ def size_filter(
     assert len(img.shape) == 3, "image has to be 3D"
     if method == "3D":
         return remove_small_objects(
-            img > 0,
-            min_size=min_size,
-            connectivity=connectivity,
-            in_place=False
+            img > 0, min_size=min_size, connectivity=connectivity, in_place=False
         )
     elif method == "slice_by_slice":
         for zz in range(img.shape[0]):
@@ -103,7 +97,7 @@ def size_filter(
                 img[zz, :, :],
                 min_size=min_size,
                 connectivity=connectivity,
-                in_place=False
+                in_place=False,
             )
     else:
         raise NotImplementedError(f"unsupported method {method}")
@@ -302,3 +296,29 @@ def get_3dseed_from_mid_frame(
         seed[mid_frame, int(py), int(px)] = seed_count
 
     return seed
+
+
+def peak_local_max_wrapper(
+    struct_img_for_peak: np.ndarray, bw: np.ndarray
+) -> np.ndarray:
+    from skimage.feature import peak_local_max
+
+    local_maxi = peak_local_max(
+        struct_img_for_peak, labels=label(bw), min_distance=2, indices=False
+    )
+    return local_maxi
+
+
+def watershed_wrapper(bw: np.ndarray, local_maxi: np.ndarray) -> np.ndarray:
+    from scipy.ndimage import distance_transform_edt
+    from skimage.measure import label
+    from skimage.morphology import watershed, dilation, ball
+
+    distance = distance_transform_edt(bw)
+    im_watershed = watershed(
+        -distance,
+        label(dilation(local_maxi, selem=ball(1))),
+        mask=bw,
+        watershed_line=True,
+    )
+    return im_watershed
