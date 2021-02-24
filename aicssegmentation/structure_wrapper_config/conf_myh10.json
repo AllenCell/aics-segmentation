@@ -1,0 +1,67 @@
+{
+    "1": {
+        "name": "Intensity Normalization",
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "intensity_normalization",
+        "parameter": {
+            "scaling_param": [
+                2.5,
+                17
+            ]
+        },
+        "parent": 0
+    },
+    "2": {
+        "name": "Edge Preserving Smoothing",
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "edge_preserving_smoothing_3d",
+        "parent": 1
+    },
+    "3": {
+        "name": "Vesselness 3D",
+        "module": "aicssegmentation.core.vessel",
+        "function": "vesselness3D",
+        "parameter": {
+            "sigmas": [
+                2
+            ],
+            "tau": 1,
+            "whiteonblack": "True",
+            "cutoff": 0.2
+        },
+        "parent": 2
+    },
+    "4": {
+        "name": "Vesselness 3D",
+        "module": "aicssegmentation.core.vessel",
+        "function": "vesselness3D",
+        "parameter": {
+            "sigmas": [
+                1
+            ],
+            "tau": 1,
+            "whiteonblack": "True",
+            "cutoff": 0.015
+        },
+        "parent": 2
+    },
+    "5": {
+        "name": "Logical OR",
+        "module": "numpy",
+        "function": "logical_or",
+        "parent": [
+            3,
+            4
+        ]
+    },
+    "6": {
+        "name": "Size Filter",
+        "module": "aicssegmentation.core.utils",
+        "function": "size_filter",
+        "parameter": {
+            "min_size": 16,
+            "method": "3D"
+        },
+        "parent": 5
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "1": {
+        "name": "Intensity Normalization",
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "intensity_normalization",
+        "parameter": {
+            "scaling_param": [
+                1,
+                40
+            ]
+        },
+        "parent": 0
+    },
+    "2": {
+        "name": "Gaussian Smoothing Slice by Slice",
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "image_smoothing_gaussian_slice_by_slice",
+        "parameter": {
+            "sigma": 1,
+            "truncate_range": 3.0
+        },
+        "parent": 1
+    },
+    "3": {
+        "name": "3D Dot Filter",
+        "module": "aicssegmentation.core.seg_dot",
+        "function": "dot_3d",
+        "parameter": {
+            "log_sigma": 1,
+            "cutoff": 0.031
+        },
+        "parent": 2
+    },
+    "4": {
+        "name": "Size Filter",
+        "module": "aicssegmentation.core.utils",
+        "function": "size_filter",
+        "parent": 3,
+        "parameter": {
+            "min_size": 5,
+            "method": "3D"
+        }
+    }
+}
