@@ -62,8 +62,229 @@
             "method": {
                 "widge type": "drop-down",
                 "data type": "str",
-                "option": ["3D", "slice_by_slice"]
+                "option": [
+                    "3D",
+                    "slice_by_slice"
+                ]
             }
+        }
+    },
+    "Vesselness 3D": {
+        "module": "aicssegmentation.core.vessel",
+        "function": "vesselness3D",
+        "parameter": {
+            "sigmas": {
+                "widge type": "slider",
+                "data type": "int",
+                "min": 0
+            },
+            "tau": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": 0.5,
+                "max": 1.0
+            },
+            "whiteonblack": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
+            },
+            "cutoff": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": -1
+            }
+        }
+    },
+    "Image Smoothing Gaussian Slice by Slice": {
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "image_smoothing_gaussian_slice_by_slice",
+        "parameter": {
+            "sigma": {
+                "widge type": "slider",
+                "data type": "float"
+            },
+            "truncate_range": {
+                "widge type": "slider",
+                "data type": "float"
+            }
+        }
+    },
+    "3D Spot Filter": {
+        "module": "aicssegmentation.core.seg_dot",
+        "function": "dot_3d",
+        "parameter": {
+            "log_sigma": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": 0
+            }
+        }
+    },
+    "Image Smoothing Gaussian 3D": {
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "image_smoothing_gaussian_3d",
+        "parameter": {
+            "sigma": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": 0
+            },
+            "truncate_range": {
+                "widge type": "slider",
+                "data type": "float"
+            }
+        }
+    },
+    "Slice By Slice Spot Filter": {
+        "module": "aicssegmentation.core.seg_dot",
+        "function": "dot_slice_by_slice",
+        "parameter": {
+            "log_sigma": {
+                "widge type": "slider",
+                "data type": "float",
+            }
+        }
+    },
+    "2D Slice By Slice Spot Filter Wrapper": {
+        "module": "aicssegmentation.core.seg_dot",
+        "function": "dot_2d_slice_by_slice_wrapper",
+        "parameter": {
+            "s2_param": [
+                [
+                    {
+                        "widge type": "slider",
+                        "data type": "float",
+                    },
+                    {
+                        "widge type": "slider",
+                        "data type": "float",
+                    }
+                ],
+                [
+                    {
+                        "widge type": "slider",
+                        "data type": "float",
+                    },
+                    {
+                        "widge type": "slider",
+                        "data type": "float",
+                    }
+                ]
+            ]
+        }
+    },
+    "Get Middle Frame": {
+        "module": "aicssegmentation.core.utils",
+        "function": "get_middle_frame",
+        "parameter": {
+            "name": {
+                "widge type": "drop-down",
+                "data type": "string",
+                "option": [
+                    "z",
+                    "intensity"
+                ]
+            }
+        }
+    },
+    "2D Filament Filter Wrapper": { // TODO
+        "module": "aicssegmentation.core.vessel",
+        "function": "filament_2d_wrapper",
+        "parameter": {
+            "f2_param": {}
+        }
+    },
+    "3D Spot Filter Wrapper": {
+        "module": "aicssegmentation.core.seg_dot",
+        "function": ""
+    },
+    "Hole Filling": {
+        "module": "aicssegmentation.core.utils",
+        "function": "hole_filling",
+        "parameter": {
+            "hole_min": {
+                "widge type": "slider",
+                "data type": "int",
+                "min": 0
+            },
+            "hole_max": {
+                "widge type": "slider",
+                "data type": "int",
+                "min": 0
+            },
+            "fill_2d": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
+            }
+        }
+    },
+    "Peak Local Max Wrapper": {
+        "module": "aicssegmentation.core.utils",
+        "function": "peak_local_max_wrapper",
+        "parameter": {
+            "struct_img_for_peak": {
+                "data type": "np.ndarray"
+            },
+            "bw": {
+                "data type": "np.ndarray"
+            }
+        }
+    },
+    "Watershed Wrapper": {
+        "module": "aicssegmentation.core.utils",
+        "function": "watershed_wrapper",
+        "parameter": {
+            "bw": {
+                "data type": "np.ndarray"
+            },
+            "local_maxi": {
+                "data type": "np.ndarray"
+            }
+        }
+    },
+    "Low Level Threshold": {
+        "module": "aicssegmentation.core.utils",
+        "function": "low_level_threshold",
+        "parameter": {
+            "structure_img_smooth": {
+                "data type": "np.ndarray"
+            },
+            "low_level_min_size": {
+                "data type": "int",
+                "widge type": "slider",
+                "min": 0
+            }
+        }
+    },
+    "High Level Threshold": {
+        "module": "aicssegmentation.core.utils",
+        "function": "high_level_threshold",
+        "parameter": {
+            "bw_low_level": {
+                "data type": "np.ndarray"
+            },
+            "structure_img_smooth": {
+                "data type": "np.ndarray"
+            }
+        }
+    }
+}
+
+"Name": {
+    "module": "",
+    "function": "",
+    "parameter": {
+        "name": {
+            "widge type": "",
+            "data type": ""
         }
     }
 }
