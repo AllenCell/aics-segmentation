@@ -97,11 +97,7 @@ def filament_2d_wrapper(struct_img: np.ndarray, f2_param: List[List]):
 
 
 def vesselness3D(
-    nd_array: np.ndarray,
-    sigmas: List,
-    tau=0.5,
-    whiteonblack=True,
-    cutoff: float = -1
+    nd_array: np.ndarray, sigmas: List, tau=0.5, whiteonblack=True, cutoff: float = -1
 ):
     """Multi-scale 3D filament filter
 
