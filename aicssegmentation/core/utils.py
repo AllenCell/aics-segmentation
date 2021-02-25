@@ -395,7 +395,7 @@ def segmentation_intersection(seg: List) -> np.ndarray:
     return all(seg)
 
 
-def remove_index_object(label: np.nd_array, id_to_remove: List[int], in_place=False):
+def remove_index_object(label: np.ndarray, id_to_remove: List[int], in_place=False):
 
     if in_place:
         img = label
