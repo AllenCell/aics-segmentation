@@ -377,7 +377,7 @@ def dilation_wrapper(img, ball_size):
     return dilation(img, selem=ball(ball_size))
 
 
-def z_range(bw, seg):
+def z_range(bw: np.ndarray, seg: np.ndarray):
     bw_z = np.zeros(bw.shape[0], dtype=np.uint16)
     for zz in range(bw.shape[0]):
         bw_z[zz] = np.count_nonzero(seg[zz, :, :] > 0)
@@ -398,7 +398,9 @@ def z_range(bw, seg):
     seg[high_z + 1 :, :, :] = 0
 
 
-def cell_local_adaptive_threshold(structure_img_smooth, cell_wise_min_area):
+def cell_local_adaptive_threshold(
+    structure_img_smooth: np.ndarray, cell_wise_min_area: int
+):
     from skimage.filters import threshold_triangle, threshold_otsu
     from skimage.morphology import dilation
 

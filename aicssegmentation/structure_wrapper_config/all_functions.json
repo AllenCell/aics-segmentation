@@ -121,6 +121,13 @@
                 "widge type": "slider",
                 "data type": "float",
                 "min": 0
+            },
+            "cutoff": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": 0,
+                "max": 1,
+                "increment": 0.01
             }
         }
     },
@@ -145,36 +152,8 @@
         "parameter": {
             "log_sigma": {
                 "widge type": "slider",
-                "data type": "float",
+                "data type": "float"
             }
-        }
-    },
-    "2D Slice By Slice Spot Filter Wrapper": {
-        "module": "aicssegmentation.core.seg_dot",
-        "function": "dot_2d_slice_by_slice_wrapper",
-        "parameter": {
-            "s2_param": [
-                [
-                    {
-                        "widge type": "slider",
-                        "data type": "float",
-                    },
-                    {
-                        "widge type": "slider",
-                        "data type": "float",
-                    }
-                ],
-                [
-                    {
-                        "widge type": "slider",
-                        "data type": "float",
-                    },
-                    {
-                        "widge type": "slider",
-                        "data type": "float",
-                    }
-                ]
-            ]
         }
     },
     "Get Middle Frame": {
@@ -190,17 +169,6 @@
                 ]
             }
         }
-    },
-    "2D Filament Filter Wrapper": { // TODO
-        "module": "aicssegmentation.core.vessel",
-        "function": "filament_2d_wrapper",
-        "parameter": {
-            "f2_param": {}
-        }
-    },
-    "3D Spot Filter Wrapper": {
-        "module": "aicssegmentation.core.seg_dot",
-        "function": ""
     },
     "Hole Filling": {
         "module": "aicssegmentation.core.utils",
@@ -275,16 +243,67 @@
                 "data type": "np.ndarray"
             }
         }
-    }
-}
-
-"Name": {
-    "module": "",
-    "function": "",
-    "parameter": {
-        "name": {
-            "widge type": "",
-            "data type": ""
+    },
+    "Cell Local Adaptive Threshold": {
+        "module": "aicssegmentation.core.utils",
+        "function": "cell_local_adaptive_threshold",
+        "parameter": {
+            "structure_img_smooth": {
+                "data type": "np.ndarray"
+            },
+            "cell_wise_min_area": {
+                "data type": "int",
+                "widge_type": "slider",
+                "min": 0,
+                "increment": 1
+            }
+        }
+    },
+    "Z Range": {
+        "module": "aicssegmentation.core.utils",
+        "function": "z_range",
+        "parameter": {
+            "bw": {
+                "data type": "np.ndarray"
+            },
+            "seg": {
+                "data type": "np.ndarray"
+            }
+        }
+    },
+    "Logical OR": {
+        "module": "numpy",
+        "function": "logical_or",
+        "parameter": {
+            "array1": {
+                "data type": "np.ndarray"
+            },
+            "array2": {
+                "data type": "np.ndarray"
+            }
+        }
+    },
+    "Topology Preserving Thinning": {
+        "module": "aicssegmentation.core.utils",
+        "function": "topology_preserving_thinning",
+        "parameter": {
+            "bw": {
+                "data type": "np.ndarray"
+            },
+            "min_thickness": {
+                "data type": "int",
+                "widge type": "slider",
+                "min": 0,
+                "max": 50,
+                "increment": 1
+            },
+            "thin": {
+                "data type": "int",
+                "widge type": "slider",
+                "min": 0,
+                "max": 50,
+                "increment": 1
+            }
         }
     }
 }
