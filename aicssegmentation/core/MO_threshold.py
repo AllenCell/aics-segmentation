@@ -11,6 +11,7 @@ def MO(
     extra_criteria: bool = False,
     local_adjust: float = 0.98,
     return_object: bool = False,
+    dilate: bool = False,
 ) -> np.ndarray:
     """
     Implementation of "Masked Object Thresholding" algorithm. Specifically, the
@@ -40,6 +41,8 @@ def MO(
     return_object: bool
         whether to return the global thresholding results in order to obtain the
         individual objects the local thresholding is made on
+    dilate: bool
+        whether to perform dilation on bw_low_level prior to the high level threshold
 
     Return:
     --------------
@@ -59,7 +62,8 @@ def MO(
     bw_low_level = remove_small_objects(
         bw_low_level, min_size=object_minArea, connectivity=1, in_place=True
     )
-    bw_low_level = dilation(bw_low_level, selem=ball(2))
+    if dilate:
+        bw_low_level = dilation(bw_low_level, selem=ball(2))
 
     bw_high_level = np.zeros_like(bw_low_level)
     lab_low, num_obj = label(bw_low_level, return_num=True, connectivity=1)
