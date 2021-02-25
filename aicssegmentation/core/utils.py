@@ -395,7 +395,7 @@ def segmentation_intersection(seg: List) -> np.ndarray:
     return all(seg)
 
 
-def remove_index_object(label: np.nd_array, id_to_remove: List[int], in_place=False):
+def remove_index_object(label: np.ndarray, id_to_remove: List[int], in_place=False):
 
     if in_place:
         img = label
@@ -480,3 +480,12 @@ def cell_local_adaptive_threshold(
             np.logical_and(structure_img_smooth > local_otsu * 0.98, single_obj)
         ] = 1
     return bw_high_level
+
+
+def invert_mask(img):
+    return 1 - img
+
+
+def mask_image(image, mask, value):
+    image[mask] = value
+    return image

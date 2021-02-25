@@ -156,20 +156,6 @@
             }
         }
     },
-    "Get Middle Frame": {
-        "module": "aicssegmentation.core.utils",
-        "function": "get_middle_frame",
-        "parameter": {
-            "name": {
-                "widge type": "drop-down",
-                "data type": "string",
-                "option": [
-                    "z",
-                    "intensity"
-                ]
-            }
-        }
-    },
     "Hole Filling": {
         "module": "aicssegmentation.core.utils",
         "function": "hole_filling",
@@ -214,32 +200,6 @@
                 "data type": "np.ndarray"
             },
             "local_maxi": {
-                "data type": "np.ndarray"
-            }
-        }
-    },
-    "Low Level Threshold": {
-        "module": "aicssegmentation.core.utils",
-        "function": "low_level_threshold",
-        "parameter": {
-            "structure_img_smooth": {
-                "data type": "np.ndarray"
-            },
-            "low_level_min_size": {
-                "data type": "int",
-                "widge type": "slider",
-                "min": 0
-            }
-        }
-    },
-    "High Level Threshold": {
-        "module": "aicssegmentation.core.utils",
-        "function": "high_level_threshold",
-        "parameter": {
-            "bw_low_level": {
-                "data type": "np.ndarray"
-            },
-            "structure_img_smooth": {
                 "data type": "np.ndarray"
             }
         }
@@ -302,6 +262,88 @@
                 "widge type": "slider",
                 "min": 0,
                 "max": 50,
+                "increment": 1
+            }
+        }
+    },
+    "Masked Object Threshold": {
+        "module": "aicssegmentation.core.MO_threshold",
+        "function": "MO",
+        "parameter": {
+            "structure_img_smooth": {
+                "data type": "np.ndarray",
+            },
+            "global_thresh_method": {
+                "data type": "str",
+                "widge type": "drop-down",
+                "options": [
+                    "triangle",
+                    "median",
+                    "ave_tri_med"
+                ]
+            },
+            "object_minArea": {
+                "data type": "int",
+                "widge type": "slider",
+                "min": 0,
+                "max": 1
+            },
+            "extra_criteria": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
+            },
+            "local_adjust": {
+                "data type": "float",
+                "widge type": "slider",
+                "min": 0,
+                "max": 1
+            },
+            "return_object": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
+            },
+            "dilate": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
+            }
+        }
+    },
+    "Invert Mask": {
+        "module": "aicssegmentation.core.utils",
+        "function": "invert_mask",
+        "parameter": {
+            "img": {
+                "data type": "np.ndarray"
+            }
+        }
+    },
+    "Mask Image": {
+        "module": "aicssegmentation.core.utils",
+        "function": "invert_mask",
+        "parameter": {
+            "image": {
+                "data type": "np.ndarray"
+            },
+            "mask": {
+                "data type": "np.ndarray"
+            },
+            "value": {
+                "data type": "int",
+                "widge type": "slider",
+                "min": 0,
+                "max": 255,
                 "increment": 1
             }
         }
