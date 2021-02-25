@@ -396,3 +396,28 @@ def z_range(bw, seg):
 
     seg[:low_z, :, :] = 0
     seg[high_z + 1 :, :, :] = 0
+
+
+def cell_local_adaptive_threshold(structure_img_smooth, cell_wise_min_area):
+    from skimage.filters import threshold_triangle, threshold_otsu
+    from skimage.morphology import dilation
+
+    # cell-wise local adaptive thresholding
+    th_low_level = threshold_triangle(structure_img_smooth)
+
+    bw_low_level = structure_img_smooth > th_low_level
+    bw_low_level = remove_small_objects(
+        bw_low_level, min_size=cell_wise_min_area, connectivity=1, in_place=True
+    )
+    bw_low_level = dilation(bw_low_level, selem=ball(2))
+
+    bw_high_level = np.zeros_like(bw_low_level)
+    lab_low, num_obj = label(bw_low_level, return_num=True, connectivity=1)
+
+    for idx in range(num_obj):
+        single_obj = lab_low == (idx + 1)
+        local_otsu = threshold_otsu(structure_img_smooth[single_obj > 0])
+        bw_high_level[
+            np.logical_and(structure_img_smooth > local_otsu * 0.98, single_obj)
+        ] = 1
+    return bw_high_level
