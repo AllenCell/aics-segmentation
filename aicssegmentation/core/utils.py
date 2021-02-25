@@ -263,9 +263,9 @@ def get_middle_frame(struct_img: np.ndarray, method: str = "z") -> int:
 
 def get_3dseed_from_mid_frame(
     bw: np.ndarray,
-    stack_shape: List,
-    mid_frame: int,
-    hole_min: int,
+    stack_shape: List = None,
+    mid_frame: int = -1,
+    hole_min: int = 1,
     bg_seed: bool = True,
 ) -> np.ndarray:
     """build a 3D seed image from the binary segmentation of a single slice
@@ -273,12 +273,14 @@ def get_3dseed_from_mid_frame(
     Parameters:
     ------------
     bw: np.ndarray
-        the 2d segmentation of a single frame
-    shape_3d: List
-        the shape of original 3d image, e.g. shape_3d = img.shape
+        the 2d segmentation of a single frame, or a 3D array with only one slice
+        containing segmentation
+    stack_shape: List
+        (only used when bw is 2d) the shape of original 3d image, e.g. 
+        shape_3d = img.shape
     frame_index: int
-        the index of where bw is from the whole z-stack
-    area_min: int
+        (only used when bw is 2d) the index of where bw is from the whole z-stack
+    hole_min: int
         any connected component in bw2d with size smaller than area_min
         will be excluded from seed image generation
     bg_seed: bool
@@ -292,7 +294,7 @@ def get_3dseed_from_mid_frame(
     out1 = label(out)
     stat = regionprops(out1)
 
-    # build the seed for watershed
+    # build the seed
     seed = np.zeros(stack_shape)
     seed_count = 0
     if bg_seed:
@@ -305,6 +307,105 @@ def get_3dseed_from_mid_frame(
         seed[mid_frame, int(py), int(px)] = seed_count
 
     return seed
+
+
+def get_seed_for_objects(
+    raw: np.ndarray,
+    bw: np.ndarray,
+    area_min: int = 1,
+    area_max: int = 10000,
+    bg_seed: bool = True,
+) -> np.ndarray:
+    """
+    build a seed image for an image of 3D objects (assuming roughly convex shape
+    in 3D) using the information in the middle slice
+
+    Parameters:
+    ------------
+    raw: np.ndarray
+        orignal image used to determine middle slice
+    bw: np.ndarray
+        a round 3D segmentation, expecting the segmentation in the middle slice 
+        having relatively good quality
+    area_min: int
+        estimated minimal size on one single slice (major body chunk, e.g. the 
+        center XY plane of a 3D ball) of an object
+    area_max: int
+        estimated maximal size on one single slice (major body chunk, e.g. the 
+        center XY plane of a 3D ball) of an object. It is recommended to be
+        conservertive (setting this value a little larger)
+    bg_seed: bool
+        bg_seed=True will add a background seed at the first frame (z=0).
+
+    """
+    from skimage.morphology import remove_small_objects
+
+    # determine middle slice
+    mid_z = get_middle_frame(raw, method="intensity")
+
+    # take seg of middle slice
+    bw2d = bw[mid_z, :, :]
+
+    # fillin holes to form solid objects
+    bw2d_fill = hole_filling(bw2d, area_min, area_max)
+
+    # prune the objects in middle slice
+    out = remove_small_objects(bw2d_fill > 0, area_min)
+
+    # extract object and calculate centroid
+    out1 = label(out)
+    stat = regionprops(out1)
+
+    # use each centroid as one seed
+    seed = np.zeros(raw.shape)
+    seed_count = 0
+    if bg_seed:
+        seed[0, :, :] = 1
+        seed_count += 1
+
+    for idx in range(len(stat)):
+        py, px = np.round(stat[idx].centroid)
+        seed_count += 1
+        seed[mid_z, int(py), int(px)] = seed_count
+
+    return seed
+
+
+def segmentation_union(seg: List) -> np.ndarray:
+    """ merge multiple segmentations into a single result
+
+    Parameters
+    ------------
+    seg: List
+        a list of segmentations, should all have the same shape
+    """
+
+    return any(seg)
+
+
+def segmentation_intersection(seg: List) -> np.ndarray:
+    """ get the intersection of multiple segmentations into a single result
+
+    Parameters
+    ------------
+    seg: List
+        a list of segmentations, should all have the same shape
+    """
+
+    return all(seg)
+
+
+def remove_index_object(label: np.nd_array, id_to_remove: List[int], in_place=False):
+
+    if in_place:
+        img = label
+    else:
+        img = label.copy()
+
+    for id in id_to_remove:
+        img[img == id] = 0
+
+    return img
 
 
 def peak_local_max_wrapper(
