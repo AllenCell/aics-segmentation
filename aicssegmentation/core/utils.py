@@ -276,7 +276,7 @@ def get_3dseed_from_mid_frame(
         the 2d segmentation of a single frame, or a 3D array with only one slice
         containing segmentation
     stack_shape: List
-        (only used when bw is 2d) the shape of original 3d image, e.g. 
+        (only used when bw is 2d) the shape of original 3d image, e.g.
         shape_3d = img.shape
     frame_index: int
         (only used when bw is 2d) the index of where bw is from the whole z-stack
@@ -325,13 +325,13 @@ def get_seed_for_objects(
     raw: np.ndarray
         orignal image used to determine middle slice
     bw: np.ndarray
-        a round 3D segmentation, expecting the segmentation in the middle slice 
+        a round 3D segmentation, expecting the segmentation in the middle slice
         having relatively good quality
     area_min: int
-        estimated minimal size on one single slice (major body chunk, e.g. the 
+        estimated minimal size on one single slice (major body chunk, e.g. the
         center XY plane of a 3D ball) of an object
     area_max: int
-        estimated maximal size on one single slice (major body chunk, e.g. the 
+        estimated maximal size on one single slice (major body chunk, e.g. the
         center XY plane of a 3D ball) of an object. It is recommended to be
         conservertive (setting this value a little larger)
     bg_seed: bool
@@ -372,7 +372,7 @@ def get_seed_for_objects(
 
 
 def segmentation_union(seg: List) -> np.ndarray:
-    """ merge multiple segmentations into a single result
+    """merge multiple segmentations into a single result
 
     Parameters
     ------------
@@ -384,7 +384,7 @@ def segmentation_union(seg: List) -> np.ndarray:
 
 
 def segmentation_intersection(seg: List) -> np.ndarray:
-    """ get the intersection of multiple segmentations into a single result
+    """get the intersection of multiple segmentations into a single result
 
     Parameters
     ------------
@@ -432,50 +432,6 @@ def watershed_wrapper(bw: np.ndarray, local_maxi: np.ndarray) -> np.ndarray:
         watershed_line=True,
     )
     return im_watershed
-
-
-# TODO replace with MO threshold
-def low_level_threshold(structure_img_smooth: np.ndarray) -> np.ndarray:
-    from skimage.filters import threshold_triangle
-
-    global_tri = threshold_triangle(structure_img_smooth)
-    global_median = np.percentile(structure_img_smooth, 50)
-
-    th_low_level = (global_tri + global_median) / 2
-    bw_low_level = structure_img_smooth > th_low_level
-
-    return bw_low_level
-
-
-def high_level_threshold(
-    bw_low_level: np.ndarray,
-    structure_img_smooth: np.ndarray,
-    local_cutoff=0,
-    otsu_scale=1,
-) -> np.ndarray:
-    from skimage.measure import label
-    from skimage.filters import threshold_otsu
-
-    local_cutoff *= threshold_otsu(structure_img_smooth)
-
-    bw_high_level = np.zeros_like(bw_low_level)
-    lab_low, num_obj = label(bw_low_level, return_num=True, connectivity=1)
-    for idx in range(num_obj):
-        single_obj = lab_low == (idx + 1)
-        local_otsu = threshold_otsu(structure_img_smooth[single_obj])
-        if local_otsu > local_cutoff:
-            bw_high_level[
-                np.logical_and(
-                    structure_img_smooth > otsu_scale * local_otsu, single_obj
-                )
-            ] = 1
-    return bw_high_level
-
-
-def dilation_wrapper(img, ball_size):
-    from skimage.morphology import dilation, ball
-
-    return dilation(img, selem=ball(ball_size))
 
 
 def z_range(bw: np.ndarray, seg: np.ndarray):
