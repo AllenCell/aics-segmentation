@@ -434,14 +434,29 @@ def watershed_wrapper(bw: np.ndarray, local_maxi: np.ndarray) -> np.ndarray:
     return im_watershed
 
 
-def z_range(bw: np.ndarray, seg: np.ndarray):
+def prune_z_slices(bw: np.ndarray, ):
+    """ 
+    prune the segmentation by only keep a certain range of z-slices
+    with the assumption of all signals living only in a few consecutive
+    z-slices. This function will first determine the key z-slice where most
+    of the signals living on and then include a few slices up/down along z 
+    to make the segmentation completed. This is useful when you have prior 
+    knowledge about your segmentation target and can effectively exclude 
+    small segmented objects due to noise/artifacts in those z-slices we are
+    sure the signal should not live on.
+
+    Parameters:
+    -----------
+    bw: np.ndarray
+        the segmentation before pruning
+    """
     bw_z = np.zeros(bw.shape[0], dtype=np.uint16)
     for zz in range(bw.shape[0]):
-        bw_z[zz] = np.count_nonzero(seg[zz, :, :] > 0)
+        bw_z[zz] = np.count_nonzero(bw[zz, :, :] > 0)
 
     mid_z = np.argmax(bw_z)
     low_z = 0
-    high_z = seg.shape[0] - 2
+    high_z = bw.shape[0] - 2
     for ii in np.arange(mid_z - 1, 0, -1):
         if bw_z[ii] < 100:
             low_z = ii
@@ -451,8 +466,11 @@ def z_range(bw: np.ndarray, seg: np.ndarray):
             high_z = ii
             break
 
+    seg = bw.copy()
     seg[:low_z, :, :] = 0
     seg[high_z + 1 :, :, :] = 0
+
+    return seg
 
 
 def cell_local_adaptive_threshold(
