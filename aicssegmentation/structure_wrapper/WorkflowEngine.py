@@ -1,9 +1,15 @@
+from aicssegmentation.structure_wrapper_config.structure_config_utils import load_workflow_config, parse_config_to_objects
+
+
 class WorkflowEngine:
     def __init__(self, workflow_name, image):
         self.workflow_name = workflow_name
-        self.steps = list()
+        self.steps = self.get_steps()
         self.currentStep = 0
         self.image = [image]
+
+    def get_steps(self):
+        return parse_config_to_objects(load_workflow_config(self.workflow_name))
 
     def get_next_step(self):
         return self.steps[self.currentStep]
