@@ -435,13 +435,13 @@ def watershed_wrapper(bw: np.ndarray, local_maxi: np.ndarray) -> np.ndarray:
 
 
 def prune_z_slices(bw: np.ndarray):
-    """ 
+    """
     prune the segmentation by only keep a certain range of z-slices
     with the assumption of all signals living only in a few consecutive
     z-slices. This function will first determine the key z-slice where most
-    of the signals living on and then include a few slices up/down along z 
-    to make the segmentation completed. This is useful when you have prior 
-    knowledge about your segmentation target and can effectively exclude 
+    of the signals living on and then include a few slices up/down along z
+    to make the segmentation completed. This is useful when you have prior
+    knowledge about your segmentation target and can effectively exclude
     small segmented objects due to noise/artifacts in those z-slices we are
     sure the signal should not live on.
 
