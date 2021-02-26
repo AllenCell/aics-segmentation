@@ -271,7 +271,7 @@
         "function": "MO",
         "parameter": {
             "structure_img_smooth": {
-                "data type": "np.ndarray",
+                "data type": "np.ndarray"
             },
             "global_thresh_method": {
                 "data type": "str",
@@ -331,7 +331,7 @@
     },
     "Mask Image": {
         "module": "aicssegmentation.core.utils",
-        "function": "invert_mask",
+        "function": "mask_image",
         "parameter": {
             "image": {
                 "data type": "np.ndarray"
