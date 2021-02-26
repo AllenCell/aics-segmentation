@@ -217,17 +217,10 @@
             }
         }
     },
-    "Z Range": {
+    "Prune Z-Slices": {
         "module": "aicssegmentation.core.utils",
         "function": "z_range",
-        "parameter": {
-            "bw": {
-                "data type": "np.ndarray"
-            },
-            "seg": {
-                "data type": "np.ndarray"
-            }
-        }
+        "parameter": null
     },
     "Logical OR": {
         "module": "numpy",

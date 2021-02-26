@@ -434,7 +434,7 @@ def watershed_wrapper(bw: np.ndarray, local_maxi: np.ndarray) -> np.ndarray:
     return im_watershed
 
 
-def prune_z_slices(bw: np.ndarray, ):
+def prune_z_slices(bw: np.ndarray):
     """ 
     prune the segmentation by only keep a certain range of z-slices
     with the assumption of all signals living only in a few consecutive

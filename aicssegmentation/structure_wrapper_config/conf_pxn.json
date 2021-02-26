@@ -51,7 +51,7 @@
         "parent": 4
     },
     "6": {
-        "name": "Z Range",
+        "name": "Prune Z-Slices",
         "module": "aicssegmentation.core.utils",
         "function": "prune_z_slices",
         "parent": 5
