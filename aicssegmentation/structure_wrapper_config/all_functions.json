@@ -92,10 +92,6 @@
             "sigma": {
                 "widge type": "slider",
                 "data type": "float"
-            },
-            "truncate_range": {
-                "widge type": "slider",
-                "data type": "float"
             }
         }
     },

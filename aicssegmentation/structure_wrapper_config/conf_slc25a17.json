@@ -16,8 +16,7 @@
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_slice_by_slice",
         "parameter": {
-            "sigma": 1,
-            "truncate_range": 3.0
+            "sigma": 1
         },
         "parent": 1
     },
