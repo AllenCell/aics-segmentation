@@ -62,7 +62,289 @@
             "method": {
                 "widge type": "drop-down",
                 "data type": "str",
-                "option": ["3D", "slice_by_slice"]
+                "option": [
+                    "3D",
+                    "slice_by_slice"
+                ]
+            }
+        }
+    },
+    "Vesselness 3D": {
+        "module": "aicssegmentation.core.vessel",
+        "function": "vesselness3D",
+        "parameter": {
+            "sigmas": {
+                "widge type": "slider",
+                "data type": "int",
+                "min": 0
+            },
+            "tau": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": 0.5,
+                "max": 1.0
+            },
+            "whiteonblack": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
+            },
+            "cutoff": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": -1
+            }
+        }
+    },
+    "Image Smoothing Gaussian Slice by Slice": {
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "image_smoothing_gaussian_slice_by_slice",
+        "parameter": {
+            "sigma": {
+                "widge type": "slider",
+                "data type": "float"
+            },
+            "truncate_range": {
+                "widge type": "slider",
+                "data type": "float"
+            }
+        }
+    },
+    "3D Spot Filter": {
+        "module": "aicssegmentation.core.seg_dot",
+        "function": "dot_3d",
+        "parameter": {
+            "log_sigma": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": 0
+            },
+            "cutoff": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": 0,
+                "max": 1,
+                "increment": 0.01
+            }
+        }
+    },
+    "Image Smoothing Gaussian 3D": {
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "image_smoothing_gaussian_3d",
+        "parameter": {
+            "sigma": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": 0
+            },
+            "truncate_range": {
+                "widge type": "slider",
+                "data type": "float"
+            }
+        }
+    },
+    "Slice By Slice Spot Filter": {
+        "module": "aicssegmentation.core.seg_dot",
+        "function": "dot_slice_by_slice",
+        "parameter": {
+            "log_sigma": {
+                "widge type": "slider",
+                "data type": "float"
+            }
+        }
+    },
+    "Hole Filling": {
+        "module": "aicssegmentation.core.utils",
+        "function": "hole_filling",
+        "parameter": {
+            "hole_min": {
+                "widge type": "slider",
+                "data type": "int",
+                "min": 0
+            },
+            "hole_max": {
+                "widge type": "slider",
+                "data type": "int",
+                "min": 0
+            },
+            "fill_2d": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
+            }
+        }
+    },
+    "Peak Local Max Wrapper": {
+        "module": "aicssegmentation.core.utils",
+        "function": "peak_local_max_wrapper",
+        "parameter": {
+            "struct_img_for_peak": {
+                "data type": "np.ndarray"
+            },
+            "bw": {
+                "data type": "np.ndarray"
+            }
+        }
+    },
+    "Watershed Wrapper": {
+        "module": "aicssegmentation.core.utils",
+        "function": "watershed_wrapper",
+        "parameter": {
+            "bw": {
+                "data type": "np.ndarray"
+            },
+            "local_maxi": {
+                "data type": "np.ndarray"
+            }
+        }
+    },
+    "Cell Local Adaptive Threshold": {
+        "module": "aicssegmentation.core.utils",
+        "function": "cell_local_adaptive_threshold",
+        "parameter": {
+            "structure_img_smooth": {
+                "data type": "np.ndarray"
+            },
+            "cell_wise_min_area": {
+                "data type": "int",
+                "widge_type": "slider",
+                "min": 0,
+                "increment": 1
+            }
+        }
+    },
+    "Z Range": {
+        "module": "aicssegmentation.core.utils",
+        "function": "z_range",
+        "parameter": {
+            "bw": {
+                "data type": "np.ndarray"
+            },
+            "seg": {
+                "data type": "np.ndarray"
+            }
+        }
+    },
+    "Logical OR": {
+        "module": "numpy",
+        "function": "logical_or",
+        "parameter": {
+            "array1": {
+                "data type": "np.ndarray"
+            },
+            "array2": {
+                "data type": "np.ndarray"
+            }
+        }
+    },
+    "Topology Preserving Thinning": {
+        "module": "aicssegmentation.core.utils",
+        "function": "topology_preserving_thinning",
+        "parameter": {
+            "bw": {
+                "data type": "np.ndarray"
+            },
+            "min_thickness": {
+                "data type": "int",
+                "widge type": "slider",
+                "min": 0,
+                "max": 50,
+                "increment": 1
+            },
+            "thin": {
+                "data type": "int",
+                "widge type": "slider",
+                "min": 0,
+                "max": 50,
+                "increment": 1
+            }
+        }
+    },
+    "Masked Object Threshold": {
+        "module": "aicssegmentation.core.MO_threshold",
+        "function": "MO",
+        "parameter": {
+            "structure_img_smooth": {
+                "data type": "np.ndarray"
+            },
+            "global_thresh_method": {
+                "data type": "str",
+                "widge type": "drop-down",
+                "options": [
+                    "triangle",
+                    "median",
+                    "ave_tri_med"
+                ]
+            },
+            "object_minArea": {
+                "data type": "int",
+                "widge type": "slider",
+                "min": 0,
+                "max": 1
+            },
+            "extra_criteria": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
+            },
+            "local_adjust": {
+                "data type": "float",
+                "widge type": "slider",
+                "min": 0,
+                "max": 1
+            },
+            "return_object": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
+            },
+            "dilate": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
+            }
+        }
+    },
+    "Invert Mask": {
+        "module": "aicssegmentation.core.utils",
+        "function": "invert_mask",
+        "parameter": {
+            "img": {
+                "data type": "np.ndarray"
+            }
+        }
+    },
+    "Mask Image": {
+        "module": "aicssegmentation.core.utils",
+        "function": "mask_image",
+        "parameter": {
+            "image": {
+                "data type": "np.ndarray"
+            },
+            "mask": {
+                "data type": "np.ndarray"
+            },
+            "value": {
+                "data type": "int",
+                "widge type": "slider",
+                "min": 0,
+                "max": 255,
+                "increment": 1
             }
         }
     }
