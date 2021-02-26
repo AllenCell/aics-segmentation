@@ -42,9 +42,9 @@
         "parent": 2
     },
     "5": {
-        "name": "Logical OR",
-        "module": "numpy",
-        "function": "logical_or",
+        "name": "Merge Segmentation",
+        "module": "aicssegmentation.core.utils",
+        "function": "segmentation_union",
         "parent": [
             3,
             4
