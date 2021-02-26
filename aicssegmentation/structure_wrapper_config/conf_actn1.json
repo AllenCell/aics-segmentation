@@ -25,8 +25,6 @@
             "sigmas": [
                 2
             ],
-            "tau": 1,
-            "whiteonblack": "True",
             "cutoff": 0.15
         },
         "parent": 2
@@ -39,8 +37,6 @@
             "sigmas": [
                 1
             ],
-            "tau": 1,
-            "whiteonblack": "True",
             "cutoff": 0.05
         },
         "parent": 2

@@ -25,9 +25,7 @@
             "sigmas": [
                 1
             ],
-            "cutoff": 0.01,
-            "tau": 1,
-            "whiteonblack": "True"
+            "cutoff": 0.01
         },
         "parent": 2
     },

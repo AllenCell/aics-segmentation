@@ -78,20 +78,6 @@
                 "data type": "int",
                 "min": 0
             },
-            "tau": {
-                "widge type": "slider",
-                "data type": "float",
-                "min": 0.5,
-                "max": 1.0
-            },
-            "whiteonblack": {
-                "widge type": "drop-down",
-                "data type": "bool",
-                "option": [
-                    "True",
-                    "False"
-                ]
-            },
             "cutoff": {
                 "widge type": "slider",
                 "data type": "float",
