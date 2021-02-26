@@ -71,9 +71,9 @@
         "parent": 6
     },
     "9": {
-        "name": "Logical OR",
-        "module": "numpy",
-        "function": "logical_or",
+        "name": "Merge Segmentation",
+        "module": "aicssegmentation.core.utils",
+        "function": "segmentation_union",
         "parent": [
             7,
             8
@@ -98,9 +98,9 @@
         ]
     },
     "12": {
-        "name": "Logical OR",
-        "module": "numpy",
-        "function": "logical_or",
+        "name": "Merge Segmentation",
+        "module": "aicssegmentation.core.utils",
+        "function": "segmentation_union",
         "parent": [
             11,
             3

@@ -211,18 +211,6 @@
         "function": "z_range",
         "parameter": null
     },
-    "Logical OR": {
-        "module": "numpy",
-        "function": "logical_or",
-        "parameter": {
-            "array1": {
-                "data type": "np.ndarray"
-            },
-            "array2": {
-                "data type": "np.ndarray"
-            }
-        }
-    },
     "Topology Preserving Thinning": {
         "module": "aicssegmentation.core.utils",
         "function": "topology_preserving_thinning",
