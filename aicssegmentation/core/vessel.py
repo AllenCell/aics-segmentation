@@ -97,7 +97,7 @@ def filament_2d_wrapper(struct_img: np.ndarray, f2_param: List[List]):
 
 
 def vesselness3D(
-    nd_array: np.ndarray, sigmas: List, tau=0.5, whiteonblack=True, cutoff: float = -1
+    nd_array: np.ndarray, sigmas: List, tau=1, whiteonblack=True, cutoff: float = -1
 ):
     """Multi-scale 3D filament filter
 
@@ -110,7 +110,7 @@ def vesselness3D(
     tau: float
         parameter that controls response uniformity. The value has to be
         between 0.5 and 1. Lower tau means more intense output response.
-        Default is 0.5
+        Default is 1
     whiteonblack: bool
         whether the filamentous structures are bright on dark background
         or dark on bright. Default is True.
