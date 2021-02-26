@@ -130,10 +130,6 @@
                 "widge type": "slider",
                 "data type": "float",
                 "min": 0
-            },
-            "truncate_range": {
-                "widge type": "slider",
-                "data type": "float"
             }
         }
     },
@@ -178,17 +174,10 @@
             }
         }
     },
-    "Peak Local Max Wrapper": {
+    "Find Local Maxima": {
         "module": "aicssegmentation.core.utils",
         "function": "peak_local_max_wrapper",
-        "parameter": {
-            "struct_img_for_peak": {
-                "data type": "np.ndarray"
-            },
-            "bw": {
-                "data type": "np.ndarray"
-            }
-        }
+        "parameter": null
     },
     "Watershed Wrapper": {
         "module": "aicssegmentation.core.utils",
