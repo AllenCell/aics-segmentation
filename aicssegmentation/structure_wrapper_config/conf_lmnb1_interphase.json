@@ -15,8 +15,7 @@
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_3d",
         "parameter": {
-            "sigma": 1,
-            "truncate_range": 3.0
+            "sigma": 1
         },
         "parent": 1
     },
@@ -73,7 +72,7 @@
         "module": "skimage.morphology",
         "function": "watershed",
         "parameter": {
-            "watershed_line": true,
+            "watershed_line": true
         },
         "parent": [1, 7]
     },
@@ -82,7 +81,7 @@
         "module": "aicssegmentation.core.utils",
         "function": "remove_index_object",
         "parameter": {
-            "id_to_remove": [1],
+            "id_to_remove": [1]
         },
         "parent": 8
     },

@@ -291,11 +291,7 @@
     "Invert Mask": {
         "module": "aicssegmentation.core.utils",
         "function": "invert_mask",
-        "parameter": {
-            "img": {
-                "data type": "np.ndarray"
-            }
-        }
+        "parameter": null
     },
     "Mask Image": {
         "module": "aicssegmentation.core.utils",
