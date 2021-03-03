@@ -12,9 +12,9 @@ class WorkflowStep:
         Params:
             step_config (dict): dictionary object containing information about this workflow step
         """
-        self.name: str = step_config["name"]     # Name of the workflow step
-        self.parent: int = step_config["parent"] # Index of parent in entire workflow
-        self.result: np.ndarray = None           # Result of running this step, None if not executed
+        self.name: str = step_config["name"]         # Name of the workflow step
+        self.parent: int = step_config["parent"] - 1 # Index of parent in entire workflow #TODO: Better to change jason to 0-indexed to avoid confusion
+        self.result: np.ndarray = None               # Result of running this step, None if not executed
 
         module = importlib.import_module(step_config["module"])
         self.__function = getattr(module, step_config["function"])
@@ -33,7 +33,7 @@ class WorkflowStep:
         Returns:
             self.result (np.ndarray): Result of performing workflow step on the given image.
        """
-        if self.parameters:
+        if self.__parameters:
             self.result: np.ndarray = self.__function(image, **self.__parameters)
         else:
             self.result: np.ndarray = self.__function(image)

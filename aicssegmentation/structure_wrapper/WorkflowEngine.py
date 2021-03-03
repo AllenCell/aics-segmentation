@@ -88,7 +88,7 @@ class WorkflowEngine:
             self.image (np.ndarray): Result of performing workflow step on the given image
                                      None if step has not been executed yet.
        """
-        if step_index >= self.currentStep:
+        if step_index > self.currentStep:
             return None # returns None if the WorkflowStep has not been executed.
         else:
             return self.steps[step_index].result
