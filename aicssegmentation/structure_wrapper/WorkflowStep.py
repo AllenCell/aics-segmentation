@@ -9,9 +9,11 @@ class WorkflowStep:
         if "parameter" in step_config:
             self.parameters = step_config["parameter"]
         self.parent = step_config["parent"]
+        self.result = None
 
     def execute(self, image):
         if self.parameters:
-            return self.function(image, **self.parameters)
+            self.result = self.function(image, **self.parameters)
         else:
-            return self.function(image)
+            self.result = self.function(image)
+        return self.result
