@@ -34,7 +34,7 @@ class WorkflowStep:
             self.result (np.ndarray): Result of performing workflow step on the given image.
        """
         if self.parameters:
-            self.result = self.__function(image, **self.__parameters)
+            self.result: np.ndarray = self.__function(image, **self.__parameters)
         else:
-            self.result = self.__function(image)
+            self.result: np.ndarray = self.__function(image)
         return self.result
