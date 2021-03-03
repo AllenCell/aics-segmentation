@@ -18,7 +18,7 @@ class WorkflowEngine:
         # Execute the next step and add result to results list
         if self.currentStep == 0:
             return self.execute_step(self.starting_image)
-        elif self.currentStep > len(self.steps):
+        elif self.isDone():
             print("No steps left to run")
         else:
             return self.execute_step(self.steps[self.currentStep - 1].result)
@@ -49,4 +49,7 @@ class WorkflowEngine:
         while self.currentStep <= len(self.steps):
             self.execute_next()
         return self.image[-1]
+
+    def isDone(self):
+        return self.currentStep >= len(self.steps)
 
