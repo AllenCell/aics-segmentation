@@ -10,7 +10,7 @@ class WorkflowStep:
         Constructor for the workflow object
 
         Params:
-            step_config: dictionary object containing information about this workflow step
+            step_config (dict): dictionary object containing information about this workflow step
         """
         self.name: str = step_config["name"]     # Name of the workflow step
         self.parent: int = step_config["parent"] # Index of parent in entire workflow
