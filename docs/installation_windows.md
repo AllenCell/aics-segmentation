@@ -83,7 +83,7 @@ conda install nb_conda
 
 ```bash
 cd C:\Projects
-git clone https://github.com/AllenInstitute/aics-segmentation.git
+git clone https://github.com/AllenCell/aics-segmentation.git
 ```
 
 
