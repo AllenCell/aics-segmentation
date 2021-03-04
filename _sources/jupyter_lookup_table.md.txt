@@ -2,7 +2,7 @@
 
 We recommend that users start by
 
-Identifying a structure in the [lookup table](www.allencell.org/segmenter.html#lookup-table) that looks most similar to the segmentation task that you are faced with. Once you have identified this structure, open the correspoinding Jupyter Notebook and follow the instructions in the notebook to tune the workflow for your particular task. Finally, after finalizing the algorithms and parameters in the workflow, modify batch_processing.py to batch process all data (file by file or folder by folder).
+Identifying a structure in the [lookup table](https://www.allencell.org/segmenter.html#lookup-table) that looks most similar to the segmentation task that you are faced with. Once you have identified this structure, open the correspoinding Jupyter Notebook and follow the instructions in the notebook to tune the workflow for your particular task. Finally, after finalizing the algorithms and parameters in the workflow, modify batch_processing.py to batch process all data (file by file or folder by folder).
 
 
 ## Step 1: Find the entry in the lookup table with most similar morphology to your data
