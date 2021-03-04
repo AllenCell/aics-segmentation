@@ -13,7 +13,7 @@ class WorkflowStep:
             step_config (dict): dictionary object containing information about this workflow step
         """
         self.name: str = step_config["name"]         # Name of the workflow step
-        self.parent: int = step_config["parent"] - 1 # Index of parent in entire workflow #TODO: Better to change jason to 0-indexed to avoid confusion
+        self.parent: int = step_config["parent"] - 1 # Index of parent in entire workflow #TODO: Better to change json to 0-indexed to avoid confusion
         self.result: np.ndarray = None               # Result of running this step, None if not executed
 
         module = importlib.import_module(step_config["module"])

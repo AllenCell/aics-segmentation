@@ -28,8 +28,6 @@ def parse_config_to_objects(cfg: dict):
         workflow.append(WorkflowStep(step))
     return workflow
 
-
-
 def apply_on_single_image_with_config(img: np.ndarray, cfg: Dict):
 
     module_list = []
