@@ -36,8 +36,7 @@
         "function": "size_filter",
         "parameter": {
             "min_size": 3,
-            "method": "3D",
-            "connectivity": 1
+            "method": "3D"
         },
         "parent": 3
     },
@@ -65,8 +64,7 @@
         "function": "size_filter",
         "parameter": {
             "min_size": 3,
-            "method": "3D",
-            "connectivity": 1
+            "method": "3D"
         },
         "parent": 6
     }

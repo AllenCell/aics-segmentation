@@ -26,12 +26,12 @@
         "function": "MO",
         "parameter": {
             "global_thresh_method": "ave",
-            "object_minArea": "700",
-            "extra_criteria": "False",
+            "object_minArea": 700,
+            "extra_criteria": false,
             "local_adjust": 1.0,
-            "dilate": "False"
+            "dilate": false
         },
-        "parent": 3
+        "parent": 2
     },
     "4": {
         "name": "Slice by Slice Spot Filter",
@@ -49,8 +49,7 @@
         "function": "size_filter",
         "parameter": {
             "min_size": 5,
-            "method": "3D",
-            "connectivity": 1
+            "method": "3D"
         },
         "parent": 4
     },
@@ -60,8 +59,7 @@
         "function": "size_filter",
         "parameter": {
             "min_size": 5,
-            "method": "3D",
-            "connectivity": 1
+            "method": "3D"
         },
         "parent": 5
     }

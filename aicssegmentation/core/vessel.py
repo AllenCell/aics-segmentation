@@ -158,7 +158,7 @@ def vesselness3D(
 def vesselness2D(
     nd_array: np.ndarray,
     sigmas: List,
-    tau: float = 0.5,
+    tau: float = 1,
     whiteonblack: bool = True,
     cutoff: float = -1,
 ):
@@ -220,7 +220,7 @@ def vesselness2D_single_slice(
     nd_array: np.ndarray,
     single_z: int,
     sigmas: List,
-    tau: float = 0.5,
+    tau: float = 1,
     whiteonblack: bool = True,
     cutoff: float = -1,
 ):
@@ -272,7 +272,7 @@ def vesselness2D_single_slice(
 def vesselnessSliceBySlice(
     nd_array: np.ndarray,
     sigmas: List,
-    tau: float = 0.5,
+    tau: float = 1,
     whiteonblack: bool = True,
     cutoff: float = -1,
 ):

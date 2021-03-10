@@ -15,8 +15,59 @@
                     "widge type": "slider",
                     "data type": "float",
                     "min": 0.5,
+                    "max": 200,
+                    "increment": 0.5
+                }
+            ]
+        }
+    },
+    "Intensity Normalization with bound": {
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "intensity_normalization",
+        "parameter": {
+            "scaling_param": [
+                {
+                    "widge type": "slider",
+                    "data type": "float",
+                    "min": 0.5,
                     "max": 30,
                     "increment": 0.5
+                },
+                {
+                    "widge type": "slider",
+                    "data type": "float",
+                    "min": 0.5,
+                    "max": 200,
+                    "increment": 0.5
+                },
+                {
+                    "widge type": "slider",
+                    "data type": "int",
+                    "min": 20,
+                    "max": 1000,
+                    "increment": 20
+                },
+                {
+                    "widge type": "slider",
+                    "data type": "int",
+                    "min": 50,
+                    "max": 8000,
+                    "increment": 50
+                }
+            ]
+        }
+    },
+    "Intensity Normalization using min-max with bound": {
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "intensity_normalization",
+        "parameter": {
+            "scaling_param": [
+                {
+                    "widge type": "slider",
+                    "data type": "int",
+                    "min": 50,
+                    "max": 8000,
+                    "increment": 50
                 }
             ]
         }
@@ -30,7 +81,7 @@
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
         "parameter": {
-            "sigma": [
+            "sigmas": [
                 {
                     "widge type": "slider",
                     "data type": "float",
@@ -42,7 +93,7 @@
             "cutoff": {
                 "widge type": "slider",
                 "data type": "float",
-                "min": 0.05,
+                "min": 0.005,
                 "max": 0.5,
                 "increment": 0.005
             }
@@ -75,7 +126,7 @@
         "parameter": {
             "sigmas": {
                 "widge type": "slider",
-                "data type": "int",
+                "data type": "float",
                 "min": 0,
                 "max": 5,
                 "increment": 0.5
@@ -83,7 +134,7 @@
             "cutoff": {
                 "widge type": "slider",
                 "data type": "float",
-                "min": 0,
+                "min": 0.005,
                 "max": 0.5,
                 "increment": 0.005
             }
@@ -238,9 +289,6 @@
         "module": "aicssegmentation.core.MO_threshold",
         "function": "MO",
         "parameter": {
-            "structure_img_smooth": {
-                "data type": "np.ndarray"
-            },
             "global_thresh_method": {
                 "data type": "str",
                 "widge type": "drop-down",
@@ -254,7 +302,8 @@
                 "data type": "int",
                 "widge type": "slider",
                 "min": 0,
-                "max": 1
+                "max": 2000,
+                "increment": 50
             },
             "extra_criteria": {
                 "widge type": "drop-down",
@@ -268,15 +317,8 @@
                 "data type": "float",
                 "widge type": "slider",
                 "min": 0,
-                "max": 1
-            },
-            "return_object": {
-                "widge type": "drop-down",
-                "data type": "bool",
-                "option": [
-                    "True",
-                    "False"
-                ]
+                "max": 2,
+                "increment": 0.02
             },
             "dilate": {
                 "widge type": "drop-down",

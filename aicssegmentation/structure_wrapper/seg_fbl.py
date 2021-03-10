@@ -65,7 +65,7 @@ def Workflow_fbl(
     ###################
     # PRE_PROCESSING
     ###################
-    # intenisty normalization (min/max)
+    # intenisty normalization
     struct_img = intensity_normalization(struct_img, scaling_param=intensity_norm_param)
 
     out_img_list.append(struct_img.copy())

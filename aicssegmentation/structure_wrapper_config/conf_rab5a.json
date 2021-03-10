@@ -1,6 +1,6 @@
 {
     "1": {
-        "name": "Intensity Normalization",
+        "name": "Intensity Normalization using min-max with bound",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
         "parameter": {
@@ -36,7 +36,7 @@
         "parameter": {
             "hole_min": 0,
             "hole_max": 81,
-            "fill_2d": "True"
+            "fill_2d": true
         },
         "parent": 3
     },

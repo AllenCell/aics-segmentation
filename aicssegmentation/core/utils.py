@@ -74,8 +74,7 @@ def size_filter(
     img: np.ndarray,
     min_size: int,
     method: str = "3D",
-    connectivity: int = 1,
-    copy=False,
+    connectivity: int = 1
 ):
     """size filter
 
@@ -96,13 +95,10 @@ def size_filter(
             img > 0, min_size=min_size, connectivity=connectivity, in_place=False
         )
     elif method == "slice_by_slice":
-        if copy:  # for pxn
-            seg = np.zeros_like(img)
-        else:
-            seg = img
+        seg = np.zeros(img.shape, dtype=bool)
         for zz in range(img.shape[0]):
             seg[zz, :, :] = remove_small_objects(
-                img[zz, :, :],
+                img[zz, :, :] > 0,
                 min_size=min_size,
                 connectivity=connectivity,
                 in_place=False,

@@ -35,8 +35,7 @@
         "function": "size_filter",
         "parameter": {
             "min_size": 4,
-            "method": "slice_by_slice",
-            "copy": "True"
+            "method": "slice_by_slice"
         },
         "parent": 3
     },
