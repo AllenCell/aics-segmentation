@@ -71,10 +71,7 @@ def hole_filling(
 
 
 def size_filter(
-    img: np.ndarray,
-    min_size: int,
-    method: str = "3D",
-    connectivity: int = 1
+    img: np.ndarray, min_size: int, method: str = "3D", connectivity: int = 1
 ):
     """size filter
 
