@@ -22,7 +22,7 @@ def load_workflow_config(workflow_name: str):
 
     return cfg
 
-def parse_config_to_objects(cfg: dict):
+def parse_config_to_objects(cfg: Dict):
     workflow = list()
     for step in cfg.values():
         workflow.append(WorkflowStep(step))
