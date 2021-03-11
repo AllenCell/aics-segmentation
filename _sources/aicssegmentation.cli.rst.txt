@@ -1,0 +1,22 @@
+aicssegmentation.cli package
+============================
+
+Submodules
+----------
+
+aicssegmentation.cli.to\_analysis module
+----------------------------------------
+
+.. automodule:: aicssegmentation.cli.to_analysis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: aicssegmentation.cli
+   :members:
+   :undoc-members:
+   :show-inheritance:
