@@ -373,7 +373,7 @@ def segmentation_union(seg: List) -> np.ndarray:
         a list of segmentations, should all have the same shape
     """
 
-    return any(seg)
+    return np.logical_or.reduce(seg)
 
 
 def segmentation_intersection(seg: List) -> np.ndarray:
@@ -385,7 +385,7 @@ def segmentation_intersection(seg: List) -> np.ndarray:
         a list of segmentations, should all have the same shape
     """
 
-    return all(seg)
+    return np.logical_and.reduce(seg)
 
 
 def remove_index_object(label: np.ndarray, id_to_remove: List[int], in_place=False):
