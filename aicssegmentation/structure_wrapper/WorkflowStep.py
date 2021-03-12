@@ -1,6 +1,6 @@
 import importlib
 import numpy as np
-from typing import Dict
+from typing import Dict, List
 
 class WorkflowStep:
     """
@@ -14,7 +14,13 @@ class WorkflowStep:
             step_config (dict): dictionary object containing information about this workflow step
         """
         self.name: str = step_config["name"]         # Name of the workflow step
-        self.parent: int = step_config["parent"] - 1 # Index of parent in entire workflow #TODO: Better to change json to 0-indexed to avoid confusion
+        self.parent: List = None
+        if isinstance(step_config, int):
+            # single parent
+            self.parent = [step_config["parent"] - 1] # Index of parent in entire workflow #TODO: Better to change json to 0-indexed to avoid confusion
+        else:
+            # multiple parents
+            self.parent = step_config["parent"]
         self.result: np.ndarray = None               # Result of running this step, None if not executed
 
         module = importlib.import_module(step_config["module"])
@@ -23,7 +29,7 @@ class WorkflowStep:
         if "parameter" in step_config:
             self.__parameters = step_config["parameter"]
 
-    def execute(self, image: list) -> np.ndarray:
+    def execute(self, image: List) -> np.ndarray:
         """
         Execute this workflow step on a given image and return the result.
         Also sets the result field to the resultant image.
