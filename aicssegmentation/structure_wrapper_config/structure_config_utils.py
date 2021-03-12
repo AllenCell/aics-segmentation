@@ -58,7 +58,7 @@ def apply_on_single_image_with_config(img: np.ndarray, cfg: Dict):
     return out_list[-1]
 
 
-cfg = load_workflow_config("npm1")
-img = np.random.randn(60, 60, 60)
-apply_on_single_image_with_config(img, cfg)
-print("done")
+# cfg = load_workflow_config("npm1")
+# img = np.random.randn(60, 60, 60)
+# apply_on_single_image_with_config(img, cfg)
+# print("done")

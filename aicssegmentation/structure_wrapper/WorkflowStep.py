@@ -15,7 +15,7 @@ class WorkflowStep:
         """
         self.name: str = step_config["name"]         # Name of the workflow step
         self.parent: List = None
-        if isinstance(step_config, int):
+        if isinstance(step_config["parent"], int):
             # single parent
             self.parent = [step_config["parent"] - 1] # Index of parent in entire workflow #TODO: Better to change json to 0-indexed to avoid confusion
         else:
@@ -41,7 +41,7 @@ class WorkflowStep:
             self.result (np.ndarray): Result of performing workflow step on the given image.
        """
         if self.__parameters:
-            self.result: np.ndarray = self.__function(image, **self.__parameters)
+            self.result: np.ndarray = self.__function(*image, **self.__parameters)
         else:
-            self.result: np.ndarray = self.__function(image)
+            self.result: np.ndarray = self.__function(*image)
         return self.result

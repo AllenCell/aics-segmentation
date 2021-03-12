@@ -62,22 +62,16 @@ class WorkflowEngine:
         image: np.ndarray = None
         if self.next_step == 0:
             # First image, so use the starting image for the next workflow step
-            image = self.starting_image
+            image = [self.starting_image]
         elif self.is_done():
             # No more workflow steps to perform
             # TODO: what to do if done with workflow but execute_next is prompted?
             # printing message for now
             print("No steps left to run")
         else:
-            if len(self.get_next_step().parent) == 1:
-                # Single parent
-                # First step has been run, so run next workflow step with the result of its parent
-                image = [self.get_result(self.get_next_step().parent)]
-            else:
-                # multiple parents
-                image = list()
-                for i in range((self.get_next_step()).parent):
-                    image.append(self.get_result(i))
+            image = list()
+            for i in (self.get_next_step()).parent:
+                image.append(self.get_result(i))
 
         result: np.ndarray = self.get_next_step().execute(image)
 
