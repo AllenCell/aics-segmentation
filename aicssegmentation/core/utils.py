@@ -242,7 +242,11 @@ def get_middle_frame(struct_img: np.ndarray, method: str = "z") -> int:
         z_profile = np.zeros((bw.shape[0],), dtype=int)
         for zz in range(bw.shape[0]):
             z_profile[zz] = np.count_nonzero(bw[zz, :, :])
-        mid_frame = round(histogram_otsu(z_profile) * bw.shape[0]).astype(int)
+        mid_frame = None
+        if isinstance(round(histogram_otsu(z_profile) * bw.shape[0]), int):
+            mid_frame = round(histogram_otsu(z_profile) * bw.shape[0])
+        else:
+            mid_frame = round(histogram_otsu(z_profile) * bw.shape[0]).astype(int)
 
     elif method == "z":
         mid_frame = struct_img.shape[0] // 2
@@ -373,7 +377,7 @@ def segmentation_union(seg: List) -> np.ndarray:
         a list of segmentations, should all have the same shape
     """
 
-    return any(seg)
+    return np.logical_or.reduce(seg)
 
 
 def segmentation_intersection(seg: List) -> np.ndarray:
@@ -385,7 +389,7 @@ def segmentation_intersection(seg: List) -> np.ndarray:
         a list of segmentations, should all have the same shape
     """
 
-    return all(seg)
+    return np.logical_and.reduce(seg)
 
 
 def remove_index_object(label: np.ndarray, id_to_remove: List[int], in_place=False):

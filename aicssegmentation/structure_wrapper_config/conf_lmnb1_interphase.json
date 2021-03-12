@@ -92,7 +92,7 @@
         "parent": 9,
         "parameter": {
             "connectivity": 1,
-            "method": "thick"
+            "mode": "thick"
         }
     }
 }

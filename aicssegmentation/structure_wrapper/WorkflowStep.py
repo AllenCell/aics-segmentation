@@ -20,7 +20,7 @@ class WorkflowStep:
             self.parent = [step_config["parent"] - 1] # Index of parent in entire workflow #TODO: Better to change json to 0-indexed to avoid confusion
         else:
             # multiple parents
-            self.parent = step_config["parent"]
+            self.parent = [i - 1 for i in step_config["parent"]]
         self.result: np.ndarray = None               # Result of running this step, None if not executed
 
         module = importlib.import_module(step_config["module"])
@@ -43,5 +43,11 @@ class WorkflowStep:
         if self.__parameters:
             self.result: np.ndarray = self.__function(*image, **self.__parameters)
         else:
-            self.result: np.ndarray = self.__function(*image)
+            # for "Merge Segmentation' we need a list of images, while other functions take in with multiple params
+            if self.name == "Merge Segmentation":
+                # feed in as list
+                self.result: np.ndarray = self.__function(image)
+            else:
+                # unpack list and feed in images
+                self.result: np.ndarray = self.__function(*image)
         return self.result
