@@ -71,12 +71,9 @@ def hole_filling(
 
 
 def size_filter(
-    img: np.ndarray,
-    min_size: int,
-    method: str = "3D",
-    connectivity: int = 1
+    img: np.ndarray, min_size: int, method: str = "3D", connectivity: int = 1
 ):
-    """ size filter
+    """size filter
 
     Parameters:
     ------------
@@ -92,19 +89,18 @@ def size_filter(
     assert len(img.shape) == 3, "image has to be 3D"
     if method == "3D":
         return remove_small_objects(
-            img > 0,
-            min_size=min_size,
-            connectivity=connectivity,
-            in_place=False
+            img > 0, min_size=min_size, connectivity=connectivity, in_place=False
         )
     elif method == "slice_by_slice":
+        seg = np.zeros(img.shape, dtype=bool)
         for zz in range(img.shape[0]):
-            img[zz, :, :] = remove_small_objects(
-                img[zz, :, :],
+            seg[zz, :, :] = remove_small_objects(
+                img[zz, :, :] > 0,
                 min_size=min_size,
                 connectivity=connectivity,
-                in_place=False
+                in_place=False,
             )
+        return seg
     else:
         raise NotImplementedError(f"unsupported method {method}")
 
@@ -260,9 +256,9 @@ def get_middle_frame(struct_img: np.ndarray, method: str = "z") -> int:
 
 def get_3dseed_from_mid_frame(
     bw: np.ndarray,
-    stack_shape: List,
-    mid_frame: int,
-    hole_min: int,
+    stack_shape: List = None,
+    mid_frame: int = -1,
+    hole_min: int = 1,
     bg_seed: bool = True,
 ) -> np.ndarray:
     """build a 3D seed image from the binary segmentation of a single slice
@@ -270,12 +266,14 @@ def get_3dseed_from_mid_frame(
     Parameters:
     ------------
     bw: np.ndarray
-        the 2d segmentation of a single frame
-    shape_3d: List
-        the shape of original 3d image, e.g. shape_3d = img.shape
+        the 2d segmentation of a single frame, or a 3D array with only one slice
+        containing segmentation
+    stack_shape: List
+        (only used when bw is 2d) the shape of original 3d image, e.g.
+        shape_3d = img.shape
     frame_index: int
-        the index of where bw is from the whole z-stack
-    area_min: int
+        (only used when bw is 2d) the index of where bw is from the whole z-stack
+    hole_min: int
         any connected component in bw2d with size smaller than area_min
         will be excluded from seed image generation
     bg_seed: bool
@@ -289,7 +287,7 @@ def get_3dseed_from_mid_frame(
     out1 = label(out)
     stat = regionprops(out1)
 
-    # build the seed for watershed
+    # build the seed
     seed = np.zeros(stack_shape)
     seed_count = 0
     if bg_seed:
@@ -302,3 +300,203 @@ def get_3dseed_from_mid_frame(
         seed[mid_frame, int(py), int(px)] = seed_count
 
     return seed
+
+
+def get_seed_for_objects(
+    raw: np.ndarray,
+    bw: np.ndarray,
+    area_min: int = 1,
+    area_max: int = 10000,
+    bg_seed: bool = True,
+) -> np.ndarray:
+    """
+    build a seed image for an image of 3D objects (assuming roughly convex shape
+    in 3D) using the information in the middle slice
+
+    Parameters:
+    ------------
+    raw: np.ndarray
+        orignal image used to determine middle slice
+    bw: np.ndarray
+        a round 3D segmentation, expecting the segmentation in the middle slice
+        having relatively good quality
+    area_min: int
+        estimated minimal size on one single slice (major body chunk, e.g. the
+        center XY plane of a 3D ball) of an object
+    area_max: int
+        estimated maximal size on one single slice (major body chunk, e.g. the
+        center XY plane of a 3D ball) of an object. It is recommended to be
+        conservertive (setting this value a little larger)
+    bg_seed: bool
+        bg_seed=True will add a background seed at the first frame (z=0).
+
+    """
+    from skimage.morphology import remove_small_objects
+
+    # determine middle slice
+    mid_z = get_middle_frame(raw, method="intensity")
+
+    # take seg of middle slice
+    bw2d = bw[mid_z, :, :]
+
+    # fillin holes to form solid objects
+    bw2d_fill = hole_filling(bw2d, area_min, area_max)
+
+    # prune the objects in middle slice
+    out = remove_small_objects(bw2d_fill > 0, area_min)
+
+    # extract object and calculate centroid
+    out1 = label(out)
+    stat = regionprops(out1)
+
+    # use each centroid as one seed
+    seed = np.zeros(raw.shape)
+    seed_count = 0
+    if bg_seed:
+        seed[0, :, :] = 1
+        seed_count += 1
+
+    for idx in range(len(stat)):
+        py, px = np.round(stat[idx].centroid)
+        seed_count += 1
+        seed[mid_z, int(py), int(px)] = seed_count
+
+    return seed
+
+
+def segmentation_union(seg: List) -> np.ndarray:
+    """merge multiple segmentations into a single result
+
+    Parameters
+    ------------
+    seg: List
+        a list of segmentations, should all have the same shape
+    """
+
+    return any(seg)
+
+
+def segmentation_intersection(seg: List) -> np.ndarray:
+    """get the intersection of multiple segmentations into a single result
+
+    Parameters
+    ------------
+    seg: List
+        a list of segmentations, should all have the same shape
+    """
+
+    return all(seg)
+
+
+def remove_index_object(label: np.ndarray, id_to_remove: List[int], in_place=False):
+
+    if in_place:
+        img = label
+    else:
+        img = label.copy()
+
+    for id in id_to_remove:
+        img[img == id] = 0
+
+    return img
+
+
+def peak_local_max_wrapper(
+    struct_img_for_peak: np.ndarray, bw: np.ndarray
+) -> np.ndarray:
+    from skimage.feature import peak_local_max
+
+    local_maxi = peak_local_max(
+        struct_img_for_peak, labels=label(bw), min_distance=2, indices=False
+    )
+    return local_maxi
+
+
+def watershed_wrapper(bw: np.ndarray, local_maxi: np.ndarray) -> np.ndarray:
+    from scipy.ndimage import distance_transform_edt
+    from skimage.measure import label
+    from skimage.morphology import watershed, dilation, ball
+
+    distance = distance_transform_edt(bw)
+    im_watershed = watershed(
+        -distance,
+        label(dilation(local_maxi, selem=ball(1))),
+        mask=bw,
+        watershed_line=True,
+    )
+    return im_watershed
+
+
+def prune_z_slices(bw: np.ndarray):
+    """
+    prune the segmentation by only keep a certain range of z-slices
+    with the assumption of all signals living only in a few consecutive
+    z-slices. This function will first determine the key z-slice where most
+    of the signals living on and then include a few slices up/down along z
+    to make the segmentation completed. This is useful when you have prior
+    knowledge about your segmentation target and can effectively exclude
+    small segmented objects due to noise/artifacts in those z-slices we are
+    sure the signal should not live on.
+
+    Parameters:
+    -----------
+    bw: np.ndarray
+        the segmentation before pruning
+    """
+    bw_z = np.zeros(bw.shape[0], dtype=np.uint16)
+    for zz in range(bw.shape[0]):
+        bw_z[zz] = np.count_nonzero(bw[zz, :, :] > 0)
+
+    mid_z = np.argmax(bw_z)
+    low_z = 0
+    high_z = bw.shape[0] - 2
+    for ii in np.arange(mid_z - 1, 0, -1):
+        if bw_z[ii] < 100:
+            low_z = ii
+            break
+    for ii in range(mid_z + 1, bw.shape[0] - 1, 1):
+        if bw_z[ii] < 100:
+            high_z = ii
+            break
+
+    seg = bw.copy()
+    seg[:low_z, :, :] = 0
+    seg[high_z + 1 :, :, :] = 0
+
+    return seg
+
+
+def cell_local_adaptive_threshold(
+    structure_img_smooth: np.ndarray, cell_wise_min_area: int
+):
+    from skimage.filters import threshold_triangle, threshold_otsu
+    from skimage.morphology import dilation
+
+    # cell-wise local adaptive thresholding
+    th_low_level = threshold_triangle(structure_img_smooth)
+
+    bw_low_level = structure_img_smooth > th_low_level
+    bw_low_level = remove_small_objects(
+        bw_low_level, min_size=cell_wise_min_area, connectivity=1, in_place=True
+    )
+    bw_low_level = dilation(bw_low_level, selem=ball(2))
+
+    bw_high_level = np.zeros_like(bw_low_level)
+    lab_low, num_obj = label(bw_low_level, return_num=True, connectivity=1)
+
+    for idx in range(num_obj):
+        single_obj = lab_low == (idx + 1)
+        local_otsu = threshold_otsu(structure_img_smooth[single_obj > 0])
+        bw_high_level[
+            np.logical_and(structure_img_smooth > local_otsu * 0.98, single_obj)
+        ] = 1
+    return bw_high_level
+
+
+def invert_mask(img):
+    return 1 - img
+
+
+def mask_image(image, mask, value):
+    image[mask] = value
+    return image

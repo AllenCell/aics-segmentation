@@ -1,0 +1,45 @@
+{
+    "1": {
+        "name": "Intensity Normalization",
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "intensity_normalization",
+        "parameter": {
+            "scaling_param": [
+                3,
+                17
+            ]
+        },
+        "parent": 0
+    },
+    "2": {
+        "name": "3D Gaussian Smoothing",
+        "module": "aicssegmentation.core.pre_processing_utils",
+        "function": "image_smoothing_gaussian_3d",
+        "parameter": {
+            "sigma": 1
+        },
+        "parent": 1
+    },
+    "3": {
+        "name": "Vesselness 3D",
+        "module": "aicssegmentation.core.vessel",
+        "function": "vesselness3D",
+        "parameter": {
+            "sigmas": [
+                1.5
+            ],
+            "cutoff": 0.2
+        },
+        "parent": 2
+    },
+    "4": {
+        "name": "Size Filter",
+        "module": "aicssegmentation.core.utils",
+        "function": "size_filter",
+        "parent": 3,
+        "parameter": {
+            "min_size": 15,
+            "method": "3D"
+        }
+    }
+}

@@ -97,11 +97,7 @@ def filament_2d_wrapper(struct_img: np.ndarray, f2_param: List[List]):
 
 
 def vesselness3D(
-    nd_array: np.ndarray,
-    sigmas: List,
-    tau=0.5,
-    whiteonblack=True,
-    cutoff: float = -1
+    nd_array: np.ndarray, sigmas: List, tau=1, whiteonblack=True, cutoff: float = -1
 ):
     """Multi-scale 3D filament filter
 
@@ -114,7 +110,7 @@ def vesselness3D(
     tau: float
         parameter that controls response uniformity. The value has to be
         between 0.5 and 1. Lower tau means more intense output response.
-        Default is 0.5
+        Default is 1
     whiteonblack: bool
         whether the filamentous structures are bright on dark background
         or dark on bright. Default is True.
@@ -162,7 +158,7 @@ def vesselness3D(
 def vesselness2D(
     nd_array: np.ndarray,
     sigmas: List,
-    tau: float = 0.5,
+    tau: float = 1,
     whiteonblack: bool = True,
     cutoff: float = -1,
 ):
@@ -220,12 +216,65 @@ def vesselness2D(
         return response > cutoff
 
 
+def vesselness2D_single_slice(
+    nd_array: np.ndarray,
+    single_z: int,
+    sigmas: List,
+    tau: float = 1,
+    whiteonblack: bool = True,
+    cutoff: float = -1,
+):
+    """Multi-scale 2D filament filter
+
+    Parameters:
+    ------------
+    nd_array: np.ndarray
+        the 3D image to be filterd on
+    single_z: int
+        the index of the slice to apply the filter
+    sigmas: List
+        a list of scales to use
+    tau: float
+        parameter that controls response uniformity. The value has to be
+        between 0.5 and 1. Lower tau means more intense output response.
+        Default is 0.5
+    whiteonblack: bool
+        whether the filamentous structures are bright on dark background
+        or dark on bright. Default is True.
+    cutoff: float
+        the cutoff value to apply on the filter result. If the cutoff is
+        negative, no cutoff will be applied. Default is -1
+
+    Reference:
+    ------------
+    T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic
+    images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.
+    """
+
+    if not nd_array.ndim == 3:
+        raise (ValueError("Only 3 dimensions is currently supported"))
+
+    # adapted from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74  # noqa E501
+    if np.any(np.asarray(sigmas) < 0.0):
+        raise ValueError("Sigma values less than zero are not valid")
+
+    response = np.zeros(nd_array.shape)
+    response[single_z, :, :] = vesselness2D(
+        nd_array[single_z, :, :], sigmas=sigmas, tau=1, whiteonblack=True
+    )
+
+    if cutoff < 0:
+        return response
+    else:
+        return response > cutoff
+
+
 def vesselnessSliceBySlice(
     nd_array: np.ndarray,
     sigmas: List,
-    tau: float = 0.5,
+    tau: float = 1,
     whiteonblack: bool = True,
-    cutoff: float = -1
+    cutoff: float = -1,
 ):
     """
     wrapper for applying multi-scale 2D filament filter on 3D images in a

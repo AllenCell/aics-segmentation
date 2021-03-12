@@ -37,11 +37,28 @@ def apply_on_single_image_with_config(img: np.ndarray, cfg: Dict):
         module_name = importlib.import_module(step_info["module"])
         step_func = getattr(module_name, step_info["function"])
         module_list.append(step_func)
-        if "parameter" in step_info:
-            out = step_func(out_list[step_info["parent"]], **step_info["parameter"])
+        print(step_info["parent"])
+
+        if type(step_info["parent"]) == list:
+            inputs = [out_list[i] for i in step_info["parent"]]
         else:
-            out = step_func(out_list[step_info["parent"]])
+            inputs = [out_list[step_info["parent"]]]
 
-        out_list.append(out)
+        if "parameter" in step_info:
+            out = step_func(*inputs, **step_info["parameter"])
+        else:
+            out = step_func(*inputs)
 
+        # if out returns multiple objects, store them in neighboring indices
+        if type(out) == tuple:
+            out = list(out)
+            out_list += out
+        else:
+            out_list.append(out)
     return out_list[-1]
+
+
+cfg = load_workflow_config("npm1")
+img = np.random.randn(60, 60, 60)
+apply_on_single_image_with_config(img, cfg)
+print("done")
