@@ -1,12 +1,12 @@
 import importlib
 import numpy as np
-from typing import Dict, List
+from typing import Dict, List, Any
 
 class WorkflowStep:
     """
     A class that defines a step in an AICS-Segmentation workflow.
     """
-    def __init__(self, step_config: Dict):
+    def __init__(self, step_config: Dict[str, str]):
         """
         Constructor for the workflow object
 
@@ -14,7 +14,7 @@ class WorkflowStep:
             step_config (dict): dictionary object containing information about this workflow step
         """
         self.name: str = step_config["name"]         # Name of the workflow step
-        self.parent: List = None
+        self.parent: List[int] = None
         if isinstance(step_config["parent"], int):
             # single parent
             self.parent = [step_config["parent"] - 1] # Index of parent in entire workflow #TODO: Better to change json to 0-indexed to avoid confusion
@@ -25,11 +25,11 @@ class WorkflowStep:
 
         module = importlib.import_module(step_config["module"])
         self.__function = getattr(module, step_config["function"])
-        self.__parameters: dict = None
+        self.__parameters: dict[str, Any] = None
         if "parameter" in step_config:
             self.__parameters = step_config["parameter"]
 
-    def execute(self, image: List) -> np.ndarray:
+    def execute(self, image: List[np.ndarray]) -> np.ndarray:
         """
         Execute this workflow step on a given image and return the result.
         Also sets the result field to the resultant image.
