@@ -43,11 +43,10 @@ class WorkflowStep:
         if self.__parameters:
             self.result: np.ndarray = self.__function(*image, **self.__parameters)
         else:
-            # for "Merge Segmentation' we need a list of images, while other functions take in with multiple params
-            if self.name == "Merge Segmentation":
-                # feed in as list
-                self.result: np.ndarray = self.__function(image)
-            else:
-                # unpack list and feed in images
+            try:
+                # Most functions require unpacking the images into individual params
                 self.result: np.ndarray = self.__function(*image)
+            except:
+                # Some functions want it as a list
+                self.result: np.ndarray = self.__function(image)
         return self.result
