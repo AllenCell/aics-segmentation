@@ -17,11 +17,11 @@ class WorkflowEngine:
             image (np.ndarray):  image to perform workflow on
         """
         self.workflow_name: str = workflow_name   # Workflow name
-        self.steps: list = self.__get_steps()        # List of WorkflowSteps for this workflow
+        self.steps: List[WorkflowStep] = self.__get_steps()        # List of WorkflowSteps for this workflow
         self.next_step: int = 0                 # Next step to execute
         self.starting_image: np.ndarray = image          # Initial image
 
-    def __get_steps(self) -> List:
+    def __get_steps(self) -> List[WorkflowStep]:
         """
         Get a list of WorkflowStep objects to perform on the starting image.
 
