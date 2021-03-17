@@ -29,6 +29,14 @@ class WorkflowStep:
         if "parameter" in step_config:
             self.__parameters = step_config["parameter"]
 
+        # Until we can get the category key into every json file
+        # TODO: Remove this once we have category defined in every json file
+        self.category = None # preprocessing, core, or postprocessing?
+        try:
+            self.category = step_config["category"]
+        except:
+            self.category = None
+
     def execute(self, image: List[np.ndarray]) -> np.ndarray:
         """
         Execute this workflow step on a given image and return the result.
