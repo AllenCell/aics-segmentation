@@ -353,5 +353,15 @@
                 "increment": 1
             }
         }
+    },
+    "Merge Segmentation":{
+        "module": "aicssegmentation.core.utils",
+        "function": "segmentation_union",
+        "parameter": null
+    },
+    "Segmentation XOR":{
+        "module": "aicssegmentation.core.utils",
+        "function": "segmentation_xor",
+        "parameter": null
     }
 }

@@ -388,6 +388,18 @@ def segmentation_intersection(seg: List) -> np.ndarray:
     return np.logical_and.reduce(seg)
 
 
+def segmentation_xor(seg: List) -> np.ndarray:
+    """get the intersection of multiple segmentations into a single result
+
+    Parameters
+    ------------
+    seg: List
+        a list of segmentations, should all have the same shape
+    """
+
+    return np.logical_xor.reduce(seg)
+
+
 def remove_index_object(label: np.ndarray, id_to_remove: List[int], in_place=False):
 
     if in_place:
