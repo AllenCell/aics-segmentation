@@ -125,7 +125,7 @@ def MO(
     local_adjust: float = 0.98,
     return_object: bool = False,
     dilate: bool = False,
-) -> np.ndarray:
+):
     """
     Implementation of "Masked Object Thresholding" algorithm. Specifically, the
     algorithm is a hybrid thresholding method combining two levels of thresholds.
