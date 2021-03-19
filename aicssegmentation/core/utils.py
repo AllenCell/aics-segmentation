@@ -509,6 +509,6 @@ def invert_mask(img):
     return 1 - img
 
 
-def mask_image(image, mask, value):
+def mask_image(image, mask, value: int = 0):
     image[mask] = value
     return image
