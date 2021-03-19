@@ -242,21 +242,6 @@
             }
         }
     },
-    "Cell Local Adaptive Threshold": {
-        "module": "aicssegmentation.core.utils",
-        "function": "cell_local_adaptive_threshold",
-        "parameter": {
-            "structure_img_smooth": {
-                "data type": "np.ndarray"
-            },
-            "cell_wise_min_area": {
-                "data type": "int",
-                "widge_type": "slider",
-                "min": 0,
-                "increment": 1
-            }
-        }
-    },
     "Prune Z-Slices": {
         "module": "aicssegmentation.core.utils",
         "function": "z_range",
