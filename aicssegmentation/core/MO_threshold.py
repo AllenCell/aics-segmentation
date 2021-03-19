@@ -4,7 +4,7 @@ from skimage.filters import threshold_triangle, threshold_otsu
 from skimage.measure import label
 
 
-def MO_low_loevel(
+def MO_low_level(
     structure_img_smooth: np.ndarray,
     global_thresh_method: str,
     object_minArea: int,
