@@ -58,7 +58,7 @@ def MO_low_level(
     return bw_low_level
 
 
-def MO_high_loevel(
+def MO_high_level(
     structure_img_smooth: np.ndarray,
     bw_low_level: np.ndarray,
     extra_criteria: bool = False,
