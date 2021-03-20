@@ -27,8 +27,6 @@
         "parameter": {
             "global_thresh_method": "ave",
             "object_minArea": 700,
-            "extra_criteria": true,
-            "local_adjust": 0.98,
             "dilate": true
         },
         "parent": 2
