@@ -2,26 +2,34 @@ import importlib
 import numpy as np
 from typing import Dict, List, Any
 
+
 class WorkflowStep:
     """
     A class that defines a step in an AICS-Segmentation workflow.
     """
+
     def __init__(self, step_config: Dict[str, str]):
         """
         Constructor for the workflow object
 
         Params:
-            step_config (dict): dictionary object containing information about this workflow step
+            step_config (dict): dictionary object containing information about this 
+            workflow step
         """
-        self.name: str = step_config["name"]         # Name of the workflow step
+        self.name: str = step_config["name"]  # Name of the workflow step
         self.parent: List[int] = None
         if isinstance(step_config["parent"], int):
             # single parent
-            self.parent = [step_config["parent"] - 1] # Index of parent in entire workflow #TODO: Better to change json to 0-indexed to avoid confusion
+            self.parent = [
+                step_config["parent"] - 1
+            ]  # Index of parent in entire workflow 
+            # TODO: Better to change json to 0-indexed to avoid confusion
         else:
             # multiple parents
             self.parent = [i - 1 for i in step_config["parent"]]
-        self.result: np.ndarray = None               # Result of running this step, None if not executed
+        self.result: np.ndarray = (
+            None  # Result of running this step, None if not executed
+        )
 
         module = importlib.import_module(step_config["module"])
         self.__function = getattr(module, step_config["function"])
@@ -31,10 +39,10 @@ class WorkflowStep:
 
         # Until we can get the category key into every json file
         # TODO: Remove this once we have category defined in every json file
-        self.category = None # preprocessing, core, or postprocessing?
+        self.category = None  # preprocessing, core, or postprocessing?
         try:
             self.category = step_config["category"]
-        except:
+        except Exception:
             self.category = None
 
     def execute(self, image: List[np.ndarray]) -> np.ndarray:
@@ -43,18 +51,20 @@ class WorkflowStep:
         Also sets the result field to the resultant image.
 
         Params:
-            image (np.ndarray): Image to perform this workflow step on, generally parent image
+            image (np.ndarray): Image to perform this workflow step on, generally
+            the parent image
 
         Returns:
-            self.result (np.ndarray): Result of performing workflow step on the given image.
-       """
+            self.result (np.ndarray): Result of performing workflow step on the 
+            given image.
+        """
         if self.__parameters:
             self.result: np.ndarray = self.__function(*image, **self.__parameters)
         else:
             try:
                 # Most functions require unpacking the images into individual params
                 self.result: np.ndarray = self.__function(*image)
-            except:
+            except Exception:
                 # Some functions want it as a list
                 self.result: np.ndarray = self.__function(image)
         return self.result

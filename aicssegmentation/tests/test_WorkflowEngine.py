@@ -4,9 +4,10 @@ import numpy as np
 from aicssegmentation.structure_wrapper.WorkflowEngine import WorkflowEngine
 from skimage import data
 
+
 class TestWorkflowEngine:
     def setup_method(self):
-        caller = getattr(data, 'astronaut')
+        caller = getattr(data, "astronaut")
         image = caller()
         self.fake_image = np.asarray(image)
         self.engine = WorkflowEngine("sec61b", self.fake_image)
@@ -42,5 +43,3 @@ class TestWorkflowEngine:
     def test_is_done(self):
         self.engine.execute_all()
         assert self.engine.is_done()
-
-

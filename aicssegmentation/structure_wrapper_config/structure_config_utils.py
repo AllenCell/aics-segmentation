@@ -22,11 +22,13 @@ def load_workflow_config(workflow_name: str):
 
     return cfg
 
+
 def parse_config_to_objects(cfg: Dict):
     workflow = list()
     for step in cfg.values():
         workflow.append(WorkflowStep(step))
     return workflow
+
 
 def apply_on_single_image_with_config(img: np.ndarray, cfg: Dict):
 
@@ -56,9 +58,3 @@ def apply_on_single_image_with_config(img: np.ndarray, cfg: Dict):
         else:
             out_list.append(out)
     return out_list[-1]
-
-
-# cfg = load_workflow_config("npm1")
-# img = np.random.randn(60, 60, 60)
-# apply_on_single_image_with_config(img, cfg)
-# print("done")
