@@ -21,15 +21,25 @@
         "parent": 1
     },
     "3": {
-        "name": "Masked Object Thresholding",
+        "name": "Masked Object Thresholding - Part 1: low level",
         "module": "aicssegmentation.core.MO_threshold",
-        "function": "MO",
+        "function": "MO_low_level",
         "parameter": {
             "global_thresh_method": "ave",
             "object_minArea": 700,
             "dilate": true
         },
         "parent": 2
+    },
+    "4": {
+        "name": "Masked Object Thresholding - Part 2: high level",
+        "module": "aicssegmentation.core.MO_threshold",
+        "function": "MO_high_level",
+        "parameter": {
+            "extra_criteria": true,
+            "local_adjust": 0.98
+        },
+        "parent": [2, 3]
     },
     "5": {
         "name": "Slice by Slice Spot Filter",
@@ -100,7 +110,7 @@
         "function": "segmentation_union",
         "parent": [
             11,
-            3
+            4
         ]
     },
     "13": {

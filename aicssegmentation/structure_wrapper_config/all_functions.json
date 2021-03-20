@@ -242,21 +242,6 @@
             }
         }
     },
-    "Cell Local Adaptive Threshold": {
-        "module": "aicssegmentation.core.utils",
-        "function": "cell_local_adaptive_threshold",
-        "parameter": {
-            "structure_img_smooth": {
-                "data type": "np.ndarray"
-            },
-            "cell_wise_min_area": {
-                "data type": "int",
-                "widge_type": "slider",
-                "min": 0,
-                "increment": 1
-            }
-        }
-    },
     "Prune Z-Slices": {
         "module": "aicssegmentation.core.utils",
         "function": "z_range",
@@ -285,9 +270,30 @@
             }
         }
     },
-    "Masked Object Threshold": {
+    "Masked Object Threshold - Part 2: high level": {
         "module": "aicssegmentation.core.MO_threshold",
-        "function": "MO",
+        "function": "MO_high_level",
+        "parameter": {
+            "extra_criteria": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
+            },
+            "local_adjust": {
+                "data type": "float",
+                "widge type": "slider",
+                "min": 0,
+                "max": 2,
+                "increment": 0.02
+            }
+        }
+    },
+    "Masked Object Threshold - Part 1: low level": {
+        "module": "aicssegmentation.core.MO_threshold",
+        "function": "MO_low_level",
         "parameter": {
             "global_thresh_method": {
                 "data type": "str",
@@ -304,21 +310,6 @@
                 "min": 0,
                 "max": 2000,
                 "increment": 50
-            },
-            "extra_criteria": {
-                "widge type": "drop-down",
-                "data type": "bool",
-                "option": [
-                    "True",
-                    "False"
-                ]
-            },
-            "local_adjust": {
-                "data type": "float",
-                "widge type": "slider",
-                "min": 0,
-                "max": 2,
-                "increment": 0.02
             },
             "dilate": {
                 "widge type": "drop-down",
@@ -353,5 +344,15 @@
                 "increment": 1
             }
         }
+    },
+    "Merge Segmentation":{
+        "module": "aicssegmentation.core.utils",
+        "function": "segmentation_union",
+        "parameter": null
+    },
+    "Segmentation XOR":{
+        "module": "aicssegmentation.core.utils",
+        "function": "segmentation_xor",
+        "parameter": null
     }
 }
