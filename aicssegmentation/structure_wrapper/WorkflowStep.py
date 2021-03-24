@@ -2,10 +2,12 @@ import importlib
 import numpy as np
 from typing import Dict, List, Any
 
+
 class WorkflowStep:
     """
     A class that defines a step in an AICS-Segmentation workflow.
     """
+
     def __init__(self, step_config: Dict[str, str]):
         """
         Constructor for the workflow object
@@ -17,11 +19,13 @@ class WorkflowStep:
         self.parent: List[int] = None
         if isinstance(step_config["parent"], int):
             # single parent
-            self.parent = [step_config["parent"] - 1] # Index of parent in entire workflow #TODO: Better to change json to 0-indexed to avoid confusion
+            # Index of parent in entire workflow #TODO: Better to change json to 0-indexed to avoid confusion
+            self.parent = [step_config["parent"] - 1]
         else:
             # multiple parents
             self.parent = [i - 1 for i in step_config["parent"]]
-        self.result: np.ndarray = None               # Result of running this step, None if not executed
+        # Result of running this step, None if not executed
+        self.result: np.ndarray = None
 
         module = importlib.import_module(step_config["module"])
         self.__function = getattr(module, step_config["function"])
@@ -31,10 +35,10 @@ class WorkflowStep:
 
         # Until we can get the category key into every json file
         # TODO: Remove this once we have category defined in every json file
-        self.category = None # preprocessing, core, or postprocessing?
+        self.category = None  # preprocessing, core, or postprocessing?
         try:
             self.category = step_config["category"]
-        except:
+        except KeyError:
             self.category = None
 
     def execute(self, image: List[np.ndarray]) -> np.ndarray:

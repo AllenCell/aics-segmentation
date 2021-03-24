@@ -8,6 +8,7 @@ class WorkflowEngine:
     """
     A class to define a whole aics-segmentation workflow
     """
+
     def __init__(self, workflow_name: str, image: np.ndarray):
         """
         Constructor for the WorkflowEngine object
@@ -17,7 +18,8 @@ class WorkflowEngine:
             image (np.ndarray):  image to perform workflow on
         """
         self.workflow_name: str = workflow_name   # Workflow name
-        self.steps: List[WorkflowStep] = self.__get_steps()        # List of WorkflowSteps for this workflow
+        # List of WorkflowSteps for this workflow
+        self.steps: List[WorkflowStep] = self.__get_steps()
         self.next_step: int = 0                 # Next step to execute
         self.starting_image: np.ndarray = image          # Initial image
 
@@ -79,7 +81,6 @@ class WorkflowEngine:
         self.next_step = self.next_step + 1
         return result
 
-
     def get_result(self, step_index: int) -> np.ndarray:
         """
         Get the result image for a workflow step.
@@ -95,7 +96,7 @@ class WorkflowEngine:
         if step_index == -1:
             return self.starting_image
         elif step_index > self.next_step:
-            return None # returns None if the WorkflowStep has not been executed.
+            return None  # returns None if the WorkflowStep has not been executed.
         else:
             return self.steps[step_index].result
 
@@ -140,4 +141,3 @@ class WorkflowEngine:
             (bool): True if all WorkflowSteps have been executed, False if not
        """
         return self.next_step >= len(self.steps)
-
