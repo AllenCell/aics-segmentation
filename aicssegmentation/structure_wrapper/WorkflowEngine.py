@@ -1,5 +1,6 @@
 from aicssegmentation.structure_wrapper_config.structure_config_utils \
     import load_workflow_config, parse_config_to_objects
+
 import numpy as np
 from aicssegmentation.structure_wrapper.WorkflowStep import WorkflowStep
 from typing import List
@@ -19,11 +20,11 @@ class WorkflowEngine:
             information about this workflow step
             image (np.ndarray):  image to perform workflow on
         """
-        self.workflow_name: str = workflow_name   # Workflow name
-        # List of WorkflowSteps for this workflow
-        self.steps: List[WorkflowStep] = self.__get_steps()
-        self.next_step: int = 0                 # Next step to execute
-        self.starting_image: np.ndarray = image          # Initial image
+        self.workflow_name: str = workflow_name              # Workflow name
+        self.steps: List[WorkflowStep] = self.__get_steps()  # List of WorkflowSteps for this workflow
+        self.next_step: int = 0                              # Next step to execute
+        self.starting_image: np.ndarray = image              # Initial image
+
 
     def __get_steps(self) -> List[WorkflowStep]:
         """
@@ -40,6 +41,7 @@ class WorkflowEngine:
         return parse_config_to_objects(load_workflow_config(
             self.workflow_name))
 
+
     def get_next_step(self) -> WorkflowStep:
         """
         Get the next step to be performed
@@ -49,7 +51,7 @@ class WorkflowEngine:
 
         Returns:
             (WorkflowStep): next WorkflowStep object to perform on image
-       """
+        """
         return self.steps[self.next_step]
 
     def execute_next(self) -> np.ndarray:
@@ -60,11 +62,10 @@ class WorkflowEngine:
             none
 
         Returns:
+
             result (np.ndarray): resultant image from running the
             next workflow step
        """
-        print("running step")
-        print(self.next_step)
         # Pick which image to perform the workflow step on
         image: np.ndarray = None
         if self.next_step == 0:
@@ -90,6 +91,7 @@ class WorkflowEngine:
     def get_result(self, step_index: int) -> np.ndarray:
         """
         Get the result image for a workflow step.
+
         You must call execute() on the workflow step in order to
         produce a result first before calling this function.
 
@@ -105,9 +107,7 @@ class WorkflowEngine:
         if step_index == -1:
             return self.starting_image
         elif step_index > self.next_step:
-            # returns None if the WorkflowStep has not been executed.
-            return None
-
+            return None  # returns None if the WorkflowStep has not been executed.
         else:
             return self.steps[step_index].result
 
@@ -119,6 +119,7 @@ class WorkflowEngine:
            none
 
         Returns:
+
             (np.ndarray): Result of the last executed WorkflowStep,
                             returns the starting image if no Workflowsteps have
                             been run.
@@ -137,7 +138,7 @@ class WorkflowEngine:
 
         Returns:
             (np.ndarray): Result of the final WorkflowStep.
-       """
+        """
         while not self.is_done():
             self.execute_next()
         return self.get_most_recent_result()
@@ -151,5 +152,5 @@ class WorkflowEngine:
 
         Returns:
             (bool): True if all WorkflowSteps have been executed, False if not
-       """
+        """
         return self.next_step >= len(self.steps)

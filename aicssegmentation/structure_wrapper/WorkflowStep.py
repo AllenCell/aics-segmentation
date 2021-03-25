@@ -15,19 +15,22 @@ class WorkflowStep:
         Params:
             step_config (dict): dictionary object containing
                                 information about this workflow step
+
         """
         self.name: str = step_config["name"]  # Name of the workflow step
         self.parent: List[int] = None
         if isinstance(step_config["parent"], int):
-            # Index of parent in entire workflow
+            # single parent
+            self.parent = [
+                step_config["parent"] - 1
+            ]  # Index of parent in entire workflow
             # TODO: Better to change json to 0-indexed to avoid confusion
-            self.parent = [step_config["parent"] - 1]
         else:
             # multiple parents
             self.parent = [i - 1 for i in step_config["parent"]]
-        # Result of running this step, None if not executed
-        self.result: np.ndarray = None
-
+        self.result: np.ndarray = (
+            None  # Result of running this step, None if not executed
+        )
         module = importlib.import_module(step_config["module"])
         self.__function = getattr(module, step_config["function"])
         self.__parameters: dict[str, Any] = None
@@ -40,6 +43,7 @@ class WorkflowStep:
         try:
             self.category = step_config["category"]
         except KeyError:
+
             self.category = None
 
     def execute(self, image: List[np.ndarray]) -> np.ndarray:
@@ -55,6 +59,7 @@ class WorkflowStep:
             self.result (np.ndarray): Result of performing workflow step
                                         on the given image.
        """
+
         if self.__parameters:
             self.result: np.ndarray = self.__function(*image,
                                                       **self.__parameters)
@@ -62,7 +67,7 @@ class WorkflowStep:
             try:
                 # Most functions require unpacking the images
                 self.result: np.ndarray = self.__function(*image)
-            except:
+            except Exception:
                 # Some functions want it as a list
                 self.result: np.ndarray = self.__function(image)
         return self.result

@@ -7,7 +7,7 @@ from skimage import data
 
 class TestWorkflowEngine:
     def setup_method(self):
-        caller = getattr(data, 'astronaut')
+        caller = getattr(data, "astronaut")
         image = caller()
         self.fake_image = np.asarray(image)
         self.engine = WorkflowEngine("sec61b", self.fake_image)
