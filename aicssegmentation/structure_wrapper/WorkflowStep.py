@@ -13,13 +13,14 @@ class WorkflowStep:
         Constructor for the workflow object
 
         Params:
-            step_config (dict): dictionary object containing information about this workflow step
+            step_config (dict): dictionary object containing
+                                information about this workflow step
         """
-        self.name: str = step_config["name"]         # Name of the workflow step
+        self.name: str = step_config["name"]  # Name of the workflow step
         self.parent: List[int] = None
         if isinstance(step_config["parent"], int):
-            # single parent
-            # Index of parent in entire workflow #TODO: Better to change json to 0-indexed to avoid confusion
+            # Index of parent in entire workflow
+            # TODO: Better to change json to 0-indexed to avoid confusion
             self.parent = [step_config["parent"] - 1]
         else:
             # multiple parents
@@ -47,16 +48,19 @@ class WorkflowStep:
         Also sets the result field to the resultant image.
 
         Params:
-            image (np.ndarray): Image to perform this workflow step on, generally parent image
+            image (np.ndarray): Image to perform this workflow step on,
+                                generally parent image
 
         Returns:
-            self.result (np.ndarray): Result of performing workflow step on the given image.
+            self.result (np.ndarray): Result of performing workflow step
+                                        on the given image.
        """
         if self.__parameters:
-            self.result: np.ndarray = self.__function(*image, **self.__parameters)
+            self.result: np.ndarray = self.__function(*image,
+                                                      **self.__parameters)
         else:
             try:
-                # Most functions require unpacking the images into individual params
+                # Most functions require unpacking the images
                 self.result: np.ndarray = self.__function(*image)
             except:
                 # Some functions want it as a list

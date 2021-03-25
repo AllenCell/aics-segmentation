@@ -1,4 +1,5 @@
-from aicssegmentation.structure_wrapper_config.structure_config_utils import load_workflow_config, parse_config_to_objects
+from aicssegmentation.structure_wrapper_config.structure_config_utils \
+    import load_workflow_config, parse_config_to_objects
 import numpy as np
 from aicssegmentation.structure_wrapper.WorkflowStep import WorkflowStep
 from typing import List
@@ -14,7 +15,8 @@ class WorkflowEngine:
         Constructor for the WorkflowEngine object
 
         Params:
-            workflow_name (str): dictionary object containing information about this workflow step
+            workflow_name (str): dictionary object containing
+            information about this workflow step
             image (np.ndarray):  image to perform workflow on
         """
         self.workflow_name: str = workflow_name   # Workflow name
@@ -33,8 +35,10 @@ class WorkflowEngine:
         Returns:
             (list(WorkflowStep)): List of workflow step objects
        """
-        # TODO: in order for parent fucntionality to work correctly, we should sort these in the list by parent index
-        return parse_config_to_objects(load_workflow_config(self.workflow_name))
+        # TODO: in order for parent fucntionality to work correctly,
+        #  we should sort these in the list by parent index
+        return parse_config_to_objects(load_workflow_config(
+            self.workflow_name))
 
     def get_next_step(self) -> WorkflowStep:
         """
@@ -56,7 +60,8 @@ class WorkflowEngine:
             none
 
         Returns:
-            result (np.ndarray): resultant image from running the next workflow step
+            result (np.ndarray): resultant image from running the
+            next workflow step
        """
         print("running step")
         print(self.next_step)
@@ -67,7 +72,8 @@ class WorkflowEngine:
             image = [self.starting_image]
         elif self.is_done():
             # No more workflow steps to perform
-            # TODO: what to do if done with workflow but execute_next is prompted?
+            # TODO: what to do if done with workflow
+            #  but execute_next is prompted?
             # printing message for now
             print("No steps left to run")
         else:
@@ -84,19 +90,24 @@ class WorkflowEngine:
     def get_result(self, step_index: int) -> np.ndarray:
         """
         Get the result image for a workflow step.
-        You must call execute() on the workflow step in order to produce a result first before calling this function.
+        You must call execute() on the workflow step in order to
+        produce a result first before calling this function.
 
         Params:
-            step_index (int): index of the WorkflowStep in the workflowengine to get the result image of.
+            step_index (int): index of the WorkflowStep in the
+            workflowengine to get the result image of.
 
         Returns:
-            self.image (np.ndarray): Result of performing workflow step on the given image
+            self.image (np.ndarray): Result of performing workflow step
+                                     on the given image
                                      None if step has not been executed yet.
        """
         if step_index == -1:
             return self.starting_image
         elif step_index > self.next_step:
-            return None  # returns None if the WorkflowStep has not been executed.
+            # returns None if the WorkflowStep has not been executed.
+            return None
+
         else:
             return self.steps[step_index].result
 
@@ -108,7 +119,8 @@ class WorkflowEngine:
            none
 
         Returns:
-            (np.ndarray): Result of the last executed WorkflowStep, returns the starting image if no Workflowsteps have
+            (np.ndarray): Result of the last executed WorkflowStep,
+                            returns the starting image if no Workflowsteps have
                             been run.
        """
         if self.next_step == 0:
