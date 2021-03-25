@@ -43,7 +43,6 @@ class WorkflowStep:
         try:
             self.category = step_config["category"]
         except KeyError:
-
             self.category = None
 
     def execute(self, image: List[np.ndarray]) -> np.ndarray:
@@ -66,7 +65,7 @@ class WorkflowStep:
             try:
                 # Most functions require unpacking the images
                 self.result: np.ndarray = self.__function(*image)
-            except KeyError:
+            except AttributeError:
                 # Some functions want it as a list
                 self.result: np.ndarray = self.__function(image)
         return self.result
