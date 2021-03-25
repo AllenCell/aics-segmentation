@@ -67,6 +67,8 @@ class WorkflowEngine:
             result (np.ndarray): resultant image from running the
             next workflow step
         """
+        print("executing step")
+        print(self.next_step)
         # Pick which image to perform the workflow step on
         image: np.ndarray = None
         if self.next_step == 0:
