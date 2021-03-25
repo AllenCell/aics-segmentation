@@ -1,5 +1,3 @@
-import pytest
-from unittest.mock import MagicMock, create_autospec
 import numpy as np
 from aicssegmentation.structure_wrapper.WorkflowEngine import WorkflowEngine
 from skimage import data
