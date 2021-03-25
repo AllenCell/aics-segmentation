@@ -8,7 +8,6 @@ data_dir = os.path.abspath(os.path.dirname(__file__))
 distribution_dir = os.path.join(data_dir, "..")
 
 
-
 def _load(f):
     """
 

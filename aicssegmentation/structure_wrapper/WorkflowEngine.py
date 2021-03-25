@@ -1,5 +1,7 @@
-from aicssegmentation.structure_wrapper_config.structure_config_utils \
-    import load_workflow_config, parse_config_to_objects
+from aicssegmentation.structure_wrapper_config.structure_config_utils import (
+    load_workflow_config,
+    parse_config_to_objects,
+)
 
 import numpy as np
 from aicssegmentation.structure_wrapper.WorkflowStep import WorkflowStep
@@ -20,11 +22,12 @@ class WorkflowEngine:
             information about this workflow step
             image (np.ndarray):  image to perform workflow on
         """
-        self.workflow_name: str = workflow_name              # Workflow name
-        self.steps: List[WorkflowStep] = self.__get_steps()  # List of WorkflowSteps for this workflow
-        self.next_step: int = 0                              # Next step to execute
-        self.starting_image: np.ndarray = image              # Initial image
-
+        self.workflow_name: str = workflow_name  # Workflow name
+        self.steps: List[
+            WorkflowStep
+        ] = self.__get_steps()  # List of WorkflowSteps for this workflow
+        self.next_step: int = 0  # Next step to execute
+        self.starting_image: np.ndarray = image  # Initial image
 
     def __get_steps(self) -> List[WorkflowStep]:
         """
@@ -35,12 +38,10 @@ class WorkflowEngine:
 
         Returns:
             (list(WorkflowStep)): List of workflow step objects
-       """
+        """
         # TODO: in order for parent fucntionality to work correctly,
         #  we should sort these in the list by parent index
-        return parse_config_to_objects(load_workflow_config(
-            self.workflow_name))
-
+        return parse_config_to_objects(load_workflow_config(self.workflow_name))
 
     def get_next_step(self) -> WorkflowStep:
         """
@@ -65,7 +66,7 @@ class WorkflowEngine:
 
             result (np.ndarray): resultant image from running the
             next workflow step
-       """
+        """
         # Pick which image to perform the workflow step on
         image: np.ndarray = None
         if self.next_step == 0:
@@ -103,7 +104,7 @@ class WorkflowEngine:
             self.image (np.ndarray): Result of performing workflow step
                                      on the given image
                                      None if step has not been executed yet.
-       """
+        """
         if step_index == -1:
             return self.starting_image
         elif step_index > self.next_step:
@@ -123,7 +124,7 @@ class WorkflowEngine:
             (np.ndarray): Result of the last executed WorkflowStep,
                             returns the starting image if no Workflowsteps have
                             been run.
-       """
+        """
         if self.next_step == 0:
             return self.starting_image
         else:
