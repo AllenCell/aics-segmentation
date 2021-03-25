@@ -5,7 +5,9 @@ from aicssegmentation.structure_wrapper_config.structure_config_utils import (
 
 import numpy as np
 from aicssegmentation.structure_wrapper.WorkflowStep import WorkflowStep
-from typing import List
+from typing import List, Dict
+import os
+from aicsimageio import imread
 
 
 class WorkflowEngine:
@@ -28,6 +30,9 @@ class WorkflowEngine:
         ] = self.__get_steps()  # List of WorkflowSteps for this workflow
         self.next_step: int = 0  # Next step to execute
         self.starting_image: np.ndarray = image  # Initial image
+        self._data_folder: os.path = os.path.join(
+            os.path.split(os.path.dirname(__file__))[0], "..", "demo_data"
+        )
 
     def __get_steps(self) -> List[WorkflowStep]:
         """
@@ -157,3 +162,21 @@ class WorkflowEngine:
             (bool): True if all WorkflowSteps have been executed, False if not
         """
         return self.next_step >= len(self.steps)
+
+    def get_thumbnails(self) -> Dict[str, np.ndarray]:
+        """
+        Grab all thumbnails related to this workflow from the data folder
+
+        Params:
+            none
+
+        Returns:
+            Dict[str, np.ndarray]: Map of image filenames to images
+        """
+        images_for_workflow = dict()
+        for filename in os.listdir(self._data_folder):
+            if self.workflow_name in filename:
+                image = np.squeeze(imread(os.path.join(self._data_folder, filename)))
+                images_for_workflow[filename] = image
+
+        return images_for_workflow
