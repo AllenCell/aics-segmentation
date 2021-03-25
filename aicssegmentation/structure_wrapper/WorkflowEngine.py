@@ -163,7 +163,7 @@ class WorkflowEngine:
         """
         return self.next_step >= len(self.steps)
 
-    def get_thumbnails(self) -> Dict[str, np.ndarray]:
+    def get_thumbnails(self, type="pre") -> np.ndarray:
         """
         Grab all thumbnails related to this workflow from the data folder
 
@@ -171,12 +171,8 @@ class WorkflowEngine:
             none
 
         Returns:
-            Dict[str, np.ndarray]: Map of image filenames to images
+            (np.ndarray): image
         """
-        images_for_workflow = dict()
-        for filename in os.listdir(self._data_folder):
-            if self.workflow_name in filename:
-                image = np.squeeze(imread(os.path.join(self._data_folder, filename)))
-                images_for_workflow[filename] = image
+        # TODO: need to save image in format workflowName_type.tif
+        return np.squeeze(imread(os.path.join(self.workflow_name, "_", type, ".tiff")))
 
-        return images_for_workflow
