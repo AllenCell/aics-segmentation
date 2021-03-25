@@ -34,8 +34,7 @@ class TestWorkflowEngine:
         assert self.engine.get_result(1) is None
 
     def test_get_most_recent_result(self):
-        assert np.array_equal(self.fake_image,
-                              self.engine.get_most_recent_result())
+        assert np.array_equal(self.fake_image, self.engine.get_most_recent_result())
 
     def test_execute_all(self):
         self.engine.execute_all()
