@@ -163,9 +163,9 @@ class WorkflowEngine:
         """
         return self.next_step >= len(self.steps)
 
-    def get_thumbnails(self, type="pre") -> np.ndarray:
+    def get_thumbnail_pre(self) -> np.ndarray:
         """
-        Grab all thumbnails related to this workflow from the data folder
+        Grab the pre-segmentation thumbnail related to this workflow from the data folder
 
         Params:
             none
@@ -174,5 +174,19 @@ class WorkflowEngine:
             (np.ndarray): image
         """
         # TODO: need to save image in format workflowName_type.tif
-        return np.squeeze(imread(os.path.join(self.workflow_name, "_", type, ".tiff")))
+        return np.squeeze(imread(os.path.join(self.workflow_name, "_pre.tiff")))
+
+    def get_thumbnail_post(self) -> np.ndarray:
+        """
+        Grab the post-segmentation thumbnail related to this workflow from the data folder
+
+        Params:
+            none
+
+        Returns:
+            (np.ndarray): image
+        """
+        # TODO: need to save image in format workflowName_type.tif
+        return np.squeeze(imread(os.path.join(self.workflow_name, "_post.tiff")))
+
 
