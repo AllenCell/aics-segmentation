@@ -68,16 +68,15 @@ class SampleData:
             none
         """
         no_ext = filename.split(".")[0]
-        func_to_run = (
+        exec(
             "def "
             + no_ext
             + "(self):"
             + "\n"
             + '   return self._load("'
             + filename
-            + '")'
-        )
-        exec(func_to_run)
+            + '")')
+
         exec("self." + no_ext + " = types.MethodType(" + no_ext + ", self)")
 
     def load_all_image(self, path):
@@ -93,4 +92,4 @@ class SampleData:
         for filename in os.listdir(path):
             no_ext = filename.split(".")[0]
             setattr(SampleData, no_ext, self.make_load_image(filename))
-            self.all_files.append(no_ext)
+            self.all_func.append(no_ext)
