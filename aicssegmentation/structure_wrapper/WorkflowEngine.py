@@ -174,7 +174,7 @@ class WorkflowEngine:
             (np.ndarray): image
         """
         # TODO: need to save image in format workflowName_type.tif
-        return np.squeeze(imread(os.path.join(self._data_folder, "thumbnails", self.workflow_name + "_pre.png")))
+        return np.squeeze(imread(os.path.join(self._data_folder, "assets", self.workflow_name + "_pre.png")))
 
     def get_thumbnail_post(self) -> np.ndarray:
         """
@@ -187,6 +187,6 @@ class WorkflowEngine:
             (np.ndarray): image
         """
         # TODO: need to save image in format workflowName_type.tif
-        return np.squeeze(imread(os.path.join(self._data_folder, "thumbnails", self.workflow_name + "_post.png")))
+        return np.squeeze(imread(os.path.join(self._data_folder, "assets", self.workflow_name + "_post.png")))
 
 
