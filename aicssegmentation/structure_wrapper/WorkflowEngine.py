@@ -187,6 +187,6 @@ class WorkflowEngine:
             (np.ndarray): image
         """
         # TODO: need to save image in format workflowName_type.tif
-        return np.squeeze(imread(os.path.join(self.workflow_name, "_post.tiff")))
+        return np.squeeze(imread(os.path.join(self.workflow_name, "_post.png")))
 
 

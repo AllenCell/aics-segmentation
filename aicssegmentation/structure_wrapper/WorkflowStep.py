@@ -66,7 +66,7 @@ class WorkflowStep:
             try:
                 # Most functions require unpacking the images
                 self.result: np.ndarray = self.__function(*image)
-            except KeyError:
+            except (KeyError, TypeError):
                 # Some functions want it as a list
                 self.result: np.ndarray = self.__function(image)
         return self.result
