@@ -8,3 +8,7 @@ recursive-exclude * *.py[co]
 
 recursive-include docs *.rst conf.py Makefile make.bat *.jpg *.png *.gif
 graft aicssegmentation/data
+
+include demo_data/thumbnails/*.png
+
+
