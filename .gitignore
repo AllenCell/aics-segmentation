@@ -110,6 +110,7 @@ ENV/
 
 # VSCode settings
 settings.json
+.vscode
 
 # IDE files
 .idea/
