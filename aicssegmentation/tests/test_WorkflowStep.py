@@ -25,7 +25,7 @@ class TestWorkflowEngine:
 
     def test_default_exec(self):
         # default execution with parameters
-        assert self.step.result == None
+        assert self.step.result is None
         self.step.execute([self.fake_image])
         assert isinstance(self.step.result, np.ndarray)
 
@@ -36,7 +36,7 @@ class TestWorkflowEngine:
         self.test_dict["function"] = "edge_preserving_smoothing_3d"
         self.test_dict["parent"] = 1
         self.step = WorkflowStep(self.test_dict)
-        assert self.step.result == None
+        assert self.step.result is None
         self.step.execute([self.fake_image])
         assert isinstance(self.step.result, np.ndarray)
 
@@ -46,12 +46,7 @@ class TestWorkflowEngine:
         self.test_dict["function"] = "segmentation_union"
         self.test_dict["parent"] = [1, 2]
         self.step = WorkflowStep(self.test_dict)
-        assert self.step.result == None
+        assert self.step.result is None
         with pytest.raises(Exception):
             self.step.execute([self.fake_image, self.fake_image])
         assert isinstance(self.step.result, np.ndarray)
-
-
-
-
-
