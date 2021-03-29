@@ -82,5 +82,3 @@ class WorkflowStep:
                 could be a list, str, or int.
         """
         return self.__parameters
-
-
