@@ -5,7 +5,7 @@ from aicssegmentation.structure_wrapper_config.structure_config_utils import (
 
 import numpy as np
 from aicssegmentation.structure_wrapper.WorkflowStep import WorkflowStep
-from typing import List, Dict, Any
+from typing import List
 import os
 from aicsimageio import imread
 
@@ -175,21 +175,3 @@ class WorkflowEngine:
         """
         # TODO: need to save image in format workflowName_type.tif
         return np.squeeze(imread(os.path.join(self.workflow_name, "_", type, ".tiff")))
-
-    def get_all_params(self) -> List[Dict[str, Any]]:
-        """
-        Grab all parameters and their default values for all steps
-        in this workflow
-
-        Params:
-            none
-
-        Returns:
-            all_params (list): All parameters in this workflow as a list of dictionaries.
-        """
-        all_params = list()
-        for step in self.steps:
-            all_params.append(step.get_params())
-        return all_params
-
-

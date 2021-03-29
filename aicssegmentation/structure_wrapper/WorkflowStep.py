@@ -69,18 +69,3 @@ class WorkflowStep:
                 # Some functions want it as a list
                 self.result: np.ndarray = self.__function(image)
         return self.result
-
-    def get_params(self) -> Dict[str, Any]:
-        """
-        Get the parameter names and its default values for this step.
-
-        Params:
-            none
-
-        Returns:
-            (np.ndarray): map of parameter names to default values. Default values
-                could be a list, str, or int.
-        """
-        return self.__parameters
-
-
