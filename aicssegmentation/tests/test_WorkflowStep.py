@@ -9,16 +9,18 @@ class TestWorkflowStep:
         caller = getattr(data, "astronaut")
         image = caller()
         self.fake_image = np.asarray(image)
-
         self.test_dict = dict()
+        self.step = None
+
+
+
+    def test_default_exec(self):
         self.test_dict["name"] = "intensity_normalization"
         self.test_dict["module"] = "aicssegmentation.core.pre_processing_utils"
         self.test_dict["function"] = "intensity_normalization"
         self.test_dict["parent"] = 0
         self.test_dict["parameter"] = {"scaling_param": [3, 15]}
         self.step = WorkflowStep(self.test_dict)
-
-    def test_default_exec(self):
         # default execution with parameters
         assert self.step.result is None
         self.step.execute([self.fake_image])
