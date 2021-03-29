@@ -43,4 +43,6 @@ class TestWorkflowStep:
         assert self.step.result is None
         with pytest.raises(Exception):
             self.step.execute([self.fake_image, self.fake_image])
-        assert isinstance(self.step.result, np.ndarray)
+            # should catch exception and be able to produce result
+            assert isinstance(self.step.result, np.ndarray)
+        assert self.step.result is None
