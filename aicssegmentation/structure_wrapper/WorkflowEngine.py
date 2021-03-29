@@ -185,10 +185,11 @@ class WorkflowEngine:
             none
 
         Returns:
-            all_params (list): All parameters in this workflow as
-            a list of dictionaries.
+            all_params (list): All parameters in this workflow as a list of dictionaries.
         """
         all_params = list()
         for step in self.steps:
             all_params.append(step.get_params())
         return all_params
+
+
