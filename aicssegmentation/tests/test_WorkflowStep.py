@@ -4,7 +4,7 @@ from skimage import data
 import pytest
 
 
-class TestWorkflowEngine:
+class TestWorkflowStep:
     def setup_method(self):
         caller = getattr(data, "astronaut")
         image = caller()
