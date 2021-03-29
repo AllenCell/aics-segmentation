@@ -12,8 +12,6 @@ class TestWorkflowStep:
         self.test_dict = dict()
         self.step = None
 
-
-
     def test_default_exec(self):
         self.test_dict["name"] = "intensity_normalization"
         self.test_dict["module"] = "aicssegmentation.core.pre_processing_utils"
