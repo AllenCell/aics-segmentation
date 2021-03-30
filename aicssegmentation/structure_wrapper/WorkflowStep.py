@@ -31,8 +31,13 @@ class WorkflowStep:
         self.result: np.ndarray = (
             None  # Result of running this step, None if not executed
         )
-        module = importlib.import_module(step_config["module"])
-        self.__function = getattr(module, step_config["function"])
+
+        self.module_name = step_config["module"]
+        module = importlib.import_module(self.module_name)
+
+        self.function_name = step_config["function"]
+        self.__function = getattr(module, self.function_name)
+
         self.__parameters: dict[str, Any] = None
         if "parameter" in step_config:
             self.__parameters = step_config["parameter"]

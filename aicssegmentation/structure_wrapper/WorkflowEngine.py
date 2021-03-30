@@ -8,6 +8,8 @@ from aicssegmentation.structure_wrapper.WorkflowStep import WorkflowStep
 from typing import List, Dict, Any
 import os
 from aicsimageio import imread
+import json
+from pathlib import Path
 
 
 class WorkflowEngine:
@@ -33,6 +35,9 @@ class WorkflowEngine:
         self._data_folder: os.path = os.path.join(
             os.path.split(os.path.dirname(__file__))[0], "..", "demo_data"
         )
+        self.widget_info = None
+        with open(Path(__file__).parent.parent / "structure_wrapper_config" / f"all_functions.json") as file:
+            self.widget_info = json.load(file)
 
     def __get_steps(self) -> List[WorkflowStep]:
         """
@@ -192,3 +197,11 @@ class WorkflowEngine:
         for step in self.steps:
             all_params.append(step.get_params())
         return all_params
+
+    def get_widget_data(self, step: WorkflowStep) -> dict[str, Any]:
+        for k, v in self.widget_info.items():
+            if v["module"] == step.module_name:
+                if v["function"] == step.function_name:
+                    return {k: v}
+
+        raise KeyError
