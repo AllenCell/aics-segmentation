@@ -4,11 +4,11 @@ from skimage.filters import threshold_triangle, threshold_otsu
 from skimage.measure import label
 
 
-def MO_low_loevel(
+def MO_low_level(
     structure_img_smooth: np.ndarray,
     global_thresh_method: str,
     object_minArea: int,
-    dilate: bool = False
+    dilate: bool = False,
 ) -> np.ndarray:
     """
     Implementation of "Masked Object Thresholding" algorithm. Specifically, the
@@ -58,11 +58,11 @@ def MO_low_loevel(
     return bw_low_level
 
 
-def MO_high_loevel(
+def MO_high_level(
     structure_img_smooth: np.ndarray,
     bw_low_level: np.ndarray,
     extra_criteria: bool = False,
-    local_adjust: float = 0.98
+    local_adjust: float = 0.98,
 ) -> np.ndarray:
     """
     Implementation of "Masked Object Thresholding" algorithm. Specifically, the
@@ -162,18 +162,12 @@ def MO(
     a binary nd array of the segmentation result
     """
 
-    bw_low_level = MO_low_loevel(
-        structure_img_smooth,
-        global_thresh_method,
-        object_minArea,
-        dilate
+    bw_low_level = MO_low_level(
+        structure_img_smooth, global_thresh_method, object_minArea, dilate
     )
 
-    bw_high_level = MO_high_loevel(
-        structure_img_smooth,
-        bw_low_level,
-        extra_criteria,
-        local_adjust
+    bw_high_level = MO_high_level(
+        structure_img_smooth, bw_low_level, extra_criteria, local_adjust
     )
 
     if return_object:

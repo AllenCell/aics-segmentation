@@ -3,6 +3,7 @@ from typing import Dict
 import json
 import importlib
 from pathlib import Path, PurePosixPath
+from aicssegmentation.structure_wrapper.WorkflowStep import WorkflowStep
 
 
 def get_all_workflows_avail_in_json(return_list: bool = False):
@@ -15,12 +16,18 @@ def get_all_workflows_avail_in_json(return_list: bool = False):
 
 
 def load_workflow_config(workflow_name: str):
-
     json_path = Path(__file__).parent / f"conf_{workflow_name}.json"
     with open(json_path, "r") as read_file:
         cfg = json.load(read_file)
 
     return cfg
+
+
+def parse_config_to_objects(cfg: Dict):
+    workflow = list()
+    for step in cfg.values():
+        workflow.append(WorkflowStep(step))
+    return workflow
 
 
 def apply_on_single_image_with_config(img: np.ndarray, cfg: Dict):
@@ -51,9 +58,3 @@ def apply_on_single_image_with_config(img: np.ndarray, cfg: Dict):
         else:
             out_list.append(out)
     return out_list[-1]
-
-
-cfg = load_workflow_config("npm1")
-img = np.random.randn(60, 60, 60)
-apply_on_single_image_with_config(img, cfg)
-print("done")

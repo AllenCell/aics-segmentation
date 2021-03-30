@@ -242,7 +242,11 @@ def get_middle_frame(struct_img: np.ndarray, method: str = "z") -> int:
         z_profile = np.zeros((bw.shape[0],), dtype=int)
         for zz in range(bw.shape[0]):
             z_profile[zz] = np.count_nonzero(bw[zz, :, :])
-        mid_frame = round(histogram_otsu(z_profile) * bw.shape[0]).astype(int)
+        mid_frame = None
+        if isinstance(round(histogram_otsu(z_profile) * bw.shape[0]), int):
+            mid_frame = round(histogram_otsu(z_profile) * bw.shape[0])
+        else:
+            mid_frame = round(histogram_otsu(z_profile) * bw.shape[0]).astype(int)
 
     elif method == "z":
         mid_frame = struct_img.shape[0] // 2
