@@ -27,6 +27,11 @@ class WorkflowEngine:
             image (np.ndarray):  image to perform workflow on
         """
         self.workflow_name: str = workflow_name  # Workflow name
+
+        self.widget_info: Dict[str, Any] = None
+        with open(Path(__file__).parent.parent / "structure_wrapper_config" / f"all_functions.json") as file:
+            self.widget_info = json.load(file)
+
         self.steps: List[
             WorkflowStep
         ] = self.__get_steps()  # List of WorkflowSteps for this workflow
@@ -36,9 +41,7 @@ class WorkflowEngine:
             os.path.split(os.path.dirname(__file__))[0], "..", "demo_data"
         )
 
-        self.widget_info: Dict[str, Any] = None
-        with open(Path(__file__).parent.parent / "structure_wrapper_config" / f"all_functions.json") as file:
-            self.widget_info = json.load(file)
+
 
 
 
@@ -206,11 +209,3 @@ class WorkflowEngine:
         for step in self.steps:
             all_params.append(step.get_params())
         return all_params
-
-    def get_all_widget_data(self, step: WorkflowStep) -> dict[str, Any]:
-        for k, v in self.widget_info.items():
-            if v["module"] == step.module_name:
-                if v["function"] == step.function_name:
-                    return {k: v}
-
-        raise KeyError

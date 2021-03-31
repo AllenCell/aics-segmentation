@@ -50,6 +50,8 @@ class WorkflowStep:
         except KeyError:
             self.category = None
 
+        self.widget_data = self.__get_widget_data_step(widget_info)
+
     def execute(self, image: List[np.ndarray]) -> np.ndarray:
         """
         Execute this workflow step on a given image and return the result.
@@ -88,7 +90,7 @@ class WorkflowStep:
         """
         return self.__parameters
 
-    def get_widget_data_step(self, widget_info: Dict[str, Any]) -> Dict[str, Any]:
+    def __get_widget_data_step(self, widget_info: Dict[str, Any]) -> Dict[str, Any]:
         for k, v in widget_info.items():
             if v["module"] == self.module_name:
                 if v["function"] == self.function_name:
