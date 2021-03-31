@@ -1,6 +1,5 @@
 from aicssegmentation.structure_wrapper_config.structure_config_utils import (
     load_workflow_config,
-    parse_config_to_objects,
 )
 
 import numpy as np
@@ -29,7 +28,11 @@ class WorkflowEngine:
         self.workflow_name: str = workflow_name  # Workflow name
 
         self.widget_info: Dict[str, Any] = None
-        with open(Path(__file__).parent.parent / "structure_wrapper_config" / f"all_functions.json") as file:
+        with open(
+            Path(__file__).parent.parent
+            / "structure_wrapper_config"
+            / "all_functions.json"
+        ) as file:
             self.widget_info = json.load(file)
 
         self.steps: List[
@@ -40,10 +43,6 @@ class WorkflowEngine:
         self._data_folder: os.path = os.path.join(
             os.path.split(os.path.dirname(__file__))[0], "..", "demo_data"
         )
-
-
-
-
 
     def __get_steps(self) -> List[WorkflowStep]:
         """
