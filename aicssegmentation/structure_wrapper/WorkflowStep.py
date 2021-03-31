@@ -8,7 +8,7 @@ class WorkflowStep:
     A class that defines a step in an AICS-Segmentation workflow.
     """
 
-    def __init__(self, step_config: Dict[str, str]):
+    def __init__(self, step_config: Dict[str, str], widget_info: Dict[str, Any]):
         """
         Constructor for the workflow object
 
@@ -83,7 +83,16 @@ class WorkflowStep:
             none
 
         Returns:
-            (np.ndarray): map of parameter names to default values. Default values
+            (Dict[str, Any]): map of parameter names to default values. Default values
                 could be a list, str, or int.
         """
         return self.__parameters
+
+    def get_widget_data_step(self, widget_info: Dict[str, Any]) -> Dict[str, Any]:
+        for k, v in widget_info.items():
+            if v["module"] == self.module_name:
+                if v["function"] == self.function_name:
+                    return {k: v}
+        raise KeyError("There is no information about the widget for "
+                       "\nmodule: {}\nfunction {}".format(self.module_name, self.function_name))
+

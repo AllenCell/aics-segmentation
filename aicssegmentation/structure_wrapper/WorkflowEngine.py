@@ -35,9 +35,12 @@ class WorkflowEngine:
         self._data_folder: os.path = os.path.join(
             os.path.split(os.path.dirname(__file__))[0], "..", "demo_data"
         )
-        self.widget_info = None
+
+        self.widget_info: Dict[str, Any] = None
         with open(Path(__file__).parent.parent / "structure_wrapper_config" / f"all_functions.json") as file:
             self.widget_info = json.load(file)
+
+
 
     def __get_steps(self) -> List[WorkflowStep]:
         """
@@ -51,7 +54,13 @@ class WorkflowEngine:
         """
         # TODO: in order for parent fucntionality to work correctly,
         #  we should sort these in the list by parent index
-        return parse_config_to_objects(load_workflow_config(self.workflow_name))
+        return self.__parse_config_to_objects(load_workflow_config(self.workflow_name))
+
+    def __parse_config_to_objects(self, cfg: Dict) -> List[WorkflowStep]:
+        workflow = list()
+        for step in cfg.values():
+            workflow.append(WorkflowStep(step, self.widget_info))
+        return workflow
 
     def get_next_step(self) -> WorkflowStep:
         """
@@ -198,7 +207,7 @@ class WorkflowEngine:
             all_params.append(step.get_params())
         return all_params
 
-    def get_widget_data(self, step: WorkflowStep) -> dict[str, Any]:
+    def get_all_widget_data(self, step: WorkflowStep) -> dict[str, Any]:
         for k, v in self.widget_info.items():
             if v["module"] == step.module_name:
                 if v["function"] == step.function_name:
