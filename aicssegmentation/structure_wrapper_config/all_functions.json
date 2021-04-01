@@ -5,15 +5,15 @@
         "parameter": {
             "scaling_param": [
                 {
-                    "widge type": "slider",
-                    "data type": "float",
+                    "widget_type": "slider",
+                    "data_type": "float",
                     "min": 0.5,
                     "max": 30,
                     "increment": 0.5
                 },
                 {
-                    "widge type": "slider",
-                    "data type": "float",
+                    "widget_type": "slider",
+                    "data_type": "float",
                     "min": 0.5,
                     "max": 200,
                     "increment": 0.5
@@ -27,29 +27,29 @@
         "parameter": {
             "scaling_param": [
                 {
-                    "widge type": "slider",
-                    "data type": "float",
+                    "widget_type": "slider",
+                    "data_type": "float",
                     "min": 0.5,
                     "max": 30,
                     "increment": 0.5
                 },
                 {
-                    "widge type": "slider",
-                    "data type": "float",
+                    "widget_type": "slider",
+                    "data_type": "float",
                     "min": 0.5,
                     "max": 200,
                     "increment": 0.5
                 },
                 {
-                    "widge type": "slider",
-                    "data type": "int",
+                    "widget_type": "slider",
+                    "data_type": "int",
                     "min": 20,
                     "max": 1000,
                     "increment": 20
                 },
                 {
-                    "widge type": "slider",
-                    "data type": "int",
+                    "widget_type": "slider",
+                    "data_type": "int",
                     "min": 50,
                     "max": 8000,
                     "increment": 50
@@ -63,8 +63,8 @@
         "parameter": {
             "scaling_param": [
                 {
-                    "widge type": "slider",
-                    "data type": "int",
+                    "widget_type": "slider",
+                    "data_type": "int",
                     "min": 50,
                     "max": 8000,
                     "increment": 50
@@ -83,16 +83,16 @@
         "parameter": {
             "sigmas": [
                 {
-                    "widge type": "slider",
-                    "data type": "float",
+                    "widget_type": "slider",
+                    "data_type": "float",
                     "min": 0.5,
                     "max": 5,
                     "increment": 0.5
                 }
             ],
             "cutoff": {
-                "widge type": "slider",
-                "data type": "float",
+                "widget_type": "slider",
+                "data_type": "float",
                 "min": 0.005,
                 "max": 0.5,
                 "increment": 0.005
@@ -104,15 +104,15 @@
         "function": "size_filter",
         "parameter": {
             "min_size": {
-                "widge type": "slider",
-                "data type": "int",
+                "widget_type": "slider",
+                "data_type": "int",
                 "min": 0,
                 "max": 50,
                 "increment": 5
             },
             "method": {
-                "widge type": "drop-down",
-                "data type": "str",
+                "widget_type": "drop-down",
+                "data_type": "str",
                 "option": [
                     "3D",
                     "slice_by_slice"
@@ -125,15 +125,15 @@
         "function": "vesselness3D",
         "parameter": {
             "sigmas": {
-                "widge type": "slider",
-                "data type": "float",
+                "widget_type": "slider",
+                "data_type": "float",
                 "min": 0,
                 "max": 5,
                 "increment": 0.5
             },
             "cutoff": {
-                "widge type": "slider",
-                "data type": "float",
+                "widget_type": "slider",
+                "data_type": "float",
                 "min": 0.005,
                 "max": 0.5,
                 "increment": 0.005
@@ -145,8 +145,8 @@
         "function": "image_smoothing_gaussian_slice_by_slice",
         "parameter": {
             "sigma": {
-                "widge type": "slider",
-                "data type": "float",
+                "widget_type": "slider",
+                "data_type": "float",
                 "min": 0.5,
                 "max": 10,
                 "increment": 0.5
@@ -158,15 +158,15 @@
         "function": "dot_3d",
         "parameter": {
             "log_sigma": {
-                "widge type": "slider",
-                "data type": "float",
+                "widget_type": "slider",
+                "data_type": "float",
                 "min": 0,
                 "max": 5,
                 "increment": 0.5
             },
             "cutoff": {
-                "widge type": "slider",
-                "data type": "float",
+                "widget_type": "slider",
+                "data_type": "float",
                 "min": 0,
                 "max": 0.5,
                 "increment": 0.005
@@ -178,8 +178,8 @@
         "function": "image_smoothing_gaussian_3d",
         "parameter": {
             "sigma": {
-                "widge type": "slider",
-                "data type": "float",
+                "widget_type": "slider",
+                "data_type": "float",
                 "min": 0
             }
         }
@@ -189,8 +189,8 @@
         "function": "dot_slice_by_slice",
         "parameter": {
             "log_sigma": {
-                "widge type": "slider",
-                "data type": "float",
+                "widget_type": "slider",
+                "data_type": "float",
                 "min": 0,
                 "max": 5,
                 "increment": 0.5
@@ -202,22 +202,22 @@
         "function": "hole_filling",
         "parameter": {
             "hole_min": {
-                "widge type": "slider",
-                "data type": "int",
+                "widget_type": "slider",
+                "data_type": "int",
                 "min": 0,
                 "max": 50,
                 "increment": 1
             },
             "hole_max": {
-                "widge type": "slider",
-                "data type": "int",
+                "widget_type": "slider",
+                "data_type": "int",
                 "min": 0,
                 "max": 10000,
                 "increment": 10
             },
             "fill_2d": {
-                "widge type": "drop-down",
-                "data type": "bool",
+                "widget_type": "drop-down",
+                "data_type": "bool",
                 "option": [
                     "True",
                     "False"
@@ -235,10 +235,10 @@
         "function": "watershed_wrapper",
         "parameter": {
             "bw": {
-                "data type": "np.ndarray"
+                "data_type": "np.ndarray"
             },
             "local_maxi": {
-                "data type": "np.ndarray"
+                "data_type": "np.ndarray"
             }
         }
     },
@@ -252,18 +252,18 @@
         "function": "topology_preserving_thinning",
         "parameter": {
             "bw": {
-                "data type": "np.ndarray"
+                "data_type": "np.ndarray"
             },
             "min_thickness": {
-                "data type": "int",
-                "widge type": "slider",
+                "data_type": "int",
+                "widget_type": "slider",
                 "min": 0,
                 "max": 50,
                 "increment": 1
             },
             "thin": {
-                "data type": "int",
-                "widge type": "slider",
+                "data_type": "int",
+                "widget_type": "slider",
                 "min": 0,
                 "max": 50,
                 "increment": 1
@@ -275,16 +275,16 @@
         "function": "MO_high_level",
         "parameter": {
             "extra_criteria": {
-                "widge type": "drop-down",
-                "data type": "bool",
+                "widget_type": "drop-down",
+                "data_type": "bool",
                 "option": [
                     "True",
                     "False"
                 ]
             },
             "local_adjust": {
-                "data type": "float",
-                "widge type": "slider",
+                "data_type": "float",
+                "widget_type": "slider",
                 "min": 0,
                 "max": 2,
                 "increment": 0.02
@@ -296,8 +296,8 @@
         "function": "MO_low_level",
         "parameter": {
             "global_thresh_method": {
-                "data type": "str",
-                "widge type": "drop-down",
+                "data_type": "str",
+                "widget_type": "drop-down",
                 "options": [
                     "triangle",
                     "median",
@@ -305,15 +305,15 @@
                 ]
             },
             "object_minArea": {
-                "data type": "int",
-                "widge type": "slider",
+                "data_type": "int",
+                "widget_type": "slider",
                 "min": 0,
                 "max": 2000,
                 "increment": 50
             },
             "dilate": {
-                "widge type": "drop-down",
-                "data type": "bool",
+                "widget_type": "drop-down",
+                "data_type": "bool",
                 "option": [
                     "True",
                     "False"
@@ -331,14 +331,14 @@
         "function": "mask_image",
         "parameter": {
             "image": {
-                "data type": "np.ndarray"
+                "data_type": "np.ndarray"
             },
             "mask": {
-                "data type": "np.ndarray"
+                "data_type": "np.ndarray"
             },
             "value": {
-                "data type": "int",
-                "widge type": "slider",
+                "data_type": "int",
+                "widget_type": "slider",
                 "min": 0,
                 "max": 255,
                 "increment": 1

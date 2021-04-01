@@ -94,7 +94,7 @@ class WorkflowStep:
         for k, v in widget_info.items():
             if v["module"] == self.module_name:
                 if v["function"] == self.function_name:
-                    return {k: v}
+                    return v
         raise KeyError(
             "There is no information about the widget for "
             "\nmodule: {}\nfunction {}".format(self.module_name, self.function_name)
