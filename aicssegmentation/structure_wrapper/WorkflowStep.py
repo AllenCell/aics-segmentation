@@ -72,11 +72,11 @@ class WorkflowStep:
             try:
                 # Most functions require unpacking the images
                 self.result: np.ndarray = self.__function(*image)
-            except (AttributeError, TypeError):
+            except (KeyError, TypeError):
                 # Some functions want it as a list
                 self.result: np.ndarray = self.__function(image)
         return self.result
-
+      
     def get_params(self) -> Dict[str, Any]:
         """
         Get the parameter names and its default values for this step.
@@ -99,3 +99,4 @@ class WorkflowStep:
             "There is no information about the widget for "
             "\nmodule: {}\nfunction {}".format(self.module_name, self.function_name)
         )
+

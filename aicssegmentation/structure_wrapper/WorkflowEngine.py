@@ -4,7 +4,7 @@ from aicssegmentation.structure_wrapper_config.structure_config_utils import (
 
 import numpy as np
 from aicssegmentation.structure_wrapper.WorkflowStep import WorkflowStep
-from typing import List, Dict, Any
+from typing import List
 import os
 from aicsimageio import imread
 import json
@@ -179,9 +179,10 @@ class WorkflowEngine:
         """
         return self.next_step >= len(self.steps)
 
-    def get_thumbnails(self, type="pre") -> np.ndarray:
+    def get_thumbnail_pre(self) -> np.ndarray:
         """
-        Grab all thumbnails related to this workflow from the data folder
+        Grab the pre-segmentation thumbnail related to this workflow from
+        the data folder
 
         Params:
             none
@@ -190,21 +191,31 @@ class WorkflowEngine:
             (np.ndarray): image
         """
         # TODO: need to save image in format workflowName_type.tif
-        return np.squeeze(imread(os.path.join(self.workflow_name, "_", type, ".tiff")))
+        return np.squeeze(
+            imread(
+                os.path.join(
+                    self._data_folder, "assets", self.workflow_name + "_pre.png"
+                )
+            )
+        )
 
-    def get_all_params(self) -> List[Dict[str, Any]]:
+    def get_thumbnail_post(self) -> np.ndarray:
         """
-        Grab all parameters and their default values for all steps
-        in this workflow
+        Grab the post-segmentation thumbnail related to this
+        workflow from the data folder
 
         Params:
             none
 
         Returns:
-            all_params (list): All parameters in this workflow as
-            a list of dictionaries.
+            (np.ndarray): image
         """
-        all_params = list()
-        for step in self.steps:
-            all_params.append(step.get_params())
-        return all_params
+        # TODO: need to save image in format workflowName_type.tif
+        return np.squeeze(
+            imread(
+                os.path.join(
+                    self._data_folder, "assets", self.workflow_name + "_post.png"
+                )
+            )
+        )
+
