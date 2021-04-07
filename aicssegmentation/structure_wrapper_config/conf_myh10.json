@@ -57,6 +57,7 @@
     },
     "6": {
         "name": "Size Filter",
+        "category": "postprocessing",
         "module": "aicssegmentation.core.utils",
         "function": "size_filter",
         "parameter": {
