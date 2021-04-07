@@ -1,6 +1,7 @@
 {  
     "1": {
         "name": "Intensity Normalization using min-max with bound ",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
         "parameter": {
@@ -12,6 +13,7 @@
     },
     "2": {
         "name": "Image Smoothing Gaussian 3D",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_3d",
         "parameter": {

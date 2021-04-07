@@ -1,6 +1,7 @@
 {
     "1": {
         "name": "Intensity Normalization",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
         "parameter": {
@@ -13,6 +14,7 @@
     },
     "2": {
         "name": "Image Smoothing Gaussian Slice by Slice",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_slice_by_slice",
         "parameter": {
