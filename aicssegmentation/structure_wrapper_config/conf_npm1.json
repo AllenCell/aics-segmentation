@@ -24,6 +24,7 @@
     },
     "3": {
         "name": "Masked Object Thresholding - Part 1: low level",
+        "category": "core",
         "module": "aicssegmentation.core.MO_threshold",
         "function": "MO_low_level",
         "parameter": {
@@ -35,6 +36,7 @@
     },
     "4": {
         "name": "Masked Object Thresholding - Part 2: high level",
+        "category": "core",
         "module": "aicssegmentation.core.MO_threshold",
         "function": "MO_high_level",
         "parameter": {
@@ -45,6 +47,7 @@
     },
     "5": {
         "name": "Slice by Slice Spot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
         "parameter": {
@@ -55,12 +58,14 @@
     },
     "6": {
         "name": "Invert Mask",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "invert_mask",
         "parent": 2
     },
     "7": {
         "name": "Slice by Slice Spot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
         "parameter": {
@@ -71,6 +76,7 @@
     },
     "8": {
         "name": "Slice by Slice Spot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
         "parameter": {
@@ -81,6 +87,7 @@
     },
     "9": {
         "name": "Merge Segmentation",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "segmentation_union",
         "parent": [
@@ -90,12 +97,14 @@
     },
     "10": {
         "name": "Invert Mask",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "invert_mask",
         "parent": 4
     },
     "11": {
         "name": "Mask Image",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "mask_image",
         "parameter": {
@@ -108,6 +117,7 @@
     },
     "12": {
         "name": "Merge Segmentation",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "segmentation_union",
         "parent": [
@@ -117,6 +127,7 @@
     },
     "13": {
         "name": "Mask Image",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "mask_image",
         "parameter": {

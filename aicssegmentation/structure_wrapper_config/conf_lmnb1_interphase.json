@@ -96,7 +96,7 @@
     },
     "10": {
         "name": "Extract Boundary of Objects",
-        "category": "core",
+        "category": "postprocessing",
         "module": "skimage.segmentation",
         "function": "find_boundaries",
         "parent": 9,

@@ -20,7 +20,8 @@
         "parent": 1
     },
     "3": {
-        "name": "2D Slice By Slice Spot Filter Wrapper",
+        "name": "Slice by Slice Dot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
         "parameter": {

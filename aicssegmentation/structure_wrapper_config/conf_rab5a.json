@@ -23,6 +23,7 @@
     },
     "3": {
         "name": "3D Spot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_3d",
         "parameter": {

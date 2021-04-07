@@ -32,6 +32,7 @@
     },
     "4": {
         "name": "Slice by Slice Spot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
         "parameter": {
@@ -42,6 +43,7 @@
     },
     "5": {
         "name": "Slice by Slice Spot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
         "parameter": {
@@ -52,6 +54,7 @@
     },
     "6": {
         "name": "Slice by Slice Spot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
         "parameter": {
@@ -62,6 +65,7 @@
     },
     "7": {
         "name": "Merge Segmentation",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "segmentation_union",
         "parent": [

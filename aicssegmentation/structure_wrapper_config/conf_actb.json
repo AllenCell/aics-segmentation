@@ -21,6 +21,7 @@
     },
     "3": {
         "name": "Vesselness 3D",
+        "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselness3D",
         "parameter": {
@@ -33,6 +34,7 @@
     },
     "4": {
         "name": "Vesselness 3D",
+        "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselness3D",
         "parameter": {
@@ -45,6 +47,7 @@
     },
     "5": {
         "name": "Merge Segmentation",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "segmentation_union",
         "parent": [

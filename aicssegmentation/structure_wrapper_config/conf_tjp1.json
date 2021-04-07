@@ -24,6 +24,7 @@
     },
     "3": {
         "name": "Vesselness 3D",
+        "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselness3D",
         "parameter": {

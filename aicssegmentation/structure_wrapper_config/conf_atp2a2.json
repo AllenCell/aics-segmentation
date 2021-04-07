@@ -21,6 +21,7 @@
     },
     "3": {
         "name": "2D Filament Filter (slice by slice)",
+        "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
         "parameter": {

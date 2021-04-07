@@ -38,6 +38,7 @@
     },
     "4": {
         "name": "3D Spot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_3d",
         "parameter": {
@@ -48,6 +49,7 @@
     },
     "5": {
         "name": "Size Filter",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "size_filter",
         "parameter": {
@@ -58,6 +60,7 @@
     },
     "6": {
         "name": "Find Local Maxima",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "peak_local_max_wrapper",
         "parent": [
@@ -67,6 +70,7 @@
     },
     "7": {
         "name": "Watershed",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "watershed_wrapper",
         "parent": [
