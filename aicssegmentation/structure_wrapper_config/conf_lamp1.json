@@ -85,14 +85,14 @@
             "hole_max": 1600,
             "fill_2d": true
         },
-        "parent": 3
+        "parent": 7
     },
     "9":{
         "name": "Size Filter",
         "category": "postprocessing",
         "module": "aicssegmentation.core.utils",
         "function": "size_filter",
-        "parent": 3,
+        "parent": 8,
         "parameter": {
             "min_size": 15,
             "method": "3D"
