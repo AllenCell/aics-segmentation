@@ -1,6 +1,7 @@
 {
     "1": {
         "name": "Intensity Normalization",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
         "parameter": {
@@ -13,6 +14,7 @@
     },
     "2": {
         "name": "3D Gaussian Smoothing",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_3d",
         "parameter": {
@@ -22,6 +24,7 @@
     },
     "3": {
         "name": "2D Filament Filter (slice by slice)",
+        "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
         "parameter": {
@@ -34,6 +37,7 @@
     },
     "4": {
         "name": "Size Filter",
+        "category": "postprocessing",
         "module": "aicssegmentation.core.utils",
         "function": "size_filter",
         "parent": 3,

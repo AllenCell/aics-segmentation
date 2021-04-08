@@ -1,6 +1,7 @@
 {
     "1": {
         "name": "Intensity Normalization",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
         "parameter": {
@@ -13,6 +14,7 @@
     },
     "2": {
         "name": "Image Smoothing Gaussian Slice by Slice",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_slice_by_slice",
         "parameter": {
@@ -22,6 +24,7 @@
     },
     "3": {
         "name": "3D Spot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_3d",
         "parameter": {
@@ -32,6 +35,7 @@
     },
     "4": {
         "name": "Size Filter",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "size_filter",
         "parameter": {
@@ -42,6 +46,7 @@
     },
     "5": {
         "name": "Find Local Maxima",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "peak_local_max_wrapper",
         "parent": [
@@ -51,6 +56,7 @@
     },
     "6": {
         "name": "Watershed",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "watershed_wrapper",
         "parent": [
@@ -60,6 +66,7 @@
     },
     "7": {
         "name": "Size Filter",
+        "category": "postprocessing",
         "module": "aicssegmentation.core.utils",
         "function": "size_filter",
         "parameter": {

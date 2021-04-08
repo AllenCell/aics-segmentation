@@ -1,6 +1,7 @@
 {
     "1": {
         "name": "Intensity Normalization",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
         "parameter": {
@@ -13,6 +14,7 @@
     },
     "2": {
         "name": "Gaussian Smoothing Slice by Slice",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_slice_by_slice",
         "parameter": {
@@ -22,6 +24,7 @@
     },
     "3": {
         "name": "3D Dot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_3d",
         "parameter": {
@@ -32,6 +35,7 @@
     },
     "4": {
         "name": "Size Filter",
+        "category": "postprocessing",
         "module": "aicssegmentation.core.utils",
         "function": "size_filter",
         "parent": 3,

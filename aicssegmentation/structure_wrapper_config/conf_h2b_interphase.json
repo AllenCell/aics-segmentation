@@ -1,6 +1,7 @@
 {
     "1": {
         "name": "Intensity Normalization",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
         "parameter": {
@@ -13,12 +14,14 @@
     },
     "2": {
         "name": "Edge Preserving Smoothing",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "edge_preserving_smoothing_3d",
         "parent": 1
     },
     "3": {
-        "name": "2D Slice by Slice Dot Filter",
+        "name": "Slice by Slice Dot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
         "parameter": {
@@ -28,7 +31,8 @@
         "parent": 2
     },
     "4": {
-        "name": "2D Slice by Slice Dot Filter",
+        "name": "Slice by Slice Dot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
         "parameter": {
@@ -39,6 +43,7 @@
     },
     "5": {
         "name": "Merge Segmentation",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "segmentation_union",
         "parent": [
@@ -48,6 +53,7 @@
     },
     "6": {
         "name": "Size Filter",
+        "category": "postprocessing",
         "module": "aicssegmentation.core.utils",
         "function": "size_filter",
         "parent": 5,

@@ -28,7 +28,7 @@ ALL_STRUCTURE_NAMES = [
     "fbl",
     "fbl_labelfree_4dn",
     "gja1",
-    "h2b",
+    "h2b_interphase",
     "lamp1",
     # 'lmnb1_interphase',
     "lmnb1_mitotic",
