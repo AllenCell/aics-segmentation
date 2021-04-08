@@ -1,13 +1,13 @@
 from aicssegmentation.structure_wrapper_config.structure_config_utils import (
     load_workflow_config,
-    parse_config_to_objects,
 )
-
 import numpy as np
 from aicssegmentation.structure_wrapper.WorkflowStep import WorkflowStep
 from typing import List
 import os
 from aicsimageio import imread
+import json
+from pathlib import Path
 
 
 class WorkflowEngine:
@@ -25,6 +25,15 @@ class WorkflowEngine:
             image (np.ndarray):  image to perform workflow on
         """
         self.workflow_name: str = workflow_name  # Workflow name
+
+        self.widget_info: Dict[str, Any] = None
+        with open(
+            Path(__file__).parent.parent
+            / "structure_wrapper_config"
+            / "all_functions.json"
+        ) as file:
+            self.widget_info = json.load(file)
+
         self.steps: List[
             WorkflowStep
         ] = self.__get_steps()  # List of WorkflowSteps for this workflow
@@ -46,7 +55,13 @@ class WorkflowEngine:
         """
         # TODO: in order for parent fucntionality to work correctly,
         #  we should sort these in the list by parent index
-        return parse_config_to_objects(load_workflow_config(self.workflow_name))
+        return self.__parse_config_to_objects(load_workflow_config(self.workflow_name))
+
+    def __parse_config_to_objects(self, cfg: Dict) -> List[WorkflowStep]:
+        workflow = list()
+        for step in cfg.values():
+            workflow.append(WorkflowStep(step, self.widget_info))
+        return workflow
 
     def get_next_step(self) -> WorkflowStep:
         """
