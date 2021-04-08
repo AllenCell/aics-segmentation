@@ -27,7 +27,9 @@
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
         "parameter": {
-            "sigmas": [1],
+            "sigmas": [
+                1
+            ],
             "cutoff": 0.01
         },
         "parent": 2
@@ -38,7 +40,9 @@
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
         "parameter": {
-            "sigmas": [2],
+            "sigmas": [
+                2
+            ],
             "cutoff": 0.01
         },
         "parent": 2
@@ -49,7 +53,9 @@
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
         "parameter": {
-            "sigmas": [3],
+            "sigmas": [
+                3
+            ],
             "cutoff": 0.01
         },
         "parent": 2
@@ -59,8 +65,11 @@
         "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "segmentation_union",
-        "parent": [3, 4, 5]
-
+        "parent": [
+            3,
+            4,
+            5
+        ]
     },
     "7": {
         "name": "Generate seeding image",
@@ -72,7 +81,10 @@
             "area_max": 10,
             "bg_seed": true
         },
-        "parent": [2, 6]
+        "parent": [
+            2,
+            6
+        ]
     },
     "8": {
         "name": "Marker-Control Watershed",
@@ -82,7 +94,10 @@
         "parameter": {
             "watershed_line": true
         },
-        "parent": [1, 7]
+        "parent": [
+            1,
+            7
+        ]
     },
     "9": {
         "name": "Remove Index Object",
@@ -90,7 +105,9 @@
         "module": "aicssegmentation.core.utils",
         "function": "remove_index_object",
         "parameter": {
-            "id_to_remove": [1]
+            "id_to_remove": [
+                1
+            ]
         },
         "parent": 8
     },

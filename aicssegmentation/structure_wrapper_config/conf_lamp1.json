@@ -1,16 +1,19 @@
-{  
+{
     "1": {
         "name": "Intensity Normalization",
         "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
         "parameter": {
-            "scaling_param": [3, 19]
+            "scaling_param": [
+                3,
+                19
+            ]
         },
         "parent": 0
     },
     "2": {
-        "name": "Image Smoothing Gaussian Slice by Slice",
+        "name": "Gaussian Smoothing Slice by Slice",
         "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_slice_by_slice",
@@ -19,19 +22,21 @@
         },
         "parent": 1
     },
-    "3":{
+    "3": {
         "name": "2D Filament Filter (slice by slice)",
         "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
         "parameter": {
-            "sigmas": [1],
+            "sigmas": [
+                1
+            ],
             "cutoff": 0.15
         },
         "parent": 2
     },
     "4": {
-        "name": "Slice by Slice Spot Filter",
+        "name": "Slice By Slice Spot Filter",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
@@ -42,7 +47,7 @@
         "parent": 2
     },
     "5": {
-        "name": "Slice by Slice Spot Filter",
+        "name": "Slice By Slice Spot Filter",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
@@ -53,7 +58,7 @@
         "parent": 2
     },
     "6": {
-        "name": "Slice by Slice Spot Filter",
+        "name": "Slice By Slice Spot Filter",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
@@ -87,7 +92,7 @@
         },
         "parent": 3
     },
-    "9":{
+    "9": {
         "name": "Size Filter",
         "category": "postprocessing",
         "module": "aicssegmentation.core.utils",
