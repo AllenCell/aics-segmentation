@@ -14,7 +14,7 @@ from aicssegmentation.core.output_utils import (
 from scipy.ndimage import zoom
 
 
-def Workflow_h2b(
+def Workflow_h2b_interphase(
     struct_img: np.ndarray,
     rescale_ratio: float = -1,
     output_type: str = "default",

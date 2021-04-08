@@ -1,6 +1,7 @@
 {
     "1": {
         "name": "Intensity Normalization",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
         "parameter": {
@@ -13,6 +14,7 @@
     },
     "2": {
         "name": "3D Gaussian Smoothing",
+        "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_3d",
         "parameter": {
@@ -23,6 +25,7 @@
     },
     "3": {
         "name": "Masked Object Thresholding - Part 1: low level",
+        "category": "core",
         "module": "aicssegmentation.core.MO_threshold",
         "function": "MO_low_level",
         "parameter": {
@@ -34,6 +37,7 @@
     },
     "4": {
         "name": "Masked Object Thresholding - Part 2: high level",
+        "category": "core",
         "module": "aicssegmentation.core.MO_threshold",
         "function": "MO_high_level",
         "parameter": {
@@ -44,6 +48,7 @@
     },
     "5": {
         "name": "Topology Preserving Thinning",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "topology_preserving_thinning",
         "parameter": {
@@ -54,6 +59,7 @@
     },
     "6": {
         "name": "3D Spot Filter",
+        "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_3d",
         "parameter": {
@@ -64,6 +70,7 @@
     },
     "7": {
         "name": "Merge Segmentation",
+        "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "segmentation_union",
         "parent": [
@@ -73,6 +80,7 @@
     },
     "8": {
         "name": "Size Filter",
+        "category": "postprocessing",
         "module": "aicssegmentation.core.utils",
         "function": "size_filter",
         "parent": 7,
