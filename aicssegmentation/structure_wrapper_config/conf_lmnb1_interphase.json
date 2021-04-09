@@ -104,11 +104,6 @@
         "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "remove_index_object",
-        "parameter": {
-            "id_to_remove": [
-                1
-            ]
-        },
         "parent": 8
     },
     "10": {

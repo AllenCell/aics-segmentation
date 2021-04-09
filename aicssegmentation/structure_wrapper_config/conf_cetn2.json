@@ -85,8 +85,7 @@
         "function": "size_filter",
         "parameter": {
             "min_size": 3,
-            "method": "3D",
-            "connectivity": 1
+            "method": "3D"
         },
         "parent": 7
     }
