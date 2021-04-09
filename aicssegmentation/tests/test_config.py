@@ -29,7 +29,7 @@ class TestConfig:
                 # all functions used in configs must be defined in all_functions.json
                 assert (
                     step_name in all_functions.keys()
-                ), f'Function "{step_name}" in workflow {workflow_config} is not in all_functions.json'
+                ), f'Func "{step_name}" in {workflow_config} is not in all_functions'
 
                 # Check that functions with matching names import the same module
                 reference_import = (
@@ -39,12 +39,15 @@ class TestConfig:
                 import_name = cfg[step]["module"] + cfg[step]["function"]
                 assert (
                     import_name == reference_import
-                ), f"Import statement for {step_name} in workflow {workflow_config}, {import_name}, should match {reference_import} "
+                ), f"Import statement for {step_name} in workflow {workflow_config}," \
+                   f"{import_name}, should match {reference_import}"
 
-                # check that the parameters in the config file match the parameters required in all_functions.json
+                # check that the parameters in the config file match the parameters
+                # required in all_functions.json
                 reference_parameters = all_functions[step_name]["parameter"]
                 if "parameter" in cfg[step]:
                     for param in cfg[step]["parameter"]:
                         assert (
                             param in reference_parameters.keys()
-                        ), f'Parameter "{param}" in {workflow_config} is not defined for function {step_name}'
+                        ), f'Parameter "{param}" in {workflow_config} is' \
+                           f'not defined for function {step_name}'
