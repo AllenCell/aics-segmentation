@@ -194,6 +194,13 @@
                 "min": 0,
                 "max": 5,
                 "increment": 0.5
+            },
+            "cutoff": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": 0,
+                "max": 1,
+                "increment": 0.01
             }
         }
     },
