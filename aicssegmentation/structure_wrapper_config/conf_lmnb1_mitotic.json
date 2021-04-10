@@ -1,6 +1,6 @@
-{  
+{
     "1": {
-        "name": "Intensity Normalization using min-max with bound ",
+        "name": "Intensity Normalization using min-max with bound",
         "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
@@ -12,7 +12,7 @@
         "parent": 0
     },
     "2": {
-        "name": "Image Smoothing Gaussian 3D",
+        "name": "3D Gaussian Smoothing",
         "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_3d",
@@ -21,18 +21,20 @@
         },
         "parent": 1
     },
-    "3":{
+    "3": {
         "name": "2D Filament Filter (slice by slice)",
         "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
         "parameter": {
-            "sigmas": [0.5],
+            "sigmas": [
+                0.5
+            ],
             "cutoff": 0.01
         },
         "parent": 2
     },
-    "4":{
+    "4": {
         "name": "Size Filter",
         "category": "postprocessing",
         "module": "aicssegmentation.core.utils",
