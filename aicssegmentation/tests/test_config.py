@@ -37,17 +37,17 @@ class TestConfig:
                     + all_functions[step_name]["function"]
                 )
                 import_name = cfg[step]["module"] + cfg[step]["function"]
-                assert (
-                    import_name == reference_import
-                ), f"Import statement for {step_name} in workflow {workflow_config}," \
-                   f"{import_name}, should match {reference_import}"
+                assert import_name == reference_import, (
+                    f"Import statement for {step_name} in workflow {workflow_config},"
+                    f"{import_name}, should match {reference_import}"
+                )
 
                 # check that the parameters in the config file match the parameters
                 # required in all_functions.json
                 reference_parameters = all_functions[step_name]["parameter"]
                 if "parameter" in cfg[step]:
                     for param in cfg[step]["parameter"]:
-                        assert (
-                            param in reference_parameters.keys()
-                        ), f'Parameter "{param}" in {workflow_config} is' \
-                           f'not defined for function {step_name}'
+                        assert param in reference_parameters.keys(), (
+                            f'Parameter "{param}" in {workflow_config} is'
+                            f"not defined for function {step_name}"
+                        )
