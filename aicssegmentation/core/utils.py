@@ -393,7 +393,7 @@ def segmentation_intersection(seg: List) -> np.ndarray:
 
 
 def segmentation_xor(seg: List) -> np.ndarray:
-    """get the intersection of multiple segmentations into a single result
+    """get the XOR of multiple segmentations into a single result
 
     Parameters
     ------------
@@ -404,7 +404,9 @@ def segmentation_xor(seg: List) -> np.ndarray:
     return np.logical_xor.reduce(seg)
 
 
-def remove_index_object(label: np.ndarray, id_to_remove: List[int], in_place=False):
+def remove_index_object(
+    label: np.ndarray, id_to_remove: List[int] = [1], in_place=False
+):
 
     if in_place:
         img = label

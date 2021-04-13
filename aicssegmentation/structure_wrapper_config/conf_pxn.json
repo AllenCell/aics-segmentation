@@ -20,7 +20,7 @@
         "parent": 1
     },
     "3": {
-        "name": "Vesselness 3D",
+        "name": "Filament Filter 3D",
         "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselness3D",

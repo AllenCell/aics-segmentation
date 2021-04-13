@@ -77,7 +77,7 @@
         "function": "edge_preserving_smoothing_3d",
         "parameter": null
     },
-    "2D Filament filter (slice by slice)": {
+    "Filament Filter Slice by Slice": {
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
         "parameter": {
@@ -120,7 +120,7 @@
             }
         }
     },
-    "Vesselness 3D": {
+    "Filament Filter 3D": {
         "module": "aicssegmentation.core.vessel",
         "function": "vesselness3D",
         "parameter": {
@@ -129,7 +129,7 @@
                 "data_type": "float",
                 "min": 0,
                 "max": 5,
-                "increment": 0.5
+                "increment": 0.05
             },
             "cutoff": {
                 "widget_type": "slider",
@@ -140,7 +140,7 @@
             }
         }
     },
-    "Image Smoothing Gaussian Slice by Slice": {
+    "Gaussian Smoothing Slice by Slice": {
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_slice_by_slice",
         "parameter": {
@@ -153,7 +153,7 @@
             }
         }
     },
-    "3D Spot Filter": {
+    "Spot Filter 3D": {
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_3d",
         "parameter": {
@@ -173,7 +173,7 @@
             }
         }
     },
-    "Image Smoothing Gaussian 3D": {
+    "Gaussian Smoothing 3D": {
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_3d",
         "parameter": {
@@ -184,7 +184,7 @@
             }
         }
     },
-    "Slice By Slice Spot Filter": {
+    "Spot Filter Slice by Slice": {
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
         "parameter": {
@@ -193,7 +193,14 @@
                 "data_type": "float",
                 "min": 0,
                 "max": 5,
-                "increment": 0.5
+                "increment": 0.05
+            },
+            "cutoff": {
+                "widge type": "slider",
+                "data type": "float",
+                "min": 0,
+                "max": 1,
+                "increment": 0.01
             }
         }
     },
@@ -230,30 +237,34 @@
         "function": "peak_local_max_wrapper",
         "parameter": null
     },
-    "Watershed Wrapper": {
+    "Watershed for cutting": {
         "module": "aicssegmentation.core.utils",
         "function": "watershed_wrapper",
+        "parameter": null
+    },
+    "Watershed for segmentation": {
+        "module": "skimage.morphology",
+        "function": "watershed",
         "parameter": {
-            "bw": {
-                "data_type": "np.ndarray"
-            },
-            "local_maxi": {
-                "data_type": "np.ndarray"
+            "watershed_line": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
             }
         }
     },
     "Prune Z-Slices": {
         "module": "aicssegmentation.core.utils",
-        "function": "z_range",
+        "function": "prune_z_slices",
         "parameter": null
     },
     "Topology Preserving Thinning": {
         "module": "aicssegmentation.core.utils",
         "function": "topology_preserving_thinning",
         "parameter": {
-            "bw": {
-                "data_type": "np.ndarray"
-            },
             "min_thickness": {
                 "data_type": "int",
                 "widget_type": "slider",
@@ -321,7 +332,7 @@
             }
         }
     },
-    "Invert Mask": {
+    "Invert Image": {
         "module": "aicssegmentation.core.utils",
         "function": "invert_mask",
         "parameter": null
@@ -330,12 +341,6 @@
         "module": "aicssegmentation.core.utils",
         "function": "mask_image",
         "parameter": {
-            "image": {
-                "data_type": "np.ndarray"
-            },
-            "mask": {
-                "data_type": "np.ndarray"
-            },
             "value": {
                 "data_type": "int",
                 "widget_type": "slider",
@@ -345,14 +350,71 @@
             }
         }
     },
-    "Merge Segmentation":{
+    "Merge Segmentation": {
         "module": "aicssegmentation.core.utils",
         "function": "segmentation_union",
         "parameter": null
     },
-    "Segmentation XOR":{
+    "Segmentation XOR": {
         "module": "aicssegmentation.core.utils",
         "function": "segmentation_xor",
         "parameter": null
+    },
+    "Generate seeding image": {
+        "module": "aicssegmentation.core.utils",
+        "function": "get_seed_for_objects",
+        "parameter": {
+            "area_min": {
+                "data type": "int",
+                "widge_type": "slider",
+                "min": 0,
+                "max": 1000,
+                "increment": 100
+            },
+            "area_max": {
+                "data type": "int",
+                "widge_type": "slider",
+                "min": 0,
+                "max": 50000,
+                "increment": 100
+            },
+            "bg_seed": {
+                "widge type": "drop-down",
+                "data type": "bool",
+                "option": [
+                    "True",
+                    "False"
+                ]
+            }
+        }
+    },
+    "Remove Index Object": {
+        "module": "aicssegmentation.core.utils",
+        "function": "remove_index_object",
+        "parameter": null
+    },
+    "Extract Boundary of Objects": {
+        "module": "skimage.segmentation",
+        "function": "find_boundaries",
+        "parameter": {
+            "connectivity": {
+                "data type": "int",
+                "widge_type": "drop-down",
+                "option": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            "mode": {
+                "data type": "str",
+                "widge type": "drop-down",
+                "option": [
+                    "thick",
+                    "inner",
+                    "outer"
+                ]
+            }
+        }
     }
 }

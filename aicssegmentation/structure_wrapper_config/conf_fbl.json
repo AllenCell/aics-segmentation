@@ -13,7 +13,7 @@
         "parent": 0
     },
     "2": {
-        "name": "Image Smoothing Gaussian 3D",
+        "name": "Gaussian Smoothing 3D",
         "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_3d",
@@ -23,7 +23,7 @@
         "parent": 1
     },
     "3": {
-        "name": "Masked Object Thresholding - Part 1: low level",
+        "name": "Masked Object Threshold - Part 1: low level",
         "category": "core",
         "module": "aicssegmentation.core.MO_threshold",
         "function": "MO_low_level",
@@ -35,7 +35,7 @@
         "parent": 2
     },
     "4": {
-        "name": "Masked Object Thresholding - Part 2: high level",
+        "name": "Masked Object Threshold - Part 2: high level",
         "category": "core",
         "module": "aicssegmentation.core.MO_threshold",
         "function": "MO_high_level",
@@ -43,10 +43,13 @@
             "extra_criteria": false,
             "local_adjust": 1.0
         },
-        "parent": [2, 3]
+        "parent": [
+            2,
+            3
+        ]
     },
     "5": {
-        "name": "Slice by Slice Spot Filter",
+        "name": "Spot Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
@@ -72,8 +75,10 @@
         "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "segmentation_union",
-        "parent": [4, 6]
-
+        "parent": [
+            4,
+            6
+        ]
     },
     "8": {
         "name": "Size Filter",
