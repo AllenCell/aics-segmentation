@@ -8,7 +8,7 @@ class WorkflowStep:
     A class that defines a step in an AICS-Segmentation workflow.
     """
 
-    def __init__(self, step_config: Dict[str, str]):
+    def __init__(self, step_config: Dict[str, str], widget_info: Dict[str, Any]):
         """
         Constructor for the workflow object
 
@@ -31,8 +31,13 @@ class WorkflowStep:
         self.result: np.ndarray = (
             None  # Result of running this step, None if not executed
         )
-        module = importlib.import_module(step_config["module"])
-        self.__function = getattr(module, step_config["function"])
+
+        self.module_name = step_config["module"]
+        module = importlib.import_module(self.module_name)
+
+        self.function_name = step_config["function"]
+        self.__function = getattr(module, self.function_name)
+
         self.__parameters: dict[str, Any] = None
         if "parameter" in step_config:
             self.__parameters = step_config["parameter"]
@@ -44,6 +49,8 @@ class WorkflowStep:
             self.category = step_config["category"]
         except KeyError:
             self.category = None
+
+        self.widget_data = self.__get_widget_data_step(widget_info)
 
     def execute(self, image: List[np.ndarray]) -> np.ndarray:
         """
@@ -69,3 +76,26 @@ class WorkflowStep:
                 # Some functions want it as a list
                 self.result: np.ndarray = self.__function(image)
         return self.result
+
+    def get_params(self) -> Dict[str, Any]:
+        """
+        Get the parameter names and its default values for this step.
+
+        Params:
+            none
+
+        Returns:
+            (Dict[str, Any]): map of parameter names to default values. Default values
+                could be a list, str, or int.
+        """
+        return self.__parameters
+
+    def __get_widget_data_step(self, widget_info: Dict[str, Any]) -> Dict[str, Any]:
+        for k, v in widget_info.items():
+            if v["module"] == self.module_name:
+                if v["function"] == self.function_name:
+                    return v
+        raise KeyError(
+            "There is no information about the widget for "
+            "\nmodule: {}\nfunction {}".format(self.module_name, self.function_name)
+        )
