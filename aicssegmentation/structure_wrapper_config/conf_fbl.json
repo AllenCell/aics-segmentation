@@ -13,7 +13,7 @@
         "parent": 0
     },
     "2": {
-        "name": "3D Gaussian Smoothing",
+        "name": "Gaussian Smoothing 3D",
         "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_3d",
@@ -49,7 +49,7 @@
         ]
     },
     "5": {
-        "name": "Slice By Slice Spot Filter",
+        "name": "Spot Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",

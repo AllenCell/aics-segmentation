@@ -23,7 +23,7 @@
         "parent": 1
     },
     "3": {
-        "name": "2D Filament Filter (slice by slice)",
+        "name": "Filament Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
@@ -36,7 +36,7 @@
         "parent": 2
     },
     "4": {
-        "name": "Slice By Slice Spot Filter",
+        "name": "Spot Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
@@ -47,7 +47,7 @@
         "parent": 2
     },
     "5": {
-        "name": "Slice By Slice Spot Filter",
+        "name": "Spot Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
@@ -58,7 +58,7 @@
         "parent": 2
     },
     "6": {
-        "name": "Slice By Slice Spot Filter",
+        "name": "Spot Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
@@ -90,14 +90,14 @@
             "hole_max": 1600,
             "fill_2d": true
         },
-        "parent": 3
+        "parent": 7
     },
     "9": {
         "name": "Size Filter",
         "category": "postprocessing",
         "module": "aicssegmentation.core.utils",
         "function": "size_filter",
-        "parent": 3,
+        "parent": 8,
         "parameter": {
             "min_size": 15,
             "method": "3D"

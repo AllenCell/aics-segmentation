@@ -37,7 +37,7 @@
         "parent": 1
     },
     "4": {
-        "name": "3D Spot Filter",
+        "name": "Spot Filter 3D",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_3d",
@@ -69,7 +69,7 @@
         ]
     },
     "7": {
-        "name": "Watershed",
+        "name": "Watershed for cutting",
         "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "watershed_wrapper",

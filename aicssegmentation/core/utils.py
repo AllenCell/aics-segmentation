@@ -393,7 +393,7 @@ def segmentation_intersection(seg: List) -> np.ndarray:
 
 
 def segmentation_xor(seg: List) -> np.ndarray:
-    """get the intersection of multiple segmentations into a single result
+    """get the XOR of multiple segmentations into a single result
 
     Parameters
     ------------

@@ -20,7 +20,7 @@
         "parent": 1
     },
     "3": {
-        "name": "Slice By Slice Spot Filter",
+        "name": "Spot Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",

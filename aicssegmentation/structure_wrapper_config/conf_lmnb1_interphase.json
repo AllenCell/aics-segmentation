@@ -12,7 +12,7 @@
         "parent": 0
     },
     "2": {
-        "name": "3D Gaussian Smoothing",
+        "name": "Gaussian Smoothing 3D",
         "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_3d",
@@ -22,7 +22,7 @@
         "parent": 1
     },
     "3": {
-        "name": "2D Filament Filter (slice by slice)",
+        "name": "Filament Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
@@ -35,7 +35,7 @@
         "parent": 2
     },
     "4": {
-        "name": "2D Filament Filter (slice by slice)",
+        "name": "Filament Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
@@ -48,7 +48,7 @@
         "parent": 2
     },
     "5": {
-        "name": "2D Filament Filter (slice by slice)",
+        "name": "Filament Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
@@ -77,8 +77,8 @@
         "module": "aicssegmentation.core.utils",
         "function": "get_seed_for_objects",
         "parameter": {
-            "area_min": 1,
-            "area_max": 10,
+            "area_min": 400,
+            "area_max": 40000,
             "bg_seed": true
         },
         "parent": [
@@ -87,7 +87,7 @@
         ]
     },
     "8": {
-        "name": "Marker-Control Watershed",
+        "name": "Watershed for segmentation",
         "category": "core",
         "module": "skimage.morphology",
         "function": "watershed",

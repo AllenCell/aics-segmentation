@@ -20,7 +20,7 @@
         "parent": 1
     },
     "3": {
-        "name": "2D Filament Filter (slice by slice)",
+        "name": "Filament Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",

@@ -13,7 +13,7 @@
         "parent": 0
     },
     "2": {
-        "name": "3D Gaussian Smoothing",
+        "name": "Gaussian Smoothing 3D",
         "category": "preprocessing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_3d",
@@ -49,7 +49,7 @@
         ]
     },
     "5": {
-        "name": "Slice By Slice Spot Filter",
+        "name": "Spot Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
@@ -60,14 +60,14 @@
         "parent": 2
     },
     "6": {
-        "name": "Invert Mask",
+        "name": "Invert Image",
         "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "invert_mask",
         "parent": 2
     },
     "7": {
-        "name": "Slice By Slice Spot Filter",
+        "name": "Spot Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
@@ -78,7 +78,7 @@
         "parent": 6
     },
     "8": {
-        "name": "Slice By Slice Spot Filter",
+        "name": "Spot Filter Slice by Slice",
         "category": "core",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
@@ -99,11 +99,11 @@
         ]
     },
     "10": {
-        "name": "Invert Mask",
+        "name": "Invert Image",
         "category": "core",
         "module": "aicssegmentation.core.utils",
         "function": "invert_mask",
-        "parent": 4
+        "parent": 3
     },
     "11": {
         "name": "Mask Image",
