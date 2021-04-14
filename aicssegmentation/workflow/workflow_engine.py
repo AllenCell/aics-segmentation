@@ -1,32 +1,32 @@
-import json
-import numpy
-
-from pathlib import Path
 from typing import List
-from aicssegmentation.util.directories import Directories
-from aicssegmentation.structure_wrapper_config.structure_config_utils import get_all_workflows_avail_in_json
 from .workflow import Workflow
 from .workflow_definition import WorkflowDefinition
+from .structure_wrapper_config import StructureWrapperConfig
 
 class WorkflowEngine:
     def __init__(self):
-        with open(Directories.get_structure_config_dir() / "all_functions.json") as file:
-            self._all_functions_info = json.load(file)
-
-        self._load_workflow_definitions()    
+        self._workflow_definitions = self._load_workflow_definitions()
         
     @property
     def workflow_definitions(self) -> List[WorkflowDefinition]:
-        pass
+        """
+        List of all workflow definitions
+        """
+        return self._workflow_definitions
 
-    def get_workflow(self, workflow_name: str) -> Workflow:
-        pass
+    def get_executable_workflow(self, workflow_name: str) -> Workflow:
+        """
+        Get an executable workflow object
+
+        inputs:
+            workflow_name: Name of the workflow to load
+        """
+        # TODO implement
+        raise NotImplementedError()
 
     def _load_workflow_definitions(self):
-        self._workflow_definitions = list()
-        available_workflows = get_all_workflows_avail_in_json()
+        definitions = list()
+        available_workflows = StructureWrapperConfig.get_available_workflows()
         for name in available_workflows:
-            # load json from config
-            # map
-                # self._workflow_definitions.append(WorkflowDefinition.from_json())
-            pass
+            definitions.append(StructureWrapperConfig.get_workflow_definition(name))
+        return definitions

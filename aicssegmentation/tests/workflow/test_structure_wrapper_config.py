@@ -1,36 +1,13 @@
 import pytest
 
 from aicssegmentation.workflow.structure_wrapper_config import StructureWrapperConfig
-
-ALL_STRUCTURE_NAMES = [
-    "actb",
-    "actn1",
-    "atp2a2",
-    "cetn2",
-    "ctnnb1",
-    "dsp",
-    "fbl",
-    "gja1",
-    "h2b_interphase",
-    "lamp1",
-    "lmnb1_interphase",
-    "lmnb1_mitotic",
-    "myh10",
-    "npm1",        
-    "nup153",
-    "pxn",
-    "rab5a",
-    "sec61b",    
-    "slc25a17",
-    "smc1a",
-    "son",
-    "st6gal1",
-    "tjp1",
-    "tomm20",
-    "tuba1b"    
-]
+from . import SUPPORTED_STRUCTURE_NAMES
 
 class TestStructureWrapperConfig:
+
+    def test_get_available_workflows(self):
+        workflows = StructureWrapperConfig.get_available_workflows()
+        assert workflows == ALL_STRUCTURE_NAMES
 
     def test_functions_json_mapping(self):
         # TODO
@@ -51,7 +28,11 @@ class TestStructureWrapperConfig:
         with pytest.raises(ValueError):
             workflow_def = StructureWrapperConfig.get_workflow_definition(name)        
 
-    @pytest.mark.parametrize("name", ALL_STRUCTURE_NAMES)
+    def test_get_workflow_definition_unavailable_workflow_fails(self):
+        with pytest.raises(ValueError):
+            workflow_def = StructureWrapperConfig.get_workflow_definition("unsupported workflow")  
+
+    @pytest.mark.parametrize("name", SUPPORTED_STRUCTURE_NAMES)
     def test_get_workflow_definition(self, name):
         workflow_def = StructureWrapperConfig.get_workflow_definition(name)
         assert workflow_def is not None

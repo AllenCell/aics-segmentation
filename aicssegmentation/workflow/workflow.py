@@ -1,15 +1,11 @@
 import os
-import json
 import numpy as np
+import logging
 
 from typing import Any, Dict, List
 from aicsimageio import imread
-from pathlib import Path
-from aicssegmentation.structure_wrapper_config.structure_config_utils import (
-    load_workflow_config
-)
 from .workflow_step import WorkflowStep
-
+from .workflow_definition import WorkflowDefinition
 
 class Workflow:
     """
@@ -18,53 +14,42 @@ class Workflow:
     according to the steps defined in its WorkflowDefinition.
     """
 
-    def __init__(self, workflow_name: str, image: np.ndarray):
-        """
-        Constructor for the Workflow object
+    def __init__(self, workflow_definition: WorkflowDefinition, input_image: np.ndarray):
+        if workflow_definition is None:
+            raise ValueError("workflow_definition")
+        if input_image is None:
+            raise ValueError("image")
+        self._definition = workflow_definition
+        self._starting_image = input_image   
+        self._next_step: int = 0  # Next step to execute     
 
-        Params:
-            workflow_name (str): dictionary object containing
-            information about this workflow step
-            image (np.ndarray):  image to perform workflow on
-        """
-        self.workflow_name: str = workflow_name  # Workflow name
+    # def __init__(self, workflow_name: str, image: np.ndarray):
+    #     """
+    #     Constructor for the Workflow object
 
-        self.widget_info: Dict[str, Any] = None
-        with open(
-            Path(__file__).parent.parent
-            / "structure_wrapper_config"
-            / "all_functions.json"
-        ) as file:
-            self.widget_info = json.load(file)
+    #     Params:
+    #         workflow_name (str): dictionary object containing
+    #         information about this workflow step
+    #         image (np.ndarray):  image to perform workflow on
+    #     """
+    #     self.workflow_name: str = workflow_name  # Workflow name
 
-        self.steps: List[
-            WorkflowStep
-        ] = self.__get_steps()  # List of WorkflowSteps for this workflow
-        self.next_step: int = 0  # Next step to execute
-        self.starting_image: np.ndarray = image  # Initial image
-        self._data_folder: os.path = os.path.join(
-            os.path.split(os.path.dirname(__file__))[0], "..", "demo_data"
-        )
+    #     self.widget_info: Dict[str, Any] = None
+    #     with open(
+    #         Path(__file__).parent.parent
+    #         / "structure_wrapper_config"
+    #         / "all_functions.json"
+    #     ) as file:
+    #         self.widget_info = json.load(file)
 
-    def __get_steps(self) -> List[WorkflowStep]:
-        """
-        Get a list of WorkflowStep objects to perform on the starting image.
-
-        Params:
-            none
-
-        Returns:
-            (list(WorkflowStep)): List of workflow step objects
-        """
-        # TODO: in order for parent fucntionality to work correctly,
-        #  we should sort these in the list by parent index
-        return self.__parse_config_to_objects(load_workflow_config(self.workflow_name))
-
-    def __parse_config_to_objects(self, cfg: Dict) -> List[WorkflowStep]:
-        workflow = list()
-        for step in cfg.values():
-            workflow.append(WorkflowStep(step, self.widget_info))
-        return workflow
+    #     self.steps: List[
+    #         WorkflowStep
+    #     ] = self.__get_steps()  # List of WorkflowSteps for this workflow
+    #     self.next_step: int = 0  # Next step to execute
+    #     self.starting_image: np.ndarray = image  # Initial image
+    #     self._data_folder: os.path = os.path.join(
+    #         os.path.split(os.path.dirname(__file__))[0], "..", "demo_data"
+    #     )
 
     def get_next_step(self) -> WorkflowStep:
         """
@@ -76,7 +61,7 @@ class Workflow:
         Returns:
             (WorkflowStep): next WorkflowStep object to perform on image
         """
-        return self.steps[self.next_step]
+        return self._definition.steps[self._next_step]
 
     def execute_next(self) -> np.ndarray:
         """
@@ -91,10 +76,10 @@ class Workflow:
             next workflow step
         """
         print("executing step")
-        print(self.next_step)
+        print(self._next_step)
         # Pick which image to perform the workflow step on
         image: np.ndarray = None
-        if self.next_step == 0:
+        if self._next_step == 0:
             # First image, so use the starting image for the next workflow step
             image = [self.starting_image]
         elif self.is_done():
@@ -111,7 +96,7 @@ class Workflow:
         result: np.ndarray = self.get_next_step().execute(image)
 
         # Only increment after running step
-        self.next_step = self.next_step + 1
+        self._next_step = self._next_step + 1
         return result
 
     def get_result(self, step_index: int) -> np.ndarray:
@@ -132,7 +117,7 @@ class Workflow:
         """
         if step_index == -1:
             return self.starting_image
-        elif step_index > self.next_step:
+        elif step_index > self._next_step:
             return None  # returns None if the WorkflowStep has not been executed.
         else:
             return self.steps[step_index].result
@@ -150,10 +135,10 @@ class Workflow:
                             returns the starting image if no Workflowsteps have
                             been run.
         """
-        if self.next_step == 0:
+        if self._next_step == 0:
             return self.starting_image
         else:
-            return self.get_result(self.next_step - 1)
+            return self.get_result(self._next_step - 1)
 
     def execute_all(self) -> np.ndarray:
         """
@@ -179,44 +164,6 @@ class Workflow:
         Returns:
             (bool): True if all WorkflowSteps have been executed, False if not
         """
-        return self.next_step >= len(self.steps)
+        return self._next_step >= len(self.steps)
 
-    def get_thumbnail_pre(self) -> np.ndarray:
-        """
-        Grab the pre-segmentation thumbnail related to this workflow from
-        the data folder
 
-        Params:
-            none
-
-        Returns:
-            (np.ndarray): image
-        """
-        # TODO: need to save image in format workflowName_type.tif
-        return np.squeeze(
-            imread(
-                os.path.join(
-                    self._data_folder, "assets", self.workflow_name + "_pre.png"
-                )
-            )
-        )
-
-    def get_thumbnail_post(self) -> np.ndarray:
-        """
-        Grab the post-segmentation thumbnail related to this
-        workflow from the data folder
-
-        Params:
-            none
-
-        Returns:
-            (np.ndarray): image
-        """
-        # TODO: need to save image in format workflowName_type.tif
-        return np.squeeze(
-            imread(
-                os.path.join(
-                    self._data_folder, "assets", self.workflow_name + "_post.png"
-                )
-            )
-        )

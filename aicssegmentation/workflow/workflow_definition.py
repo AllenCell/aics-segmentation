@@ -1,5 +1,10 @@
+import numpy as np
+
+from aicsimageio import imread
 from typing import Dict, List
 from dataclasses import dataclass
+from aicssegmentation.util.lazy import lazy_property
+from aicssegmentation.util.directories import Directories
 from .workflow_step import WorkflowStep
 
 @dataclass
@@ -13,8 +18,22 @@ class WorkflowDefinition:
     """
 
     name: str
-    steps: List[WorkflowStep]        
+    steps: List[WorkflowStep]    
 
-    # TODO get thumbnails
+    @lazy_property
+    def thumbnail_pre(self) -> np.ndarray:
+        """
+        The Pre-segmentation thumbnail related to this workflow, as a numpy array
+        """                
+        return np.squeeze(
+            imread(Directories.get_assets_dir() / f"thumbnails/{self.name.lower()}_pre.png")
+        )
 
-
+    @lazy_property
+    def thumbnail_post(self) -> np.ndarray:
+        """
+        The Post-segmentation thumbnail related to this workflow, as a numpy array
+        """        
+        return np.squeeze(
+            imread(Directories.get_assets_dir() / f"thumbnails/{self.name.lower()}_post.png")
+        )        

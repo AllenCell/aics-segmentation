@@ -15,6 +15,18 @@ class ConfigurationException(Exception):
 
 class StructureWrapperConfig:
     _all_functions = None
+    _available_workflow_names = None
+
+    @classmethod
+    def get_available_workflows(cls) -> List[str]:
+        """
+        Get the list of all workflows available through configuration 
+        """
+        if cls._available_workflow_names is None:
+            json_list = sorted(Directories.get_structure_config_dir().glob("conf_*.json"))
+            cls._available_workflow_names = [p.stem[5:] for p in json_list]
+
+        return cls._available_workflow_names
 
     @classmethod
     def get_all_functions(cls) -> List[SegmenterFunction]:
@@ -40,6 +52,9 @@ class StructureWrapperConfig:
         """
         if workflow_name is None or len(workflow_name.strip()) == 0:
             raise ValueError("workflow_name cannot be empty")
+            
+        if workflow_name not in cls.get_available_workflows():
+            raise ValueError(f"No workflow configuration available for {workflow_name}")
 
         path = Directories.get_structure_config_dir() / f"conf_{workflow_name}.json"
 
