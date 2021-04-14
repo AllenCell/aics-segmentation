@@ -4,7 +4,7 @@ from typing import Dict, List, Union
 
 
 class WidgetType(Enum):
-    SLIDER = "slider",
+    SLIDER = "slider"
     DROPDOWN = "drop-down"
 
     @staticmethod

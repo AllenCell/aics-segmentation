@@ -123,5 +123,5 @@ class StructureWrapperConfig:
             
             steps.append(step)
         
-        return steps
+        return WorkflowDefinition(name=workflow_name, steps=steps)
 
