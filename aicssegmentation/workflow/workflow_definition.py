@@ -1,6 +1,6 @@
 from typing import List
 from dataclasses import dataclass
-from . import WorkflowStep
+from .workflow_step import WorkflowStep
 
 class WorkflowDefinition:
     """

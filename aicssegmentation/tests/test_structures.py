@@ -127,6 +127,3 @@ def test_all_structures():
     for structure_name in ALL_STRUCTURE_NAMES:
         print("Testing", structure_name, "...")
         unit_test(structure_name)
-
-
-test_all_structures()

@@ -8,7 +8,7 @@ from pathlib import Path
 from aicssegmentation.structure_wrapper_config.structure_config_utils import (
     load_workflow_config
 )
-from aicssegmentation.structure_wrapper.WorkflowStep import WorkflowStep
+from .workflow_step import WorkflowStep
 
 
 class Workflow:

@@ -5,7 +5,8 @@ from pathlib import Path
 from typing import List
 from aicssegmentation.util.directories import Directories
 from aicssegmentation.structure_wrapper_config.structure_config_utils import get_all_workflows_avail_in_json
-from . import Workflow, WorkflowDefinition
+from .workflow import Workflow
+from .workflow_definition import WorkflowDefinition
 
 class WorkflowEngine:
     def __init__(self):

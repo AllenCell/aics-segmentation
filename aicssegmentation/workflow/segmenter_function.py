@@ -1,6 +1,6 @@
 from enum import Enum
 from dataclasses import dataclass
-from typing import Any, List
+from typing import Any, Dict, List, Union
 
 
 class WidgetType(Enum):
@@ -13,8 +13,10 @@ class FunctionParameter:
     name: str
     widget_type: WidgetType
     data_type: str
-    min_value: Any
-    max_value: Any
+    min_value: Union[int, float] = None
+    max_value: Union[int, float] = None
+    increment: Union[int, float] = None
+    options: List[str] = None
 
 
 @dataclass
@@ -22,4 +24,4 @@ class SegmenterFunction:
     display_name: str
     function: str
     module: str
-    parameters: List[FunctionParameter] = None
+    parameters: Dict[str, List[FunctionParameter]] = None
