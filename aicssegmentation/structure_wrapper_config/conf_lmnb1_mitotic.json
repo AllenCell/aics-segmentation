@@ -1,32 +1,26 @@
 {
-    "1": {
-        "name": "Intensity Normalization using min-max with bound",
-        "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
-        "function": "intensity_normalization",
-        "parameter": {
+    "1": {        
+        "category": "preprocessing",        
+        "function": "intensity_normalization_min_max_with_bound",
+        "parameter_defaults": {
             "scaling_param": [
                 4000
             ]
         },
         "parent": 0
     },
-    "2": {
-        "name": "Gaussian Smoothing 3D",
-        "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
-        "function": "image_smoothing_gaussian_3d",
-        "parameter": {
+    "2": {        
+        "category": "preprocessing",        
+        "function": "gaussian_smoothing_3D",
+        "parameter_defaults": {
             "sigma": 1
         },
         "parent": 1
     },
-    "3": {
-        "name": "Filament Filter Slice by Slice",
-        "category": "core",
-        "module": "aicssegmentation.core.vessel",
-        "function": "vesselnessSliceBySlice",
-        "parameter": {
+    "3": {        
+        "category": "core",        
+        "function": "filement_filter_slice_by_slice",
+        "parameter_defaults": {
             "sigmas": [
                 0.5
             ],
@@ -34,13 +28,11 @@
         },
         "parent": 2
     },
-    "4": {
-        "name": "Size Filter",
-        "category": "postprocessing",
-        "module": "aicssegmentation.core.utils",
+    "4": {        
+        "category": "postprocessing",        
         "function": "size_filter",
         "parent": 3,
-        "parameter": {
+        "parameter_defaults": {
             "min_size": 5,
             "method": "3D"
         }

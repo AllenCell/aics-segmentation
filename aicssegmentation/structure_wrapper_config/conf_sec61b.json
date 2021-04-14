@@ -1,10 +1,8 @@
 {
     "1": {
-        "name": "Intensity Normalization",
         "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
-        "parameter": {
+        "parameter_defaults": {
             "scaling_param": [
                 2.5,
                 7.5
@@ -12,19 +10,15 @@
         },
         "parent": 0
     },
-    "2": {
-        "name": "Edge Preserving Smoothing",
+    "2": {        
         "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
-        "function": "edge_preserving_smoothing_3d",
+        "function": "edge_preserving_smoothing",
         "parent": 1
     },
-    "3": {
-        "name": "Filament Filter Slice by Slice",
+    "3": {        
         "category": "core",
-        "module": "aicssegmentation.core.vessel",
-        "function": "vesselnessSliceBySlice",
-        "parameter": {
+        "function": "filement_filter_slice_by_slice",
+        "parameter_defaults": {
             "sigmas": [
                 1
             ],
@@ -32,13 +26,11 @@
         },
         "parent": 2
     },
-    "4": {
-        "name": "Size Filter",
+    "4": {        
         "category": "postprocessing",
-        "module": "aicssegmentation.core.utils",
         "function": "size_filter",
         "parent": 3,
-        "parameter": {
+        "parameter_defaults": {
             "min_size": 15,
             "method": "3D"
         }

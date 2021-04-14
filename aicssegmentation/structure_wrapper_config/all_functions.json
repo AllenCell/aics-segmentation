@@ -1,8 +1,9 @@
 {
-    "Intensity Normalization": {
+    "intensity_normalization": {
+        "name": "Intensity Normalization",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
-        "parameter": {
+        "parameters": {
             "scaling_param": [
                 {
                     "widget_type": "slider",
@@ -21,10 +22,11 @@
             ]
         }
     },
-    "Intensity Normalization with bound": {
+    "intensity_normalization_with_bound": {
+        "name": "Intensity Normalization with bound",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
-        "parameter": {
+        "parameters": {
             "scaling_param": [
                 {
                     "widget_type": "slider",
@@ -57,10 +59,11 @@
             ]
         }
     },
-    "Intensity Normalization using min-max with bound": {
+    "intensity_normalization_min_max_with_bound": {
+        "name": "Intensity Normalization using min-max with bound",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "intensity_normalization",
-        "parameter": {
+        "parameters": {
             "scaling_param": [
                 {
                     "widget_type": "slider",
@@ -72,15 +75,17 @@
             ]
         }
     },
-    "Edge Preserving Smoothing": {
+    "edge_preserving_smoothing": {
+        "name": "Edge Preserving Smoothing",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "edge_preserving_smoothing_3d",
-        "parameter": null
+        "parameters": null
     },
-    "Filament Filter Slice by Slice": {
+    "filement_filter_slice_by_slice": {
+        "name": "Filament Filter Slice by Slice",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselnessSliceBySlice",
-        "parameter": {
+        "parameters": {
             "sigmas": [
                 {
                     "widget_type": "slider",
@@ -99,10 +104,11 @@
             }
         }
     },
-    "Size Filter": {
+    "size_filter": {
+        "name": "Size Filter",
         "module": "aicssegmentation.core.utils",
         "function": "size_filter",
-        "parameter": {
+        "parameters": {
             "min_size": {
                 "widget_type": "slider",
                 "data_type": "int",
@@ -120,10 +126,11 @@
             }
         }
     },
-    "Filament Filter 3D": {
+    "filament_filter_3D": {
+        "name": "Filament Filter 3D",
         "module": "aicssegmentation.core.vessel",
         "function": "vesselness3D",
-        "parameter": {
+        "parameters": {
             "sigmas": {
                 "widget_type": "slider",
                 "data_type": "float",
@@ -140,10 +147,11 @@
             }
         }
     },
-    "Gaussian Smoothing Slice by Slice": {
+    "gaussian_smoothing_slice_by_slice": {
+        "name": "Gaussian Smoothing Slice by Slice",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_slice_by_slice",
-        "parameter": {
+        "parameters": {
             "sigma": {
                 "widget_type": "slider",
                 "data_type": "float",
@@ -153,10 +161,11 @@
             }
         }
     },
-    "Spot Filter 3D": {
+    "spot_filter_3D": {
+        "name": "Spot Filter 3D",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_3d",
-        "parameter": {
+        "parameters": {
             "log_sigma": {
                 "widget_type": "slider",
                 "data_type": "float",
@@ -173,10 +182,11 @@
             }
         }
     },
-    "Gaussian Smoothing 3D": {
+    "gaussian_smoothing_3D": {
+        "name": "Gaussian Smoothing 3D",
         "module": "aicssegmentation.core.pre_processing_utils",
         "function": "image_smoothing_gaussian_3d",
-        "parameter": {
+        "parameters": {
             "sigma": {
                 "widget_type": "slider",
                 "data_type": "float",
@@ -184,10 +194,11 @@
             }
         }
     },
-    "Spot Filter Slice by Slice": {
+    "spot_filter_slice_by_slice": {
+        "name": "Spot Filter Slice by Slice",
         "module": "aicssegmentation.core.seg_dot",
         "function": "dot_slice_by_slice",
-        "parameter": {
+        "parameters": {
             "log_sigma": {
                 "widget_type": "slider",
                 "data_type": "float",
@@ -204,10 +215,11 @@
             }
         }
     },
-    "Hole Filling": {
+    "hole_filling": {
+        "name": "Hole Filling",
         "module": "aicssegmentation.core.utils",
         "function": "hole_filling",
-        "parameter": {
+        "parameters": {
             "hole_min": {
                 "widget_type": "slider",
                 "data_type": "int",
@@ -232,20 +244,23 @@
             }
         }
     },
-    "Find Local Maxima": {
+    "find_local_maxima": {
+        "name": "Find Local Maxima",
         "module": "aicssegmentation.core.utils",
         "function": "peak_local_max_wrapper",
-        "parameter": null
+        "parameters": null
     },
-    "Watershed for cutting": {
+    "watershed_for_cutting": {
+        "name": "Watershed for cutting",
         "module": "aicssegmentation.core.utils",
         "function": "watershed_wrapper",
-        "parameter": null
+        "parameters": null
     },
-    "Watershed for segmentation": {
+    "watershed_for_segmentation": {
+        "name": "Watershed for segmentation",
         "module": "skimage.morphology",
         "function": "watershed",
-        "parameter": {
+        "parameters": {
             "watershed_line": {
                 "widge type": "drop-down",
                 "data type": "bool",
@@ -256,15 +271,17 @@
             }
         }
     },
-    "Prune Z-Slices": {
+    "prune_z_slices": {
+        "name": "Prune Z-Slices",
         "module": "aicssegmentation.core.utils",
         "function": "prune_z_slices",
-        "parameter": null
+        "parameters": null
     },
-    "Topology Preserving Thinning": {
+    "topology_preserving_thinning": {
+        "name": "Topology Preserving Thinning",
         "module": "aicssegmentation.core.utils",
         "function": "topology_preserving_thinning",
-        "parameter": {
+        "parameters": {
             "min_thickness": {
                 "data_type": "int",
                 "widget_type": "slider",
@@ -281,10 +298,11 @@
             }
         }
     },
-    "Masked Object Threshold - Part 2: high level": {
+    "masked_object_treshold_high_level": {
+        "name": "Masked Object Threshold - Part 2: high level",
         "module": "aicssegmentation.core.MO_threshold",
         "function": "MO_high_level",
-        "parameter": {
+        "parameters": {
             "extra_criteria": {
                 "widget_type": "drop-down",
                 "data_type": "bool",
@@ -302,10 +320,11 @@
             }
         }
     },
-    "Masked Object Threshold - Part 1: low level": {
+    "masked_object_treshold_low_level": {
+        "name": "Masked Object Threshold - Part 1: low level",
         "module": "aicssegmentation.core.MO_threshold",
         "function": "MO_low_level",
-        "parameter": {
+        "parameters": {
             "global_thresh_method": {
                 "data_type": "str",
                 "widget_type": "drop-down",
@@ -332,15 +351,17 @@
             }
         }
     },
-    "Invert Image": {
+    "invert_image": {
+        "name": "Invert Image",
         "module": "aicssegmentation.core.utils",
         "function": "invert_mask",
-        "parameter": null
+        "parameters": null
     },
-    "Mask Image": {
+    "mask_image": {
+        "name": "Mask Image",
         "module": "aicssegmentation.core.utils",
         "function": "mask_image",
-        "parameter": {
+        "parameters": {
             "value": {
                 "data_type": "int",
                 "widget_type": "slider",
@@ -350,20 +371,23 @@
             }
         }
     },
-    "Merge Segmentation": {
+    "merge_segmentation": {
+        "name": "Merge Segmentation",
         "module": "aicssegmentation.core.utils",
         "function": "segmentation_union",
-        "parameter": null
+        "parameters": null
     },
-    "Segmentation XOR": {
+    "segmentation_xor": {
+        "name": "Segmentation XOR",
         "module": "aicssegmentation.core.utils",
         "function": "segmentation_xor",
-        "parameter": null
+        "parameters": null
     },
-    "Generate seeding image": {
+    "generate_seeding_image": {
+        "name": "Generate seeding image",
         "module": "aicssegmentation.core.utils",
         "function": "get_seed_for_objects",
-        "parameter": {
+        "parameters": {
             "area_min": {
                 "data type": "int",
                 "widge_type": "slider",
@@ -388,15 +412,17 @@
             }
         }
     },
-    "Remove Index Object": {
+    "remove_index_object": {
+        "name": "Remove Index Object",
         "module": "aicssegmentation.core.utils",
         "function": "remove_index_object",
-        "parameter": null
+        "parameters": null
     },
-    "Extract Boundary of Objects": {
+    "extract_boundary_of_objects": {
+        "name": "Extract Boundary of Objects",
         "module": "skimage.segmentation",
         "function": "find_boundaries",
-        "parameter": {
+        "parameters": {
             "connectivity": {
                 "data type": "int",
                 "widge_type": "drop-down",

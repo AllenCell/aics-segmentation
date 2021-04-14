@@ -38,7 +38,7 @@ class WorkflowStep:
         self.function_name = step_config["function"]
         self.__function = getattr(module, self.function_name)
 
-        self.__parameters: dict[str, Any] = None
+        self.__parameters: Dict[str, Any] = None
         if "parameter" in step_config:
             self.__parameters = step_config["parameter"]
 

@@ -1,23 +1,26 @@
-from aicssegmentation.structure_wrapper_config.structure_config_utils import (
-    load_workflow_config,
-)
-import numpy as np
-from aicssegmentation.structure_wrapper.WorkflowStep import WorkflowStep
-from typing import List
 import os
-from aicsimageio import imread
 import json
+import numpy as np
+
+from typing import Any, Dict, List
+from aicsimageio import imread
 from pathlib import Path
+from aicssegmentation.structure_wrapper_config.structure_config_utils import (
+    load_workflow_config
+)
+from aicssegmentation.structure_wrapper.WorkflowStep import WorkflowStep
 
 
-class WorkflowEngine:
+class Workflow:
     """
-    A class to define a whole aics-segmentation workflow
+    Represents an executable aics-segmentation workflow
+    This class provides the functionality to run a workflow using an image input
+    according to the steps defined in its WorkflowDefinition.
     """
 
     def __init__(self, workflow_name: str, image: np.ndarray):
         """
-        Constructor for the WorkflowEngine object
+        Constructor for the Workflow object
 
         Params:
             workflow_name (str): dictionary object containing

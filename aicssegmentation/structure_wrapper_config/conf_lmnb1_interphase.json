@@ -1,32 +1,26 @@
 {
-    "1": {
-        "name": "Intensity Normalization",
-        "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
+    "1": {        
+        "category": "preprocessing",        
         "function": "intensity_normalization",
-        "parameter": {
+        "parameter_defaults": {
             "scaling_param": [
                 4000
             ]
         },
         "parent": 0
     },
-    "2": {
-        "name": "Gaussian Smoothing 3D",
-        "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
-        "function": "image_smoothing_gaussian_3d",
-        "parameter": {
+    "2": {        
+        "category": "preprocessing",        
+        "function": "gaussian_smoothing_3D",
+        "parameter_defaults": {
             "sigma": 1
         },
         "parent": 1
     },
-    "3": {
-        "name": "Filament Filter Slice by Slice",
-        "category": "core",
-        "module": "aicssegmentation.core.vessel",
-        "function": "vesselnessSliceBySlice",
-        "parameter": {
+    "3": {        
+        "category": "core",    
+        "function": "filement_filter_slice_by_slice",
+        "parameter_defaults": {
             "sigmas": [
                 1
             ],
@@ -34,12 +28,10 @@
         },
         "parent": 2
     },
-    "4": {
-        "name": "Filament Filter Slice by Slice",
-        "category": "core",
-        "module": "aicssegmentation.core.vessel",
-        "function": "vesselnessSliceBySlice",
-        "parameter": {
+    "4": {        
+        "category": "core",        
+        "function": "filement_filter_slice_by_slice",
+        "parameter_defaults": {
             "sigmas": [
                 2
             ],
@@ -47,12 +39,10 @@
         },
         "parent": 2
     },
-    "5": {
-        "name": "Filament Filter Slice by Slice",
-        "category": "core",
-        "module": "aicssegmentation.core.vessel",
-        "function": "vesselnessSliceBySlice",
-        "parameter": {
+    "5": {        
+        "category": "core",        
+        "function": "filement_filter_slice_by_slice",
+        "parameter_defaults": {
             "sigmas": [
                 3
             ],
@@ -60,23 +50,19 @@
         },
         "parent": 2
     },
-    "6": {
-        "name": "Merge Segmentation",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
-        "function": "segmentation_union",
+    "6": {        
+        "category": "core",        
+        "function": "merge_segmentation",
         "parent": [
             3,
             4,
             5
         ]
     },
-    "7": {
-        "name": "Generate seeding image",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
-        "function": "get_seed_for_objects",
-        "parameter": {
+    "7": {        
+        "category": "core",        
+        "function": "generate_seeding_image",
+        "parameter_defaults": {
             "area_min": 400,
             "area_max": 40000,
             "bg_seed": true
@@ -86,12 +72,10 @@
             6
         ]
     },
-    "8": {
-        "name": "Watershed for segmentation",
-        "category": "core",
-        "module": "skimage.morphology",
-        "function": "watershed",
-        "parameter": {
+    "8": {        
+        "category": "core",        
+        "function": "watershed_for_segmentation",
+        "parameter_defaults": {
             "watershed_line": true
         },
         "parent": [
@@ -99,20 +83,16 @@
             7
         ]
     },
-    "9": {
-        "name": "Remove Index Object",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
+    "9": {        
+        "category": "core",        
         "function": "remove_index_object",
         "parent": 8
     },
-    "10": {
-        "name": "Extract Boundary of Objects",
-        "category": "postprocessing",
-        "module": "skimage.segmentation",
-        "function": "find_boundaries",
+    "10": {        
+        "category": "postprocessing",        
+        "function": "extract_boundary_of_objects",
         "parent": 9,
-        "parameter": {
+        "parameter_defaults": {
             "connectivity": 1,
             "mode": "thick"
         }
