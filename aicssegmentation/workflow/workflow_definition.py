@@ -1,7 +1,8 @@
-from typing import List
+from typing import Dict, List
 from dataclasses import dataclass
 from .workflow_step import WorkflowStep
 
+@dataclass
 class WorkflowDefinition:
     """
     Definition of an aics-segmentation Workflow
@@ -12,12 +13,8 @@ class WorkflowDefinition:
     """
 
     name: str
-    steps: List[WorkflowStep]
+    steps: List[WorkflowStep]        
 
-    # TODO
-    # JSON encoder instead ?
-    @staticmethod
-    def from_json(self, json):        
-        pass
+    # TODO get thumbnails
 
 

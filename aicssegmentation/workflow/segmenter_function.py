@@ -1,12 +1,22 @@
 from enum import Enum
 from dataclasses import dataclass
-from typing import Any, Dict, List, Union
+from typing import Dict, List, Union
 
 
 class WidgetType(Enum):
     SLIDER = "slider",
-    DROPDOWN = "dropdown"
+    DROPDOWN = "drop-down"
 
+    @staticmethod
+    def from_str(value: str):
+        if value is not None:
+            value = value.lower()
+        if value == WidgetType.SLIDER.value:
+            return WidgetType.SLIDER
+        if value == WidgetType.DROPDOWN.value:
+            return WidgetType.DROPDOWN
+        raise NotImplementedError()
+            
 
 @dataclass    
 class FunctionParameter:
@@ -21,6 +31,7 @@ class FunctionParameter:
 
 @dataclass
 class SegmenterFunction:
+    name: str
     display_name: str
     function: str
     module: str

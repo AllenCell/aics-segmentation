@@ -11,7 +11,7 @@
         "parent": 0
     },
     "2": {        
-        "function": "edge_preserving_smoothing_3d",
+        "function": "edge_preserving_smoothing",
         "category": "preprocessing",
         "parent": 1
     },
