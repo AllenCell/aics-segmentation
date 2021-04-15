@@ -6,6 +6,7 @@ from .segmenter_function import SegmenterFunction, FunctionParameter, WidgetType
 from .workflow_definition import WorkflowDefinition
 from .workflow_step import WorkflowStep, WorkflowStepCategory
 
+
 class ConfigurationException(Exception):
     """
     Raised when errors are encountered reading from Configuration files

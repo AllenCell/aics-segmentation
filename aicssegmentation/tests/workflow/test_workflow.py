@@ -42,3 +42,5 @@ class TestWorkflow:
         self._workflow.execute_all()
         assert self._workflow.get_next_step() is None
         assert self._workflow.is_done()
+
+    # TODO test all workflows
