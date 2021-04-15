@@ -7,6 +7,8 @@ from aicsimageio import imread
 from .workflow_step import WorkflowStep
 from .workflow_definition import WorkflowDefinition
 
+log = logging.getLogger(__name__)
+
 class Workflow:
     """
     Represents an executable aics-segmentation workflow
@@ -22,34 +24,14 @@ class Workflow:
         self._definition = workflow_definition
         self._starting_image = input_image   
         self._next_step: int = 0  # Next step to execute     
+        self._results = list() # Store step results
 
-    # def __init__(self, workflow_name: str, image: np.ndarray):
-    #     """
-    #     Constructor for the Workflow object
-
-    #     Params:
-    #         workflow_name (str): dictionary object containing
-    #         information about this workflow step
-    #         image (np.ndarray):  image to perform workflow on
-    #     """
-    #     self.workflow_name: str = workflow_name  # Workflow name
-
-    #     self.widget_info: Dict[str, Any] = None
-    #     with open(
-    #         Path(__file__).parent.parent
-    #         / "structure_wrapper_config"
-    #         / "all_functions.json"
-    #     ) as file:
-    #         self.widget_info = json.load(file)
-
-    #     self.steps: List[
-    #         WorkflowStep
-    #     ] = self.__get_steps()  # List of WorkflowSteps for this workflow
-    #     self.next_step: int = 0  # Next step to execute
-    #     self.starting_image: np.ndarray = image  # Initial image
-    #     self._data_folder: os.path = os.path.join(
-    #         os.path.split(os.path.dirname(__file__))[0], "..", "demo_data"
-    #     )
+    def reset(self):
+        """
+        Reset the workflow so it can be run again
+        """
+        self._next_step = 0
+        self._results = list()
 
     def get_next_step(self) -> WorkflowStep:
         """
@@ -60,7 +42,10 @@ class Workflow:
 
         Returns:
             (WorkflowStep): next WorkflowStep object to perform on image
+            None if all steps have already been executed            
         """
+        if self._next_step >= len(self._definition.steps):
+            return None
         return self._definition.steps[self._next_step]
 
     def execute_next(self) -> np.ndarray:
@@ -71,34 +56,40 @@ class Workflow:
             none
 
         Returns:
-
             result (np.ndarray): resultant image from running the
             next workflow step
         """
-        print("executing step")
-        print(self._next_step)
+        log.info(f"Executing step #{self._next_step}")
+
+        step = self.get_next_step()
+
         # Pick which image to perform the workflow step on
         image: np.ndarray = None
+
         if self._next_step == 0:
             # First image, so use the starting image for the next workflow step
-            image = [self.starting_image]
+            image = [self._starting_image]
         elif self.is_done():
             # No more workflow steps to perform
             # TODO: what to do if done with workflow
             #  but execute_next is prompted?
             # printing message for now
-            print("No steps left to run")
+            log.info("No steps left to run")
         else:
             image = list()
-            for i in (self.get_next_step()).parent:
-                image.append(self.get_result(i))
+            for i in step.parent:
+                res = self.get_result(i-1) # parents are 1 indexed            
+                image.append(res) 
 
-        result: np.ndarray = self.get_next_step().execute(image)
+        result: np.ndarray = self.get_next_step().execute(image, step.parameter_defaults)
+        self._results.append(result)
 
         # Only increment after running step
-        self._next_step = self._next_step + 1
+        self._next_step += 1
         return result
 
+    # TODO maybe change this to match the step number instead? 
+    #      Review when we implement rerunning single workflow steps
     def get_result(self, step_index: int) -> np.ndarray:
         """
         Get the result image for a workflow step.
@@ -115,12 +106,12 @@ class Workflow:
                                      on the given image
                                      None if step has not been executed yet.
         """
-        if step_index == -1:
-            return self.starting_image
-        elif step_index > self._next_step:
+        if step_index < 0:
+            return self._starting_image
+        if step_index >= len(self._results):
             return None  # returns None if the WorkflowStep has not been executed.
-        else:
-            return self.steps[step_index].result
+        
+        return self._results[step_index]
 
     def get_most_recent_result(self) -> np.ndarray:
         """
@@ -130,13 +121,12 @@ class Workflow:
            none
 
         Returns:
-
             (np.ndarray): Result of the last executed WorkflowStep,
                             returns the starting image if no Workflowsteps have
                             been run.
         """
         if self._next_step == 0:
-            return self.starting_image
+            return self._starting_image # TODO does this behavior make sense? Return None instead?
         else:
             return self.get_result(self._next_step - 1)
 
@@ -150,6 +140,7 @@ class Workflow:
         Returns:
             (np.ndarray): Result of the final WorkflowStep.
         """
+        self.reset()
         while not self.is_done():
             self.execute_next()
         return self.get_most_recent_result()
@@ -164,6 +155,6 @@ class Workflow:
         Returns:
             (bool): True if all WorkflowSteps have been executed, False if not
         """
-        return self._next_step >= len(self.steps)
+        return self._next_step >= len(self._definition.steps)
 
 

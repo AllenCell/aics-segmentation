@@ -7,7 +7,7 @@ class TestStructureWrapperConfig:
 
     def test_get_available_workflows(self):
         workflows = StructureWrapperConfig.get_available_workflows()
-        assert workflows == ALL_STRUCTURE_NAMES
+        assert workflows == SUPPORTED_STRUCTURE_NAMES
 
     def test_functions_json_mapping(self):
         # TODO

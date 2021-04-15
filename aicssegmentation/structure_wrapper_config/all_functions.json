@@ -81,7 +81,7 @@
         "python::function": "edge_preserving_smoothing_3d",
         "parameters": null
     },
-    "filement_filter_slice_by_slice": {
+    "filament_filter_slice_by_slice": {
         "name": "Filament Filter Slice by Slice",
         "python::module": "aicssegmentation.core.vessel",
         "python::function": "vesselnessSliceBySlice",

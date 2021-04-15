@@ -19,7 +19,7 @@
     },
     "3": {        
         "category": "core",        
-        "function": "filement_filter_slice_by_slice",
+        "function": "filament_filter_slice_by_slice",
         "parameter_defaults": {
             "sigmas": [
                 0.5

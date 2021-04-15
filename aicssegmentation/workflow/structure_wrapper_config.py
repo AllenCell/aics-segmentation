@@ -52,7 +52,7 @@ class StructureWrapperConfig:
         """
         if workflow_name is None or len(workflow_name.strip()) == 0:
             raise ValueError("workflow_name cannot be empty")
-            
+
         if workflow_name not in cls.get_available_workflows():
             raise ValueError(f"No workflow configuration available for {workflow_name}")
 
@@ -94,9 +94,9 @@ class StructureWrapperConfig:
                     param_name = param_k
                     params[param_name] = list()
                     
-                    if type(param_v) == dict:                                            
+                    if isinstance(param_v, dict):  
                         params[param_name].append(build_function_parameter(param_name, param_v))                        
-                    elif type(param_v) == list: 
+                    elif isinstance(param_v, list):
                         for item in param_v:                                                   
                             params[param_name].append(build_function_parameter(param_name, item) )
                 
@@ -118,21 +118,24 @@ class StructureWrapperConfig:
         for step_k, step_v in obj.items():
             step_number = int(step_k)
             function = next(filter(lambda f: f.name == step_v["function"], functions))
+            
+            if isinstance(step_v["parent"], list): #
+                parent = step_v["parent"]
+            else:
+                parent = [step_v["parent"]]
+
+
             step = WorkflowStep(category=WorkflowStepCategory.from_str(step_v["category"]),
                                 function=function, 
                                 step_number=step_number, 
-                                parent=step_v["parent"])
+                                parent=parent)
 
             if(step_v.get("parameter_defaults") is not None and len(step_v["parameter_defaults"]) > 0):
                 param_defaults = dict()
 
                 for param_k, param_v in step_v["parameter_defaults"].items():
                     param_name = param_k                    
-
-                    if type(param_v) == list:              
-                        param_defaults[param_name] = param_v
-                    else:
-                        param_defaults[param_name] = [param_v]
+                    param_defaults[param_name] = param_v                    
                 
                 step.parameter_defaults = param_defaults
             

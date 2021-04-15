@@ -24,19 +24,48 @@ class WorkflowStepCategory(Enum):
             return WorkflowStepCategory.POST_PROCESSING            
         raise NotImplementedError()
             
+
 @dataclass
 class WorkflowStep:
     category: WorkflowStepCategory
     function: SegmenterFunction
-    step_number: int
-    parent: int
+    step_number: int    
+    parent: List[int]
     parameter_defaults: Dict[str, List] = None
     
     @property
-    def name(self):
+    def name(self):        
         return self.function.display_name
 
-    # TODO execute() - or delegate to function?
+    def execute(self, image: List[np.ndarray], parameters: Dict[str, Any] = None) -> np.ndarray:
+        """
+        Execute this workflow step on a given image and return the result.
+        Also sets the result field to the resultant image.
+
+        Params:
+            image (np.ndarray): Image to perform this workflow step on,
+                                generally parent image
+            parameters (Dict): Dictionary of parameters to pass to the
+                                underlying function
+
+        Returns:
+            self.result (np.ndarray): Result of performing workflow step
+                                        on the given image.
+        """        
+        
+        py_module = importlib.import_module(self.function.module)        
+        py_function = getattr(py_module, self.function.function)
+
+        if parameters is not None:
+            return py_function(*image, **parameters)
+        else:
+            try:
+                # Most functions require unpacking the images
+                return py_function(*image)
+            except (KeyError, TypeError):
+                # Some functions want it as a list
+                return py_function(image)
+
 
 # class WorkflowStep:
 #     """
