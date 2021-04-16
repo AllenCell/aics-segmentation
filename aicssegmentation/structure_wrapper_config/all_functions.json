@@ -113,8 +113,8 @@
                 "widget_type": "slider",
                 "data_type": "int",
                 "min": 0,
-                "max": 50,
-                "increment": 5
+                "max": 500,
+                "increment": 1
             },
             "method": {
                 "widget_type": "drop-down",
