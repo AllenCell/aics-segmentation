@@ -69,7 +69,7 @@
                     "widget_type": "slider",
                     "data_type": "int",
                     "min": 50,
-                    "max": 8000,
+                    "max": 10000,
                     "increment": 50
                 }
             ]
@@ -113,8 +113,8 @@
                 "widget_type": "slider",
                 "data_type": "int",
                 "min": 0,
-                "max": 50,
-                "increment": 5
+                "max": 500,
+                "increment": 1
             },
             "method": {
                 "widget_type": "drop-down",
@@ -171,14 +171,14 @@
                 "data_type": "float",
                 "min": 0,
                 "max": 5,
-                "increment": 0.5
+                "increment": 0.05
             },
             "cutoff": {
                 "widget_type": "slider",
                 "data_type": "float",
                 "min": 0,
                 "max": 0.5,
-                "increment": 0.005
+                "increment": 0.001
             }
         }
     },
