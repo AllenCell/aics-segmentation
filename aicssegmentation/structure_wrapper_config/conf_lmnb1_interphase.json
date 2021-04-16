@@ -1,7 +1,7 @@
 {
     "1": {        
         "category": "preprocessing",        
-        "function": "intensity_normalization",
+        "function": "intensity_normalization_min_max_with_bound",
         "parameter_defaults": {
             "scaling_param": [
                 4000
