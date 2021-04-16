@@ -10,7 +10,8 @@ class WorkflowEngine:
     aicssegmentation workflow engine
     Use this class to access and execute aicssegmentation structure workflows
     """
-    def __init__(self):
+    def __init__(self, structure_config: StructureWrapperConfig = None):
+        self._structure_config = structure_config or StructureWrapperConfig()
         self._workflow_definitions = self._load_workflow_definitions()
         
     @property
@@ -39,7 +40,7 @@ class WorkflowEngine:
 
     def _load_workflow_definitions(self) -> List[WorkflowDefinition]:
         definitions = list()
-        available_workflows = StructureWrapperConfig.get_available_workflows()
+        available_workflows = self._structure_config.get_available_workflows()
         for name in available_workflows:
-            definitions.append(StructureWrapperConfig.get_workflow_definition(name))
+            definitions.append(self._structure_config.get_workflow_definition(name))
         return definitions

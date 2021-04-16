@@ -7,7 +7,7 @@ from skimage import data
 class TestWorkflow:
     def setup_method(self):        
         self._fake_image = np.asarray(data.astronaut())
-        definition = StructureWrapperConfig.get_workflow_definition("sec61b") # TODO use a test workflow
+        definition = StructureWrapperConfig().get_workflow_definition("sec61b") # TODO use a test workflow
         self._workflow = Workflow(definition, self._fake_image)
 
     def test_step_by_step_workflow(self):     

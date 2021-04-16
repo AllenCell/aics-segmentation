@@ -23,6 +23,10 @@ class Workflow:
         self._next_step: int = 0  # Next step to execute     
         self._results = list() # Store step results
 
+    @property
+    def workflow_definition(self) -> WorkflowDefinition:
+        return self._definition
+        
     def reset(self):
         """
         Reset the workflow so it can be run again

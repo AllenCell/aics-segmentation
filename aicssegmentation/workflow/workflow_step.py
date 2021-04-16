@@ -41,13 +41,12 @@ class WorkflowStep:
     def name(self):        
         return self.function.display_name
 
-    def execute(self, image: List[np.ndarray], parameters: Dict[str, Any] = None) -> np.ndarray:
+    def execute(self, input_images: List[np.ndarray], parameters: Dict[str, Any] = None) -> np.ndarray:
         """
-        Execute this workflow step on a given image and return the result.
-        Also sets the result field to the resultant image.
+        Execute this workflow step on the given input image and return the result.        
 
         Params:
-            image (List[np.ndarray]): List of image inputs to perform this workflow step on,
+            input_images (List[np.ndarray]): List of image inputs to perform this workflow step on,
                                       generally parent image
             parameters (Dict): Dictionary of parameters to pass to the
                                 underlying function
@@ -56,16 +55,20 @@ class WorkflowStep:
             self.result (np.ndarray): Result of performing workflow step
                                         on the given image.
         """        
-        
+        if not isinstance(input_images, list):
+            raise ValueError("input_images must be a list")
+
         py_module = importlib.import_module(self.function.module)        
         py_function = getattr(py_module, self.function.function)
 
-        if parameters is not None:
-            return py_function(*image, **parameters)
-        else:
-            try:
-                # Most functions require unpacking the images
-                return py_function(*image)
-            except (KeyError, TypeError):
-                # Some functions want it as a list
-                return py_function(image)
+        try:
+            # Most functions require unpacking the images
+            if parameters is not None:
+                return py_function(*input_images, **parameters)            
+
+            return py_function(*input_images)
+        except TypeError:
+            # Some functions want it as a list
+            if parameters is not None:
+                return py_function(input_images, **parameters)                        
+            return py_function(input_images)

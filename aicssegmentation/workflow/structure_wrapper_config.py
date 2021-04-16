@@ -15,46 +15,47 @@ class ConfigurationException(Exception):
 
 
 class StructureWrapperConfig:
-    _all_functions = None
-    _available_workflow_names = None
-
-    @classmethod
-    def get_available_workflows(cls) -> List[str]:
+    """
+    Provides access to structure wrapper configuration
+    """
+    def __init__(self):
+        self._all_functions = None
+        self._available_workflow_names = None
+        
+    def get_available_workflows(self) -> List[str]:
         """
         Get the list of all workflows available through configuration 
         """
-        if cls._available_workflow_names is None:
+        if self._available_workflow_names is None:
             json_list = sorted(Directories.get_structure_config_dir().glob("conf_*.json"))
-            cls._available_workflow_names = [p.stem[5:] for p in json_list]
+            self._available_workflow_names = [p.stem[5:] for p in json_list]
 
-        return cls._available_workflow_names
+        return self._available_workflow_names
 
-    @classmethod
-    def get_all_functions(cls) -> List[SegmenterFunction]:
+    def get_all_functions(self) -> List[SegmenterFunction]:
         """
         Get the list of all available Functions from configuration
         """
-        if cls._all_functions is None:
+        if self._all_functions is None:
             path = Directories.get_structure_config_dir() / "all_functions.json"
 
             try:            
                 with open(path) as file:
                     obj = json.load(file)
-                    cls._all_functions = cls._all_functions_decoder(obj)
+                    self._all_functions = self._all_functions_decoder(obj)
             except Exception as ex:
                 raise ConfigurationException(f"Error reading json configuration from {path}") from ex
         
-        return cls._all_functions
+        return self._all_functions
     
-    @classmethod
-    def get_workflow_definition(cls, workflow_name: str):
+    def get_workflow_definition(self, workflow_name: str):
         """
         Get a WorkflowDefinition for the given workflow from the corresponding json structure config
         """
         if workflow_name is None or len(workflow_name.strip()) == 0:
             raise ValueError("workflow_name cannot be empty")
 
-        if workflow_name not in cls.get_available_workflows():
+        if workflow_name not in self.get_available_workflows():
             raise ValueError(f"No workflow configuration available for {workflow_name}")
 
         path = Directories.get_structure_config_dir() / f"conf_{workflow_name}.json"
@@ -62,12 +63,11 @@ class StructureWrapperConfig:
         try:            
             with open(path) as file:
                 obj = json.load(file)
-                return cls._workflow_decoder(obj, workflow_name)
+                return self._workflow_decoder(obj, workflow_name)
         except Exception as ex:
             raise ConfigurationException(f"Error reading json configuration from {path}") from ex        
 
-    @classmethod
-    def _all_functions_decoder(cls, obj: Dict) -> List[SegmenterFunction]:
+    def _all_functions_decoder(self, obj: Dict) -> List[SegmenterFunction]:
         """
         Decode Functions config (all_functions.json)
         """    
@@ -107,13 +107,11 @@ class StructureWrapperConfig:
 
         return functions
             
-
-    @classmethod
-    def _workflow_decoder(cls, obj: Dict, workflow_name: str) -> WorkflowDefinition:
+    def _workflow_decoder(self, obj: Dict, workflow_name: str) -> WorkflowDefinition:
         """
         Decode Workflow config (conf_{workflow_name}.json)
         """
-        functions = cls.get_all_functions()
+        functions = self.get_all_functions()
         steps = list()
 
         for step_k, step_v in obj.items():
