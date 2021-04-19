@@ -65,7 +65,7 @@
         "parameter_defaults": {
             "area_min": 400,
             "area_max": 40000,
-            "bg_seed": true
+            "bg_seed": "True"
         },
         "parent": [
             2,

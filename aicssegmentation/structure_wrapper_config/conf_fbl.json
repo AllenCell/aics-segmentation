@@ -22,7 +22,7 @@
         "category": "core",        
         "function": "masked_object_treshold_low_level",
         "parameter_defaults": {
-            "global_thresh_method": "ave",
+            "global_thresh_method": "ave_tri_med",
             "object_minArea": 700,
             "dilate": "False"
         },
