@@ -56,7 +56,7 @@ class StructureWrapperConfig:
 
     def get_workflow_definition(self, workflow_name: str):
         """
-        Get a WorkflowDefinition for the given workflow from the corresponding 
+        Get a WorkflowDefinition for the given workflow from the corresponding
         json structure config
         """
         if workflow_name is None or len(workflow_name.strip()) == 0:

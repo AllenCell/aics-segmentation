@@ -29,12 +29,16 @@ class TestStructureWrapperConfig:
     @pytest.mark.parametrize("name", [None, "", "  "])
     def test_get_workflow_definition_empty_name_fails(self, name):
         with pytest.raises(ValueError):
-            workflow_def = self._structure_wrapper_config.get_workflow_definition(name)
+            workflow_def = self._structure_wrapper_config.get_workflow_definition(
+                name
+            )  # noqa F841
 
     def test_get_workflow_definition_unavailable_workflow_fails(self):
         with pytest.raises(ValueError):
-            workflow_def = self._structure_wrapper_config.get_workflow_definition(
-                "unsupported workflow"
+            workflow_def = (
+                self._structure_wrapper_config.get_workflow_definition(  # noqa F841
+                    "unsupported workflow"
+                )
             )
 
     @pytest.mark.parametrize("name", SUPPORTED_STRUCTURE_NAMES)
