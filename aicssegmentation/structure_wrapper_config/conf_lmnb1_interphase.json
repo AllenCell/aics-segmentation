@@ -76,7 +76,7 @@
         "category": "core",        
         "function": "watershed_for_segmentation",
         "parameter_defaults": {
-            "watershed_line": true
+            "watershed_line": "True"
         },
         "parent": [
             1,
