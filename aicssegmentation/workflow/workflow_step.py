@@ -21,9 +21,9 @@ class WorkflowStepCategory(Enum):
         if value == WorkflowStepCategory.CORE.value:
             return WorkflowStepCategory.CORE
         if value == WorkflowStepCategory.POST_PROCESSING.value:
-            return WorkflowStepCategory.POST_PROCESSING            
+            return WorkflowStepCategory.POST_PROCESSING
         raise NotImplementedError()
-            
+
 
 @dataclass
 class WorkflowStep:
@@ -33,17 +33,19 @@ class WorkflowStep:
 
     category: WorkflowStepCategory
     function: SegmenterFunction
-    step_number: int    
+    step_number: int
     parent: List[int]
     parameter_defaults: Dict[str, List] = None
-    
+
     @property
-    def name(self):        
+    def name(self):
         return self.function.display_name
 
-    def execute(self, input_images: List[np.ndarray], parameters: Dict[str, Any] = None) -> np.ndarray:
+    def execute(
+        self, input_images: List[np.ndarray], parameters: Dict[str, Any] = None
+    ) -> np.ndarray:
         """
-        Execute this workflow step on the given input image and return the result.        
+        Execute this workflow step on the given input image and return the result.
 
         Params:
             input_images (List[np.ndarray]): List of image inputs to perform this workflow step on,
@@ -54,21 +56,21 @@ class WorkflowStep:
         Returns:
             self.result (np.ndarray): Result of performing workflow step
                                         on the given image.
-        """        
+        """
         if not isinstance(input_images, list):
             raise ValueError("input_images must be a list")
 
-        py_module = importlib.import_module(self.function.module)        
+        py_module = importlib.import_module(self.function.module)
         py_function = getattr(py_module, self.function.function)
 
         try:
             # Most functions require unpacking the images
             if parameters is not None:
-                return py_function(*input_images, **parameters)            
+                return py_function(*input_images, **parameters)
 
             return py_function(*input_images)
         except TypeError:
             # Some functions want it as a list
             if parameters is not None:
-                return py_function(input_images, **parameters)                        
+                return py_function(input_images, **parameters)
             return py_function(input_images)

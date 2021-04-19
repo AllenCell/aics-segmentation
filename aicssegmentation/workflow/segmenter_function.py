@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Union
 
 
-class WidgetType(Enum):    
+class WidgetType(Enum):
     SLIDER = "slider"
     DROPDOWN = "drop-down"
 
@@ -16,13 +16,14 @@ class WidgetType(Enum):
         if value == WidgetType.DROPDOWN.value:
             return WidgetType.DROPDOWN
         raise NotImplementedError()
-            
 
-@dataclass    
+
+@dataclass
 class FunctionParameter:
     """
     Represents an input parameter to a segmenter function
     """
+
     name: str
     widget_type: WidgetType
     data_type: str
@@ -35,10 +36,11 @@ class FunctionParameter:
 @dataclass
 class SegmenterFunction:
     """
-    Represents an aicssegmentation function. 
+    Represents an aicssegmentation function.
     Functions are the smallest executable entity in a workflow and directly map
     to a python callable
     """
+
     name: str
     display_name: str
     function: str
