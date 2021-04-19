@@ -330,7 +330,7 @@
             "global_thresh_method": {
                 "data_type": "str",
                 "widget_type": "drop-down",
-                "optionss": [
+                "options": [
                     "triangle",
                     "median",
                     "ave_tri_med"
