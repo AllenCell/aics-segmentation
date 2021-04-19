@@ -288,8 +288,8 @@
                 "data_type": "int",
                 "widget_type": "slider",
                 "min": 0,
-                "max": 50,
-                "increment": 1
+                "max": 10,
+                "increment": 0.2
             },
             "thin": {
                 "data_type": "int",
