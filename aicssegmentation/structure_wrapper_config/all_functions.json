@@ -170,7 +170,7 @@
                 "widget_type": "slider",
                 "data_type": "float",
                 "min": 0,
-                "max": 5,
+                "max": 10,
                 "increment": 0.05
             },
             "cutoff": {
@@ -205,7 +205,7 @@
                 "widget_type": "slider",
                 "data_type": "float",
                 "min": 0,
-                "max": 5,
+                "max": 10,
                 "increment": 0.05
             },
             "cutoff": {
@@ -213,7 +213,7 @@
                 "data_type": "float",
                 "min": 0,
                 "max": 1,
-                "increment": 0.01
+                "increment": 0.001
             }
         }
     },
