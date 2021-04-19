@@ -34,14 +34,15 @@ class WorkflowEngine:
             image (ndarray): input image for the workflow to execute on
         """
         if input_image is None:
-            raise ValueError(f"input_image")
+            raise ValueError("input_image")
 
         definition = next(
             filter(lambda d: d.name == workflow_name, self._workflow_definitions), None
         )
         if definition is None:
             raise ValueError(
-                f"No available workflow definition found for {workflow_name}. Specify a valid workflow name."
+                f"No available workflow definition found for {workflow_name}. "
+                "Specify a valid workflow name."
             )
 
         return Workflow(definition, input_image)

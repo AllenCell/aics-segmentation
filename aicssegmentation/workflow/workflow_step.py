@@ -48,8 +48,8 @@ class WorkflowStep:
         Execute this workflow step on the given input image and return the result.
 
         Params:
-            input_images (List[np.ndarray]): List of image inputs to perform this workflow step on,
-                                      generally parent image
+            input_images (List[np.ndarray]): List of image inputs to perform this
+                    workflow step on, generally parent image
             parameters (Dict): Dictionary of parameters to pass to the
                                 underlying function
 
