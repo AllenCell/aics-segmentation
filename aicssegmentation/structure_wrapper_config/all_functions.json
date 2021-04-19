@@ -234,7 +234,7 @@
                 "data_type": "int",
                 "min": 0,
                 "max": 10000,
-                "increment": 10
+                "increment": 1
             },
             "fill_2d": {
                 "widget_type": "drop-down",
