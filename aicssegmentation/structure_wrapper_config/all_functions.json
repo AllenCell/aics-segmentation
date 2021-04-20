@@ -170,7 +170,7 @@
                 "widget_type": "slider",
                 "data_type": "float",
                 "min": 0,
-                "max": 5,
+                "max": 10,
                 "increment": 0.05
             },
             "cutoff": {
@@ -190,7 +190,9 @@
             "sigma": {
                 "widget_type": "slider",
                 "data_type": "float",
-                "min": 0
+                "min": 0,
+                "max": 10,
+                "increment":0.5
             }
         }
     },
@@ -203,7 +205,7 @@
                 "widget_type": "slider",
                 "data_type": "float",
                 "min": 0,
-                "max": 5,
+                "max": 10,
                 "increment": 0.05
             },
             "cutoff": {
@@ -211,7 +213,7 @@
                 "data_type": "float",
                 "min": 0,
                 "max": 1,
-                "increment": 0.01
+                "increment": 0.001
             }
         }
     },
@@ -232,7 +234,7 @@
                 "data_type": "int",
                 "min": 0,
                 "max": 10000,
-                "increment": 10
+                "increment": 1
             },
             "fill_2d": {
                 "widget_type": "drop-down",
@@ -286,8 +288,8 @@
                 "data_type": "int",
                 "widget_type": "slider",
                 "min": 0,
-                "max": 50,
-                "increment": 1
+                "max": 10,
+                "increment": 0.2
             },
             "thin": {
                 "data_type": "int",
@@ -328,7 +330,7 @@
             "global_thresh_method": {
                 "data_type": "str",
                 "widget_type": "drop-down",
-                "optionss": [
+                "options": [
                     "triangle",
                     "median",
                     "ave_tri_med"

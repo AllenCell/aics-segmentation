@@ -1,7 +1,11 @@
 import pytest
 import numpy as np
 
-from aicssegmentation.workflow.workflow_step import WorkflowStep, WorkflowStepCategory, SegmenterFunction
+from aicssegmentation.workflow.workflow_step import (
+    WorkflowStep,
+    WorkflowStepCategory,
+    SegmenterFunction,
+)
 
 
 class TestWorkflowStep:

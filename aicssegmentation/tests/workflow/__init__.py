@@ -1,4 +1,5 @@
-# List of all structures supported by the configurable workflow engine (used by several tests)
+# List of all structures supported by the configurable workflow engine
+# (used by several tests)
 # Update this list if support is added for new structures
 SUPPORTED_STRUCTURE_NAMES = [
     "actb",

@@ -72,7 +72,7 @@
         "parameter_defaults": {
             "hole_min": 0,
             "hole_max": 1600,
-            "fill_2d": true
+            "fill_2d": "True"
         },
         "parent": 7
     },
