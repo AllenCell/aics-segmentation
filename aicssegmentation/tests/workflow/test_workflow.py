@@ -10,7 +10,7 @@ class TestWorkflow:
         definition = StructureWrapperConfig().get_workflow_definition("sec61b") # TODO use a test workflow
         self._workflow = Workflow(definition, self._fake_image)
 
-    def test_step_by_step_workflow(self):     
+    def test_step_by_step_workflow_sec61b(self):     
         assert self._workflow.get_result(0) is None         
         assert np.array_equal(self._fake_image, self._workflow.get_most_recent_result())
         assert self._workflow.get_next_step().step_number == 1
@@ -37,10 +37,7 @@ class TestWorkflow:
 
         assert self._workflow.is_done()
         
-
-    def test_execute_all(self):
+    def test_execute_all_sec61b(self):
         self._workflow.execute_all()
         assert self._workflow.get_next_step() is None
         assert self._workflow.is_done()
-
-    # TODO test all workflows
