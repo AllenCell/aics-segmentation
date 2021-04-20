@@ -70,9 +70,7 @@ def Workflow_cardio_actn2(
     if rescale_ratio > 0:
         struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
 
-        struct_img = (struct_img - struct_img.min() + 1e-8) / (
-            struct_img.max() - struct_img.min() + 1e-8
-        )
+        struct_img = (struct_img - struct_img.min() + 1e-8) / (struct_img.max() - struct_img.min() + 1e-8)
 
     # smoothing with gaussian filter
     structure_img_smooth = edge_preserving_smoothing_3d(struct_img)
@@ -85,9 +83,7 @@ def Workflow_cardio_actn2(
     ###################
 
     # vesselness 3d
-    response = vesselness3D(
-        structure_img_smooth, sigmas=vesselness_sigma, tau=1, whiteonblack=True
-    )
+    response = vesselness3D(structure_img_smooth, sigmas=vesselness_sigma, tau=1, whiteonblack=True)
     bw = response > vesselness_cutoff
 
     ###################

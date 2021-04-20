@@ -22,4 +22,4 @@ class Directories:
         """
         Path to the structure json config directory
         """
-        return cls._module_base_dir / "structure_wrapper_config"        
+        return cls._module_base_dir / "structure_wrapper_config"

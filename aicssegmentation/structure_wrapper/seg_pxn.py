@@ -72,9 +72,7 @@ def Workflow_pxn(
     if rescale_ratio > 0:
         struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
 
-        struct_img = (struct_img - struct_img.min() + 1e-8) / (
-            struct_img.max() - struct_img.min() + 1e-8
-        )
+        struct_img = (struct_img - struct_img.min() + 1e-8) / (struct_img.max() - struct_img.min() + 1e-8)
 
     # smoothing with boundary preserving smoothing
     structure_img_smooth = edge_preserving_smoothing_3d(struct_img)
@@ -87,9 +85,7 @@ def Workflow_pxn(
     ###################
 
     # vesselness 3d
-    response = vesselness3D(
-        structure_img_smooth, sigmas=vesselness_sigma, tau=1, whiteonblack=True
-    )
+    response = vesselness3D(structure_img_smooth, sigmas=vesselness_sigma, tau=1, whiteonblack=True)
     bw = response > vesselness_cutoff
 
     ###################
@@ -98,13 +94,9 @@ def Workflow_pxn(
 
     seg = np.zeros_like(bw)
     for zz in range(bw.shape[0]):
-        seg[zz, :, :] = remove_small_objects(
-            bw[zz, :, :] > 0, min_size=minArea2D, connectivity=1, in_place=False
-        )
+        seg[zz, :, :] = remove_small_objects(bw[zz, :, :] > 0, min_size=minArea2D, connectivity=1, in_place=False)
 
-    seg = remove_small_objects(
-        seg > 0, min_size=minArea3D, connectivity=1, in_place=False
-    )
+    seg = remove_small_objects(seg > 0, min_size=minArea3D, connectivity=1, in_place=False)
 
     # determine z-range
     bw_z = np.zeros(bw.shape[0], dtype=np.uint16)

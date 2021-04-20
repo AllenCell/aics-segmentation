@@ -33,9 +33,7 @@ def filament_3d_wrapper(struct_img: np.ndarray, f3_param: List[List]):
     bw = np.zeros(struct_img.shape, dtype=bool)
     for fid in range(len(f3_param)):
         sigma = f3_param[fid][0]
-        eigenvalues = absolute_3d_hessian_eigenvalues(
-            struct_img, sigma=sigma, scale=True, whiteonblack=True
-        )
+        eigenvalues = absolute_3d_hessian_eigenvalues(struct_img, sigma=sigma, scale=True, whiteonblack=True)
         responce = compute_vesselness3D(eigenvalues[1], eigenvalues[2], tau=1)
         bw = np.logical_or(bw, responce > f3_param[fid][1])
     return bw
@@ -72,9 +70,7 @@ def filament_2d_wrapper(struct_img: np.ndarray, f2_param: List[List]):
     if len(struct_img.shape) == 2:
         for fid in range(len(f2_param)):
             sigma = f2_param[fid][0]
-            eigenvalues = absolute_3d_hessian_eigenvalues(
-                struct_img, sigma=sigma, scale=True, whiteonblack=True
-            )
+            eigenvalues = absolute_3d_hessian_eigenvalues(struct_img, sigma=sigma, scale=True, whiteonblack=True)
             responce = compute_vesselness2D(eigenvalues[1], tau=1)
             bw = np.logical_or(bw, responce > f2_param[fid][1])
     elif len(struct_img.shape) == 3:
@@ -85,20 +81,14 @@ def filament_2d_wrapper(struct_img: np.ndarray, f2_param: List[List]):
             res = np.zeros_like(struct_img)
             for zz in range(struct_img.shape[0]):
                 tmp = np.concatenate((struct_img[zz, :, :], mip), axis=1)
-                eigenvalues = absolute_3d_hessian_eigenvalues(
-                    tmp, sigma=sigma, scale=True, whiteonblack=True
-                )
+                eigenvalues = absolute_3d_hessian_eigenvalues(tmp, sigma=sigma, scale=True, whiteonblack=True)
                 responce = compute_vesselness2D(eigenvalues[1], tau=1)
-                res[zz, :, : struct_img.shape[2] - 3] = responce[
-                    :, : struct_img.shape[2] - 3
-                ]
+                res[zz, :, : struct_img.shape[2] - 3] = responce[:, : struct_img.shape[2] - 3]
             bw = np.logical_or(bw, res > f2_param[fid][1])
     return bw
 
 
-def vesselness3D(
-    nd_array: np.ndarray, sigmas: List, tau=1, whiteonblack=True, cutoff: float = -1
-):
+def vesselness3D(nd_array: np.ndarray, sigmas: List, tau=1, whiteonblack=True, cutoff: float = -1):
     """Multi-scale 3D filament filter
 
     Parameters:
@@ -141,12 +131,8 @@ def vesselness3D(
     )
 
     for i, sigma in enumerate(sigmas):
-        eigenvalues = absolute_3d_hessian_eigenvalues(
-            nd_array, sigma=sigma, scale=True, whiteonblack=True
-        )
-        filtered_array[i] = compute_vesselness3D(
-            eigenvalues[1], eigenvalues[2], tau=tau
-        )
+        eigenvalues = absolute_3d_hessian_eigenvalues(nd_array, sigma=sigma, scale=True, whiteonblack=True)
+        filtered_array[i] = compute_vesselness3D(eigenvalues[1], eigenvalues[2], tau=tau)
     response = np.max(filtered_array, axis=0)
 
     if cutoff < 0:
@@ -204,9 +190,7 @@ def vesselness2D(
     )
 
     for i, sigma in enumerate(sigmas):
-        eigenvalues = absolute_3d_hessian_eigenvalues(
-            nd_array, sigma=sigma, scale=True, whiteonblack=True
-        )
+        eigenvalues = absolute_3d_hessian_eigenvalues(nd_array, sigma=sigma, scale=True, whiteonblack=True)
         filtered_array[i] = compute_vesselness2D(eigenvalues[1], tau=tau)
     response = np.max(filtered_array, axis=0)
 
@@ -259,9 +243,7 @@ def vesselness2D_single_slice(
         raise ValueError("Sigma values less than zero are not valid")
 
     response = np.zeros(nd_array.shape)
-    response[single_z, :, :] = vesselness2D(
-        nd_array[single_z, :, :], sigmas=sigmas, tau=1, whiteonblack=True
-    )
+    response[single_z, :, :] = vesselness2D(nd_array[single_z, :, :], sigmas=sigmas, tau=1, whiteonblack=True)
 
     if cutoff < 0:
         return response
@@ -315,13 +297,9 @@ def compute_vesselness3D(eigen2, eigen3, tau):
     """ backend for computing 3D filament filter """
 
     lambda3m = copy.copy(eigen3)
-    lambda3m[np.logical_and(eigen3 < 0, eigen3 > (tau * eigen3.min()))] = (
-        tau * eigen3.min()
-    )
+    lambda3m[np.logical_and(eigen3 < 0, eigen3 > (tau * eigen3.min()))] = tau * eigen3.min()
     response = np.multiply(np.square(eigen2), np.abs(lambda3m - eigen2))
-    response = divide_nonzero(
-        27 * response, np.power(2 * np.abs(eigen2) + np.abs(lambda3m - eigen2), 3)
-    )
+    response = divide_nonzero(27 * response, np.power(2 * np.abs(eigen2) + np.abs(lambda3m - eigen2), 3))
 
     response[np.less(eigen2, 0.5 * lambda3m)] = 1
     response[eigen2 >= 0] = 0
@@ -335,14 +313,10 @@ def compute_vesselness2D(eigen2, tau):
     """ backend for computing 2D filament filter """
 
     Lambda3 = copy.copy(eigen2)
-    Lambda3[np.logical_and(Lambda3 < 0, Lambda3 >= (tau * Lambda3.min()))] = (
-        tau * Lambda3.min()
-    )
+    Lambda3[np.logical_and(Lambda3 < 0, Lambda3 >= (tau * Lambda3.min()))] = tau * Lambda3.min()
 
     response = np.multiply(np.square(eigen2), np.abs(Lambda3 - eigen2))
-    response = divide_nonzero(
-        27 * response, np.power(2 * np.abs(eigen2) + np.abs(Lambda3 - eigen2), 3)
-    )
+    response = divide_nonzero(27 * response, np.power(2 * np.abs(eigen2) + np.abs(Lambda3 - eigen2), 3))
 
     response[np.less(eigen2, 0.5 * Lambda3)] = 1
     response[eigen2 >= 0] = 0

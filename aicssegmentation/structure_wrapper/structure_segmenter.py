@@ -27,9 +27,7 @@ class StructureSegmenter:
             logging.info("getting function " + function_name)
             SegModuleFunction = getattr(seg_module, function_name)
         except Exception as e:
-            logging.error(
-                f"raising failure while trying to get module/function for {module_name}"
-            )
+            logging.error(f"raising failure while trying to get module/function for {module_name}")
             raise e
         try:
             logging.info("executing")

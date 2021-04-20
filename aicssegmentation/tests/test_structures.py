@@ -93,9 +93,7 @@ def create_test_image(structure_name: str, output_type: str = "default"):
         raise e
 
     # load stock random image
-    random_array = imread(Path(TEST_IMG_DIR + "random_input.tiff")).reshape(
-        *BASE_IMAGE_DIM
-    )
+    random_array = imread(Path(TEST_IMG_DIR + "random_input.tiff")).reshape(*BASE_IMAGE_DIM)
 
     # conduct segmentation
     output_array = SegModuleFunction(
@@ -114,13 +112,9 @@ def unit_test(structure_name: str):
     output_array = create_test_image(structure_name, output_type="array").ravel()
 
     # get rid of STC dimensions from AICSImage format, resized to resize_ratio
-    expected_output = imread(
-        Path(TEST_IMG_DIR + "expected_" + structure_name + "_struct_segmentation.tiff")
-    ).ravel()
+    expected_output = imread(Path(TEST_IMG_DIR + "expected_" + structure_name + "_struct_segmentation.tiff")).ravel()
 
-    assert np.allclose(output_array, expected_output), (
-        "Tested and expected outputs differ for " + structure_name
-    )
+    assert np.allclose(output_array, expected_output), "Tested and expected outputs differ for " + structure_name
 
 
 def test_all_structures():

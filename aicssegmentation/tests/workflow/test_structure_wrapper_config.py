@@ -3,6 +3,7 @@ import pytest
 from aicssegmentation.workflow.structure_wrapper_config import StructureWrapperConfig
 from . import SUPPORTED_STRUCTURE_NAMES
 
+
 class TestStructureWrapperConfig:
     def setup_method(self):
         self._structure_wrapper_config = StructureWrapperConfig()
@@ -23,16 +24,16 @@ class TestStructureWrapperConfig:
         functions = self._structure_wrapper_config.get_all_functions()
 
         assert functions is not None
-        assert len(functions) > 0        
+        assert len(functions) > 0
 
-    @pytest.mark.parametrize("name", [None, "", "  "])    
+    @pytest.mark.parametrize("name", [None, "", "  "])
     def test_get_workflow_definition_empty_name_fails(self, name):
         with pytest.raises(ValueError):
-            workflow_def = self._structure_wrapper_config.get_workflow_definition(name)        
+            workflow_def = self._structure_wrapper_config.get_workflow_definition(name)
 
     def test_get_workflow_definition_unavailable_workflow_fails(self):
         with pytest.raises(ValueError):
-            workflow_def = self._structure_wrapper_config.get_workflow_definition("unsupported workflow")  
+            workflow_def = self._structure_wrapper_config.get_workflow_definition("unsupported workflow")
 
     @pytest.mark.parametrize("name", SUPPORTED_STRUCTURE_NAMES)
     def test_get_workflow_definition(self, name):

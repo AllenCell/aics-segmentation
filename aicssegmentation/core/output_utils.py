@@ -60,12 +60,8 @@ def output_hook(im, names, out_flag, output_path, fn):
                 segmentation_type = names[i]
                 bw = im[i].astype(np.uint8)
                 bw[bw > 0] = 255
-                with OmeTiffWriter(
-                    str(output_path / (fn + "_bw_" + segmentation_type[3:] + ".tiff"))
-                ) as writer:
+                with OmeTiffWriter(str(output_path / (fn + "_bw_" + segmentation_type[3:] + ".tiff"))) as writer:
                     writer.save(bw)
             else:
-                with OmeTiffWriter(
-                    str(output_path / (fn + "_" + names[i] + ".tiff"))
-                ) as writer:
+                with OmeTiffWriter(str(output_path / (fn + "_" + names[i] + ".tiff"))) as writer:
                     writer.save(im[i])

@@ -49,9 +49,7 @@ def MO_low_level(
         th_low_level = (global_tri + global_median) / 2
 
     bw_low_level = structure_img_smooth > th_low_level
-    bw_low_level = remove_small_objects(
-        bw_low_level, min_size=object_minArea, connectivity=1, in_place=True
-    )
+    bw_low_level = remove_small_objects(bw_low_level, min_size=object_minArea, connectivity=1, in_place=True)
     if dilate:
         bw_low_level = dilation(bw_low_level, selem=ball(2))
 
@@ -99,20 +97,12 @@ def MO_high_level(
             single_obj = lab_low == (idx + 1)
             local_otsu = threshold_otsu(structure_img_smooth[single_obj > 0])
             if local_otsu > local_cutoff:
-                bw_high_level[
-                    np.logical_and(
-                        structure_img_smooth > local_otsu * local_adjust, single_obj
-                    )
-                ] = 1
+                bw_high_level[np.logical_and(structure_img_smooth > local_otsu * local_adjust, single_obj)] = 1
     else:
         for idx in range(num_obj):
             single_obj = lab_low == (idx + 1)
             local_otsu = threshold_otsu(structure_img_smooth[single_obj > 0])
-            bw_high_level[
-                np.logical_and(
-                    structure_img_smooth > local_otsu * local_adjust, single_obj
-                )
-            ] = 1
+            bw_high_level[np.logical_and(structure_img_smooth > local_otsu * local_adjust, single_obj)] = 1
 
     return bw_high_level > 0
 
@@ -162,13 +152,9 @@ def MO(
     a binary nd array of the segmentation result
     """
 
-    bw_low_level = MO_low_level(
-        structure_img_smooth, global_thresh_method, object_minArea, dilate
-    )
+    bw_low_level = MO_low_level(structure_img_smooth, global_thresh_method, object_minArea, dilate)
 
-    bw_high_level = MO_high_level(
-        structure_img_smooth, bw_low_level, extra_criteria, local_adjust
-    )
+    bw_high_level = MO_high_level(structure_img_smooth, bw_low_level, extra_criteria, local_adjust)
 
     if return_object:
         return bw_high_level, bw_low_level
