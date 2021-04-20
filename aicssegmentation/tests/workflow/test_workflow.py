@@ -1,3 +1,5 @@
+from aicssegmentation.tests.workflow import SUPPORTED_STRUCTURE_NAMES
+import pytest
 import numpy as np
 from aicssegmentation.workflow.workflow import Workflow
 from aicssegmentation.workflow.structure_wrapper_config import StructureWrapperConfig
@@ -41,3 +43,17 @@ class TestWorkflow:
         self._workflow.execute_all()
         assert self._workflow.get_next_step() is None
         assert self._workflow.is_done()
+
+    # TODO eventually turn into a proper end to end test of all configurable workflows
+    #      currently this just makes sure that all workflows are properly loaded and
+    #      can be executed through the engine. However, we use a fake 2D image so this is
+    #      not an actual end to end test of the workflows 
+    #      Note: workflows are currently properly tested in tests/test_structures.py
+    @pytest.mark.parametrize("name", SUPPORTED_STRUCTURE_NAMES)
+    def test_execute_all_workflows(self, name):
+        definition = StructureWrapperConfig().get_workflow_definition(name) 
+        workflow = Workflow(definition, self._fake_image)
+        workflow.execute_all()
+        assert workflow.get_next_step() is None
+        assert workflow.is_done()        
+

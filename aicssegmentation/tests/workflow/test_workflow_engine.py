@@ -37,3 +37,4 @@ class TestWorkflowEngine:
         workflow = self._workflow_engine.get_executable_workflow(workflow_name, np.ones((1,1,1)))        
         assert isinstance(workflow, Workflow)
         assert workflow.workflow_definition.name == workflow_name
+        
