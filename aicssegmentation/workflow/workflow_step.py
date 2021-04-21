@@ -1,6 +1,5 @@
 import importlib
 import numpy as np
-import traceback
 
 from dataclasses import dataclass
 from enum import Enum
@@ -68,8 +67,8 @@ class WorkflowStep:
                 return py_function(*input_images, **parameters)
 
             return py_function(*input_images)
-        except TypeError as ex:
-            # Some functions want it as a list          
+        except TypeError:
+            # Some functions want it as a list
             if parameters is not None:
                 return py_function(input_images, **parameters)
             return py_function(input_images)
