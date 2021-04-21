@@ -24,7 +24,7 @@
         "parameter_defaults": {
             "global_thresh_method": "ave_tri_med",
             "object_minArea": 700,
-            "dilate": "False"
+            "dilate": false
         },
         "parent": 2
     },
@@ -32,7 +32,7 @@
         "category": "core",        
         "function": "masked_object_treshold_high_level",
         "parameter_defaults": {
-            "extra_criteria": "False",
+            "extra_criteria": false,
             "local_adjust": 1.0
         },
         "parent": [

@@ -240,8 +240,8 @@
                 "widget_type": "drop-down",
                 "data_type": "bool",
                 "options": [
-                    "True",
-                    "False"
+                    true,
+                    false
                 ]
             }
         }
@@ -267,8 +267,8 @@
                 "widget_type": "drop-down",
                 "data_type": "bool",
                 "options": [
-                    "True",
-                    "False"
+                    true,
+                    false
                 ]
             }
         }
@@ -309,8 +309,8 @@
                 "widget_type": "drop-down",
                 "data_type": "bool",
                 "options": [
-                    "True",
-                    "False"
+                    true,
+                    false
                 ]
             },
             "local_adjust": {
@@ -347,8 +347,8 @@
                 "widget_type": "drop-down",
                 "data_type": "bool",
                 "options": [
-                    "True",
-                    "False"
+                    true,
+                    false
                 ]
             }
         }
@@ -408,8 +408,8 @@
                 "widget_type": "drop-down",
                 "data_type": "bool",
                 "options": [
-                    "True",
-                    "False"
+                    true,
+                    false
                 ]
             }
         }

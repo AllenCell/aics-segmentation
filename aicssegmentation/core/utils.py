@@ -355,7 +355,7 @@ def get_seed_for_objects(
         seed_count += 1
         seed[mid_z, int(py), int(px)] = seed_count
 
-    return seed
+    return seed.astype(int)
 
 
 def segmentation_union(seg: List) -> np.ndarray:

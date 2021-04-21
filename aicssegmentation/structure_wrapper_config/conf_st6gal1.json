@@ -24,7 +24,7 @@
         "parameter_defaults": {
             "global_thresh_method": "triangle",
             "object_minArea": 1200,
-            "dilate": "True"
+            "dilate": true
         },
         "parent": 2
     },
@@ -32,7 +32,7 @@
         "category": "core",        
         "function": "masked_object_treshold_high_level",
         "parameter_defaults": {
-            "extra_criteria": "False",
+            "extra_criteria": false,
             "local_adjust": 0.98
         },
         "parent": [

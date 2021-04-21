@@ -65,7 +65,7 @@
         "parameter_defaults": {
             "area_min": 400,
             "area_max": 40000,
-            "bg_seed": "True"
+            "bg_seed": true
         },
         "parent": [
             2,
@@ -76,7 +76,7 @@
         "category": "core",        
         "function": "watershed_for_segmentation",
         "parameter_defaults": {
-            "watershed_line": "True"
+            "watershed_line": true
         },
         "parent": [
             1,
