@@ -260,7 +260,7 @@
     },
     "watershed_for_segmentation": {
         "name": "Watershed for segmentation",
-        "python::module": "skimage.morphology",
+        "python::module": "skimage.segmentation",
         "python::function": "watershed",
         "parameters": {
             "watershed_line": {
