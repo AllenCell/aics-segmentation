@@ -6,9 +6,7 @@ from skimage.measure import label, regionprops
 from skimage.morphology import ball, erosion, medial_axis, remove_small_objects
 
 
-def hole_filling(
-    bw: np.ndarray, hole_min: int, hole_max: int, fill_2d: bool = True
-) -> np.ndarray:
+def hole_filling(bw: np.ndarray, hole_min: int, hole_max: int, fill_2d: bool = True) -> np.ndarray:
     """Fill holes in 2D/3D segmentation
 
     Parameters:
@@ -70,9 +68,7 @@ def hole_filling(
     return np.logical_or(bw, fill_out)
 
 
-def size_filter(
-    img: np.ndarray, min_size: int, method: str = "3D", connectivity: int = 1
-):
+def size_filter(img: np.ndarray, min_size: int, method: str = "3D", connectivity: int = 1):
     """size filter
 
     Parameters:
@@ -88,9 +84,7 @@ def size_filter(
     """
     assert len(img.shape) == 3, "image has to be 3D"
     if method == "3D":
-        return remove_small_objects(
-            img > 0, min_size=min_size, connectivity=connectivity, in_place=False
-        )
+        return remove_small_objects(img > 0, min_size=min_size, connectivity=connectivity, in_place=False)
     elif method == "slice_by_slice":
         seg = np.zeros(img.shape, dtype=bool)
         for zz in range(img.shape[0]):
@@ -105,9 +99,7 @@ def size_filter(
         raise NotImplementedError(f"unsupported method {method}")
 
 
-def topology_preserving_thinning(
-    bw: np.ndarray, min_thickness: int = 1, thin: int = 1
-) -> np.ndarray:
+def topology_preserving_thinning(bw: np.ndarray, min_thickness: int = 1, thin: int = 1) -> np.ndarray:
     """perform thinning on segmentation without breaking topology
 
     Parameters:
@@ -196,9 +188,7 @@ def absolute_eigenvaluesh(nd_array):
     sorted_eigenvalues = sortbyabs(eigenvalues, axis=-1)
     return [
         np.squeeze(eigenvalue, axis=-1)
-        for eigenvalue in np.split(
-            sorted_eigenvalues, sorted_eigenvalues.shape[-1], axis=-1
-        )
+        for eigenvalue in np.split(sorted_eigenvalues, sorted_eigenvalues.shape[-1], axis=-1)
     ]
 
 
@@ -365,7 +355,7 @@ def get_seed_for_objects(
         seed_count += 1
         seed[mid_z, int(py), int(px)] = seed_count
 
-    return seed
+    return seed.astype(int)
 
 
 def segmentation_union(seg: List) -> np.ndarray:
@@ -404,9 +394,7 @@ def segmentation_xor(seg: List) -> np.ndarray:
     return np.logical_xor.reduce(seg)
 
 
-def remove_index_object(
-    label: np.ndarray, id_to_remove: List[int] = [1], in_place=False
-):
+def remove_index_object(label: np.ndarray, id_to_remove: List[int] = [1], in_place=False):
 
     if in_place:
         img = label
@@ -419,14 +407,10 @@ def remove_index_object(
     return img
 
 
-def peak_local_max_wrapper(
-    struct_img_for_peak: np.ndarray, bw: np.ndarray
-) -> np.ndarray:
+def peak_local_max_wrapper(struct_img_for_peak: np.ndarray, bw: np.ndarray) -> np.ndarray:
     from skimage.feature import peak_local_max
 
-    local_maxi = peak_local_max(
-        struct_img_for_peak, labels=label(bw), min_distance=2, indices=False
-    )
+    local_maxi = peak_local_max(struct_img_for_peak, labels=label(bw), min_distance=2, indices=False)
     return local_maxi
 
 
@@ -484,9 +468,7 @@ def prune_z_slices(bw: np.ndarray):
     return seg
 
 
-def cell_local_adaptive_threshold(
-    structure_img_smooth: np.ndarray, cell_wise_min_area: int
-):
+def cell_local_adaptive_threshold(structure_img_smooth: np.ndarray, cell_wise_min_area: int):
     from skimage.filters import threshold_triangle, threshold_otsu
     from skimage.morphology import dilation
 
@@ -494,9 +476,7 @@ def cell_local_adaptive_threshold(
     th_low_level = threshold_triangle(structure_img_smooth)
 
     bw_low_level = structure_img_smooth > th_low_level
-    bw_low_level = remove_small_objects(
-        bw_low_level, min_size=cell_wise_min_area, connectivity=1, in_place=True
-    )
+    bw_low_level = remove_small_objects(bw_low_level, min_size=cell_wise_min_area, connectivity=1, in_place=True)
     bw_low_level = dilation(bw_low_level, selem=ball(2))
 
     bw_high_level = np.zeros_like(bw_low_level)
@@ -505,9 +485,7 @@ def cell_local_adaptive_threshold(
     for idx in range(num_obj):
         single_obj = lab_low == (idx + 1)
         local_otsu = threshold_otsu(structure_img_smooth[single_obj > 0])
-        bw_high_level[
-            np.logical_and(structure_img_smooth > local_otsu * 0.98, single_obj)
-        ] = 1
+        bw_high_level[np.logical_and(structure_img_smooth > local_otsu * 0.98, single_obj)] = 1
     return bw_high_level
 
 

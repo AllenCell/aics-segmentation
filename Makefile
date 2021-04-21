@@ -57,3 +57,13 @@ gen-docs: ## generate Sphinx HTML documentation, including API docs
 docs: ## generate Sphinx HTML documentation, including API docs, and serve to browser
 	make gen-docs
 	$(BROWSER) docs/_build/html/index.html
+
+test: ## run pytest with coverage report
+	pytest --cov=aicssegmentation --cov-report xml --cov-report term
+
+lint: ## run a lint check / report
+	flake8 aicssegmentation --count --verbose --show-source --statistics
+	black --check --exclude vendor aicssegmentation
+
+lint-format: ## reformat files with black
+	black --exclude vendor aicssegmentation

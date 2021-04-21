@@ -21,9 +21,7 @@ def dot_3d(struct_img: np.ndarray, log_sigma: float, cutoff=-1):
         negative, no cutoff will be applied. Default is -1
     """
     assert len(struct_img.shape) == 3
-    responce = (
-        -1 * (log_sigma ** 2) * ndi.filters.gaussian_laplace(struct_img, log_sigma)
-    )
+    responce = -1 * (log_sigma ** 2) * ndi.filters.gaussian_laplace(struct_img, log_sigma)
     if cutoff < 0:
         return responce
     else:
@@ -47,9 +45,7 @@ def dot_2d(struct_img, log_sigma, cutoff=-1):
         negative, no cutoff will be applied. Default is -1
     """
     assert len(struct_img.shape) == 2
-    responce = (
-        -1 * (log_sigma ** 2) * ndi.filters.gaussian_laplace(struct_img, log_sigma)
-    )
+    responce = -1 * (log_sigma ** 2) * ndi.filters.gaussian_laplace(struct_img, log_sigma)
     if cutoff < 0:
         return responce
     else:
@@ -78,9 +74,7 @@ def dot_3d_wrapper(struct_img: np.ndarray, s3_param: List):
     bw = np.zeros(struct_img.shape, dtype=bool)
     for fid in range(len(s3_param)):
         log_sigma = s3_param[fid][0]
-        responce = (
-            -1 * (log_sigma ** 2) * ndi.filters.gaussian_laplace(struct_img, log_sigma)
-        )
+        responce = -1 * (log_sigma ** 2) * ndi.filters.gaussian_laplace(struct_img, log_sigma)
         bw = np.logical_or(bw, responce > s3_param[fid][1])
     return bw
 
@@ -126,11 +120,7 @@ def dot_slice_by_slice(struct_img: np.ndarray, log_sigma: float, cutoff=-1):
     """
     res = np.zeros_like(struct_img)
     for zz in range(struct_img.shape[0]):
-        res[zz, :, :] = (
-            -1
-            * (log_sigma ** 2)
-            * ndi.filters.gaussian_laplace(struct_img[zz, :, :], log_sigma)
-        )
+        res[zz, :, :] = -1 * (log_sigma ** 2) * ndi.filters.gaussian_laplace(struct_img[zz, :, :], log_sigma)
 
     if cutoff < 0:
         return res
@@ -162,10 +152,6 @@ def dot_2d_slice_by_slice_wrapper(struct_img: np.ndarray, s2_param: List):
         log_sigma = s2_param[fid][0]
         responce = np.zeros_like(struct_img)
         for zz in range(struct_img.shape[0]):
-            responce[zz, :, :] = (
-                -1
-                * (log_sigma ** 2)
-                * ndi.filters.gaussian_laplace(struct_img[zz, :, :], log_sigma)
-            )
+            responce[zz, :, :] = -1 * (log_sigma ** 2) * ndi.filters.gaussian_laplace(struct_img[zz, :, :], log_sigma)
         bw = np.logical_or(bw, responce > s2_param[fid][1])
     return bw

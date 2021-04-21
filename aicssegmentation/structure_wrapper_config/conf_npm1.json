@@ -1,10 +1,8 @@
 {
-    "1": {
-        "name": "Intensity Normalization",
-        "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
+    "1": {        
+        "category": "preprocessing",        
         "function": "intensity_normalization",
-        "parameter": {
+        "parameter_defaults": {
             "scaling_param": [
                 0.5,
                 15
@@ -12,34 +10,28 @@
         },
         "parent": 0
     },
-    "2": {
-        "name": "Gaussian Smoothing 3D",
-        "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
-        "function": "image_smoothing_gaussian_3d",
-        "parameter": {
+    "2": {        
+        "category": "preprocessing",        
+        "function": "gaussian_smoothing_3D",
+        "parameter_defaults": {
             "sigma": 1
         },
         "parent": 1
     },
-    "3": {
-        "name": "Masked Object Threshold - Part 1: low level",
-        "category": "core",
-        "module": "aicssegmentation.core.MO_threshold",
-        "function": "MO_low_level",
-        "parameter": {
-            "global_thresh_method": "ave",
+    "3": {        
+        "category": "core",        
+        "function": "masked_object_treshold_low_level",
+        "parameter_defaults": {
+            "global_thresh_method": "ave_tri_med",
             "object_minArea": 700,
             "dilate": true
         },
         "parent": 2
     },
-    "4": {
-        "name": "Masked Object Threshold - Part 2: high level",
-        "category": "core",
-        "module": "aicssegmentation.core.MO_threshold",
-        "function": "MO_high_level",
-        "parameter": {
+    "4": {        
+        "category": "core",        
+        "function": "masked_object_treshold_high_level",
+        "parameter_defaults": {
             "extra_criteria": true,
             "local_adjust": 0.98
         },
@@ -48,69 +40,55 @@
             3
         ]
     },
-    "5": {
-        "name": "Spot Filter Slice by Slice",
-        "category": "core",
-        "module": "aicssegmentation.core.seg_dot",
-        "function": "dot_slice_by_slice",
-        "parameter": {
+    "5": {        
+        "category": "core",        
+        "function": "spot_filter_slice_by_slice",
+        "parameter_defaults": {
             "log_sigma": 2,
             "cutoff": 0.025
         },
         "parent": 2
     },
-    "6": {
-        "name": "Invert Image",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
-        "function": "invert_mask",
+    "6": {        
+        "category": "core",        
+        "function": "invert_image",
         "parent": 2
     },
-    "7": {
-        "name": "Spot Filter Slice by Slice",
-        "category": "core",
-        "module": "aicssegmentation.core.seg_dot",
-        "function": "dot_slice_by_slice",
-        "parameter": {
+    "7": {        
+        "category": "core",        
+        "function": "spot_filter_slice_by_slice",
+        "parameter_defaults": {
             "log_sigma": 2,
             "cutoff": 0.025
         },
         "parent": 6
     },
-    "8": {
-        "name": "Spot Filter Slice by Slice",
-        "category": "core",
-        "module": "aicssegmentation.core.seg_dot",
-        "function": "dot_slice_by_slice",
-        "parameter": {
+    "8": {        
+        "category": "core",        
+        "function": "spot_filter_slice_by_slice",
+        "parameter_defaults": {
             "log_sigma": 1,
             "cutoff": 0.025
         },
         "parent": 6
     },
-    "9": {
-        "name": "Merge Segmentation",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
-        "function": "segmentation_union",
+    "9": {        
+        "category": "core",        
+        "function": "merge_segmentation",
         "parent": [
             7,
             8
         ]
     },
-    "10": {
-        "name": "Invert Image",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
-        "function": "invert_mask",
+    "10": {        
+        "category": "core",        
+        "function": "invert_image",
         "parent": 3
     },
-    "11": {
-        "name": "Mask Image",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
+    "11": {        
+        "category": "core",        
         "function": "mask_image",
-        "parameter": {
+        "parameter_defaults": {
             "value": 0
         },
         "parent": [
@@ -118,22 +96,18 @@
             10
         ]
     },
-    "12": {
-        "name": "Merge Segmentation",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
-        "function": "segmentation_union",
+    "12": {        
+        "category": "core",        
+        "function": "merge_segmentation",
         "parent": [
             11,
             4
         ]
     },
-    "13": {
-        "name": "Mask Image",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
+    "13": {        
+        "category": "core",        
         "function": "mask_image",
-        "parameter": {
+        "parameter_defaults": {
             "value": 0
         },
         "parent": [
@@ -141,12 +115,10 @@
             9
         ]
     },
-    "14": {
-        "name": "Size Filter",
-        "category": "postprocessing",
-        "module": "aicssegmentation.core.utils",
+    "14": {        
+        "category": "postprocessing",        
         "function": "size_filter",
-        "parameter": {
+        "parameter_defaults": {
             "min_size": 5,
             "method": "3D"
         },

@@ -67,37 +67,27 @@ def Workflow_cetn2(
     # PRE_PROCESSING
     ###################
     # intenisty normalization (min/max)
-    struct_img_for_seg = intensity_normalization(
-        struct_img.copy(), scaling_param=intensity_norm_param_seg
-    )
-    struct_img_for_peak = intensity_normalization(
-        struct_img.copy(), scaling_param=intensity_norm_param_peak
-    )
+    struct_img_for_seg = intensity_normalization(struct_img.copy(), scaling_param=intensity_norm_param_seg)
+    struct_img_for_peak = intensity_normalization(struct_img.copy(), scaling_param=intensity_norm_param_peak)
 
     out_img_list.append(struct_img_for_seg.copy())
     out_name_list.append("im_norm")
 
     # rescale if needed
     if rescale_ratio > 0:
-        struct_img_for_seg = zoom(
-            struct_img_for_seg, (1, rescale_ratio, rescale_ratio), order=2
-        )
+        struct_img_for_seg = zoom(struct_img_for_seg, (1, rescale_ratio, rescale_ratio), order=2)
 
         struct_img_for_seg = (struct_img_for_seg - struct_img_for_seg.min() + 1e-8) / (
             struct_img_for_seg.max() - struct_img_for_seg.min() + 1e-8
         )
 
-        struct_img_for_peak = zoom(
-            struct_img_for_peak, (1, rescale_ratio, rescale_ratio), order=2
+        struct_img_for_peak = zoom(struct_img_for_peak, (1, rescale_ratio, rescale_ratio), order=2)
+
+        struct_img_for_peak = (struct_img_for_peak - struct_img_for_peak.min() + 1e-8) / (
+            struct_img_for_peak.max() - struct_img_for_peak.min() + 1e-8
         )
 
-        struct_img_for_peak = (
-            struct_img_for_peak - struct_img_for_peak.min() + 1e-8
-        ) / (struct_img_for_peak.max() - struct_img_for_peak.min() + 1e-8)
-
-        gaussian_smoothing_truncate_range = (
-            gaussian_smoothing_truncate_range * rescale_ratio
-        )
+        gaussian_smoothing_truncate_range = gaussian_smoothing_truncate_range * rescale_ratio
 
     # smoothing with gaussian filter
     structure_img_smooth_for_seg = image_smoothing_gaussian_slice_by_slice(
@@ -122,9 +112,7 @@ def Workflow_cetn2(
     out_name_list.append("interm_mask")
 
     # step 2: 'local_maxi + watershed' for cell cutting
-    local_maxi = peak_local_max(
-        struct_img_for_peak, labels=label(bw), min_distance=2, indices=False
-    )
+    local_maxi = peak_local_max(struct_img_for_peak, labels=label(bw), min_distance=2, indices=False)
 
     out_img_list.append(local_maxi.copy())
     out_name_list.append("interm_local_max")
@@ -140,9 +128,7 @@ def Workflow_cetn2(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(
-        im_watershed, min_size=minArea, connectivity=1, in_place=False
-    )
+    seg = remove_small_objects(im_watershed, min_size=minArea, connectivity=1, in_place=False)
 
     # output
     seg = seg > 0

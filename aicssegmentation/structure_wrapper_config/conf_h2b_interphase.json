@@ -1,10 +1,8 @@
 {
-    "1": {
-        "name": "Intensity Normalization",
-        "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
+    "1": {        
+        "category": "preprocessing",        
         "function": "intensity_normalization",
-        "parameter": {
+        "parameter_defaults": {
             "scaling_param": [
                 1.0,
                 14
@@ -12,52 +10,42 @@
         },
         "parent": 0
     },
-    "2": {
-        "name": "Edge Preserving Smoothing",
-        "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
-        "function": "edge_preserving_smoothing_3d",
+    "2": {        
+        "category": "preprocessing",        
+        "function": "edge_preserving_smoothing",
         "parent": 1
     },
-    "3": {
-        "name": "Spot Filter Slice by Slice",
-        "category": "core",
-        "module": "aicssegmentation.core.seg_dot",
-        "function": "dot_slice_by_slice",
-        "parameter": {
+    "3": {        
+        "category": "core",        
+        "function": "spot_filter_slice_by_slice",
+        "parameter_defaults": {
             "log_sigma": 1,
             "cutoff": 0.014
         },
         "parent": 2
     },
-    "4": {
-        "name": "Spot Filter Slice by Slice",
-        "category": "core",
-        "module": "aicssegmentation.core.seg_dot",
-        "function": "dot_slice_by_slice",
-        "parameter": {
+    "4": {        
+        "category": "core",        
+        "function": "spot_filter_slice_by_slice",
+        "parameter_defaults": {
             "log_sigma": 2,
             "cutoff": 0.039
         },
         "parent": 2
     },
-    "5": {
-        "name": "Merge Segmentation",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
-        "function": "segmentation_union",
+    "5": {        
+        "category": "core",        
+        "function": "merge_segmentation",
         "parent": [
             3,
             4
         ]
     },
-    "6": {
-        "name": "Size Filter",
-        "category": "postprocessing",
-        "module": "aicssegmentation.core.utils",
+    "6": {        
+        "category": "postprocessing",        
         "function": "size_filter",
         "parent": 5,
-        "parameter": {
+        "parameter_defaults": {
             "min_size": 3,
             "method": "3D"
         }

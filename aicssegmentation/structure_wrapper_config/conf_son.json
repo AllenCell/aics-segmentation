@@ -1,10 +1,8 @@
 {
-    "1": {
-        "name": "Intensity Normalization",
-        "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
+    "1": {        
+        "category": "preprocessing",        
         "function": "intensity_normalization",
-        "parameter": {
+        "parameter_defaults": {
             "scaling_param": [
                 2,
                 30
@@ -12,19 +10,15 @@
         },
         "parent": 0
     },
-    "2": {
-        "name": "Edge Preserving Smoothing",
-        "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
-        "function": "edge_preserving_smoothing_3d",
+    "2": {        
+        "category": "preprocessing",        
+        "function": "edge_preserving_smoothing",
         "parent": 1
     },
-    "3": {
-        "name": "Filament Filter 3D",
-        "category": "core",
-        "module": "aicssegmentation.core.vessel",
-        "function": "vesselness3D",
-        "parameter": {
+    "3": {        
+        "category": "core",        
+        "function": "filament_filter_3D",
+        "parameter_defaults": {
             "sigmas": [
                 1.2
             ],
@@ -32,76 +26,62 @@
         },
         "parent": 2
     },
-    "4": {
-        "name": "Spot Filter 3D",
-        "category": "core",
-        "module": "aicssegmentation.core.seg_dot",
-        "function": "dot_3d",
-        "parameter": {
+    "4": {        
+        "category": "core",        
+        "function": "spot_filter_3D",
+        "parameter_defaults": {
             "log_sigma": 3,
             "cutoff": 0.2
         },
         "parent": 2
     },
-    "5": {
-        "name": "Spot Filter 3D",
-        "category": "core",
-        "module": "aicssegmentation.core.seg_dot",
-        "function": "dot_3d",
-        "parameter": {
+    "5": {        
+        "category": "core",        
+        "function": "spot_filter_3D",
+        "parameter_defaults": {
             "log_sigma": 1.15,
             "cutoff": 0.07
         },
         "parent": 2
     },
-    "6": {
-        "name": "Spot Filter 3D",
-        "category": "core",
-        "module": "aicssegmentation.core.seg_dot",
-        "function": "dot_3d",
-        "parameter": {
+    "6": {        
+        "category": "core",        
+        "function": "spot_filter_3D",
+        "parameter_defaults": {
             "log_sigma": 1.15,
             "cutoff": 0.03
         },
         "parent": 2
     },
-    "7": {
-        "name": "Spot Filter 3D",
-        "category": "core",
-        "module": "aicssegmentation.core.seg_dot",
-        "function": "dot_3d",
-        "parameter": {
+    "7": {        
+        "category": "core",        
+        "function": "spot_filter_3D",
+        "parameter_defaults": {
             "log_sigma": 1.15,
             "cutoff": 0.02
         },
         "parent": 2
     },
-    "8": {
-        "name": "Size Filter",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
+    "8": {        
+        "category": "core",        
         "function": "size_filter",
         "parent": 6,
-        "parameter": {
+        "parameter_defaults": {
             "min_size": 150,
             "method": "3D"
         }
     },
-    "9": {
-        "name": "Segmentation XOR",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
+    "9": {        
+        "category": "core",        
         "function": "segmentation_xor",
         "parent": [
             7,
             8
         ]
     },
-    "10": {
-        "name": "Merge Segmentation",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
-        "function": "segmentation_union",
+    "10": {        
+        "category": "core",        
+        "function": "merge_segmentation",
         "parent": [
             3,
             4,
@@ -109,13 +89,11 @@
             9
         ]
     },
-    "11": {
-        "name": "Size Filter",
-        "category": "postprocessing",
-        "module": "aicssegmentation.core.utils",
+    "11": {        
+        "category": "postprocessing",        
         "function": "size_filter",
         "parent": 10,
-        "parameter": {
+        "parameter_defaults": {
             "min_size": 15,
             "method": "3D"
         }

@@ -1,74 +1,60 @@
 {
-    "1": {
-        "name": "Intensity Normalization using min-max with bound",
-        "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
-        "function": "intensity_normalization",
-        "parameter": {
+    "1": {        
+        "category": "preprocessing",        
+        "function": "intensity_normalization_min_max_with_bound",
+        "parameter_defaults": {
             "scaling_param": [
                 8000
             ]
         },
         "parent": 0
     },
-    "2": {
-        "name": "Gaussian Smoothing Slice by Slice",
-        "category": "preprocessing",
-        "module": "aicssegmentation.core.pre_processing_utils",
-        "function": "image_smoothing_gaussian_slice_by_slice",
-        "parameter": {
+    "2": {        
+        "category": "preprocessing",        
+        "function": "gaussian_smoothing_slice_by_slice",
+        "parameter_defaults": {
             "sigma": 1
         },
         "parent": 1
     },
-    "3": {
-        "name": "Spot Filter 3D",
-        "category": "core",
-        "module": "aicssegmentation.core.seg_dot",
-        "function": "dot_3d",
-        "parameter": {
+    "3": {        
+        "category": "core",        
+        "function": "spot_filter_3D",
+        "parameter_defaults": {
             "log_sigma": 1,
             "cutoff": 0.012
         },
         "parent": 2
     },
-    "4": {
-        "name": "Size Filter",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
+    "4": {        
+        "category": "core",        
         "function": "size_filter",
-        "parameter": {
+        "parameter_defaults": {
             "min_size": 4,
             "method": "3D"
         },
         "parent": 3
     },
-    "5": {
-        "name": "Find Local Maxima",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
-        "function": "peak_local_max_wrapper",
+    "5": {        
+        "category": "core",        
+        "function": "find_local_maxima",
         "parent": [
             1,
             4
         ]
     },
-    "6": {
-        "name": "Watershed for cutting",
-        "category": "core",
-        "module": "aicssegmentation.core.utils",
-        "function": "watershed_wrapper",
+    "6": {        
+        "category": "core",        
+        "function": "watershed_for_cutting",
         "parent": [
             4,
             5
         ]
     },
-    "7": {
-        "name": "Size Filter",
-        "category": "postprocessing",
-        "module": "aicssegmentation.core.utils",
+    "7": {        
+        "category": "postprocessing",        
         "function": "size_filter",
-        "parameter": {
+        "parameter_defaults": {
             "min_size": 4,
             "method": "3D"
         },
