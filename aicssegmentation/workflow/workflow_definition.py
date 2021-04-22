@@ -40,4 +40,4 @@ class WorkflowDefinition:
         """
         Diagram / flow chart image for this workflow, as a numpy array
         """
-        return np.squeeze(imread(Directories.get_assets_dir() / f"diagrams/{self.name.lower()}_diagram.png"))
+        return np.squeeze(imread(Directories.get_assets_dir() / f"diagrams/{self.name.lower()}.png"))
