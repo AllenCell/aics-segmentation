@@ -1,3 +1,4 @@
+from aicssegmentation.workflow.segmenter_function import FunctionParameter, WidgetType
 import pytest
 import numpy as np
 
@@ -67,6 +68,22 @@ class TestWorkflowStep:
         with pytest.raises(AttributeError):
             step.execute([img])
 
+    def test_execute_bad_parameters_fails(self):
+        # Arrange
+        function = SegmenterFunction(
+            name="single_input",
+            display_name="Test single input",
+            function="not_a_function",
+            module="aicssegmentation.tests.workflow.mock_module",
+        )
+        step = WorkflowStep(category=WorkflowStepCategory.PRE_PROCESSING, function=function, step_number=1, parent=[0])
+
+        img = np.ones((75, 200, 200))
+
+        # Act / Assert
+        with pytest.raises(AttributeError):
+            step.execute([img])
+
     def test_execute_function_single_input(self):
         # Arrange
         function = SegmenterFunction(
@@ -74,15 +91,18 @@ class TestWorkflowStep:
             display_name="Test single input",
             function="function_single_input",
             module="aicssegmentation.tests.workflow.mock_module",
+            parameters={
+                "x": FunctionParameter("x", WidgetType.SLIDER, "int"),
+                "y": FunctionParameter("y", WidgetType.SLIDER, "int"),
+            },
         )
         step = WorkflowStep(category=WorkflowStepCategory.PRE_PROCESSING, function=function, step_number=1, parent=[0])
         img = np.ones((75, 200, 200))
+        params = {"a": 1, "b": 2}
 
         # Act
-        result = step.execute([img])
-
-        # Assert
-        assert result == 1
+        with pytest.raises(ValueError):
+            step.execute([img], params)
 
     def test_execute_function_single_input_with_parameters(self):
         # Arrange
@@ -91,6 +111,10 @@ class TestWorkflowStep:
             display_name="Test single input with parameters",
             function="function_single_input_with_parameters",
             module="aicssegmentation.tests.workflow.mock_module",
+            parameters={
+                "x": FunctionParameter("x", WidgetType.SLIDER, "int"),
+                "y": FunctionParameter("y", WidgetType.SLIDER, "int"),
+            },
         )
         step = WorkflowStep(category=WorkflowStepCategory.PRE_PROCESSING, function=function, step_number=1, parent=[0])
         img = np.ones((75, 200, 200))
@@ -127,6 +151,10 @@ class TestWorkflowStep:
             display_name="Test list input with parameters",
             function="function_list_input_with_parameters",
             module="aicssegmentation.tests.workflow.mock_module",
+            parameters={
+                "x": FunctionParameter("x", WidgetType.SLIDER, "int"),
+                "y": FunctionParameter("y", WidgetType.SLIDER, "int"),
+            },
         )
         step = WorkflowStep(category=WorkflowStepCategory.PRE_PROCESSING, function=function, step_number=1, parent=[0])
         img1 = np.ones((75, 200, 200))
