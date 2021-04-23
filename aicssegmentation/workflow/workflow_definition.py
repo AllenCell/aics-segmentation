@@ -34,3 +34,10 @@ class WorkflowDefinition:
         The Post-segmentation thumbnail related to this workflow, as a numpy array
         """
         return np.squeeze(imread(Directories.get_assets_dir() / f"thumbnails/{self.name.lower()}_post.png"))
+
+    @lazy_property
+    def diagram_image(self) -> np.ndarray:
+        """
+        Diagram / flow chart image for this workflow, as a numpy array
+        """
+        return np.squeeze(imread(Directories.get_assets_dir() / f"diagrams/{self.name.lower()}.png"))
