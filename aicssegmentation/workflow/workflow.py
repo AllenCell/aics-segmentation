@@ -1,3 +1,4 @@
+from typing import Any, Dict
 import numpy as np
 import logging
 
@@ -50,12 +51,13 @@ class Workflow:
             return None
         return self._definition.steps[self._next_step]
 
-    def execute_next(self) -> np.ndarray:
+    def execute_next(self, parameters: Dict[str, Any] = None) -> np.ndarray:
         """
         Execute the next workflow step.
 
         Params:
-            none
+            parameters: Optional dictionary of parameter inputs to use when executing the step
+                        If parameters are not provided, the step's default parameters will be used
 
         Returns:
             result (np.ndarray): resultant image from running the
@@ -83,7 +85,7 @@ class Workflow:
                 res = self.get_result(i - 1)  # parents are 1 indexed
                 image.append(res)
 
-        result: np.ndarray = self.get_next_step().execute(image, step.parameter_defaults)
+        result: np.ndarray = self.get_next_step().execute(image, parameters or step.parameter_defaults)
         self._results.append(result)
 
         # Only increment after running step
@@ -134,7 +136,9 @@ class Workflow:
 
     def execute_all(self) -> np.ndarray:
         """
-        Execute all the remaining WorkflowSteps in the WorkflowEngine.
+        Execute all steps in the Workflow
+        Note: default parameters will be used to execute the steps. To execute a step
+              with user-provided parameters, use execute_next()
 
         Params:
             none
