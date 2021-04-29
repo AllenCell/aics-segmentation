@@ -164,7 +164,7 @@ def mipView(im):
 
 
 def img_seg_combine(img, seg, roi=["Full", None]):
-    """ creating raw and segmentation side-by-side for visualizaiton """
+    """creating raw and segmentation side-by-side for visualizaiton"""
     # normalize to 0~1
     img = img.astype(np.float32)
     img = (img - img.min()) / (img.max() - img.min())
@@ -186,7 +186,7 @@ def img_seg_combine(img, seg, roi=["Full", None]):
 
 
 def seg_fluo_side_by_side(im, seg, roi=["Full", None]):
-    """ wrapper for displaying raw and segmentation side by side"""
+    """wrapper for displaying raw and segmentation side by side"""
     out = img_seg_combine(im, seg, roi)
 
     return out

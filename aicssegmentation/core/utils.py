@@ -144,7 +144,7 @@ def divide_nonzero(array1, array2):
 
 
 def histogram_otsu(hist):
-    """ Apply Otsu thresholding method on 1D histogram """
+    """Apply Otsu thresholding method on 1D histogram"""
 
     # modify the elements in hist to avoid completely zero value in cumsum
     hist = hist + 1e-5

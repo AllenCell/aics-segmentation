@@ -294,7 +294,7 @@ def vesselnessSliceBySlice(
 
 
 def compute_vesselness3D(eigen2, eigen3, tau):
-    """ backend for computing 3D filament filter """
+    """backend for computing 3D filament filter"""
 
     lambda3m = copy.copy(eigen3)
     lambda3m[np.logical_and(eigen3 < 0, eigen3 > (tau * eigen3.min()))] = tau * eigen3.min()
@@ -310,7 +310,7 @@ def compute_vesselness3D(eigen2, eigen3, tau):
 
 
 def compute_vesselness2D(eigen2, tau):
-    """ backend for computing 2D filament filter """
+    """backend for computing 2D filament filter"""
 
     Lambda3 = copy.copy(eigen2)
     Lambda3[np.logical_and(Lambda3 < 0, Lambda3 >= (tau * Lambda3.min()))] = tau * Lambda3.min()
