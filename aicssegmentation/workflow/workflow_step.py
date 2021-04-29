@@ -58,6 +58,13 @@ class WorkflowStep:
         if not isinstance(input_images, list):
             raise ValueError("input_images must be a list")
 
+        if parameters is not None and not self._check_parameters(parameters):
+            raise ValueError(
+                "Provided parameters are invalid. All keys in the parameters dictionary"
+                "must correspond to existing parameter names defined for the underlying workflow function."
+                "Note: parameter names are case sensitive"
+            )
+
         py_module = importlib.import_module(self.function.module)
         py_function = getattr(py_module, self.function.function)
 
@@ -72,3 +79,10 @@ class WorkflowStep:
             if parameters is not None:
                 return py_function(input_images, **parameters)
             return py_function(input_images)
+
+    def _check_parameters(self, parameters: Dict[str, Any]) -> bool:
+        for key in parameters.keys():
+            if key not in self.function.parameters.keys():
+                return False
+
+        return True
