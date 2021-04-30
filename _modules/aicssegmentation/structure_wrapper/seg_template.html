@@ -194,6 +194,7 @@
     <span class="n">save_segmentation</span><span class="p">,</span>
     <span class="n">generate_segmentation_contour</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
 <div class="viewcode-block" id="Workflow_template"><a class="viewcode-back" href="../../../aicssegmentation.structure_wrapper.html#aicssegmentation.structure_wrapper.seg_template.Workflow_template">[docs]</a><span class="k">def</span> <span class="nf">Workflow_template</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">output_func</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -223,6 +224,7 @@
     <span class="c1"># ## no need to change below</span>
     <span class="c1">##########################################################################</span>
     <span class="c1"># output</span>
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">struct_img</span>
     <span class="n">seg</span> <span class="o">=</span> <span class="n">seg</span> <span class="o">&gt;</span> <span class="mi">0</span>
     <span class="n">seg</span> <span class="o">=</span> <span class="n">seg</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
     <span class="n">seg</span><span class="p">[</span><span class="n">seg</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">255</span>
