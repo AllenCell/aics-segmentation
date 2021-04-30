@@ -12,11 +12,7 @@ class StructureSegmenter:
         self.log = logging.getLogger(__name__)
 
     def process_img(
-        self,
-        gene: str,
-        image: np.array,
-        rescale_ratio=DEFAULT_RESCALE_RATIO,
-        module_path=DEFAULT_MODULE_PATH,
+        self, gene: str, image: np.array, rescale_ratio=DEFAULT_RESCALE_RATIO, module_path=DEFAULT_MODULE_PATH,
     ) -> (np.array, np.array):
         lower_gene = gene.lower()
         module_name = module_path + lower_gene

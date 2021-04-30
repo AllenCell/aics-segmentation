@@ -5,10 +5,7 @@ from skimage.measure import label
 
 
 def MO_low_level(
-    structure_img_smooth: np.ndarray,
-    global_thresh_method: str,
-    object_minArea: int,
-    dilate: bool = False,
+    structure_img_smooth: np.ndarray, global_thresh_method: str, object_minArea: int, dilate: bool = False,
 ) -> np.ndarray:
     """
     Implementation of "Masked Object Thresholding" algorithm. Specifically, the

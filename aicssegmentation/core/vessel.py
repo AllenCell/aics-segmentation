@@ -121,14 +121,7 @@ def vesselness3D(nd_array: np.ndarray, sigmas: List, tau=1, whiteonblack=True, c
     if np.any(np.asarray(sigmas) < 0.0):
         raise ValueError("Sigma values less than zero are not valid")
 
-    filtered_array = np.zeros(
-        tuple(
-            [
-                len(sigmas),
-            ]
-        )
-        + nd_array.shape
-    )
+    filtered_array = np.zeros(tuple([len(sigmas),]) + nd_array.shape)
 
     for i, sigma in enumerate(sigmas):
         eigenvalues = absolute_3d_hessian_eigenvalues(nd_array, sigma=sigma, scale=True, whiteonblack=True)
@@ -142,11 +135,7 @@ def vesselness3D(nd_array: np.ndarray, sigmas: List, tau=1, whiteonblack=True, c
 
 
 def vesselness2D(
-    nd_array: np.ndarray,
-    sigmas: List,
-    tau: float = 1,
-    whiteonblack: bool = True,
-    cutoff: float = -1,
+    nd_array: np.ndarray, sigmas: List, tau: float = 1, whiteonblack: bool = True, cutoff: float = -1,
 ):
     """Multi-scale 2D filament filter
 
@@ -180,14 +169,7 @@ def vesselness2D(
     if np.any(np.asarray(sigmas) < 0.0):
         raise ValueError("Sigma values less than zero are not valid")
 
-    filtered_array = np.zeros(
-        tuple(
-            [
-                len(sigmas),
-            ]
-        )
-        + nd_array.shape
-    )
+    filtered_array = np.zeros(tuple([len(sigmas),]) + nd_array.shape)
 
     for i, sigma in enumerate(sigmas):
         eigenvalues = absolute_3d_hessian_eigenvalues(nd_array, sigma=sigma, scale=True, whiteonblack=True)
@@ -201,12 +183,7 @@ def vesselness2D(
 
 
 def vesselness2D_single_slice(
-    nd_array: np.ndarray,
-    single_z: int,
-    sigmas: List,
-    tau: float = 1,
-    whiteonblack: bool = True,
-    cutoff: float = -1,
+    nd_array: np.ndarray, single_z: int, sigmas: List, tau: float = 1, whiteonblack: bool = True, cutoff: float = -1,
 ):
     """Multi-scale 2D filament filter
 
@@ -252,11 +229,7 @@ def vesselness2D_single_slice(
 
 
 def vesselnessSliceBySlice(
-    nd_array: np.ndarray,
-    sigmas: List,
-    tau: float = 1,
-    whiteonblack: bool = True,
-    cutoff: float = -1,
+    nd_array: np.ndarray, sigmas: List, tau: float = 1, whiteonblack: bool = True, cutoff: float = -1,
 ):
     """
     wrapper for applying multi-scale 2D filament filter on 3D images in a

@@ -5,11 +5,7 @@ from aicsimageio.writers import OmeTiffWriter
 
 
 def save_segmentation(
-    bw: np.ndarray,
-    contour_flag: bool,
-    output_path: Path,
-    fn: str,
-    suffix: str = "_struct_segmentation",
+    bw: np.ndarray, contour_flag: bool, output_path: Path, fn: str, suffix: str = "_struct_segmentation",
 ):
     """save the segmentation into a tiff file
 

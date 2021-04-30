@@ -89,10 +89,7 @@ def size_filter(img: np.ndarray, min_size: int, method: str = "3D", connectivity
         seg = np.zeros(img.shape, dtype=bool)
         for zz in range(img.shape[0]):
             seg[zz, :, :] = remove_small_objects(
-                img[zz, :, :] > 0,
-                min_size=min_size,
-                connectivity=connectivity,
-                in_place=False,
+                img[zz, :, :] > 0, min_size=min_size, connectivity=connectivity, in_place=False,
             )
         return seg
     else:
@@ -249,11 +246,7 @@ def get_middle_frame(struct_img: np.ndarray, method: str = "z") -> int:
 
 
 def get_3dseed_from_mid_frame(
-    bw: np.ndarray,
-    stack_shape: List = None,
-    mid_frame: int = -1,
-    hole_min: int = 1,
-    bg_seed: bool = True,
+    bw: np.ndarray, stack_shape: List = None, mid_frame: int = -1, hole_min: int = 1, bg_seed: bool = True,
 ) -> np.ndarray:
     """build a 3D seed image from the binary segmentation of a single slice
 
@@ -297,11 +290,7 @@ def get_3dseed_from_mid_frame(
 
 
 def get_seed_for_objects(
-    raw: np.ndarray,
-    bw: np.ndarray,
-    area_min: int = 1,
-    area_max: int = 10000,
-    bg_seed: bool = True,
+    raw: np.ndarray, bw: np.ndarray, area_min: int = 1, area_max: int = 10000, bg_seed: bool = True,
 ) -> np.ndarray:
     """
     build a seed image for an image of 3D objects (assuming roughly convex shape
@@ -420,12 +409,7 @@ def watershed_wrapper(bw: np.ndarray, local_maxi: np.ndarray) -> np.ndarray:
     from skimage.morphology import watershed, dilation, ball
 
     distance = distance_transform_edt(bw)
-    im_watershed = watershed(
-        -distance,
-        label(dilation(local_maxi, selem=ball(1))),
-        mask=bw,
-        watershed_line=True,
-    )
+    im_watershed = watershed(-distance, label(dilation(local_maxi, selem=ball(1))), mask=bw, watershed_line=True,)
     return im_watershed
 
 

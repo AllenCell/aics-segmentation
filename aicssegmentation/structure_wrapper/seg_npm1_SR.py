@@ -81,9 +81,7 @@ def Workflow_npm1_SR(
 
     # smoothing with gaussian filter
     structure_img_smooth = image_smoothing_gaussian_3d(
-        struct_img,
-        sigma=gaussian_smoothing_sigma,
-        truncate_range=gaussian_smoothing_truncate_range,
+        struct_img, sigma=gaussian_smoothing_sigma, truncate_range=gaussian_smoothing_truncate_range,
     )
 
     out_img_list.append(structure_img_smooth.copy())
