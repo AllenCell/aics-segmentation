@@ -104,6 +104,9 @@
 <li class="toctree-l4"><a class="reference internal" href="aicssegmentation.cli.html">aicssegmentation.cli package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">aicssegmentation.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aicssegmentation.structure_wrapper_config.html">aicssegmentation.structure_wrapper_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aicssegmentation.util.html">aicssegmentation.util package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="aicssegmentation.workflow.html">aicssegmentation.workflow package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
@@ -205,7 +208,7 @@
 <span id="aicssegmentation-core-mo-threshold-module"></span><h2>aicssegmentation.core.MO_threshold module<a class="headerlink" href="#module-aicssegmentation.core.MO_threshold" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="aicssegmentation.core.MO_threshold.MO">
-<code class="sig-prename descclassname">aicssegmentation.core.MO_threshold.</code><code class="sig-name descname">MO</code><span class="sig-paren">(</span><em class="sig-param">structure_img_smooth: numpy.ndarray</em>, <em class="sig-param">global_thresh_method: str</em>, <em class="sig-param">object_minArea: int</em>, <em class="sig-param">extra_criteria: bool = False</em>, <em class="sig-param">local_adjust: float = 0.98</em>, <em class="sig-param">return_object: bool = False</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/MO_threshold.html#MO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.MO_threshold.MO" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aicssegmentation.core.MO_threshold.</code><code class="sig-name descname">MO</code><span class="sig-paren">(</span><em class="sig-param">structure_img_smooth: numpy.ndarray</em>, <em class="sig-param">global_thresh_method: str</em>, <em class="sig-param">object_minArea: int</em>, <em class="sig-param">extra_criteria: bool = False</em>, <em class="sig-param">local_adjust: float = 0.98</em>, <em class="sig-param">return_object: bool = False</em>, <em class="sig-param">dilate: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/MO_threshold.html#MO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.MO_threshold.MO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of “Masked Object Thresholding” algorithm. Specifically, the
 algorithm is a hybrid thresholding method combining two levels of thresholds.
 The steps are [1] a global threshold is calculated, [2] extract each individual
@@ -230,6 +233,60 @@ connected component is discarded.</p>
 </dd>
 <dt>return_object: bool</dt><dd><p>whether to return the global thresholding results in order to obtain the
 individual objects the local thresholding is made on</p>
+</dd>
+<dt>dilate: bool</dt><dd><p>whether to perform dilation on bw_low_level prior to the high level threshold</p>
+</dd>
+</dl>
+<p>a binary nd array of the segmentation result</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.MO_threshold.MO_high_level">
+<code class="sig-prename descclassname">aicssegmentation.core.MO_threshold.</code><code class="sig-name descname">MO_high_level</code><span class="sig-paren">(</span><em class="sig-param">structure_img_smooth: numpy.ndarray</em>, <em class="sig-param">bw_low_level: numpy.ndarray</em>, <em class="sig-param">extra_criteria: bool = False</em>, <em class="sig-param">local_adjust: float = 0.98</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/MO_threshold.html#MO_high_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.MO_threshold.MO_high_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of “Masked Object Thresholding” algorithm. Specifically, the
+algorithm is a hybrid thresholding method combining two levels of thresholds.
+The steps are [1] a global threshold is calculated, [2] extract each individual
+connected componet after applying the global threshold, [3] remove small objects,
+[4] within each remaining object, a local Otsu threshold is calculated and applied
+with an optional local threshold adjustment ratio (to make the segmentation more
+and less conservative). An extra check can be used in step [4], which requires the
+local Otsu threshold larger than 1/3 of global Otsu threhsold and otherwise this
+connected component is discarded. This function implements the high level part.</p>
+<dl class="simple">
+<dt>structure_img_smooth: np.ndarray</dt><dd><p>the image (should have already been smoothed) to apply the method on</p>
+</dd>
+<dt>bw_low_level: np.ndarray</dt><dd><p>low level segmentation</p>
+</dd>
+<dt>extra_criteria: bool</dt><dd><p>whether to use the extra check when doing local thresholding, default is False</p>
+</dd>
+<dt>local_adjust: float</dt><dd><p>a ratio to apply on local threshold, default is 0.98</p>
+</dd>
+</dl>
+<p>a binary nd array of the segmentation result</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.MO_threshold.MO_low_level">
+<code class="sig-prename descclassname">aicssegmentation.core.MO_threshold.</code><code class="sig-name descname">MO_low_level</code><span class="sig-paren">(</span><em class="sig-param">structure_img_smooth: numpy.ndarray</em>, <em class="sig-param">global_thresh_method: str</em>, <em class="sig-param">object_minArea: int</em>, <em class="sig-param">dilate: bool = False</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/MO_threshold.html#MO_low_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.MO_threshold.MO_low_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of “Masked Object Thresholding” algorithm. Specifically, the
+algorithm is a hybrid thresholding method combining two levels of thresholds.
+The steps are [1] a global threshold is calculated, [2] extract each individual
+connected componet after applying the global threshold, [3] remove small objects,
+[4] within each remaining object, a local Otsu threshold is calculated and applied
+with an optional local threshold adjustment ratio (to make the segmentation more
+and less conservative). An extra check can be used in step [4], which requires the
+local Otsu threshold larger than 1/3 of global Otsu threhsold and otherwise this
+connected component is discarded. This function implements the low level part.</p>
+<dl class="simple">
+<dt>structure_img_smooth: np.ndarray</dt><dd><p>the image (should have already been smoothed) to apply the method on</p>
+</dd>
+<dt>global_thresh_method: str</dt><dd><p>which method to use for calculating global threshold. Options include:
+“triangle” (or “tri”), “median” (or “med”), and “ave_tri_med” (or “ave”).
+“ave” refers the average of “triangle” threshold and “mean” threshold.</p>
+</dd>
+<dt>object_minArea: int</dt><dd><p>the size filter for excluding small object before applying local threshold</p>
+</dd>
+<dt>dilate: bool</dt><dd><p>whether to perform dilation on bw_low_level prior to the high level threshold</p>
 </dd>
 </dl>
 <p>a binary nd array of the segmentation result</p>
@@ -382,7 +439,7 @@ of this cell structure</p>
 <span id="aicssegmentation-core-seg-dot-module"></span><h2>aicssegmentation.core.seg_dot module<a class="headerlink" href="#module-aicssegmentation.core.seg_dot" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="aicssegmentation.core.seg_dot.dot_2d">
-<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_2d</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">log_sigma</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_2d" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_2d</code><span class="sig-paren">(</span><em class="sig-param">struct_img</em>, <em class="sig-param">log_sigma</em>, <em class="sig-param">cutoff=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>apply 2D spot filter on a 2D image</p>
 <dl class="simple">
 <dt>struct_img: np.ndarray</dt><dd><p>the 2D image to segment</p>
@@ -391,6 +448,9 @@ of this cell structure</p>
 of your target dots. For example, if visually the diameter of the
 dots is usually 3~4 pixels, then you may want to set this as 1
 or something near 1 (like 1.25).</p>
+</dd>
+<dt>cutoff: float</dt><dd><p>the cutoff value to apply on the filter result. If the cutoff is
+negative, no cutoff will be applied. Default is -1</p>
 </dd>
 </dl>
 </dd></dl>
@@ -418,7 +478,7 @@ dots and slimmer segmentation.</p>
 
 <dl class="function">
 <dt id="aicssegmentation.core.seg_dot.dot_3d">
-<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_3d</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">log_sigma: float</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_3d" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_3d</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">log_sigma: float</em>, <em class="sig-param">cutoff=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>apply 3D spot filter on a 3D image</p>
 <dl class="simple">
 <dt>struct_img: np.ndarray</dt><dd><p>the 3D image to segment</p>
@@ -427,6 +487,9 @@ dots and slimmer segmentation.</p>
 of your target dots. For example, if visually the diameter of the
 dots is usually 3~4 pixels, then you may want to set this as 1
 or something near 1 (like 1.25).</p>
+</dd>
+<dt>cutoff: float</dt><dd><p>the cutoff value to apply on the filter result. If the cutoff is
+negative, no cutoff will be applied. Default is -1</p>
 </dd>
 </dl>
 </dd></dl>
@@ -453,7 +516,7 @@ yield less dots and slimmer segmentation.</p>
 
 <dl class="function">
 <dt id="aicssegmentation.core.seg_dot.dot_slice_by_slice">
-<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_slice_by_slice</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">log_sigma: float</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_slice_by_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_slice_by_slice" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aicssegmentation.core.seg_dot.</code><code class="sig-name descname">dot_slice_by_slice</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">log_sigma: float</em>, <em class="sig-param">cutoff=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/seg_dot.html#dot_slice_by_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.seg_dot.dot_slice_by_slice" title="Permalink to this definition">¶</a></dt>
 <dd><p>apply 2D spot filter on 3D image slice by slice</p>
 <dl class="simple">
 <dt>struct_img: np.ndarray</dt><dd><p>a 3d numpy array, usually the image after smoothing</p>
@@ -462,6 +525,9 @@ yield less dots and slimmer segmentation.</p>
 of your target dots. For example, if visually the diameter of the
 dots is usually 3~4 pixels, then you may want to set this as 1
 or something near 1 (like 1.25).</p>
+</dd>
+<dt>cutoff: float</dt><dd><p>the cutoff value to apply on the filter result. If the cutoff is
+negative, no cutoff will be applied. Default is -1</p>
 </dd>
 </dl>
 </dd></dl>
@@ -498,6 +564,11 @@ or something near 1 (like 1.25).</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="aicssegmentation.core.utils.cell_local_adaptive_threshold">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">cell_local_adaptive_threshold</code><span class="sig-paren">(</span><em class="sig-param">structure_img_smooth: numpy.ndarray</em>, <em class="sig-param">cell_wise_min_area: int</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#cell_local_adaptive_threshold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.cell_local_adaptive_threshold" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="aicssegmentation.core.utils.divide_nonzero">
 <code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">divide_nonzero</code><span class="sig-paren">(</span><em class="sig-param">array1</em>, <em class="sig-param">array2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#divide_nonzero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.divide_nonzero" title="Permalink to this definition">¶</a></dt>
 <dd><p>Divides two arrays. Returns zero when dividing by zero.</p>
@@ -505,16 +576,18 @@ or something near 1 (like 1.25).</p>
 
 <dl class="function">
 <dt id="aicssegmentation.core.utils.get_3dseed_from_mid_frame">
-<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">get_3dseed_from_mid_frame</code><span class="sig-paren">(</span><em class="sig-param">bw: numpy.ndarray</em>, <em class="sig-param">stack_shape: List</em>, <em class="sig-param">mid_frame: int</em>, <em class="sig-param">hole_min: int</em>, <em class="sig-param">bg_seed: bool = True</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/utils.html#get_3dseed_from_mid_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.get_3dseed_from_mid_frame" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">get_3dseed_from_mid_frame</code><span class="sig-paren">(</span><em class="sig-param">bw: numpy.ndarray</em>, <em class="sig-param">stack_shape: List = None</em>, <em class="sig-param">mid_frame: int = -1</em>, <em class="sig-param">hole_min: int = 1</em>, <em class="sig-param">bg_seed: bool = True</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/utils.html#get_3dseed_from_mid_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.get_3dseed_from_mid_frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>build a 3D seed image from the binary segmentation of a single slice</p>
 <dl class="simple">
-<dt>bw: np.ndarray</dt><dd><p>the 2d segmentation of a single frame</p>
+<dt>bw: np.ndarray</dt><dd><p>the 2d segmentation of a single frame, or a 3D array with only one slice
+containing segmentation</p>
 </dd>
-<dt>shape_3d: List</dt><dd><p>the shape of original 3d image, e.g. shape_3d = img.shape</p>
+<dt>stack_shape: List</dt><dd><p>(only used when bw is 2d) the shape of original 3d image, e.g.
+shape_3d = img.shape</p>
 </dd>
-<dt>frame_index: int</dt><dd><p>the index of where bw is from the whole z-stack</p>
+<dt>frame_index: int</dt><dd><p>(only used when bw is 2d) the index of where bw is from the whole z-stack</p>
 </dd>
-<dt>area_min: int</dt><dd><p>any connected component in bw2d with size smaller than area_min
+<dt>hole_min: int</dt><dd><p>any connected component in bw2d with size smaller than area_min
 will be excluded from seed image generation</p>
 </dd>
 <dt>bg_seed: bool</dt><dd><p>bg_seed=True will add a background seed at the first frame (z=0).</p>
@@ -547,6 +620,29 @@ separation is the middle of the stack).</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="aicssegmentation.core.utils.get_seed_for_objects">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">get_seed_for_objects</code><span class="sig-paren">(</span><em class="sig-param">raw: numpy.ndarray</em>, <em class="sig-param">bw: numpy.ndarray</em>, <em class="sig-param">area_min: int = 1</em>, <em class="sig-param">area_max: int = 10000</em>, <em class="sig-param">bg_seed: bool = True</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/utils.html#get_seed_for_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.get_seed_for_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>build a seed image for an image of 3D objects (assuming roughly convex shape
+in 3D) using the information in the middle slice</p>
+<dl class="simple">
+<dt>raw: np.ndarray</dt><dd><p>orignal image used to determine middle slice</p>
+</dd>
+<dt>bw: np.ndarray</dt><dd><p>a round 3D segmentation, expecting the segmentation in the middle slice
+having relatively good quality</p>
+</dd>
+<dt>area_min: int</dt><dd><p>estimated minimal size on one single slice (major body chunk, e.g. the
+center XY plane of a 3D ball) of an object</p>
+</dd>
+<dt>area_max: int</dt><dd><p>estimated maximal size on one single slice (major body chunk, e.g. the
+center XY plane of a 3D ball) of an object. It is recommended to be
+conservertive (setting this value a little larger)</p>
+</dd>
+<dt>bg_seed: bool</dt><dd><p>bg_seed=True will add a background seed at the first frame (z=0).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="aicssegmentation.core.utils.histogram_otsu">
 <code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">histogram_otsu</code><span class="sig-paren">(</span><em class="sig-param">hist</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#histogram_otsu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.histogram_otsu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply Otsu thresholding method on 1D histogram</p>
@@ -569,6 +665,92 @@ is not a hole under 3D topology, but the inside on each slice
 is indeed a hole under 2D topology.</p>
 </dd>
 <dt>Return:</dt><dd><p>a binary image after hole filling</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.invert_mask">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">invert_mask</code><span class="sig-paren">(</span><em class="sig-param">img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#invert_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.invert_mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.mask_image">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">mask_image</code><span class="sig-paren">(</span><em class="sig-param">image</em>, <em class="sig-param">mask</em>, <em class="sig-param">value: int = 0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#mask_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.mask_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.peak_local_max_wrapper">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">peak_local_max_wrapper</code><span class="sig-paren">(</span><em class="sig-param">struct_img_for_peak: numpy.ndarray</em>, <em class="sig-param">bw: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/utils.html#peak_local_max_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.peak_local_max_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.prune_z_slices">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">prune_z_slices</code><span class="sig-paren">(</span><em class="sig-param">bw: numpy.ndarray</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#prune_z_slices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.prune_z_slices" title="Permalink to this definition">¶</a></dt>
+<dd><p>prune the segmentation by only keep a certain range of z-slices
+with the assumption of all signals living only in a few consecutive
+z-slices. This function will first determine the key z-slice where most
+of the signals living on and then include a few slices up/down along z
+to make the segmentation completed. This is useful when you have prior
+knowledge about your segmentation target and can effectively exclude
+small segmented objects due to noise/artifacts in those z-slices we are
+sure the signal should not live on.</p>
+<dl class="simple">
+<dt>bw: np.ndarray</dt><dd><p>the segmentation before pruning</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.remove_index_object">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">remove_index_object</code><span class="sig-paren">(</span><em class="sig-param">label: numpy.ndarray, id_to_remove: List[int] = [1], in_place=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#remove_index_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.remove_index_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.segmentation_intersection">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">segmentation_intersection</code><span class="sig-paren">(</span><em class="sig-param">seg: List</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/utils.html#segmentation_intersection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.segmentation_intersection" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the intersection of multiple segmentations into a single result</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seg</strong> (<em>List</em>) – a list of segmentations, should all have the same shape</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.segmentation_union">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">segmentation_union</code><span class="sig-paren">(</span><em class="sig-param">seg: List</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/utils.html#segmentation_union"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.segmentation_union" title="Permalink to this definition">¶</a></dt>
+<dd><p>merge multiple segmentations into a single result</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seg</strong> (<em>List</em>) – a list of segmentations, should all have the same shape</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.segmentation_xor">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">segmentation_xor</code><span class="sig-paren">(</span><em class="sig-param">seg: List</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/utils.html#segmentation_xor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.segmentation_xor" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the XOR of multiple segmentations into a single result</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seg</strong> (<em>List</em>) – a list of segmentations, should all have the same shape</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.size_filter">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">size_filter</code><span class="sig-paren">(</span><em class="sig-param">img: numpy.ndarray</em>, <em class="sig-param">min_size: int</em>, <em class="sig-param">method: str = '3D'</em>, <em class="sig-param">connectivity: int = 1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/utils.html#size_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.size_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>size filter</p>
+<dl class="simple">
+<dt>img: np.ndarray</dt><dd><p>the image to filter on</p>
+</dd>
+<dt>min_size: int</dt><dd><p>the minimum size to keep</p>
+</dd>
+<dt>method: str</dt><dd><p>either “3D” or “slice_by_slice”, default is “3D”</p>
+</dd>
+<dt>connnectivity: int</dt><dd><p>the connectivity to use when computing object size</p>
 </dd>
 </dl>
 </dd></dl>
@@ -602,6 +784,11 @@ and alter the topology), you can set this value as 2.</p>
 <div><p>A binary image after thinning</p>
 </div></blockquote>
 </dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.utils.watershed_wrapper">
+<code class="sig-prename descclassname">aicssegmentation.core.utils.</code><code class="sig-name descname">watershed_wrapper</code><span class="sig-paren">(</span><em class="sig-param">bw: numpy.ndarray</em>, <em class="sig-param">local_maxi: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/core/utils.html#watershed_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.utils.watershed_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-aicssegmentation.core.vessel">
@@ -668,7 +855,7 @@ images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</p>
 
 <dl class="function">
 <dt id="aicssegmentation.core.vessel.vesselness2D">
-<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselness2D</code><span class="sig-paren">(</span><em class="sig-param">nd_array: numpy.ndarray</em>, <em class="sig-param">sigmas: List</em>, <em class="sig-param">tau: float = 0.5</em>, <em class="sig-param">whiteonblack: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselness2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselness2D" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselness2D</code><span class="sig-paren">(</span><em class="sig-param">nd_array: numpy.ndarray</em>, <em class="sig-param">sigmas: List</em>, <em class="sig-param">tau: float = 1</em>, <em class="sig-param">whiteonblack: bool = True</em>, <em class="sig-param">cutoff: float = -1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselness2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselness2D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multi-scale 2D filament filter</p>
 <dl class="simple">
 <dt>nd_array: np.ndarray</dt><dd><p>the 2D image to be filterd on</p>
@@ -682,17 +869,22 @@ Default is 0.5</p>
 <dt>whiteonblack: bool</dt><dd><p>whether the filamentous structures are bright on dark background
 or dark on bright. Default is True.</p>
 </dd>
+<dt>cutoff: float</dt><dd><p>the cutoff value to apply on the filter result. If the cutoff is
+negative, no cutoff will be applied. Default is -1</p>
+</dd>
 </dl>
 <p>T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic
 images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="aicssegmentation.core.vessel.vesselness3D">
-<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselness3D</code><span class="sig-paren">(</span><em class="sig-param">nd_array</em>, <em class="sig-param">sigmas</em>, <em class="sig-param">tau=0.5</em>, <em class="sig-param">whiteonblack=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselness3D" title="Permalink to this definition">¶</a></dt>
-<dd><p>Multi-scale 3D filament filter</p>
+<dt id="aicssegmentation.core.vessel.vesselness2D_single_slice">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselness2D_single_slice</code><span class="sig-paren">(</span><em class="sig-param">nd_array: numpy.ndarray</em>, <em class="sig-param">single_z: int</em>, <em class="sig-param">sigmas: List</em>, <em class="sig-param">tau: float = 1</em>, <em class="sig-param">whiteonblack: bool = True</em>, <em class="sig-param">cutoff: float = -1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselness2D_single_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselness2D_single_slice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-scale 2D filament filter</p>
 <dl class="simple">
 <dt>nd_array: np.ndarray</dt><dd><p>the 3D image to be filterd on</p>
+</dd>
+<dt>single_z: int</dt><dd><p>the index of the slice to apply the filter</p>
 </dd>
 <dt>sigmas: List</dt><dd><p>a list of scales to use</p>
 </dd>
@@ -703,6 +895,33 @@ Default is 0.5</p>
 <dt>whiteonblack: bool</dt><dd><p>whether the filamentous structures are bright on dark background
 or dark on bright. Default is True.</p>
 </dd>
+<dt>cutoff: float</dt><dd><p>the cutoff value to apply on the filter result. If the cutoff is
+negative, no cutoff will be applied. Default is -1</p>
+</dd>
+</dl>
+<p>T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic
+images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aicssegmentation.core.vessel.vesselness3D">
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselness3D</code><span class="sig-paren">(</span><em class="sig-param">nd_array: numpy.ndarray</em>, <em class="sig-param">sigmas: List</em>, <em class="sig-param">tau=1</em>, <em class="sig-param">whiteonblack=True</em>, <em class="sig-param">cutoff: float = -1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselness3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselness3D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-scale 3D filament filter</p>
+<dl class="simple">
+<dt>nd_array: np.ndarray</dt><dd><p>the 3D image to be filterd on</p>
+</dd>
+<dt>sigmas: List</dt><dd><p>a list of scales to use</p>
+</dd>
+<dt>tau: float</dt><dd><p>parameter that controls response uniformity. The value has to be
+between 0.5 and 1. Lower tau means more intense output response.
+Default is 1</p>
+</dd>
+<dt>whiteonblack: bool</dt><dd><p>whether the filamentous structures are bright on dark background
+or dark on bright. Default is True.</p>
+</dd>
+<dt>cutoff: float</dt><dd><p>the cutoff value to apply on the filter result. If the cutoff is
+negative, no cutoff will be applied. Default is -1</p>
+</dd>
 </dl>
 <p>T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic
 images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</p>
@@ -710,7 +929,7 @@ images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</p>
 
 <dl class="function">
 <dt id="aicssegmentation.core.vessel.vesselnessSliceBySlice">
-<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselnessSliceBySlice</code><span class="sig-paren">(</span><em class="sig-param">nd_array: numpy.ndarray</em>, <em class="sig-param">sigmas: List</em>, <em class="sig-param">tau: float = 0.5</em>, <em class="sig-param">whiteonblack: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselnessSliceBySlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselnessSliceBySlice" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aicssegmentation.core.vessel.</code><code class="sig-name descname">vesselnessSliceBySlice</code><span class="sig-paren">(</span><em class="sig-param">nd_array: numpy.ndarray</em>, <em class="sig-param">sigmas: List</em>, <em class="sig-param">tau: float = 1</em>, <em class="sig-param">whiteonblack: bool = True</em>, <em class="sig-param">cutoff: float = -1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/core/vessel.html#vesselnessSliceBySlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.core.vessel.vesselnessSliceBySlice" title="Permalink to this definition">¶</a></dt>
 <dd><p>wrapper for applying multi-scale 2D filament filter on 3D images in a
 slice by slice fashion</p>
 <dl class="simple">
@@ -724,6 +943,9 @@ Default is 0.5</p>
 </dd>
 <dt>whiteonblack: bool</dt><dd><p>whether the filamentous structures are bright on dark background
 or dark on bright. Default is True.</p>
+</dd>
+<dt>cutoff: float</dt><dd><p>the cutoff value to apply on the filter result. If the cutoff is
+negative, no cutoff will be applied. Default is -1</p>
 </dd>
 </dl>
 </dd></dl>

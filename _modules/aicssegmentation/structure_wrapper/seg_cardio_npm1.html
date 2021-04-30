@@ -102,6 +102,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.cli.html">aicssegmentation.cli package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.core.html">aicssegmentation.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper_config.html">aicssegmentation.structure_wrapper_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.util.html">aicssegmentation.util package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.workflow.html">aicssegmentation.workflow package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
@@ -260,12 +263,8 @@
     <span class="k">if</span> <span class="n">rescale_ratio</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">struct_img</span> <span class="o">=</span> <span class="n">zoom</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-        <span class="n">struct_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct_img</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-            <span class="n">struct_img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span>
-        <span class="p">)</span>
-        <span class="n">gaussian_smoothing_truncate_range</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">gaussian_smoothing_truncate_range</span> <span class="o">*</span> <span class="n">rescale_ratio</span>
-        <span class="p">)</span>
+        <span class="n">struct_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct_img</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+        <span class="n">gaussian_smoothing_truncate_range</span> <span class="o">=</span> <span class="n">gaussian_smoothing_truncate_range</span> <span class="o">*</span> <span class="n">rescale_ratio</span>
 
     <span class="c1"># smoothing with gaussian filter</span>
     <span class="n">structure_img_smooth</span> <span class="o">=</span> <span class="n">image_smoothing_gaussian_3d</span><span class="p">(</span>
@@ -294,9 +293,7 @@
     <span class="c1"># imsave(&#39;img_smooth.tiff&#39;, structure_img_smooth)</span>
 
     <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">structure_img_smooth</span> <span class="o">&gt;</span> <span class="n">th_low_level</span>
-    <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span>
-        <span class="n">bw_low_level</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">low_level_min_size</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>
+    <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw_low_level</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">low_level_min_size</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">dilation</span><span class="p">(</span><span class="n">bw_low_level</span><span class="p">,</span> <span class="n">selem</span><span class="o">=</span><span class="n">ball</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 
     <span class="c1"># step 2: high level thresholding</span>
@@ -307,9 +304,7 @@
         <span class="n">single_obj</span> <span class="o">=</span> <span class="n">lab_low</span> <span class="o">==</span> <span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">local_otsu</span> <span class="o">=</span> <span class="n">threshold_otsu</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">[</span><span class="n">single_obj</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">local_otsu</span> <span class="o">&gt;</span> <span class="n">local_cutoff</span><span class="p">:</span>
-            <span class="n">bw_high_level</span><span class="p">[</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">structure_img_smooth</span> <span class="o">&gt;</span> <span class="mf">0.98</span> <span class="o">*</span> <span class="n">local_otsu</span><span class="p">,</span> <span class="n">single_obj</span><span class="p">)</span>
-            <span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">bw_high_level</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">structure_img_smooth</span> <span class="o">&gt;</span> <span class="mf">0.98</span> <span class="o">*</span> <span class="n">local_otsu</span><span class="p">,</span> <span class="n">single_obj</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="c1"># imsave(&#39;seg_coarse.tiff&#39;, bw_high_level.astype(np.uint8))</span>
 
@@ -327,9 +322,7 @@
     <span class="c1">###################</span>
     <span class="c1"># POST-PROCESSING</span>
     <span class="c1">###################</span>
-    <span class="n">seg</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span>
-        <span class="n">bw_final</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw_final</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># output</span>
     <span class="n">seg</span> <span class="o">=</span> <span class="n">seg</span> <span class="o">&gt;</span> <span class="mi">0</span>

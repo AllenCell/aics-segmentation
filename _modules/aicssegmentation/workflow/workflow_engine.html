@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>aicssegmentation.workflow.workflow_engine &mdash; aicssegmentation 0.1.22 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> aicssegmentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.22
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../aicssegmentation.html">aicssegmentation package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.bin.html">aicssegmentation.bin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.cli.html">aicssegmentation.cli package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.core.html">aicssegmentation.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper_config.html">aicssegmentation.structure_wrapper_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.util.html">aicssegmentation.util package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.workflow.html">aicssegmentation.workflow package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">aicssegmentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../aicssegmentation.html">aicssegmentation</a> &raquo;</li>
+        
+      <li>aicssegmentation.workflow.workflow_engine</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for aicssegmentation.workflow.workflow_engine</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">.workflow</span> <span class="kn">import</span> <span class="n">Workflow</span>
+<span class="kn">from</span> <span class="nn">.workflow_definition</span> <span class="kn">import</span> <span class="n">WorkflowDefinition</span>
+<span class="kn">from</span> <span class="nn">.structure_wrapper_config</span> <span class="kn">import</span> <span class="n">StructureWrapperConfig</span>
+
+
+<div class="viewcode-block" id="WorkflowEngine"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow_engine.WorkflowEngine">[docs]</a><span class="k">class</span> <span class="nc">WorkflowEngine</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    aicssegmentation workflow engine</span>
+<span class="sd">    Use this class to access and execute aicssegmentation structure workflows</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure_config</span><span class="p">:</span> <span class="n">StructureWrapperConfig</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_structure_config</span> <span class="o">=</span> <span class="n">structure_config</span> <span class="ow">or</span> <span class="n">StructureWrapperConfig</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_workflow_definitions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_workflow_definitions</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">workflow_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WorkflowDefinition</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List of all workflow definitions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workflow_definitions</span>
+
+<div class="viewcode-block" id="WorkflowEngine.get_executable_workflow"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow_engine.WorkflowEngine.get_executable_workflow">[docs]</a>    <span class="k">def</span> <span class="nf">get_executable_workflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workflow_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">input_image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Workflow</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an executable workflow object</span>
+
+<span class="sd">        inputs:</span>
+<span class="sd">            workflow_name (str): Name of the workflow to load</span>
+<span class="sd">            image (ndarray): input image for the workflow to execute on</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">input_image</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;input_image&quot;</span><span class="p">)</span>
+
+        <span class="n">definition</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">workflow_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workflow_definitions</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">definition</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;No available workflow definition found for </span><span class="si">{</span><span class="n">workflow_name</span><span class="si">}</span><span class="s2">. Specify a valid workflow name.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">definition</span><span class="p">,</span> <span class="n">input_image</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_load_workflow_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WorkflowDefinition</span><span class="p">]:</span>
+        <span class="n">definitions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">available_workflows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_structure_config</span><span class="o">.</span><span class="n">get_available_workflows</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">available_workflows</span><span class="p">:</span>
+            <span class="n">definitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_structure_config</span><span class="o">.</span><span class="n">get_workflow_definition</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">definitions</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Jianxu Chen.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -102,6 +102,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.cli.html">aicssegmentation.cli package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.core.html">aicssegmentation.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper_config.html">aicssegmentation.structure_wrapper_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.util.html">aicssegmentation.util package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.workflow.html">aicssegmentation.workflow package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
@@ -228,9 +231,7 @@
 <span class="sd">            original filename (without extension) will be passed in to output_func.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># there was a typo, reproduced here to keep any code relying on the typo working</span>
-    <span class="k">return</span> <span class="n">Workflow_actn1</span><span class="p">(</span>
-        <span class="n">struct_img</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">output_func</span>
-    <span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">Workflow_actn1</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">output_func</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Workflow_actn1"><a class="viewcode-back" href="../../../aicssegmentation.structure_wrapper.html#aicssegmentation.structure_wrapper.seg_actn1.Workflow_actn1">[docs]</a><span class="k">def</span> <span class="nf">Workflow_actn1</span><span class="p">(</span>
@@ -290,9 +291,7 @@
     <span class="c1"># rescale if needed</span>
     <span class="k">if</span> <span class="n">rescale_ratio</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">struct_img</span> <span class="o">=</span> <span class="n">zoom</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">struct_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct_img</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-            <span class="n">struct_img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span>
-        <span class="p">)</span>
+        <span class="n">struct_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct_img</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
 
     <span class="c1"># smoothing</span>
     <span class="n">structure_img_smooth</span> <span class="o">=</span> <span class="n">edge_preserving_smoothing_3d</span><span class="p">(</span><span class="n">struct_img</span><span class="p">)</span>
@@ -305,15 +304,9 @@
     <span class="c1">###################</span>
 
     <span class="c1"># vesselness 3d</span>
-    <span class="n">response_1</span> <span class="o">=</span> <span class="n">vesselness3D</span><span class="p">(</span>
-        <span class="n">structure_img_smooth</span><span class="p">,</span> <span class="n">sigmas</span><span class="o">=</span><span class="n">vesselness_sigma_1</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>
-    <span class="n">response_2</span> <span class="o">=</span> <span class="n">vesselness3D</span><span class="p">(</span>
-        <span class="n">structure_img_smooth</span><span class="p">,</span> <span class="n">sigmas</span><span class="o">=</span><span class="n">vesselness_sigma_2</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>
-    <span class="n">bw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span>
-        <span class="n">response_1</span> <span class="o">&gt;</span> <span class="n">vesselness_cutoff_1</span><span class="p">,</span> <span class="n">response_2</span> <span class="o">&gt;</span> <span class="n">vesselness_cutoff_2</span>
-    <span class="p">)</span>
+    <span class="n">response_1</span> <span class="o">=</span> <span class="n">vesselness3D</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">,</span> <span class="n">sigmas</span><span class="o">=</span><span class="n">vesselness_sigma_1</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">response_2</span> <span class="o">=</span> <span class="n">vesselness3D</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">,</span> <span class="n">sigmas</span><span class="o">=</span><span class="n">vesselness_sigma_2</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">bw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">response_1</span> <span class="o">&gt;</span> <span class="n">vesselness_cutoff_1</span><span class="p">,</span> <span class="n">response_2</span> <span class="o">&gt;</span> <span class="n">vesselness_cutoff_2</span><span class="p">)</span>
 
     <span class="c1">###################</span>
     <span class="c1"># POST-PROCESSING</span>

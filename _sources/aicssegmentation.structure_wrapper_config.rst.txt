@@ -1,0 +1,10 @@
+aicssegmentation.structure\_wrapper\_config package
+===================================================
+
+Module contents
+---------------
+
+.. automodule:: aicssegmentation.structure_wrapper_config
+   :members:
+   :undoc-members:
+   :show-inheritance:

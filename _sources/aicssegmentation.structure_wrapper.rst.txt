@@ -156,10 +156,10 @@ aicssegmentation.structure\_wrapper.seg\_gja1 module
    :undoc-members:
    :show-inheritance:
 
-aicssegmentation.structure\_wrapper.seg\_h2b module
----------------------------------------------------
+aicssegmentation.structure\_wrapper.seg\_h2b\_interphase module
+---------------------------------------------------------------
 
-.. automodule:: aicssegmentation.structure_wrapper.seg_h2b
+.. automodule:: aicssegmentation.structure_wrapper.seg_h2b_interphase
    :members:
    :undoc-members:
    :show-inheritance:

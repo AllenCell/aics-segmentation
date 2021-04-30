@@ -102,6 +102,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.cli.html">aicssegmentation.cli package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.core.html">aicssegmentation.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper_config.html">aicssegmentation.structure_wrapper_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.util.html">aicssegmentation.util package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.workflow.html">aicssegmentation.workflow package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
@@ -254,9 +257,7 @@
     <span class="k">if</span> <span class="n">rescale_ratio</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">struct_img</span> <span class="o">=</span> <span class="n">zoom</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-        <span class="n">struct_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct_img</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-            <span class="n">struct_img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span>
-        <span class="p">)</span>
+        <span class="n">struct_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct_img</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
 
     <span class="c1"># smoothing with boundary preserving smoothing</span>
     <span class="n">structure_img_smooth</span> <span class="o">=</span> <span class="n">edge_preserving_smoothing_3d</span><span class="p">(</span><span class="n">struct_img</span><span class="p">)</span>
@@ -269,9 +270,7 @@
     <span class="c1">###################</span>
 
     <span class="c1"># 2d vesselness slice by slice</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">vesselnessSliceBySlice</span><span class="p">(</span>
-        <span class="n">structure_img_smooth</span><span class="p">,</span> <span class="n">sigmas</span><span class="o">=</span><span class="n">vesselness_sigma</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">vesselnessSliceBySlice</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">,</span> <span class="n">sigmas</span><span class="o">=</span><span class="n">vesselness_sigma</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">bw</span> <span class="o">=</span> <span class="n">response</span> <span class="o">&gt;</span> <span class="n">vesselness_cutoff</span>
 
     <span class="c1">###################</span>
@@ -279,9 +278,7 @@
     <span class="c1">###################</span>
     <span class="n">bw</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">zz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-        <span class="n">bw</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span>
-            <span class="n">bw</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">False</span>
-        <span class="p">)</span>
+        <span class="n">bw</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="n">seg</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 

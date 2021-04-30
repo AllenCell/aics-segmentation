@@ -10,6 +10,9 @@ Subpackages
    aicssegmentation.cli
    aicssegmentation.core
    aicssegmentation.structure_wrapper
+   aicssegmentation.structure_wrapper_config
+   aicssegmentation.util
+   aicssegmentation.workflow
 
 Module contents
 ---------------

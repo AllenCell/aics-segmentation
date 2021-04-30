@@ -102,6 +102,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.cli.html">aicssegmentation.cli package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.core.html">aicssegmentation.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper_config.html">aicssegmentation.structure_wrapper_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.util.html">aicssegmentation.util package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.workflow.html">aicssegmentation.workflow package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
@@ -348,7 +351,7 @@
 
 
 <div class="viewcode-block" id="img_seg_combine"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.img_seg_combine">[docs]</a><span class="k">def</span> <span class="nf">img_seg_combine</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Full&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot; creating raw and segmentation side-by-side for visualizaiton &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;creating raw and segmentation side-by-side for visualizaiton&quot;&quot;&quot;</span>
     <span class="c1"># normalize to 0~1</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
     <span class="n">img</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span> <span class="o">-</span> <span class="n">img</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">img</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
@@ -370,7 +373,7 @@
 
 
 <div class="viewcode-block" id="seg_fluo_side_by_side"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.seg_fluo_side_by_side">[docs]</a><span class="k">def</span> <span class="nf">seg_fluo_side_by_side</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Full&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot; wrapper for displaying raw and segmentation side by side&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;wrapper for displaying raw and segmentation side by side&quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">img_seg_combine</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">roi</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">out</span></div>

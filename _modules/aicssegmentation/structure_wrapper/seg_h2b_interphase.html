@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>aicssegmentation.structure_wrapper.seg_h2b &mdash; aicssegmentation 0.1.22 documentation</title>
+  <title>aicssegmentation.structure_wrapper.seg_h2b_interphase &mdash; aicssegmentation 0.1.22 documentation</title>
   
 
   
@@ -102,6 +102,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.cli.html">aicssegmentation.cli package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.core.html">aicssegmentation.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper_config.html">aicssegmentation.structure_wrapper_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.util.html">aicssegmentation.util package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.workflow.html">aicssegmentation.workflow package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
@@ -166,7 +169,7 @@
         
           <li><a href="../../aicssegmentation.html">aicssegmentation</a> &raquo;</li>
         
-      <li>aicssegmentation.structure_wrapper.seg_h2b</li>
+      <li>aicssegmentation.structure_wrapper.seg_h2b_interphase</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -181,7 +184,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for aicssegmentation.structure_wrapper.seg_h2b</h1><div class="highlight"><pre>
+  <h1>Source code for aicssegmentation.structure_wrapper.seg_h2b_interphase</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -198,7 +201,7 @@
 <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">zoom</span>
 
 
-<div class="viewcode-block" id="Workflow_h2b"><a class="viewcode-back" href="../../../aicssegmentation.structure_wrapper.html#aicssegmentation.structure_wrapper.seg_h2b.Workflow_h2b">[docs]</a><span class="k">def</span> <span class="nf">Workflow_h2b</span><span class="p">(</span>
+<div class="viewcode-block" id="Workflow_h2b_interphase"><a class="viewcode-back" href="../../../aicssegmentation.structure_wrapper.html#aicssegmentation.structure_wrapper.seg_h2b_interphase.Workflow_h2b_interphase">[docs]</a><span class="k">def</span> <span class="nf">Workflow_h2b_interphase</span><span class="p">(</span>
     <span class="n">struct_img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">rescale_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">output_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span>
@@ -253,9 +256,7 @@
     <span class="k">if</span> <span class="n">rescale_ratio</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">struct_img</span> <span class="o">=</span> <span class="n">zoom</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-        <span class="n">struct_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct_img</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-            <span class="n">struct_img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span>
-        <span class="p">)</span>
+        <span class="n">struct_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct_img</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
 
     <span class="c1"># smoothing with gaussian filter</span>
     <span class="n">structure_img_smooth</span> <span class="o">=</span> <span class="n">edge_preserving_smoothing_3d</span><span class="p">(</span><span class="n">struct_img</span><span class="p">)</span>

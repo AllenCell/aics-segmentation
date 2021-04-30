@@ -1,0 +1,30 @@
+aicssegmentation.util package
+=============================
+
+Submodules
+----------
+
+aicssegmentation.util.directories module
+----------------------------------------
+
+.. automodule:: aicssegmentation.util.directories
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.util.lazy module
+---------------------------------
+
+.. automodule:: aicssegmentation.util.lazy
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: aicssegmentation.util
+   :members:
+   :undoc-members:
+   :show-inheritance:

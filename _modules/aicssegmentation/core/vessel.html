@@ -102,6 +102,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.cli.html">aicssegmentation.cli package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.core.html">aicssegmentation.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper_config.html">aicssegmentation.structure_wrapper_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.util.html">aicssegmentation.util package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.workflow.html">aicssegmentation.workflow package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
@@ -217,9 +220,7 @@
     <span class="n">bw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">fid</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">f3_param</span><span class="p">)):</span>
         <span class="n">sigma</span> <span class="o">=</span> <span class="n">f3_param</span><span class="p">[</span><span class="n">fid</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span>
-            <span class="n">struct_img</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
-        <span class="p">)</span>
+        <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">responce</span> <span class="o">=</span> <span class="n">compute_vesselness3D</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">bw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">bw</span><span class="p">,</span> <span class="n">responce</span> <span class="o">&gt;</span> <span class="n">f3_param</span><span class="p">[</span><span class="n">fid</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">bw</span></div>
@@ -256,9 +257,7 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">fid</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">f2_param</span><span class="p">)):</span>
             <span class="n">sigma</span> <span class="o">=</span> <span class="n">f2_param</span><span class="p">[</span><span class="n">fid</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span>
-                <span class="n">struct_img</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
-            <span class="p">)</span>
+            <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">responce</span> <span class="o">=</span> <span class="n">compute_vesselness2D</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
             <span class="n">bw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">bw</span><span class="p">,</span> <span class="n">responce</span> <span class="o">&gt;</span> <span class="n">f2_param</span><span class="p">[</span><span class="n">fid</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
@@ -269,18 +268,14 @@
             <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">struct_img</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">zz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
                 <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">struct_img</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">mip</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span>
-                    <span class="n">tmp</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
-                <span class="p">)</span>
+                <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="n">responce</span> <span class="o">=</span> <span class="n">compute_vesselness2D</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">res</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">responce</span><span class="p">[</span>
-                    <span class="p">:,</span> <span class="p">:</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">3</span>
-                <span class="p">]</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">responce</span><span class="p">[:,</span> <span class="p">:</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">3</span><span class="p">]</span>
             <span class="n">bw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">bw</span><span class="p">,</span> <span class="n">res</span> <span class="o">&gt;</span> <span class="n">f2_param</span><span class="p">[</span><span class="n">fid</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">bw</span></div>
 
 
-<div class="viewcode-block" id="vesselness3D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.vesselness3D">[docs]</a><span class="k">def</span> <span class="nf">vesselness3D</span><span class="p">(</span><span class="n">nd_array</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="vesselness3D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.vesselness3D">[docs]</a><span class="k">def</span> <span class="nf">vesselness3D</span><span class="p">(</span><span class="n">nd_array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Multi-scale 3D filament filter</span>
 
 <span class="sd">    Parameters:</span>
@@ -292,10 +287,13 @@
 <span class="sd">    tau: float</span>
 <span class="sd">        parameter that controls response uniformity. The value has to be</span>
 <span class="sd">        between 0.5 and 1. Lower tau means more intense output response.</span>
-<span class="sd">        Default is 0.5</span>
+<span class="sd">        Default is 1</span>
 <span class="sd">    whiteonblack: bool</span>
 <span class="sd">        whether the filamentous structures are bright on dark background</span>
 <span class="sd">        or dark on bright. Default is True.</span>
+<span class="sd">    cutoff: float</span>
+<span class="sd">        the cutoff value to apply on the filter result. If the cutoff is</span>
+<span class="sd">        negative, no cutoff will be applied. Default is -1</span>
 
 <span class="sd">    Reference:</span>
 <span class="sd">    ------------</span>
@@ -320,18 +318,22 @@
     <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sigmas</span><span class="p">):</span>
-        <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span>
-            <span class="n">nd_array</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
-        <span class="p">)</span>
-        <span class="n">filtered_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_vesselness3D</span><span class="p">(</span>
-            <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span>
-        <span class="p">)</span>
+        <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span><span class="n">nd_array</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">filtered_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_vesselness3D</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">filtered_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">filtered_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">cutoff</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span> <span class="o">&gt;</span> <span class="n">cutoff</span></div>
 
 
 <div class="viewcode-block" id="vesselness2D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.vesselness2D">[docs]</a><span class="k">def</span> <span class="nf">vesselness2D</span><span class="p">(</span>
-    <span class="n">nd_array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">tau</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">nd_array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">sigmas</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span>
+    <span class="n">tau</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">whiteonblack</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">cutoff</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Multi-scale 2D filament filter</span>
 
@@ -348,6 +350,9 @@
 <span class="sd">    whiteonblack: bool</span>
 <span class="sd">        whether the filamentous structures are bright on dark background</span>
 <span class="sd">        or dark on bright. Default is True.</span>
+<span class="sd">    cutoff: float</span>
+<span class="sd">        the cutoff value to apply on the filter result. If the cutoff is</span>
+<span class="sd">        negative, no cutoff will be applied. Default is -1</span>
 
 <span class="sd">    Reference:</span>
 <span class="sd">    ------------</span>
@@ -372,18 +377,73 @@
     <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sigmas</span><span class="p">):</span>
-        <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span>
-            <span class="n">nd_array</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span>
-        <span class="p">)</span>
-        <span class="c1"># print(eigenvalues[1])</span>
-        <span class="c1"># print(eigenvalues[2])</span>
+        <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">absolute_3d_hessian_eigenvalues</span><span class="p">(</span><span class="n">nd_array</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">filtered_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_vesselness2D</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">filtered_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">filtered_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">cutoff</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span> <span class="o">&gt;</span> <span class="n">cutoff</span></div>
+
+
+<div class="viewcode-block" id="vesselness2D_single_slice"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.vesselness2D_single_slice">[docs]</a><span class="k">def</span> <span class="nf">vesselness2D_single_slice</span><span class="p">(</span>
+    <span class="n">nd_array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">single_z</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">sigmas</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span>
+    <span class="n">tau</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">whiteonblack</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">cutoff</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Multi-scale 2D filament filter</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    nd_array: np.ndarray</span>
+<span class="sd">        the 3D image to be filterd on</span>
+<span class="sd">    single_z: int</span>
+<span class="sd">        the index of the slice to apply the filter</span>
+<span class="sd">    sigmas: List</span>
+<span class="sd">        a list of scales to use</span>
+<span class="sd">    tau: float</span>
+<span class="sd">        parameter that controls response uniformity. The value has to be</span>
+<span class="sd">        between 0.5 and 1. Lower tau means more intense output response.</span>
+<span class="sd">        Default is 0.5</span>
+<span class="sd">    whiteonblack: bool</span>
+<span class="sd">        whether the filamentous structures are bright on dark background</span>
+<span class="sd">        or dark on bright. Default is True.</span>
+<span class="sd">    cutoff: float</span>
+<span class="sd">        the cutoff value to apply on the filter result. If the cutoff is</span>
+<span class="sd">        negative, no cutoff will be applied. Default is -1</span>
+
+<span class="sd">    Reference:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic</span>
+<span class="sd">    images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">nd_array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only 3 dimensions is currently supported&quot;</span><span class="p">))</span>
+
+    <span class="c1"># adapted from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74  # noqa E501</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigmas</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Sigma values less than zero are not valid&quot;</span><span class="p">)</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nd_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">response</span><span class="p">[</span><span class="n">single_z</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">vesselness2D</span><span class="p">(</span><span class="n">nd_array</span><span class="p">[</span><span class="n">single_z</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">sigmas</span><span class="o">=</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">cutoff</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span> <span class="o">&gt;</span> <span class="n">cutoff</span></div>
 
 
 <div class="viewcode-block" id="vesselnessSliceBySlice"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.vesselnessSliceBySlice">[docs]</a><span class="k">def</span> <span class="nf">vesselnessSliceBySlice</span><span class="p">(</span>
-    <span class="n">nd_array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">tau</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">nd_array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">sigmas</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span>
+    <span class="n">tau</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">whiteonblack</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">cutoff</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    wrapper for applying multi-scale 2D filament filter on 3D images in a</span>
@@ -402,6 +462,9 @@
 <span class="sd">    whiteonblack: bool</span>
 <span class="sd">        whether the filamentous structures are bright on dark background</span>
 <span class="sd">        or dark on bright. Default is True.</span>
+<span class="sd">    cutoff: float</span>
+<span class="sd">        the cutoff value to apply on the filter result. If the cutoff is</span>
+<span class="sd">        negative, no cutoff will be applied. Default is -1</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">mip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">nd_array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -411,20 +474,19 @@
         <span class="n">tmp</span> <span class="o">=</span> <span class="n">vesselness2D</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">sigmas</span><span class="o">=</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">whiteonblack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">response</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:</span> <span class="n">nd_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[:,</span> <span class="p">:</span> <span class="n">nd_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">3</span><span class="p">]</span>
 
-    <span class="k">return</span> <span class="n">response</span></div>
+    <span class="k">if</span> <span class="n">cutoff</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span> <span class="o">&gt;</span> <span class="n">cutoff</span></div>
 
 
 <div class="viewcode-block" id="compute_vesselness3D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.compute_vesselness3D">[docs]</a><span class="k">def</span> <span class="nf">compute_vesselness3D</span><span class="p">(</span><span class="n">eigen2</span><span class="p">,</span> <span class="n">eigen3</span><span class="p">,</span> <span class="n">tau</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; backend for computing 3D filament filter &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;backend for computing 3D filament filter&quot;&quot;&quot;</span>
 
     <span class="n">lambda3m</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">eigen3</span><span class="p">)</span>
-    <span class="n">lambda3m</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">eigen3</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">eigen3</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">tau</span> <span class="o">*</span> <span class="n">eigen3</span><span class="o">.</span><span class="n">min</span><span class="p">()))]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">tau</span> <span class="o">*</span> <span class="n">eigen3</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-    <span class="p">)</span>
+    <span class="n">lambda3m</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">eigen3</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">eigen3</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">tau</span> <span class="o">*</span> <span class="n">eigen3</span><span class="o">.</span><span class="n">min</span><span class="p">()))]</span> <span class="o">=</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">eigen3</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">eigen2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">lambda3m</span> <span class="o">-</span> <span class="n">eigen2</span><span class="p">))</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">divide_nonzero</span><span class="p">(</span>
-        <span class="mi">27</span> <span class="o">*</span> <span class="n">response</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eigen2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">lambda3m</span> <span class="o">-</span> <span class="n">eigen2</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">divide_nonzero</span><span class="p">(</span><span class="mi">27</span> <span class="o">*</span> <span class="n">response</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eigen2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">lambda3m</span> <span class="o">-</span> <span class="n">eigen2</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
 
     <span class="n">response</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">less</span><span class="p">(</span><span class="n">eigen2</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">lambda3m</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">response</span><span class="p">[</span><span class="n">eigen2</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -435,17 +497,13 @@
 
 
 <div class="viewcode-block" id="compute_vesselness2D"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.vessel.compute_vesselness2D">[docs]</a><span class="k">def</span> <span class="nf">compute_vesselness2D</span><span class="p">(</span><span class="n">eigen2</span><span class="p">,</span> <span class="n">tau</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; backend for computing 2D filament filter &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;backend for computing 2D filament filter&quot;&quot;&quot;</span>
 
     <span class="n">Lambda3</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">eigen2</span><span class="p">)</span>
-    <span class="n">Lambda3</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">Lambda3</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Lambda3</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">tau</span> <span class="o">*</span> <span class="n">Lambda3</span><span class="o">.</span><span class="n">min</span><span class="p">()))]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">tau</span> <span class="o">*</span> <span class="n">Lambda3</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-    <span class="p">)</span>
+    <span class="n">Lambda3</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">Lambda3</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Lambda3</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">tau</span> <span class="o">*</span> <span class="n">Lambda3</span><span class="o">.</span><span class="n">min</span><span class="p">()))]</span> <span class="o">=</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">Lambda3</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 
     <span class="n">response</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">eigen2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Lambda3</span> <span class="o">-</span> <span class="n">eigen2</span><span class="p">))</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">divide_nonzero</span><span class="p">(</span>
-        <span class="mi">27</span> <span class="o">*</span> <span class="n">response</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eigen2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Lambda3</span> <span class="o">-</span> <span class="n">eigen2</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">divide_nonzero</span><span class="p">(</span><span class="mi">27</span> <span class="o">*</span> <span class="n">response</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eigen2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Lambda3</span> <span class="o">-</span> <span class="n">eigen2</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
 
     <span class="n">response</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">less</span><span class="p">(</span><span class="n">eigen2</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">Lambda3</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">response</span><span class="p">[</span><span class="n">eigen2</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
