@@ -9,9 +9,7 @@ from aicssegmentation.core.output_utils import (
 )
 
 
-def Workflow_template(
-    struct_img, rescale_ratio, output_type, output_path, fn, output_func=None
-):
+def Workflow_template(struct_img, rescale_ratio, output_type, output_path, fn, output_func=None):
     ##########################################################################
     # PARAMETERS:
 

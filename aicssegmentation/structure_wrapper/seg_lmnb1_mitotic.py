@@ -73,9 +73,7 @@ def Workflow_lmnb1_mitotic(
     if rescale_ratio > 0:
         struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
 
-        struct_img = (struct_img - struct_img.min() + 1e-8) / (
-            struct_img.max() - struct_img.min() + 1e-8
-        )
+        struct_img = (struct_img - struct_img.min() + 1e-8) / (struct_img.max() - struct_img.min() + 1e-8)
 
     # smoothing with boundary preserving smoothing
     structure_img_smooth = image_smoothing_gaussian_3d(

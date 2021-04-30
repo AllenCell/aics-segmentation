@@ -33,9 +33,7 @@ def filament_3d_wrapper(struct_img: np.ndarray, f3_param: List[List]):
     bw = np.zeros(struct_img.shape, dtype=bool)
     for fid in range(len(f3_param)):
         sigma = f3_param[fid][0]
-        eigenvalues = absolute_3d_hessian_eigenvalues(
-            struct_img, sigma=sigma, scale=True, whiteonblack=True
-        )
+        eigenvalues = absolute_3d_hessian_eigenvalues(struct_img, sigma=sigma, scale=True, whiteonblack=True)
         responce = compute_vesselness3D(eigenvalues[1], eigenvalues[2], tau=1)
         bw = np.logical_or(bw, responce > f3_param[fid][1])
     return bw
@@ -72,9 +70,7 @@ def filament_2d_wrapper(struct_img: np.ndarray, f2_param: List[List]):
     if len(struct_img.shape) == 2:
         for fid in range(len(f2_param)):
             sigma = f2_param[fid][0]
-            eigenvalues = absolute_3d_hessian_eigenvalues(
-                struct_img, sigma=sigma, scale=True, whiteonblack=True
-            )
+            eigenvalues = absolute_3d_hessian_eigenvalues(struct_img, sigma=sigma, scale=True, whiteonblack=True)
             responce = compute_vesselness2D(eigenvalues[1], tau=1)
             bw = np.logical_or(bw, responce > f2_param[fid][1])
     elif len(struct_img.shape) == 3:
@@ -85,18 +81,14 @@ def filament_2d_wrapper(struct_img: np.ndarray, f2_param: List[List]):
             res = np.zeros_like(struct_img)
             for zz in range(struct_img.shape[0]):
                 tmp = np.concatenate((struct_img[zz, :, :], mip), axis=1)
-                eigenvalues = absolute_3d_hessian_eigenvalues(
-                    tmp, sigma=sigma, scale=True, whiteonblack=True
-                )
+                eigenvalues = absolute_3d_hessian_eigenvalues(tmp, sigma=sigma, scale=True, whiteonblack=True)
                 responce = compute_vesselness2D(eigenvalues[1], tau=1)
-                res[zz, :, : struct_img.shape[2] - 3] = responce[
-                    :, : struct_img.shape[2] - 3
-                ]
+                res[zz, :, : struct_img.shape[2] - 3] = responce[:, : struct_img.shape[2] - 3]
             bw = np.logical_or(bw, res > f2_param[fid][1])
     return bw
 
 
-def vesselness3D(nd_array, sigmas, tau=0.5, whiteonblack=True):
+def vesselness3D(nd_array: np.ndarray, sigmas: List, tau=1, whiteonblack=True, cutoff: float = -1):
     """Multi-scale 3D filament filter
 
     Parameters:
@@ -108,10 +100,13 @@ def vesselness3D(nd_array, sigmas, tau=0.5, whiteonblack=True):
     tau: float
         parameter that controls response uniformity. The value has to be
         between 0.5 and 1. Lower tau means more intense output response.
-        Default is 0.5
+        Default is 1
     whiteonblack: bool
         whether the filamentous structures are bright on dark background
         or dark on bright. Default is True.
+    cutoff: float
+        the cutoff value to apply on the filter result. If the cutoff is
+        negative, no cutoff will be applied. Default is -1
 
     Reference:
     ------------
@@ -136,18 +131,22 @@ def vesselness3D(nd_array, sigmas, tau=0.5, whiteonblack=True):
     )
 
     for i, sigma in enumerate(sigmas):
-        eigenvalues = absolute_3d_hessian_eigenvalues(
-            nd_array, sigma=sigma, scale=True, whiteonblack=True
-        )
-        filtered_array[i] = compute_vesselness3D(
-            eigenvalues[1], eigenvalues[2], tau=tau
-        )
+        eigenvalues = absolute_3d_hessian_eigenvalues(nd_array, sigma=sigma, scale=True, whiteonblack=True)
+        filtered_array[i] = compute_vesselness3D(eigenvalues[1], eigenvalues[2], tau=tau)
+    response = np.max(filtered_array, axis=0)
 
-    return np.max(filtered_array, axis=0)
+    if cutoff < 0:
+        return response
+    else:
+        return response > cutoff
 
 
 def vesselness2D(
-    nd_array: np.ndarray, sigmas: List, tau: float = 0.5, whiteonblack: bool = True
+    nd_array: np.ndarray,
+    sigmas: List,
+    tau: float = 1,
+    whiteonblack: bool = True,
+    cutoff: float = -1,
 ):
     """Multi-scale 2D filament filter
 
@@ -164,6 +163,9 @@ def vesselness2D(
     whiteonblack: bool
         whether the filamentous structures are bright on dark background
         or dark on bright. Default is True.
+    cutoff: float
+        the cutoff value to apply on the filter result. If the cutoff is
+        negative, no cutoff will be applied. Default is -1
 
     Reference:
     ------------
@@ -188,18 +190,73 @@ def vesselness2D(
     )
 
     for i, sigma in enumerate(sigmas):
-        eigenvalues = absolute_3d_hessian_eigenvalues(
-            nd_array, sigma=sigma, scale=True, whiteonblack=True
-        )
-        # print(eigenvalues[1])
-        # print(eigenvalues[2])
+        eigenvalues = absolute_3d_hessian_eigenvalues(nd_array, sigma=sigma, scale=True, whiteonblack=True)
         filtered_array[i] = compute_vesselness2D(eigenvalues[1], tau=tau)
+    response = np.max(filtered_array, axis=0)
 
-    return np.max(filtered_array, axis=0)
+    if cutoff < 0:
+        return response
+    else:
+        return response > cutoff
+
+
+def vesselness2D_single_slice(
+    nd_array: np.ndarray,
+    single_z: int,
+    sigmas: List,
+    tau: float = 1,
+    whiteonblack: bool = True,
+    cutoff: float = -1,
+):
+    """Multi-scale 2D filament filter
+
+    Parameters:
+    ------------
+    nd_array: np.ndarray
+        the 3D image to be filterd on
+    single_z: int
+        the index of the slice to apply the filter
+    sigmas: List
+        a list of scales to use
+    tau: float
+        parameter that controls response uniformity. The value has to be
+        between 0.5 and 1. Lower tau means more intense output response.
+        Default is 0.5
+    whiteonblack: bool
+        whether the filamentous structures are bright on dark background
+        or dark on bright. Default is True.
+    cutoff: float
+        the cutoff value to apply on the filter result. If the cutoff is
+        negative, no cutoff will be applied. Default is -1
+
+    Reference:
+    ------------
+    T. Jerman, et al. Enhancement of vascular structures in 3D and 2D angiographic
+    images. IEEE transactions on medical imaging. 2016 Apr 4;35(9):2107-18.
+    """
+
+    if not nd_array.ndim == 3:
+        raise (ValueError("Only 3 dimensions is currently supported"))
+
+    # adapted from https://github.com/scikit-image/scikit-image/blob/master/skimage/filters/_frangi.py#L74  # noqa E501
+    if np.any(np.asarray(sigmas) < 0.0):
+        raise ValueError("Sigma values less than zero are not valid")
+
+    response = np.zeros(nd_array.shape)
+    response[single_z, :, :] = vesselness2D(nd_array[single_z, :, :], sigmas=sigmas, tau=1, whiteonblack=True)
+
+    if cutoff < 0:
+        return response
+    else:
+        return response > cutoff
 
 
 def vesselnessSliceBySlice(
-    nd_array: np.ndarray, sigmas: List, tau: float = 0.5, whiteonblack: bool = True
+    nd_array: np.ndarray,
+    sigmas: List,
+    tau: float = 1,
+    whiteonblack: bool = True,
+    cutoff: float = -1,
 ):
     """
     wrapper for applying multi-scale 2D filament filter on 3D images in a
@@ -218,6 +275,9 @@ def vesselnessSliceBySlice(
     whiteonblack: bool
         whether the filamentous structures are bright on dark background
         or dark on bright. Default is True.
+    cutoff: float
+        the cutoff value to apply on the filter result. If the cutoff is
+        negative, no cutoff will be applied. Default is -1
     """
 
     mip = np.amax(nd_array, axis=0)
@@ -227,20 +287,19 @@ def vesselnessSliceBySlice(
         tmp = vesselness2D(tmp, sigmas=sigmas, tau=1, whiteonblack=True)
         response[zz, :, : nd_array.shape[2] - 3] = tmp[:, : nd_array.shape[2] - 3]
 
-    return response
+    if cutoff < 0:
+        return response
+    else:
+        return response > cutoff
 
 
 def compute_vesselness3D(eigen2, eigen3, tau):
-    """ backend for computing 3D filament filter """
+    """backend for computing 3D filament filter"""
 
     lambda3m = copy.copy(eigen3)
-    lambda3m[np.logical_and(eigen3 < 0, eigen3 > (tau * eigen3.min()))] = (
-        tau * eigen3.min()
-    )
+    lambda3m[np.logical_and(eigen3 < 0, eigen3 > (tau * eigen3.min()))] = tau * eigen3.min()
     response = np.multiply(np.square(eigen2), np.abs(lambda3m - eigen2))
-    response = divide_nonzero(
-        27 * response, np.power(2 * np.abs(eigen2) + np.abs(lambda3m - eigen2), 3)
-    )
+    response = divide_nonzero(27 * response, np.power(2 * np.abs(eigen2) + np.abs(lambda3m - eigen2), 3))
 
     response[np.less(eigen2, 0.5 * lambda3m)] = 1
     response[eigen2 >= 0] = 0
@@ -251,17 +310,13 @@ def compute_vesselness3D(eigen2, eigen3, tau):
 
 
 def compute_vesselness2D(eigen2, tau):
-    """ backend for computing 2D filament filter """
+    """backend for computing 2D filament filter"""
 
     Lambda3 = copy.copy(eigen2)
-    Lambda3[np.logical_and(Lambda3 < 0, Lambda3 >= (tau * Lambda3.min()))] = (
-        tau * Lambda3.min()
-    )
+    Lambda3[np.logical_and(Lambda3 < 0, Lambda3 >= (tau * Lambda3.min()))] = tau * Lambda3.min()
 
     response = np.multiply(np.square(eigen2), np.abs(Lambda3 - eigen2))
-    response = divide_nonzero(
-        27 * response, np.power(2 * np.abs(eigen2) + np.abs(Lambda3 - eigen2), 3)
-    )
+    response = divide_nonzero(27 * response, np.power(2 * np.abs(eigen2) + np.abs(Lambda3 - eigen2), 3))
 
     response[np.less(eigen2, 0.5 * Lambda3)] = 1
     response[eigen2 >= 0] = 0

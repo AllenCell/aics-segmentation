@@ -40,7 +40,7 @@ def save_segmentation(
 
 
 def generate_segmentation_contour(im):
-    """ generate the contour of the segmentation """
+    """generate the contour of the segmentation"""
 
     bd = np.logical_xor(erosion(im > 0, selem=ball(1)), im > 0)
 
@@ -51,7 +51,7 @@ def generate_segmentation_contour(im):
 
 
 def output_hook(im, names, out_flag, output_path, fn):
-    """ general hook for cutomized output """
+    """general hook for cutomized output"""
     assert len(im) == len(names) and len(names) == len(out_flag)
 
     for i in range(len(out_flag)):
@@ -60,12 +60,8 @@ def output_hook(im, names, out_flag, output_path, fn):
                 segmentation_type = names[i]
                 bw = im[i].astype(np.uint8)
                 bw[bw > 0] = 255
-                with OmeTiffWriter(
-                    str(output_path / (fn + "_bw_" + segmentation_type[3:] + ".tiff"))
-                ) as writer:
+                with OmeTiffWriter(str(output_path / (fn + "_bw_" + segmentation_type[3:] + ".tiff"))) as writer:
                     writer.save(bw)
             else:
-                with OmeTiffWriter(
-                    str(output_path / (fn + "_" + names[i] + ".tiff"))
-                ) as writer:
+                with OmeTiffWriter(str(output_path / (fn + "_" + names[i] + ".tiff"))) as writer:
                     writer.save(im[i])

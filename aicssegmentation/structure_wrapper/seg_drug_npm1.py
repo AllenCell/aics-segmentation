@@ -75,12 +75,8 @@ def Workflow_drug_npm1(
     if rescale_ratio > 0:
         struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
 
-        struct_img = (struct_img - struct_img.min() + 1e-8) / (
-            struct_img.max() - struct_img.min() + 1e-8
-        )
-        gaussian_smoothing_truncate_range = (
-            gaussian_smoothing_truncate_range * rescale_ratio
-        )
+        struct_img = (struct_img - struct_img.min() + 1e-8) / (struct_img.max() - struct_img.min() + 1e-8)
+        gaussian_smoothing_truncate_range = gaussian_smoothing_truncate_range * rescale_ratio
 
     # smoothing with gaussian filter
     structure_img_smooth = image_smoothing_gaussian_3d(
@@ -103,9 +99,7 @@ def Workflow_drug_npm1(
 
     th_low_level = (global_tri + global_median) / 2
     bw_low_level = structure_img_smooth > th_low_level
-    bw_low_level = remove_small_objects(
-        bw_low_level, min_size=low_level_min_size, connectivity=1, in_place=True
-    )
+    bw_low_level = remove_small_objects(bw_low_level, min_size=low_level_min_size, connectivity=1, in_place=True)
 
     # step 2: high level thresholding
     bw_high_level = np.zeros_like(bw_low_level)
@@ -131,9 +125,7 @@ def Workflow_drug_npm1(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(
-        bw_high_level > 0, min_size=minArea, connectivity=1, in_place=False
-    )
+    seg = remove_small_objects(bw_high_level > 0, min_size=minArea, connectivity=1, in_place=False)
 
     # output
     seg = seg > 0

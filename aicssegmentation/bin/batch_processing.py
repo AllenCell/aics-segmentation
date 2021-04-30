@@ -18,9 +18,7 @@ PER_IMAGE = "per_img"
 PER_DIR = "per_dir"
 
 log = logging.getLogger()
-logging.basicConfig(
-    level=logging.INFO, format="[%(levelname)4s:%(lineno)4s %(asctime)s] %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="[%(levelname)4s:%(lineno)4s %(asctime)s] %(message)s")
 #
 # Set the default log level for other modules used by this script
 # logging.getLogger("labkey").setLevel(logging.ERROR)
@@ -131,9 +129,7 @@ class Args(object):
             default="default",
             help="how to output the results, mostly used options are default or array",
         )
-        p.add_argument(
-            "--mitotic_stage", dest="mitotic_stage", default=None, help="mitotic_stage"
-        )
+        p.add_argument("--mitotic_stage", dest="mitotic_stage", default=None, help="mitotic_stage")
 
         subparsers = p.add_subparsers(dest="mode")
         subparsers.required = True
@@ -189,9 +185,7 @@ class Executor(object):
 
         try:
             if args.wrapper_dir == "_internal_":
-                module_name = (
-                    "aicssegmentation.structure_wrapper.seg_" + args.workflow_name
-                )
+                module_name = "aicssegmentation.structure_wrapper.seg_" + args.workflow_name
                 seg_module = importlib.import_module(module_name)
             else:
                 func_path = args.wrapper_dir
@@ -238,9 +232,7 @@ class Executor(object):
             #     struct_img =struct_img * mseg_img
 
             if args.mitotic_stage is None:
-                SegModule(
-                    struct_img, self.rescale_ratio, args.output_type, output_path, fname
-                )
+                SegModule(struct_img, self.rescale_ratio, args.output_type, output_path, fname)
             else:
                 SegModule(
                     struct_img,
@@ -262,13 +254,7 @@ class Executor(object):
             for _, fn in enumerate(filenames):
 
                 if os.path.exists(
-                    str(
-                        output_path
-                        / (
-                            os.path.splitext(os.path.basename(fn))[0]
-                            + "_struct_segmentation.tiff"
-                        )
-                    )
+                    str(output_path / (os.path.splitext(os.path.basename(fn))[0] + "_struct_segmentation.tiff"))
                 ):
                     print(f"skipping {fn} ....")
                     continue

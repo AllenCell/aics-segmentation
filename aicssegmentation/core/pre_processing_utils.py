@@ -31,10 +31,7 @@ def intensity_normalization(struct_img: np.ndarray, scaling_param: List):
 
     if len(scaling_param) == 1:
         if scaling_param[0] < 1:
-            print(
-                "intensity normalization: min-max normalization with NO absolute"
-                + "intensity upper bound"
-            )
+            print("intensity normalization: min-max normalization with NO absolute" + "intensity upper bound")
         else:
             print(f"intensity norm: min-max norm with upper bound {scaling_param[0]}")
             struct_img[struct_img > scaling_param[0]] = struct_img.min()
@@ -49,9 +46,7 @@ def intensity_normalization(struct_img: np.ndarray, scaling_param: List):
         struct_img[struct_img < strech_min] = strech_min
         struct_img = (struct_img - strech_min + 1e-8) / (strech_max - strech_min + 1e-8)
     elif len(scaling_param) == 4:
-        img_valid = struct_img[
-            np.logical_and(struct_img > scaling_param[2], struct_img < scaling_param[3])
-        ]
+        img_valid = struct_img[np.logical_and(struct_img > scaling_param[2], struct_img < scaling_param[3])]
         m, s = norm.fit(img_valid.flat)
         strech_min = max(scaling_param[2] - scaling_param[0] * s, struct_img.min())
         strech_max = min(scaling_param[3] + scaling_param[1] * s, struct_img.max())
@@ -68,9 +63,7 @@ def image_smoothing_gaussian_3d(struct_img, sigma, truncate_range=3.0):
     wrapper for 3D Guassian smoothing
     """
 
-    structure_img_smooth = gaussian_filter(
-        struct_img, sigma=sigma, mode="nearest", truncate=truncate_range
-    )
+    structure_img_smooth = gaussian_filter(struct_img, sigma=sigma, mode="nearest", truncate=truncate_range)
 
     return structure_img_smooth
 
@@ -121,9 +114,7 @@ def edge_preserving_smoothing_3d(
     # set spacing
     itk_img.SetSpacing(spacing)
 
-    gradientAnisotropicDiffusionFilter = (
-        itk.GradientAnisotropicDiffusionImageFilter.New(itk_img)
-    )
+    gradientAnisotropicDiffusionFilter = itk.GradientAnisotropicDiffusionImageFilter.New(itk_img)
     gradientAnisotropicDiffusionFilter.SetNumberOfIterations(numberOfIterations)
     gradientAnisotropicDiffusionFilter.SetTimeStep(timeStep)
     gradientAnisotropicDiffusionFilter.SetConductanceParameter(conductance)
@@ -178,7 +169,4 @@ def suggest_normalization_param(structure_img0):
         + "(may loss some dim parts), or decrease the second value"
         + "(may loss some texture in super bright regions)"
     )
-    print(
-        "To slightly reduce the contrast: You may decrease the first value, or "
-        + "increase the second value"
-    )
+    print("To slightly reduce the contrast: You may decrease the first value, or " + "increase the second value")

@@ -4,7 +4,7 @@ from scipy.ndimage.measurements import label
 
 
 def simple_builder(bw, se=None, return_dataframe=False):
-    """ build object table based on connected component """
+    """build object table based on connected component"""
 
     if se is None:
         obj_label, obj_num = label(bw > 0)
@@ -21,7 +21,7 @@ def simple_builder(bw, se=None, return_dataframe=False):
 
 
 def masked_builder(bw, mask_label):
-    """ build object table based on mask image """
+    """build object table based on mask image"""
 
     assert mask_label.max() > 0
 

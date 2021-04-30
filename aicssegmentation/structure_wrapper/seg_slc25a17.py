@@ -75,12 +75,8 @@ def Workflow_slc25a17(
     if rescale_ratio > 0:
         struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
 
-        struct_img = (struct_img - struct_img.min() + 1e-8) / (
-            struct_img.max() - struct_img.min() + 1e-8
-        )
-        gaussian_smoothing_truncate_range = (
-            gaussian_smoothing_truncate_range * rescale_ratio
-        )
+        struct_img = (struct_img - struct_img.min() + 1e-8) / (struct_img.max() - struct_img.min() + 1e-8)
+        gaussian_smoothing_truncate_range = gaussian_smoothing_truncate_range * rescale_ratio
 
     # smoothing with gaussian filter
     structure_img_smooth = image_smoothing_gaussian_slice_by_slice(
@@ -106,9 +102,7 @@ def Workflow_slc25a17(
     out_name_list.append("interm_mask")
 
     # step 2: 'local_maxi + watershed' for cell cutting
-    local_maxi = peak_local_max(
-        struct_img, labels=label(bw), min_distance=2, indices=False
-    )
+    local_maxi = peak_local_max(struct_img, labels=label(bw), min_distance=2, indices=False)
 
     out_img_list.append(local_maxi.copy())
     out_name_list.append("interm_local_max")
@@ -124,9 +118,7 @@ def Workflow_slc25a17(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(
-        im_watershed, min_size=minArea, connectivity=1, in_place=False
-    )
+    seg = remove_small_objects(im_watershed, min_size=minArea, connectivity=1, in_place=False)
 
     # HACK: Only for 2019 April Release #####
     if np.count_nonzero(seg > 0) < 50000:
