@@ -77,7 +77,11 @@ class Args(object):
         p = argparse.ArgumentParser()
         # Add arguments
         p.add_argument(
-            "-d", "--debug", action="store_true", dest="debug", help="If set debug log output is enabled",
+            "-d",
+            "--debug",
+            action="store_true",
+            dest="debug",
+            help="If set debug log output is enabled",
         )
         p.add_argument(
             "--struct_name",
@@ -86,7 +90,10 @@ class Args(object):
             help="Legacy Option for backward compatibility] use workflow_name instead",
         )
         p.add_argument(
-            "--workflow_name", dest="workflow_name", default="template", help="the name of your workflow",
+            "--workflow_name",
+            dest="workflow_name",
+            default="template",
+            help="the name of your workflow",
         )
         p.add_argument(
             "--struct_ch",
@@ -97,7 +104,11 @@ class Args(object):
             help="the index of the structure channel of the image file, default is 1",
         )
         p.add_argument(
-            "--xy", default=0.108, type=float, dest="xy", help="the xy resolution of the image, default is 0.108",
+            "--xy",
+            default=0.108,
+            type=float,
+            dest="xy",
+            help="the xy resolution of the image, default is 0.108",
         )
         p.add_argument(
             "--rescale",
@@ -108,7 +119,10 @@ class Args(object):
         )
         p.add_argument("--output_dir", dest="output_dir", help="output directory")
         p.add_argument(
-            "--wrapper_dir", dest="wrapper_dir", default="_internal_", help="wrapper directory",
+            "--wrapper_dir",
+            dest="wrapper_dir",
+            default="_internal_",
+            help="wrapper directory",
         )
         p.add_argument(
             "--use",
@@ -118,7 +132,9 @@ class Args(object):
         )
         p.add_argument("--mitotic_stage", dest="mitotic_stage", default=None, help="mitotic_stage")
         p.add_argument(
-            "--dask", action="store_true", help="if included, use dask. Omit to not use dask for parallelization",
+            "--dask",
+            action="store_true",
+            help="if included, use dask. Omit to not use dask for parallelization",
         )
 
         subparsers = p.add_subparsers(dest="mode")
@@ -183,7 +199,16 @@ class Executor(object):
         else:
             # when z and c is not in order
             if img.shape[-3] < img.shape[-4]:
-                img = np.transpose(img, (0, 2, 1, 3, 4,),)
+                img = np.transpose(
+                    img,
+                    (
+                        0,
+                        2,
+                        1,
+                        3,
+                        4,
+                    ),
+                )
             struct_img = img[0, args.struct_ch, :, :, :].astype(np.float32)
         # Check if the segmenation is mitotic stage specific
         if args.mitotic_stage is None:
@@ -196,7 +221,12 @@ class Executor(object):
             )
         else:
             return self.SegModule(
-                struct_img, args.mitotic_stage, self.rescale_ratio, args.output_type, output_path, fn,
+                struct_img,
+                args.mitotic_stage,
+                self.rescale_ratio,
+                args.output_type,
+                output_path,
+                fn,
             )
 
     def execute(self, args):
@@ -212,7 +242,8 @@ class Executor(object):
             else:
                 func_path = args.wrapper_dir
                 spec = importlib.util.spec_from_file_location(
-                    "seg_" + args.workflow_name, func_path + "/seg_" + args.workflow_name + ".py",
+                    "seg_" + args.workflow_name,
+                    func_path + "/seg_" + args.workflow_name + ".py",
                 )
                 seg_module = importlib.util.module_from_spec(spec)
                 try:
@@ -256,7 +287,12 @@ class Executor(object):
                 self.SegModule(struct_img, self.rescale_ratio, args.output_type, output_path, fname)
             else:
                 self.SegModule(
-                    struct_img, args.mitotic_stage, self.rescale_ratio, args.output_type, output_path, fname,
+                    struct_img,
+                    args.mitotic_stage,
+                    self.rescale_ratio,
+                    args.output_type,
+                    output_path,
+                    fname,
                 )
 
         elif args.mode == PER_DIR:
