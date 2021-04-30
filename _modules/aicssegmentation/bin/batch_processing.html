@@ -264,11 +264,7 @@
         <span class="n">p</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
         <span class="c1"># Add arguments</span>
         <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;--debug&quot;</span><span class="p">,</span>
-            <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
-            <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If set debug log output is enabled&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;--debug&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If set debug log output is enabled&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s2">&quot;--struct_name&quot;</span><span class="p">,</span>
@@ -277,10 +273,7 @@
             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Legacy Option for backward compatibility] use workflow_name instead&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s2">&quot;--workflow_name&quot;</span><span class="p">,</span>
-            <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;workflow_name&quot;</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;template&quot;</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the name of your workflow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;--workflow_name&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;workflow_name&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;template&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the name of your workflow&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s2">&quot;--struct_ch&quot;</span><span class="p">,</span>
@@ -291,11 +284,7 @@
             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the index of the structure channel of the image file, default is 1&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s2">&quot;--xy&quot;</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="mf">0.108</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
-            <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;xy&quot;</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the xy resolution of the image, default is 0.108&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;--xy&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.108</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;xy&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the xy resolution of the image, default is 0.108&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s2">&quot;--rescale&quot;</span><span class="p">,</span>
@@ -306,10 +295,7 @@
         <span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--output_dir&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;output_dir&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;output directory&quot;</span><span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s2">&quot;--wrapper_dir&quot;</span><span class="p">,</span>
-            <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;wrapper_dir&quot;</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;_internal_&quot;</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;wrapper directory&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;--wrapper_dir&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;wrapper_dir&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;_internal_&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;wrapper directory&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s2">&quot;--use&quot;</span><span class="p">,</span>
@@ -317,13 +303,9 @@
             <span class="n">default</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;how to output the results, mostly used options are default or array&quot;</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--mitotic_stage&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;mitotic_stage&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;mitotic_stage&quot;</span><span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s2">&quot;--mitotic_stage&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;mitotic_stage&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;mitotic_stage&quot;</span>
-        <span class="p">)</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s2">&quot;--dask&quot;</span><span class="p">,</span>
-            <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;if included, use dask. Omit to not use dask for parallelization&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;--dask&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;if included, use dask. Omit to not use dask for parallelization&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="n">subparsers</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">dest</span><span class="o">=</span><span class="s2">&quot;mode&quot;</span><span class="p">)</span>
@@ -371,15 +353,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">rescale_ratio</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
 <div class="viewcode-block" id="Executor.segment"><a class="viewcode-back" href="../../../aicssegmentation.bin.html#aicssegmentation.bin.batch_processing.Executor.segment">[docs]</a>    <span class="k">def</span> <span class="nf">segment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">output_path</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span>
-            <span class="nb">str</span><span class="p">(</span>
-                <span class="n">output_path</span>
-                <span class="o">/</span> <span class="p">(</span>
-                    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fn</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
-                    <span class="o">+</span> <span class="s2">&quot;_struct_segmentation.tiff&quot;</span>
-                <span class="p">)</span>
-            <span class="p">)</span>
-        <span class="p">):</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fn</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_struct_segmentation.tiff&quot;</span><span class="p">))):</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;skipping </span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2"> ....&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
@@ -396,16 +370,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># when z and c is not in order</span>
             <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">]:</span>
-                <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
-                    <span class="n">img</span><span class="p">,</span>
-                    <span class="p">(</span>
-                        <span class="mi">0</span><span class="p">,</span>
-                        <span class="mi">2</span><span class="p">,</span>
-                        <span class="mi">1</span><span class="p">,</span>
-                        <span class="mi">3</span><span class="p">,</span>
-                        <span class="mi">4</span><span class="p">,</span>
-                    <span class="p">),</span>
-                <span class="p">)</span>
+                <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,),)</span>
             <span class="n">struct_img</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">struct_ch</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="c1"># Check if the segmenation is mitotic stage specific</span>
         <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">mitotic_stage</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -418,12 +383,7 @@
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">SegModule</span><span class="p">(</span>
-                <span class="n">struct_img</span><span class="p">,</span>
-                <span class="n">args</span><span class="o">.</span><span class="n">mitotic_stage</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">rescale_ratio</span><span class="p">,</span>
-                <span class="n">args</span><span class="o">.</span><span class="n">output_type</span><span class="p">,</span>
-                <span class="n">output_path</span><span class="p">,</span>
-                <span class="n">fn</span><span class="p">,</span>
+                <span class="n">struct_img</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">mitotic_stage</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rescale_ratio</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">output_type</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span>
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Executor.execute"><a class="viewcode-back" href="../../../aicssegmentation.bin.html#aicssegmentation.bin.batch_processing.Executor.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
@@ -439,8 +399,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">func_path</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">wrapper_dir</span>
                 <span class="n">spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span>
-                    <span class="s2">&quot;seg_&quot;</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">,</span>
-                    <span class="n">func_path</span> <span class="o">+</span> <span class="s2">&quot;/seg_&quot;</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">workflow_name</span> <span class="o">+</span> <span class="s2">&quot;.py&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;seg_&quot;</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">workflow_name</span><span class="p">,</span> <span class="n">func_path</span> <span class="o">+</span> <span class="s2">&quot;/seg_&quot;</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">workflow_name</span> <span class="o">+</span> <span class="s2">&quot;.py&quot;</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="n">seg_module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">module_from_spec</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -481,17 +440,10 @@
             <span class="c1">#     struct_img =struct_img * mseg_img</span>
 
             <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">mitotic_stage</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">SegModule</span><span class="p">(</span>
-                    <span class="n">struct_img</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rescale_ratio</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">output_type</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">fname</span>
-                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SegModule</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rescale_ratio</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">output_type</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">SegModule</span><span class="p">(</span>
-                    <span class="n">struct_img</span><span class="p">,</span>
-                    <span class="n">args</span><span class="o">.</span><span class="n">mitotic_stage</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">rescale_ratio</span><span class="p">,</span>
-                    <span class="n">args</span><span class="o">.</span><span class="n">output_type</span><span class="p">,</span>
-                    <span class="n">output_path</span><span class="p">,</span>
-                    <span class="n">fname</span><span class="p">,</span>
+                    <span class="n">struct_img</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">mitotic_stage</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rescale_ratio</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">output_type</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span>
                 <span class="p">)</span>
 
         <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">PER_DIR</span><span class="p">:</span>

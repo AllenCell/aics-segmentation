@@ -264,9 +264,7 @@
 
     <span class="c1"># smoothing</span>
     <span class="n">structure_img_smooth</span> <span class="o">=</span> <span class="n">image_smoothing_gaussian_3d</span><span class="p">(</span>
-        <span class="n">struct_img</span><span class="p">,</span>
-        <span class="n">sigma</span><span class="o">=</span><span class="n">gaussian_smoothing_sigma</span><span class="p">,</span>
-        <span class="n">truncate_range</span><span class="o">=</span><span class="n">gaussian_smoothing_truncate_range</span><span class="p">,</span>
+        <span class="n">struct_img</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">gaussian_smoothing_sigma</span><span class="p">,</span> <span class="n">truncate_range</span><span class="o">=</span><span class="n">gaussian_smoothing_truncate_range</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>

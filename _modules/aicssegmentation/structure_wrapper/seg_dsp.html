@@ -267,9 +267,7 @@
 
     <span class="c1"># smoothing with gaussian filter</span>
     <span class="n">structure_img_smooth</span> <span class="o">=</span> <span class="n">image_smoothing_gaussian_slice_by_slice</span><span class="p">(</span>
-        <span class="n">struct_img</span><span class="p">,</span>
-        <span class="n">sigma</span><span class="o">=</span><span class="n">gaussian_smoothing_sigma</span><span class="p">,</span>
-        <span class="n">truncate_range</span><span class="o">=</span><span class="n">gaussian_smoothing_truncate_range</span><span class="p">,</span>
+        <span class="n">struct_img</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">gaussian_smoothing_sigma</span><span class="p">,</span> <span class="n">truncate_range</span><span class="o">=</span><span class="n">gaussian_smoothing_truncate_range</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
@@ -294,12 +292,7 @@
     <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;interm_local_max&quot;</span><span class="p">)</span>
 
     <span class="n">distance</span> <span class="o">=</span> <span class="n">distance_transform_edt</span><span class="p">(</span><span class="n">bw</span><span class="p">)</span>
-    <span class="n">im_watershed</span> <span class="o">=</span> <span class="n">watershed</span><span class="p">(</span>
-        <span class="o">-</span><span class="n">distance</span><span class="p">,</span>
-        <span class="n">label</span><span class="p">(</span><span class="n">dilation</span><span class="p">(</span><span class="n">local_maxi</span><span class="p">,</span> <span class="n">selem</span><span class="o">=</span><span class="n">ball</span><span class="p">(</span><span class="mi">1</span><span class="p">))),</span>
-        <span class="n">mask</span><span class="o">=</span><span class="n">bw</span><span class="p">,</span>
-        <span class="n">watershed_line</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="n">im_watershed</span> <span class="o">=</span> <span class="n">watershed</span><span class="p">(</span><span class="o">-</span><span class="n">distance</span><span class="p">,</span> <span class="n">label</span><span class="p">(</span><span class="n">dilation</span><span class="p">(</span><span class="n">local_maxi</span><span class="p">,</span> <span class="n">selem</span><span class="o">=</span><span class="n">ball</span><span class="p">(</span><span class="mi">1</span><span class="p">))),</span> <span class="n">mask</span><span class="o">=</span><span class="n">bw</span><span class="p">,</span> <span class="n">watershed_line</span><span class="o">=</span><span class="kc">True</span><span class="p">,)</span>
 
     <span class="c1">###################</span>
     <span class="c1"># POST-PROCESSING</span>
