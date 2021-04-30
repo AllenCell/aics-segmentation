@@ -84,7 +84,9 @@ def Workflow_lmnb1_interphase(
 
     # smoothing with boundary preserving smoothing
     structure_img_smooth = image_smoothing_gaussian_3d(
-        struct_img, sigma=gaussian_smoothing_sigma, truncate_range=gaussian_smoothing_truncate_range,
+        struct_img,
+        sigma=gaussian_smoothing_sigma,
+        truncate_range=gaussian_smoothing_truncate_range,
     )
 
     out_img_list.append(structure_img_smooth.copy())
@@ -103,7 +105,11 @@ def Workflow_lmnb1_interphase(
     # hole filling
     bw_fill_mid_z = hole_filling(bw_mid_z, hole_min, hole_max)
     seed = get_3dseed_from_mid_frame(
-        np.logical_xor(bw_fill_mid_z, bw_mid_z), struct_img.shape, mid_z, hole_min, bg_seed=True,
+        np.logical_xor(bw_fill_mid_z, bw_mid_z),
+        struct_img.shape,
+        mid_z,
+        hole_min,
+        bg_seed=True,
     )
     seg_filled = (
         watershed(struct_img, seed.astype(int), watershed_line=True) > 1

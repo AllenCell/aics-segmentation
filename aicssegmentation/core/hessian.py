@@ -7,7 +7,10 @@ from .utils import absolute_eigenvaluesh
 
 
 def compute_3d_hessian_matrix(
-    nd_array: np.ndarray, sigma: float = 1, scale: bool = True, whiteonblack: bool = True,
+    nd_array: np.ndarray,
+    sigma: float = 1,
+    scale: bool = True,
+    whiteonblack: bool = True,
 ) -> np.ndarray:
     """
     Computes the hessian matrix for an nd_array. The implementation was adapted from:
@@ -69,7 +72,10 @@ def compute_3d_hessian_matrix(
 
 
 def absolute_3d_hessian_eigenvalues(
-    nd_array: np.ndarray, sigma: float = 1, scale: bool = True, whiteonblack: bool = True,
+    nd_array: np.ndarray,
+    sigma: float = 1,
+    scale: bool = True,
+    whiteonblack: bool = True,
 ):
     """
     Eigenvalues of the hessian matrix calculated from the input array sorted by
