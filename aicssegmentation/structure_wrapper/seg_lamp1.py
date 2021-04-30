@@ -75,9 +75,7 @@ def Workflow_lamp1(
     out_name_list = []
 
     # intenisty normalization
-    struct_img = intensity_normalization(
-        struct_img, scaling_param=intensity_scaling_param
-    )
+    struct_img = intensity_normalization(struct_img, scaling_param=intensity_scaling_param)
 
     out_img_list.append(struct_img.copy())
     out_name_list.append("im_norm")
@@ -85,12 +83,8 @@ def Workflow_lamp1(
     if rescale_ratio > 0:
         struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
 
-        struct_img = (struct_img - struct_img.min() + 1e-8) / (
-            struct_img.max() - struct_img.min() + 1e-8
-        )
-        gaussian_smoothing_truncate_range = (
-            gaussian_smoothing_truncate_range * rescale_ratio
-        )
+        struct_img = (struct_img - struct_img.min() + 1e-8) / (struct_img.max() - struct_img.min() + 1e-8)
+        gaussian_smoothing_truncate_range = gaussian_smoothing_truncate_range * rescale_ratio
 
     structure_img_smooth = image_smoothing_gaussian_slice_by_slice(
         struct_img,
@@ -112,9 +106,7 @@ def Workflow_lamp1(
     bw_spot = np.logical_or(bw_spot, bw3)
 
     # ring/filament detection
-    ves = vesselnessSliceBySlice(
-        structure_img_smooth, sigmas=vesselness_sigma, tau=1, whiteonblack=True
-    )
+    ves = vesselnessSliceBySlice(structure_img_smooth, sigmas=vesselness_sigma, tau=1, whiteonblack=True)
     bw_ves = ves > vesselness_cutoff
 
     # fill holes
@@ -140,9 +132,7 @@ def Workflow_lamp1(
 
     full_fill = np.logical_or(partial_fill, holes)
 
-    seg = remove_small_objects(
-        full_fill, min_size=minArea, connectivity=1, in_place=False
-    )
+    seg = remove_small_objects(full_fill, min_size=minArea, connectivity=1, in_place=False)
 
     # output
     seg = seg > 0

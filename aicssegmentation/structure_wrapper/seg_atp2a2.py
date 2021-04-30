@@ -70,9 +70,7 @@ def Workflow_atp2a2(
     if rescale_ratio > 0:
         struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
 
-        struct_img = (struct_img - struct_img.min() + 1e-8) / (
-            struct_img.max() - struct_img.min() + 1e-8
-        )
+        struct_img = (struct_img - struct_img.min() + 1e-8) / (struct_img.max() - struct_img.min() + 1e-8)
 
     # smoothing with boundary preserving smoothing
     structure_img_smooth = edge_preserving_smoothing_3d(struct_img)
@@ -85,9 +83,7 @@ def Workflow_atp2a2(
     ###################
 
     # 2d vesselness slice by slice
-    response = vesselnessSliceBySlice(
-        structure_img_smooth, sigmas=vesselness_sigma, tau=1, whiteonblack=True
-    )
+    response = vesselnessSliceBySlice(structure_img_smooth, sigmas=vesselness_sigma, tau=1, whiteonblack=True)
     bw = response > vesselness_cutoff
 
     ###################
@@ -95,9 +91,7 @@ def Workflow_atp2a2(
     ###################
     bw = remove_small_objects(bw > 0, min_size=minArea, connectivity=1, in_place=False)
     for zz in range(bw.shape[0]):
-        bw[zz, :, :] = remove_small_objects(
-            bw[zz, :, :], min_size=3, connectivity=1, in_place=False
-        )
+        bw[zz, :, :] = remove_small_objects(bw[zz, :, :], min_size=3, connectivity=1, in_place=False)
 
     seg = remove_small_objects(bw > 0, min_size=minArea, connectivity=1, in_place=False)
 

@@ -76,12 +76,8 @@ def Workflow_cardio_npm1_100x(
     if rescale_ratio > 0:
         struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
 
-        struct_img = (struct_img - struct_img.min() + 1e-8) / (
-            struct_img.max() - struct_img.min() + 1e-8
-        )
-        gaussian_smoothing_truncate_range = (
-            gaussian_smoothing_truncate_range * rescale_ratio
-        )
+        struct_img = (struct_img - struct_img.min() + 1e-8) / (struct_img.max() - struct_img.min() + 1e-8)
+        gaussian_smoothing_truncate_range = gaussian_smoothing_truncate_range * rescale_ratio
 
     # smoothing with gaussian filter
     structure_img_smooth = image_smoothing_gaussian_3d(
@@ -110,9 +106,7 @@ def Workflow_cardio_npm1_100x(
     # imsave('img_smooth.tiff', structure_img_smooth)
 
     bw_low_level = structure_img_smooth > th_low_level
-    bw_low_level = remove_small_objects(
-        bw_low_level, min_size=low_level_min_size, connectivity=1, in_place=True
-    )
+    bw_low_level = remove_small_objects(bw_low_level, min_size=low_level_min_size, connectivity=1, in_place=True)
     bw_low_level = dilation(bw_low_level, selem=ball(2))
 
     # step 2: high level thresholding
@@ -123,9 +117,7 @@ def Workflow_cardio_npm1_100x(
         single_obj = lab_low == (idx + 1)
         local_otsu = threshold_otsu(structure_img_smooth[single_obj])
         if local_otsu > local_cutoff:
-            bw_high_level[
-                np.logical_and(structure_img_smooth > 1.2 * local_otsu, single_obj)
-            ] = 1
+            bw_high_level[np.logical_and(structure_img_smooth > 1.2 * local_otsu, single_obj)] = 1
 
     # imsave('seg_coarse.tiff', bw_high_level.astype(np.uint8))
 
@@ -143,9 +135,7 @@ def Workflow_cardio_npm1_100x(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(
-        bw_final, min_size=minArea, connectivity=1, in_place=True
-    )
+    seg = remove_small_objects(bw_final, min_size=minArea, connectivity=1, in_place=True)
 
     # output
     seg = seg > 0

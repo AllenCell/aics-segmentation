@@ -73,12 +73,8 @@ def Workflow_nup153(
     if rescale_ratio > 0:
         struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
 
-        struct_img = (struct_img - struct_img.min() + 1e-8) / (
-            struct_img.max() - struct_img.min() + 1e-8
-        )
-        gaussian_smoothing_truncate_range = (
-            gaussian_smoothing_truncate_range * rescale_ratio
-        )
+        struct_img = (struct_img - struct_img.min() + 1e-8) / (struct_img.max() - struct_img.min() + 1e-8)
+        gaussian_smoothing_truncate_range = gaussian_smoothing_truncate_range * rescale_ratio
 
     # smoothing with edge_preserving_smoothing filter
     structure_img_smooth = edge_preserving_smoothing_3d(struct_img)

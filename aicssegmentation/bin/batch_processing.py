@@ -18,9 +18,7 @@ PER_IMAGE = "per_img"
 PER_DIR = "per_dir"
 
 log = logging.getLogger()
-logging.basicConfig(
-    level=logging.INFO, format="[%(levelname)4s:%(lineno)4s %(asctime)s] %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="[%(levelname)4s:%(lineno)4s %(asctime)s] %(message)s")
 #
 # Set the default log level for other modules used by this script
 # logging.getLogger("labkey").setLevel(logging.ERROR)
@@ -249,9 +247,7 @@ class Executor(object):
             args.workflow_name = args.struct_name
         try:
             if args.wrapper_dir == "_internal_":
-                module_name = (
-                    "aicssegmentation.structure_wrapper.seg_" + args.workflow_name
-                )
+                module_name = "aicssegmentation.structure_wrapper.seg_" + args.workflow_name
                 seg_module = importlib.import_module(module_name)
             else:
                 func_path = args.wrapper_dir

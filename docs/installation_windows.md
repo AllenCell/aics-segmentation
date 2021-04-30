@@ -41,7 +41,7 @@ conda version : 4.6.11
 python version : 3.7.3.final.0
 ```
 
-`conda version > 4.4` is preferred. To update conda, check out [how to update your conda](https://www.anaconda.com/keeping-anaconda-date/). `python version >=3.6` is required.
+`conda version > 4.4` is preferred. To update conda, check out [how to update your conda](https://www.anaconda.com/keeping-anaconda-date/). `python version >=3.7` is required.
 
 #### Step 2.3: Test git
 
@@ -62,7 +62,7 @@ A message will be printed out on your screen. If you see a warning, like a newer
 #### Step 2.5: Create a new empty conda environment, which we will name "segmentation" (You can certainly choose a different name.)
 
 ``` bash 
-conda create -n segmentation python=3.6
+conda create -n segmentation python=3.7
 ```
 
 ### Step 2.6: Activate your conda environment "segmentation"
@@ -83,7 +83,7 @@ conda install nb_conda
 
 ```bash
 cd C:\Projects
-git clone https://github.com/AllenInstitute/aics-segmentation.git
+git clone https://github.com/AllenCell/aics-segmentation.git
 ```
 
 

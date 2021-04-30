@@ -65,7 +65,7 @@ def Workflow_fbl(
     ###################
     # PRE_PROCESSING
     ###################
-    # intenisty normalization (min/max)
+    # intenisty normalization
     struct_img = intensity_normalization(struct_img, scaling_param=intensity_norm_param)
 
     out_img_list.append(struct_img.copy())
@@ -75,12 +75,8 @@ def Workflow_fbl(
     if rescale_ratio > 0:
         struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
 
-        struct_img = (struct_img - struct_img.min() + 1e-8) / (
-            struct_img.max() - struct_img.min() + 1e-8
-        )
-        gaussian_smoothing_truncate_range = (
-            gaussian_smoothing_truncate_range * rescale_ratio
-        )
+        struct_img = (struct_img - struct_img.min() + 1e-8) / (struct_img.max() - struct_img.min() + 1e-8)
+        gaussian_smoothing_truncate_range = gaussian_smoothing_truncate_range * rescale_ratio
 
     # smoothing with gaussian filter
     structure_img_smooth = image_smoothing_gaussian_3d(
@@ -103,9 +99,7 @@ def Workflow_fbl(
 
     th_low_level = (global_tri + global_median) / 2
     bw_low_level = structure_img_smooth > th_low_level
-    bw_low_level = remove_small_objects(
-        bw_low_level, min_size=low_level_min_size, connectivity=1, in_place=True
-    )
+    bw_low_level = remove_small_objects(bw_low_level, min_size=low_level_min_size, connectivity=1, in_place=True)
 
     # step 2: high level thresholding
     bw_high_level = np.zeros_like(bw_low_level)
@@ -120,9 +114,7 @@ def Workflow_fbl(
 
     # step 3: finer segmentation
     response2d = dot_slice_by_slice(structure_img_smooth, log_sigma=dot_2d_sigma)
-    bw_finer = remove_small_objects(
-        response2d > dot_2d_cutoff, min_size=minArea, connectivity=1, in_place=True
-    )
+    bw_finer = remove_small_objects(response2d > dot_2d_cutoff, min_size=minArea, connectivity=1, in_place=True)
 
     out_img_list.append(bw_finer.copy())
     out_name_list.append("bw_fine")
@@ -134,9 +126,7 @@ def Workflow_fbl(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(
-        bw_high_level > 0, min_size=minArea, connectivity=1, in_place=False
-    )
+    seg = remove_small_objects(bw_high_level > 0, min_size=minArea, connectivity=1, in_place=False)
 
     # output
     seg = seg > 0

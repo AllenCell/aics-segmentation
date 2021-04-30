@@ -41,7 +41,7 @@ requirements = [
     "aicsimageio>3.3.0",
     "scipy>=1.1.0",
     "numpy>=1.15.1",
-    "scikit-image>=0.15.0,<0.18.0",
+    "scikit-image>=0.18.0",
     "pandas>=0.23.4",
     "itk",
     "itkwidgets",
@@ -77,6 +77,7 @@ setup(
             "batch_processing=aicssegmentation.bin.batch_processing:main"
         ],
     },
+    package_data={'demo_data': ['*.png']},
     install_requires=requirements,
     license="Allen Institute Software License",
     long_description=readme,
@@ -93,6 +94,6 @@ setup(
     url="https://github.com/AllenCell/aicssegmentation",
     # Do not edit this string manually, always use bumpversion
     # Details in CONTRIBUTING.rst
-    version="0.1.21",
+    version="0.1.22",
     zip_safe=False,
 )
