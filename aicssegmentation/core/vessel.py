@@ -121,7 +121,7 @@ def vesselness3D(nd_array: np.ndarray, sigmas: List, tau=1, whiteonblack=True, c
     if np.any(np.asarray(sigmas) < 0.0):
         raise ValueError("Sigma values less than zero are not valid")
 
-    filtered_array = np.zeros(tuple([len(sigmas),]) + nd_array.shape)
+    filtered_array = np.zeros(tuple([len(sigmas),]) + nd_array.shape)  # noqa E231
 
     for i, sigma in enumerate(sigmas):
         eigenvalues = absolute_3d_hessian_eigenvalues(nd_array, sigma=sigma, scale=True, whiteonblack=True)
@@ -169,7 +169,7 @@ def vesselness2D(
     if np.any(np.asarray(sigmas) < 0.0):
         raise ValueError("Sigma values less than zero are not valid")
 
-    filtered_array = np.zeros(tuple([len(sigmas),]) + nd_array.shape)
+    filtered_array = np.zeros(tuple([len(sigmas),]) + nd_array.shape)  # noqa E231
 
     for i, sigma in enumerate(sigmas):
         eigenvalues = absolute_3d_hessian_eigenvalues(nd_array, sigma=sigma, scale=True, whiteonblack=True)
