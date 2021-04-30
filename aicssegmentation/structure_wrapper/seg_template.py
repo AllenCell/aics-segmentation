@@ -7,6 +7,7 @@ from aicssegmentation.core.output_utils import (
     save_segmentation,
     generate_segmentation_contour,
 )
+import numpy as np
 
 
 def Workflow_template(struct_img, rescale_ratio, output_type, output_path, fn, output_func=None):
@@ -36,6 +37,7 @@ def Workflow_template(struct_img, rescale_ratio, output_type, output_path, fn, o
     # ## no need to change below
     ##########################################################################
     # output
+    seg = struct_img
     seg = seg > 0
     seg = seg.astype(np.uint8)
     seg[seg > 0] = 255

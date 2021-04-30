@@ -48,6 +48,7 @@ class Args(object):
         self.output_dir = "./"
         self.struct_ch = 0
         self.xy = 0.108
+        self.dask = False
 
         #
         self.__parse()
@@ -129,7 +130,14 @@ class Args(object):
             default="default",
             help="how to output the results, mostly used options are default or array",
         )
-        p.add_argument("--mitotic_stage", dest="mitotic_stage", default=None, help="mitotic_stage")
+        p.add_argument(
+            "--mitotic_stage", dest="mitotic_stage", default=None, help="mitotic_stage"
+        )
+        p.add_argument(
+            "--dask",
+            action="store_true",
+            help="if included, use dask. Omit to not use dask for parallelization",
+        )
 
         subparsers = p.add_subparsers(dest="mode")
         subparsers.required = True
@@ -175,14 +183,68 @@ class Executor(object):
             else:
                 self.rescale_ratio = -1
 
-    def execute(self, args):
+    def segment(self, fn, args, output_path):
+        if os.path.exists(
+            str(
+                output_path
+                / (
+                    os.path.splitext(os.path.basename(fn))[0]
+                    + "_struct_segmentation.tiff"
+                )
+            )
+        ):
+            print(f"skipping {fn} ....")
+            return
 
+        image_reader = aicsimageio.AICSImage(fn)
+        img = image_reader.data
+        # import pdb; pdb.set_trace()
+
+        # fixing the image reading
+        if len(img.shape) == 6:
+            # when z and c is not in order
+            if img.shape[-3] < img.shape[-4]:
+                img = np.transpose(img, (0, 1, 3, 2, 4, 5))
+            struct_img = img[0, 0, args.struct_ch, :, :, :].astype(np.float32)
+        else:
+            # when z and c is not in order
+            if img.shape[-3] < img.shape[-4]:
+                img = np.transpose(
+                    img,
+                    (
+                        0,
+                        2,
+                        1,
+                        3,
+                        4,
+                    ),
+                )
+            struct_img = img[0, args.struct_ch, :, :, :].astype(np.float32)
+        # Check if the segmenation is mitotic stage specific
+        if args.mitotic_stage is None:
+            return self.SegModule(
+                struct_img,
+                self.rescale_ratio,
+                args.output_type,
+                output_path,
+                os.path.splitext(os.path.basename(fn))[0],
+            )
+        else:
+            return self.SegModule(
+                struct_img,
+                args.mitotic_stage,
+                self.rescale_ratio,
+                args.output_type,
+                output_path,
+                fn,
+            )
+
+    def execute(self, args):
         if not args.struct_name == "skip":
             if not args.workflow_name == "template":
                 print("only use either workflow_name or struct_name, should use both.")
                 quit()
             args.workflow_name = args.struct_name
-
         try:
             if args.wrapper_dir == "_internal_":
                 module_name = "aicssegmentation.structure_wrapper.seg_" + args.workflow_name
@@ -200,7 +262,7 @@ class Executor(object):
                     print("check errors in wrapper script")
                     print(str(e))
             class_name = "Workflow_" + args.workflow_name
-            SegModule = getattr(seg_module, class_name)
+            self.SegModule = getattr(seg_module, class_name)
         except Exception as e:
             print(e)
             print("{} structure not found".format(args.workflow_name))
@@ -232,9 +294,11 @@ class Executor(object):
             #     struct_img =struct_img * mseg_img
 
             if args.mitotic_stage is None:
-                SegModule(struct_img, self.rescale_ratio, args.output_type, output_path, fname)
+                self.SegModule(
+                    struct_img, self.rescale_ratio, args.output_type, output_path, fname
+                )
             else:
-                SegModule(
+                self.SegModule(
                     struct_img,
                     args.mitotic_stage,
                     self.rescale_ratio,
@@ -244,64 +308,26 @@ class Executor(object):
                 )
 
         elif args.mode == PER_DIR:
-
             filenames = glob(args.input_dir + "/*" + args.data_type)
             # [os.path.basename(os.path.splitext(f)[0])
             #             for f in os.listdir(args.input_dir)
             #             if f.endswith(args.data_type)]
             filenames.sort()
 
-            for _, fn in enumerate(filenames):
+            if args.dask:
+                # using dask offers ~6x speedup on the template segmentation.
+                import dask
 
-                if os.path.exists(
-                    str(output_path / (os.path.splitext(os.path.basename(fn))[0] + "_struct_segmentation.tiff"))
-                ):
-                    print(f"skipping {fn} ....")
-                    continue
+                lazy_results = []
+                for _, fn in enumerate(filenames):
+                    lazy_result = dask.delayed(self.segment)(fn, args, output_path)
+                    lazy_results.append(lazy_result)
 
-                image_reader = aicsimageio.AICSImage(fn)
-                img = image_reader.data
-                # import pdb; pdb.set_trace()
-
-                # fixing the image reading
-                if len(img.shape) == 6:
-                    # when z and c is not in order
-                    if img.shape[-3] < img.shape[-4]:
-                        img = np.transpose(img, (0, 1, 3, 2, 4, 5))
-                    struct_img = img[0, 0, args.struct_ch, :, :, :].astype(np.float32)
-                else:
-                    # when z and c is not in order
-                    if img.shape[-3] < img.shape[-4]:
-                        img = np.transpose(
-                            img,
-                            (
-                                0,
-                                2,
-                                1,
-                                3,
-                                4,
-                            ),
-                        )
-                    struct_img = img[0, args.struct_ch, :, :, :].astype(np.float32)
-
-                # Check if the segmenation is mitotic stage specific
-                if args.mitotic_stage is None:
-                    SegModule(
-                        struct_img,
-                        self.rescale_ratio,
-                        args.output_type,
-                        output_path,
-                        os.path.splitext(os.path.basename(fn))[0],
-                    )
-                else:
-                    SegModule(
-                        struct_img,
-                        args.mitotic_stage,
-                        self.rescale_ratio,
-                        args.output_type,
-                        output_path,
-                        fn,
-                    )
+                futures = dask.persist(*lazy_results)
+                dask.compute(*futures)
+            else:
+                for _, fn in enumerate(filenames):
+                    self.segment(fn, args, output_path)
 
 
 ###############################################################################
