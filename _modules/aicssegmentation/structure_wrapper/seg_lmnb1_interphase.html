@@ -271,7 +271,9 @@
 
     <span class="c1"># smoothing with boundary preserving smoothing</span>
     <span class="n">structure_img_smooth</span> <span class="o">=</span> <span class="n">image_smoothing_gaussian_3d</span><span class="p">(</span>
-        <span class="n">struct_img</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">gaussian_smoothing_sigma</span><span class="p">,</span> <span class="n">truncate_range</span><span class="o">=</span><span class="n">gaussian_smoothing_truncate_range</span><span class="p">,</span>
+        <span class="n">struct_img</span><span class="p">,</span>
+        <span class="n">sigma</span><span class="o">=</span><span class="n">gaussian_smoothing_sigma</span><span class="p">,</span>
+        <span class="n">truncate_range</span><span class="o">=</span><span class="n">gaussian_smoothing_truncate_range</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
@@ -290,7 +292,11 @@
     <span class="c1"># hole filling</span>
     <span class="n">bw_fill_mid_z</span> <span class="o">=</span> <span class="n">hole_filling</span><span class="p">(</span><span class="n">bw_mid_z</span><span class="p">,</span> <span class="n">hole_min</span><span class="p">,</span> <span class="n">hole_max</span><span class="p">)</span>
     <span class="n">seed</span> <span class="o">=</span> <span class="n">get_3dseed_from_mid_frame</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">bw_fill_mid_z</span><span class="p">,</span> <span class="n">bw_mid_z</span><span class="p">),</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">mid_z</span><span class="p">,</span> <span class="n">hole_min</span><span class="p">,</span> <span class="n">bg_seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">bw_fill_mid_z</span><span class="p">,</span> <span class="n">bw_mid_z</span><span class="p">),</span>
+        <span class="n">struct_img</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+        <span class="n">mid_z</span><span class="p">,</span>
+        <span class="n">hole_min</span><span class="p">,</span>
+        <span class="n">bg_seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">seg_filled</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">watershed</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">seed</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">watershed_line</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>

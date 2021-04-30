@@ -199,7 +199,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <div class="viewcode-block" id="StructureSegmenter.process_img"><a class="viewcode-back" href="../../../aicssegmentation.structure_wrapper.html#aicssegmentation.structure_wrapper.structure_segmenter.StructureSegmenter.process_img">[docs]</a>    <span class="k">def</span> <span class="nf">process_img</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">gene</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="o">=</span><span class="n">DEFAULT_RESCALE_RATIO</span><span class="p">,</span> <span class="n">module_path</span><span class="o">=</span><span class="n">DEFAULT_MODULE_PATH</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">gene</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+        <span class="n">rescale_ratio</span><span class="o">=</span><span class="n">DEFAULT_RESCALE_RATIO</span><span class="p">,</span>
+        <span class="n">module_path</span><span class="o">=</span><span class="n">DEFAULT_MODULE_PATH</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
         <span class="n">lower_gene</span> <span class="o">=</span> <span class="n">gene</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="n">module_name</span> <span class="o">=</span> <span class="n">module_path</span> <span class="o">+</span> <span class="n">lower_gene</span>
