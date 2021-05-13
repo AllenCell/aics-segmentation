@@ -66,7 +66,7 @@ class StructureWrapperConfig:
         try:
             with open(path) as file:
                 obj = json.load(file)
-                return self._workflow_decoder(obj, workflow_name)
+                return self.workflow_decoder(obj, workflow_name)
         except Exception as ex:
             raise ConfigurationException(f"Error reading json configuration from {path}") from ex
 
@@ -114,7 +114,7 @@ class StructureWrapperConfig:
 
         return functions
 
-    def _workflow_decoder(self, obj: Dict, workflow_name: str) -> WorkflowDefinition:
+    def workflow_decoder(self, obj: Dict, workflow_name: str) -> WorkflowDefinition:
         """
         Decode Workflow config (conf_{workflow_name}.json)
         """
