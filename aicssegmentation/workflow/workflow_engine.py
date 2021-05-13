@@ -44,21 +44,26 @@ class WorkflowEngine:
 
         return Workflow(definition, input_image)
 
-    def load_workflow_def_from_json(self, file_path: str) -> WorkflowDefinition:
-        norm_path: path = path.abspath(file_path)
-        if not path.exists(norm_path):
+    def _load_workflow_def(self, file_path: path) -> WorkflowDefinition:
+        if not path.exists(file_path):
             raise FileNotFoundError(f"Did not find a file at {file_path}")
-        if path.splitext(norm_path)[1].lower() != ".json":
+        if path.splitext(file_path)[1].lower() != ".json":
             raise FileNotFoundError(f"The file at {file_path} is not a json file.")
 
-        with open(norm_path) as f:
+        with open(file_path) as f:
             try:
                 data = json.load(f)
             except:
                 raise Exception("Invalid json file given.")
-        return self._structure_config.workflow_decoder(data, path.basename(norm_path))
+        return self._structure_config.workflow_decoder(data, path.basename(file_path))
 
     def get_executable_workflow_from_file(self, file_path: str, input_image: np.ndarray) -> Workflow:
+        if input_image is None:
+            raise ValueError("input_image")
+        norm_path = path.abspath(file_path)
+        definition = self._load_workflow_def(norm_path)
+        return Workflow(definition, input_image)
+
 
 
 
