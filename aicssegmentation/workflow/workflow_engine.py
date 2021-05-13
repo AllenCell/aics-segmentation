@@ -48,13 +48,13 @@ class WorkflowEngine:
         if not file_path.exists():
             raise FileNotFoundError(f"Did not find a file at {file_path}")
         if file_path.suffix.lower() != ".json":
-            raise FileNotFoundError(f"The file at {file_path} is not a json file.")
+            raise ValueError(f"The file at {file_path} is not a json file.")
 
         with open(file_path) as f:
             try:
                 data = json.load(f)
             except:
-                raise Exception("Invalid json file given.")
+                raise ValueError("Invalid json file given.")
         return self._structure_config.workflow_decoder(data, file_path.stem, from_file=True)
 
     def get_executable_workflow_from_file(self, file_path: str, input_image: np.ndarray) -> Workflow:
