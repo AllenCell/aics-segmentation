@@ -55,7 +55,7 @@ class WorkflowEngine:
                 data = json.load(f)
             except:
                 raise Exception("Invalid json file given.")
-        return self._structure_config.workflow_decoder(data, path.basename(file_path))
+        return self._structure_config.workflow_decoder(data, path.basename(file_path), from_file=True)
 
     def get_executable_workflow_from_file(self, file_path: str, input_image: np.ndarray) -> Workflow:
         if input_image is None:

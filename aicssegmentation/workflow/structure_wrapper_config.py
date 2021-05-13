@@ -114,7 +114,7 @@ class StructureWrapperConfig:
 
         return functions
 
-    def workflow_decoder(self, obj: Dict, workflow_name: str) -> WorkflowDefinition:
+    def workflow_decoder(self, obj: Dict, workflow_name: str, from_file:bool = False) -> WorkflowDefinition:
         """
         Decode Workflow config (conf_{workflow_name}.json)
         """
@@ -148,4 +148,4 @@ class StructureWrapperConfig:
 
             steps.append(step)
 
-        return WorkflowDefinition(name=workflow_name, steps=steps, from_file=False)
+        return WorkflowDefinition(name=workflow_name, steps=steps, from_file=from_file)
