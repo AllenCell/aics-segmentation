@@ -10,9 +10,9 @@ from aicssegmentation.workflow.workflow_engine import WorkflowEngine, WorkflowDe
 class TestWorkflowEngine:
     expected_workflow_names = ["sec61b", "actn1", "test123"]
     expected_workflow_definitions = [
-        WorkflowDefinition(name="sec61b", steps=list()),
-        WorkflowDefinition(name="actn1", steps=list()),
-        WorkflowDefinition(name="test123", steps=list()),
+        WorkflowDefinition(name="sec61b", steps=list(), from_file=False),
+        WorkflowDefinition(name="actn1", steps=list(), from_file=False),
+        WorkflowDefinition(name="test123", steps=list(), from_file=False),
     ]
 
     def setup_method(self):
