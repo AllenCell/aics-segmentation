@@ -64,10 +64,6 @@ class WorkflowEngine:
         definition = self._load_workflow_def(norm_path)
         return Workflow(definition, input_image)
 
-
-
-
-
     def _load_workflow_definitions(self) -> List[WorkflowDefinition]:
         definitions = list()
         available_workflows = self._structure_config.get_available_workflows()

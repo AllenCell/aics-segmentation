@@ -73,11 +73,9 @@ setup(
     ],
     description="Part 1 of Allen Cell and Structure Segmenter",
     entry_points={
-        "console_scripts": [
-            "batch_processing=aicssegmentation.bin.batch_processing:main"
-        ],
+        "console_scripts": ["batch_processing=aicssegmentation.bin.batch_processing:main"],
     },
-    package_data={'demo_data': ['*.png']},
+    package_data={"demo_data": ["*.png"]},
     install_requires=requirements,
     license="Allen Institute Software License",
     long_description=readme,
