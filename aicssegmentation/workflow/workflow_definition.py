@@ -28,7 +28,7 @@ class WorkflowDefinition:
         The Pre-segmentation thumbnail related to this workflow, as a numpy array
         """
         if self.from_file:
-            raise FileNotFoundError("Cannot get thumbnails for custom loaded workflows.")
+            return np.array([])
         return np.squeeze(imread(Directories.get_assets_dir() / f"thumbnails/{self.name.lower()}_pre.png"))
 
     @lazy_property
@@ -37,7 +37,7 @@ class WorkflowDefinition:
         The Post-segmentation thumbnail related to this workflow, as a numpy array
         """
         if self.from_file:
-            raise FileNotFoundError("Cannot get thumbnails for custom loaded workflows.")
+            return np.array([])
         return np.squeeze(imread(Directories.get_assets_dir() / f"thumbnails/{self.name.lower()}_post.png"))
 
     @lazy_property
@@ -46,5 +46,5 @@ class WorkflowDefinition:
         Diagram / flow chart image for this workflow, as a numpy array
         """
         if self.from_file:
-            raise FileNotFoundError("Cannot get diagram images for custom loaded workflows.")
+            return np.array([])
         return np.squeeze(imread(Directories.get_assets_dir() / f"diagrams/{self.name.lower()}.png"))
