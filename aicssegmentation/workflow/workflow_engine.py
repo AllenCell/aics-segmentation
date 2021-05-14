@@ -6,6 +6,7 @@ from .workflow_definition import WorkflowDefinition
 from .structure_wrapper_config import StructureWrapperConfig
 from pathlib import Path
 import json
+from json import JSONDecodeError
 
 
 class WorkflowEngine:
@@ -53,8 +54,8 @@ class WorkflowEngine:
         with open(file_path) as f:
             try:
                 data = json.load(f)
-            except:
-                raise ValueError("Invalid json file given.")
+            except JSONDecodeError:
+                raise ValueError("Invalid json file given, please validate before using")
         return self._structure_config.workflow_decoder(data, file_path.stem, from_file=True)
 
     def get_executable_workflow_from_file(self, file_path: str, input_image: np.ndarray) -> Workflow:
