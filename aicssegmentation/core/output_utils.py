@@ -29,14 +29,14 @@ def save_segmentation(
         the suffix to add to the output filename
     """
     with OmeTiffWriter(str(output_path / (fn + suffix + ".tiff"))) as writer:
-        writer.save(bw)
+        writer.save(bw, dimension_order="ZYX")
 
     if contour_flag:
         bd = generate_segmentation_contour(bw)
 
         out_fn = str(output_path / (fn + suffix + "_contour.tiff"))
         with OmeTiffWriter(out_fn) as writer:
-            writer.save(bd)
+            writer.save(bd, dimension_order="ZYX")
 
 
 def generate_segmentation_contour(im):
