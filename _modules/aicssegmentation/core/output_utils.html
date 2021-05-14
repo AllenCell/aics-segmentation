@@ -216,14 +216,14 @@
 <span class="sd">        the suffix to add to the output filename</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="n">OmeTiffWriter</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="p">(</span><span class="n">fn</span> <span class="o">+</span> <span class="n">suffix</span> <span class="o">+</span> <span class="s2">&quot;.tiff&quot;</span><span class="p">)))</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
-        <span class="n">writer</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">bw</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">bw</span><span class="p">,</span> <span class="n">dimension_order</span><span class="o">=</span><span class="s2">&quot;ZYX&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">contour_flag</span><span class="p">:</span>
         <span class="n">bd</span> <span class="o">=</span> <span class="n">generate_segmentation_contour</span><span class="p">(</span><span class="n">bw</span><span class="p">)</span>
 
         <span class="n">out_fn</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="p">(</span><span class="n">fn</span> <span class="o">+</span> <span class="n">suffix</span> <span class="o">+</span> <span class="s2">&quot;_contour.tiff&quot;</span><span class="p">))</span>
         <span class="k">with</span> <span class="n">OmeTiffWriter</span><span class="p">(</span><span class="n">out_fn</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
-            <span class="n">writer</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">bd</span><span class="p">)</span></div>
+            <span class="n">writer</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">bd</span><span class="p">,</span> <span class="n">dimension_order</span><span class="o">=</span><span class="s2">&quot;ZYX&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="generate_segmentation_contour"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.output_utils.generate_segmentation_contour">[docs]</a><span class="k">def</span> <span class="nf">generate_segmentation_contour</span><span class="p">(</span><span class="n">im</span><span class="p">):</span>

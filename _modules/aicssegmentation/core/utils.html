@@ -483,6 +483,32 @@
     <span class="k">return</span> <span class="n">seed</span></div>
 
 
+<div class="viewcode-block" id="remove_hot_pixel"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.utils.remove_hot_pixel">[docs]</a><span class="k">def</span> <span class="nf">remove_hot_pixel</span><span class="p">(</span><span class="n">seg</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    remove hot pixel from segmentation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">seg</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;input segmentation must be 3D&quot;</span>
+
+    <span class="c1"># make sure the segmentation is 0/1</span>
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">seg</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">seg</span><span class="p">[</span><span class="n">seg</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># get sum projection along z</span>
+    <span class="n">seg_proj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># find hot pixels</span>
+    <span class="n">hot_pixel</span> <span class="o">=</span> <span class="n">seg_proj</span> <span class="o">&gt;=</span> <span class="n">seg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span>
+
+    <span class="c1"># clean up every z</span>
+    <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">seg_z</span> <span class="o">=</span> <span class="n">seg</span><span class="p">[</span><span class="n">z</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">seg_z</span><span class="p">[</span><span class="n">hot_pixel</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">seg</span><span class="p">[</span><span class="n">z</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">seg_z</span>
+
+    <span class="k">return</span> <span class="n">seg</span></div>
+
+
 <div class="viewcode-block" id="get_seed_for_objects"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.utils.get_seed_for_objects">[docs]</a><span class="k">def</span> <span class="nf">get_seed_for_objects</span><span class="p">(</span>
     <span class="n">raw</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">bw</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
