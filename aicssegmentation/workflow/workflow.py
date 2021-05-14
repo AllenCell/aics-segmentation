@@ -1,9 +1,12 @@
-from typing import Any, Dict
+from typing import Any, Dict, List
 import numpy as np
 import logging
 
 from .workflow_step import WorkflowStep
-from .workflow_definition import WorkflowDefinition
+from .workflow_definition import WorkflowDefinition, PrebuiltWorkflowDefinition
+
+from pathlib import Path
+from os import listdir
 
 log = logging.getLogger(__name__)
 
@@ -15,18 +18,18 @@ class Workflow:
     according to the steps defined in its WorkflowDefinition.
     """
 
-    def __init__(self, workflow_definition: WorkflowDefinition, input_image: np.ndarray):
+    def __init__(self, workflow_definition: PrebuiltWorkflowDefinition, input_image: np.ndarray):
         if workflow_definition is None:
             raise ValueError("workflow_definition")
         if input_image is None:
             raise ValueError("image")
-        self._definition = workflow_definition
-        self._starting_image = input_image
+        self._definition: PrebuiltWorkflowDefinition = workflow_definition
+        self._starting_image: np.ndarray = input_image
         self._next_step: int = 0  # Next step to execute
-        self._results = list()  # Store step results
+        self._results: List = list()  # Store step results
 
     @property
-    def workflow_definition(self) -> WorkflowDefinition:
+    def workflow_definition(self) -> PrebuiltWorkflowDefinition:
         return self._definition
 
     def reset(self):
@@ -162,3 +165,43 @@ class Workflow:
             (bool): True if all WorkflowSteps have been executed, False if not
         """
         return self._next_step >= len(self._definition.steps)
+
+
+class BatchWorkflow(Workflow):
+    def __init__(self, workflow_definition: WorkflowDefinition, input_dir: str, output_dir: str,
+                 channel_index: int = 0):
+        if workflow_definition is None:
+            raise ValueError("workflow_definition")
+
+        self.input_path = Path(input_dir)
+        if not self.input_path.exists():
+            raise ValueError("The input directory does not exist")
+
+        self.output_path = Path(output_dir)
+        # Creating an the output directory at output_dir if it does not exist already
+        if not self.output_path.exists():
+           self.output_path.mkdir(parents=True, exist_ok=True)
+
+        if not self.valid_image_set():
+            raise TypeError("Wrong type of files in input folder, only tiffs supported")
+
+
+        # self._workflows_to_execute: WorkflowDefinition = workflow_definition
+        # self._starting_image = input_image
+        # self._next_step: int = 0  # Next step to execute
+        # self._results = list()  # Store step results
+
+    def valid_image_set(self, directory: Path) -> bool:
+        """
+        Check if files in a given directory are a valid image set (is 3D,
+
+        Params:
+            directory (Path): directory to check
+
+        Returns:
+            (bool): True if all images are .tiff
+        """
+        for f in listdir(directory):
+            if not f.lower().endswith('.tiff'):
+                return False
+        return True

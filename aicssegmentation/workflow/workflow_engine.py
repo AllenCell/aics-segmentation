@@ -71,3 +71,4 @@ class WorkflowEngine:
         for name in available_workflows:
             definitions.append(self._structure_config.get_workflow_definition(name))
         return definitions
+
