@@ -3,7 +3,7 @@ import json
 from typing import Dict, List
 from aicssegmentation.util.directories import Directories
 from .segmenter_function import SegmenterFunction, FunctionParameter, WidgetType
-from .workflow_definition import WorkflowDefinition
+from .workflow_definition import WorkflowDefinition, WorkflowDefinitionFromFile
 from .workflow_step import WorkflowStep, WorkflowStepCategory
 
 
@@ -114,7 +114,7 @@ class StructureWrapperConfig:
 
         return functions
 
-    def workflow_decoder(self, obj: Dict, workflow_name: str, from_file:bool = False) -> WorkflowDefinition:
+    def workflow_decoder(self, obj: Dict, workflow_name: str, from_file: bool = False) -> WorkflowDefinition:
         """
         Decode Workflow config (conf_{workflow_name}.json)
         """
@@ -147,5 +147,7 @@ class StructureWrapperConfig:
                 step.parameter_defaults = param_defaults
 
             steps.append(step)
-
-        return WorkflowDefinition(name=workflow_name, steps=steps, from_file=from_file)
+        if from_file:
+            return WorkflowDefinitionFromFile(workflow_name, steps)
+        else:
+            return WorkflowDefinition(workflow_name, steps)
