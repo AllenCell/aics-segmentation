@@ -3,7 +3,7 @@ import json
 from typing import Dict, List
 from aicssegmentation.util.directories import Directories
 from .segmenter_function import SegmenterFunction, FunctionParameter, WidgetType
-from .workflow_definition import WorkflowDefinition, WorkflowDefinitionFromFile
+from .workflow_definition import WorkflowDefinition, PrebuiltWorkflowDefinition
 from .workflow_step import WorkflowStep, WorkflowStepCategory
 
 
@@ -148,6 +148,6 @@ class StructureWrapperConfig:
 
             steps.append(step)
         if from_file:
-            return WorkflowDefinitionFromFile(workflow_name, steps)
-        else:
             return WorkflowDefinition(workflow_name, steps)
+        else:
+            return PrebuiltWorkflowDefinition(workflow_name, steps)

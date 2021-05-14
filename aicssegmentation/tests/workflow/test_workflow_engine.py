@@ -4,15 +4,16 @@ import numpy as np
 
 from unittest.mock import MagicMock, create_autospec
 from aicssegmentation.workflow.structure_wrapper_config import StructureWrapperConfig
-from aicssegmentation.workflow.workflow_engine import WorkflowEngine, WorkflowDefinition
+from aicssegmentation.workflow.workflow_engine import WorkflowEngine
+from aicssegmentation.workflow.workflow_definition import PrebuiltWorkflowDefinition
 
 
 class TestWorkflowEngine:
     expected_workflow_names = ["sec61b", "actn1", "test123"]
     expected_workflow_definitions = [
-        WorkflowDefinition(name="sec61b", steps=list()),
-        WorkflowDefinition(name="actn1", steps=list()),
-        WorkflowDefinition(name="test123", steps=list()),
+        PrebuiltWorkflowDefinition(name="sec61b", steps=list()),
+        PrebuiltWorkflowDefinition(name="actn1", steps=list()),
+        PrebuiltWorkflowDefinition(name="test123", steps=list()),
     ]
 
     def setup_method(self):
