@@ -296,6 +296,34 @@ def get_3dseed_from_mid_frame(
     return seed
 
 
+def remove_hot_pixel(
+    seg: np.ndarray
+) -> np.ndarray:
+    """
+    remove hot pixel from segmentation
+    """
+
+    assert len(seg.shape) == 3, "input segmentation must be 3D"
+
+    # make sure the segmentation is 0/1
+    seg = seg.astype(np.uint8)
+    seg[seg > 0] = 1
+
+    # get sum projection along z
+    seg_proj = np.sum(seg, axis=0)
+
+    # find hot pixels
+    hot_pixel = seg_proj >= seg.shape[0] - 2
+
+    # clean up every z
+    for z in range(seg.shape[0]):
+        seg_z = seg[z, :, :]
+        seg_z[hot_pixel] = 0
+        seg[z, :, :] = seg_z
+
+    return seg
+
+
 def get_seed_for_objects(
     raw: np.ndarray,
     bw: np.ndarray,
