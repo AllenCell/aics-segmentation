@@ -296,9 +296,7 @@ def get_3dseed_from_mid_frame(
     return seed
 
 
-def remove_hot_pixel(
-    seg: np.ndarray
-) -> np.ndarray:
+def remove_hot_pixel(seg: np.ndarray) -> np.ndarray:
     """
     remove hot pixel from segmentation
     """
