@@ -28,7 +28,6 @@ class Workflow:
         self._starting_image: np.ndarray = input_image
         self._next_step: int = 0  # Next step to execute
         self._results: List = list()  # Store step results
-        self._selected_channel = selected_channel
 
     @property
     def workflow_definition(self) -> PrebuiltWorkflowDefinition:
@@ -170,6 +169,11 @@ class Workflow:
 
 
 class BatchWorkflow:
+    """
+    Represents a batch of workflows to process.
+    This class provides the functionality to run batches of workflows using multiple image inputs from a input directory
+    according to the steps defined in its WorkflowDefinition.
+    """
     def __init__(self, workflow_definition: WorkflowDefinition, input_dir: str, output_dir: str,
                  channel_index: int = 0):
         if workflow_definition is None:
@@ -189,15 +193,15 @@ class BatchWorkflow:
                 raise ValueError(f"Output directory does not exist, and cannot be created at {self.output_path.parent}")
 
         self.files_count: int = 0
-        self.failed_files: List[Path] = []
+        self.failed_files: Dict[Path, str] = dict()
         self._channel_index = channel_index
 
     def is_valid_image(self, image_path: Path) -> bool:
         """
-        Check if files in a given directory are a valid image set (is 3D,
+        Check if file at a given image_path is a valid image type we support (
 
         Params:
-            directory (Path): directory to check
+            image_path (Path): image to check
 
         Returns:
             (bool): True if all images are .tiff
@@ -210,26 +214,54 @@ class BatchWorkflow:
             return False
 
     def process_all(self):
+        """
+        Process all images in the input_dir with the workflow_definition used to set up the BatchWorkflow
+
+        Params:
+            none
+
+        Returns:
+            none
+        """
         #Currently will save files in same format as they are in the input path
         for f in listdir(self.input_path):
             full_path = Path(self.input_path).joinpath(f)
             self.files_count += 1
             if self.is_valid_image(full_path):
+                # read and format image in the way we expect
                 image_from_path = imread(full_path).squeeze()
                 if image_from_path.ndim > 4:
                     raise ValueError("Image is over 4 dims")
                 if image_from_path.ndim == 4:
                     image_from_path = image_from_path[self._channel_index, :, :, :]
                 try:
+                    #Run workflow on image
                     workflow = Workflow(self._workflow_definition, image_from_path)
                     result = workflow.execute_all()
-                    #saving does not work at the moment
-                    AICSImage(result).save(Path(self.output_path).joinpath(f))
                 except Exception as e:
                     # Handle failures during workflow execution/save
-                    self.failed_files.append(full_path)
+                    self.failed_files[full_path] = f"Failed during processing with error {e}"
             else:
-                # handle unsupported image types
-                self.failed_files.append(full_path)
+                self.failed_files[full_path] = f"Unsupported image type {full_path.suffix}"
+        self.write_log_file()
+
+    def write_log_file(self):
+        """
+        Write a log file to the output folder.
+
+        Params:
+            image_path (Path): image to check
+
+        Returns:
+            (bool): True if all images are .tiff
+        """
+        if self.files_count == 0:
+            raise RuntimeError("process_all has not been run yet, no logs to write.")
+
+        with open(self.output_path.joinpath("log.txt"), 'w') as f:
+            files_processed = self.files_count - len(self.failed_files)
+            f.write(f"{files_processed}/{self.files_count} files were processed.\n")
+            for key, val in self.failed_files.items():
+                f.write(f"FAILED file at: {key}, Error: {val}\n")
 
 
