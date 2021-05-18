@@ -174,8 +174,10 @@ class BatchWorkflow:
     This class provides the functionality to run batches of workflows using multiple image inputs from a input directory
     according to the steps defined in its WorkflowDefinition.
     """
-    def __init__(self, workflow_definition: WorkflowDefinition, input_dir: str, output_dir: str,
-                 channel_index: int = 0):
+
+    def __init__(
+        self, workflow_definition: WorkflowDefinition, input_dir: str, output_dir: str, channel_index: int = 0
+    ):
         if workflow_definition is None:
             raise ValueError("workflow_definition")
         self._workflow_definition = workflow_definition
@@ -206,9 +208,11 @@ class BatchWorkflow:
         Returns:
             (bool): True if all images are .tiff
         """
-        if image_path.suffix.lower() == '.tiff' \
-            or image_path.suffix.lower() == '.tif' \
-            or image_path.suffix.lower() == ".czi":
+        if (
+            image_path.suffix.lower() == ".tiff"
+            or image_path.suffix.lower() == ".tif"
+            or image_path.suffix.lower() == ".czi"
+        ):
             return True
         else:
             return False
@@ -223,7 +227,7 @@ class BatchWorkflow:
         Returns:
             none
         """
-        #Currently will save files in same format as they are in the input path
+        # Currently will save files in same format as they are in the input path
         for f in listdir(self.input_path):
             full_path = Path(self.input_path).joinpath(f)
             self.files_count += 1
@@ -235,7 +239,7 @@ class BatchWorkflow:
                 if image_from_path.ndim == 4:
                     image_from_path = image_from_path[self._channel_index, :, :, :]
                 try:
-                    #Run workflow on image
+                    # Run workflow on image
                     workflow = Workflow(self._workflow_definition, image_from_path)
                     result = workflow.execute_all()
                 except Exception as e:
@@ -258,10 +262,8 @@ class BatchWorkflow:
         if self.files_count == 0:
             raise RuntimeError("process_all has not been run yet, no logs to write.")
 
-        with open(self.output_path.joinpath("log.txt"), 'w') as f:
+        with open(self.output_path.joinpath("log.txt"), "w") as f:
             files_processed = self.files_count - len(self.failed_files)
             f.write(f"{files_processed}/{self.files_count} files were processed.\n")
             for key, val in self.failed_files.items():
                 f.write(f"FAILED file at: {key}, Error: {val}\n")
-
-
