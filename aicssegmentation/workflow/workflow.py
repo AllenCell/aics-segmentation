@@ -1,6 +1,7 @@
 from typing import Any, Dict, List
 import numpy as np
 import logging
+from aicsimageio import imread, AICSImage
 
 from .workflow_step import WorkflowStep
 from .workflow_definition import WorkflowDefinition, PrebuiltWorkflowDefinition
@@ -167,11 +168,12 @@ class Workflow:
         return self._next_step >= len(self._definition.steps)
 
 
-class BatchWorkflow(Workflow):
+class BatchWorkflow:
     def __init__(self, workflow_definition: WorkflowDefinition, input_dir: str, output_dir: str,
                  channel_index: int = 0):
         if workflow_definition is None:
             raise ValueError("workflow_definition")
+        self._workflow_definition = workflow_definition
 
         self.input_path = Path(input_dir)
         if not self.input_path.exists():
@@ -180,18 +182,15 @@ class BatchWorkflow(Workflow):
         self.output_path = Path(output_dir)
         # Creating an the output directory at output_dir if it does not exist already
         if not self.output_path.exists():
-           self.output_path.mkdir(parents=True, exist_ok=True)
+            if self.output_path.parent.exists():
+                self.output_path.mkdir(parents=True, exist_ok=True)
+            else:
+                raise ValueError(f"Output directory does not exist, and cannot be created at {self.output_path.parent}")
 
-        if not self.valid_image_set():
-            raise TypeError("Wrong type of files in input folder, only tiffs supported")
+        self.files_count: int = 0
+        self.failed_files: List[Path] = []
 
-
-        # self._workflows_to_execute: WorkflowDefinition = workflow_definition
-        # self._starting_image = input_image
-        # self._next_step: int = 0  # Next step to execute
-        # self._results = list()  # Store step results
-
-    def valid_image_set(self, directory: Path) -> bool:
+    def is_valid_image(self, image_path: Path) -> bool:
         """
         Check if files in a given directory are a valid image set (is 3D,
 
@@ -201,7 +200,28 @@ class BatchWorkflow(Workflow):
         Returns:
             (bool): True if all images are .tiff
         """
-        for f in listdir(directory):
-            if not f.lower().endswith('.tiff'):
-                return False
-        return True
+        if image_path.suffix.lower() == '.tiff' \
+            or image_path.suffix.lower() == '.tif' \
+            or image_path.suffix.lower() == ".czi":
+            return True
+        else:
+            return False
+
+    def process_all(self):
+        #Currently will save files in same format as they are in the input path
+        for f in listdir(self.input_path):
+            full_path = Path(self.input_path).joinpath(f)
+            self.files_count += 1
+            if self.is_valid_image(full_path):
+                try:
+                    workflow = Workflow(self._workflow_definition, imread(full_path))
+                    result = workflow.execute_all()
+                    AICSImage(result).save(Path(self.output_path).joinpath(f))
+                except:
+                    # Handle failures during workflow execution
+                    self.failed_files.append(full_path)
+            else:
+                # handle unsupported image types
+                self.failed_files.append(full_path)
+
+

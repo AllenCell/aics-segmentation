@@ -45,7 +45,7 @@ class WorkflowEngine:
 
         return Workflow(definition, input_image)
 
-    def _load_workflow_def(self, file_path: Path) -> WorkflowDefinition:
+    def load_workflow_def(self, file_path: Path) -> WorkflowDefinition:
         if not file_path.exists():
             raise FileNotFoundError(f"Did not find a file at {file_path}")
         if file_path.suffix.lower() != ".json":
@@ -62,7 +62,7 @@ class WorkflowEngine:
         if input_image is None:
             raise ValueError("input_image")
         norm_path = Path(file_path)
-        definition = self._load_workflow_def(norm_path)
+        definition = self.load_workflow_def(norm_path)
         return Workflow(definition, input_image)
 
     def _load_workflow_definitions(self) -> List[WorkflowDefinition]:
