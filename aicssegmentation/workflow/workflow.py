@@ -28,6 +28,7 @@ class Workflow:
         self._starting_image: np.ndarray = input_image
         self._next_step: int = 0  # Next step to execute
         self._results: List = list()  # Store step results
+        self._selected_channel = selected_channel
 
     @property
     def workflow_definition(self) -> PrebuiltWorkflowDefinition:
@@ -189,6 +190,7 @@ class BatchWorkflow:
 
         self.files_count: int = 0
         self.failed_files: List[Path] = []
+        self._channel_index = channel_index
 
     def is_valid_image(self, image_path: Path) -> bool:
         """
@@ -213,12 +215,18 @@ class BatchWorkflow:
             full_path = Path(self.input_path).joinpath(f)
             self.files_count += 1
             if self.is_valid_image(full_path):
+                image_from_path = imread(full_path).squeeze()
+                if image_from_path.ndim > 4:
+                    raise ValueError("Image is over 4 dims")
+                if image_from_path.ndim == 4:
+                    image_from_path = image_from_path[self._channel_index, :, :, :]
                 try:
-                    workflow = Workflow(self._workflow_definition, imread(full_path))
+                    workflow = Workflow(self._workflow_definition, image_from_path)
                     result = workflow.execute_all()
+                    #saving does not work at the moment
                     AICSImage(result).save(Path(self.output_path).joinpath(f))
-                except:
-                    # Handle failures during workflow execution
+                except Exception as e:
+                    # Handle failures during workflow execution/save
                     self.failed_files.append(full_path)
             else:
                 # handle unsupported image types
