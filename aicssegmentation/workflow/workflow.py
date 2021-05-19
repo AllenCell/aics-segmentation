@@ -228,12 +228,9 @@ class BatchWorkflow:
         for f in files:
             self.files_count += 1
             if self.is_valid_image(f):
+                read_image = AICSImage(f)
                 # read and format image in the way we expect
-                image_from_path = imread(f).squeeze()
-                if image_from_path.ndim > 4:
-                    raise ValueError("Image is over 4 dims")
-                if image_from_path.ndim == 4:
-                    image_from_path = image_from_path[self._channel_index, :, :, :]
+                image_from_path = self.format_image_to_3d(read_image)
                 try:
                     # Run workflow on image
                     workflow = Workflow(self._workflow_definition, image_from_path)
@@ -246,7 +243,7 @@ class BatchWorkflow:
                 self.failed_files[f] = f"Unsupported image type {f.suffix}"
         self._write_log_file()
 
-    def _write_log_file(self):
+    def _write_log_file(self) -> bool:
         """
         Write a log file to the output folder.
 
@@ -256,9 +253,6 @@ class BatchWorkflow:
         Returns:
             (bool): True if all images are .tiff
         """
-
-
-
         with open(self.output_path.joinpath("log.txt"), "w") as f:
             if self.files_count == 0:
                 f.write("no files were processed")
@@ -267,3 +261,32 @@ class BatchWorkflow:
                 f.write(f"{files_processed}/{self.files_count} files were processed.\n")
                 for key, val in self.failed_files.items():
                     f.write(f"FAILED file at: {key}, Error: {val}\n")
+
+
+    def format_image_to_3d(self, image: AICSImage) -> np.ndarray:
+        """
+        Format images in the way that aics-segmention expects for most workflows (3d, zyx)
+
+        Params:
+            image_path (Path): image to check
+
+        Returns:
+            (bool): True if all images are .tiff
+        """
+        if len(image.dims) == 6:
+            return image.get_image_data("ZYX", C=self._channel_index, S=0, T=0)
+        elif len(image.dims) == 5:
+            if 'S' in image.dims:
+                return image.get_image_data("ZYX", C=self._channel_index, S=0)
+            else:
+                return image.get_image_data("ZYX", C=self._channel_index, T=0)
+        elif len(image.dims) == 4:
+            return image.get_image_data("ZYX", C=self._channel_index)
+        elif len(image.dims) == 4:
+            return image.get_image_data("ZYX")
+        else:
+            return TypeError("Unsupported image format.")
+
+
+
+
