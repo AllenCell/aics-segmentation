@@ -3,10 +3,10 @@ import pytest
 import numpy as np
 
 from unittest.mock import MagicMock, create_autospec
-from aicssegmentation.workflow.structure_wrapper_config import StructureWrapperConfig
+from aicssegmentation.workflow.workflow_config import WorkflowConfig
 from aicssegmentation.workflow.workflow_engine import WorkflowEngine
 from aicssegmentation.workflow.workflow_definition import PrebuiltWorkflowDefinition
-
+from aicssegmentation.util.directories import Directories
 
 class TestWorkflowEngine:
     expected_workflow_names = ["sec61b", "actn1", "test123"]
@@ -17,7 +17,7 @@ class TestWorkflowEngine:
     ]
 
     def setup_method(self):
-        self._mock_structure_config: MagicMock = create_autospec(StructureWrapperConfig)
+        self._mock_structure_config: MagicMock = create_autospec(WorkflowConfig)
         self._mock_structure_config.get_available_workflows.return_value = self.expected_workflow_names
         self._mock_structure_config.get_workflow_definition.side_effect = self.expected_workflow_definitions
         self._workflow_engine = WorkflowEngine(self._mock_structure_config)
@@ -38,3 +38,19 @@ class TestWorkflowEngine:
         workflow = self._workflow_engine.get_executable_workflow(workflow_name, np.ones((1, 1, 1)))
         assert isinstance(workflow, Workflow)
         assert workflow.workflow_definition.name == workflow_name
+
+    def test_get_executable_workflow_from_config_file_null_path_fails(self):
+        with pytest.raises(ValueError):
+            self._workflow_engine.get_executable_workflow_from_config_file(None, np.ones((1, 1, 1)))
+
+    def test_get_executable_workflow_from_config_file_null_image_fails(self):
+        with pytest.raises(ValueError):
+            self._workflow_engine.get_executable_workflow(Directories.get_structure_config_dir() / "conf_actb.json", None)            
+
+    @pytest.mark.parametrize("path", [
+                                Directories.get_structure_config_dir() / "conf_actb.json", 
+                                f"{Directories.get_structure_config_dir()}/conf_actb.json"
+                            ])    
+    def test_get_executable_workflow_from_config_file(self, path):
+        workflow = self._workflow_engine.get_executable_workflow_from_config_file(path, np.ones((1, 1, 1)))
+        assert isinstance(workflow, Workflow)              

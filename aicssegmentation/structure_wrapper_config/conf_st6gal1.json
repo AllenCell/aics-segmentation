@@ -2,7 +2,7 @@
     "1": {        
         "category": "preprocessing",        
         "function": "intensity_normalization",
-        "parameter_defaults": {
+        "parameter_values": {
             "scaling_param": [
                 9,
                 19
@@ -13,7 +13,7 @@
     "2": {        
         "category": "preprocessing",        
         "function": "gaussian_smoothing_3D",
-        "parameter_defaults": {
+        "parameter_values": {
             "sigma": 1
         },
         "parent": 1
@@ -21,7 +21,7 @@
     "3": {        
         "category": "core",        
         "function": "masked_object_treshold_low_level",
-        "parameter_defaults": {
+        "parameter_values": {
             "global_thresh_method": "triangle",
             "object_minArea": 1200,
             "dilate": true
@@ -31,7 +31,7 @@
     "4": {        
         "category": "core",        
         "function": "masked_object_treshold_high_level",
-        "parameter_defaults": {
+        "parameter_values": {
             "extra_criteria": false,
             "local_adjust": 0.98
         },
@@ -43,7 +43,7 @@
     "5": {        
         "category": "core",        
         "function": "topology_preserving_thinning",
-        "parameter_defaults": {
+        "parameter_values": {
             "min_thickness": 1.6,
             "thin": 1
         },
@@ -52,7 +52,7 @@
     "6": {        
         "category": "core",        
         "function": "spot_filter_3D",
-        "parameter_defaults": {
+        "parameter_values": {
             "log_sigma": 1.6,
             "cutoff": 0.02
         },
@@ -70,7 +70,7 @@
         "category": "postprocessing",        
         "function": "size_filter",
         "parent": 7,
-        "parameter_defaults": {
+        "parameter_values": {
             "min_size": 10,
             "method": "3D"
         }

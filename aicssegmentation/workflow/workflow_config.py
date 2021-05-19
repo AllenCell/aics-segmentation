@@ -1,5 +1,6 @@
 import json
 
+from pathlib import Path
 from typing import Dict, List
 from aicssegmentation.util.directories import Directories
 from .segmenter_function import SegmenterFunction, FunctionParameter, WidgetType
@@ -15,9 +16,9 @@ class ConfigurationException(Exception):
     pass
 
 
-class StructureWrapperConfig:
+class WorkflowConfig:
     """
-    Provides access to structure wrapper configuration
+    Provides access to structure workflow configuration
     """
 
     def __init__(self):
@@ -50,10 +51,10 @@ class StructureWrapperConfig:
 
         return self._all_functions
 
-    def get_workflow_definition(self, workflow_name: str):
+    def get_workflow_definition(self, workflow_name: str) -> PrebuiltWorkflowDefinition:
         """
         Get a WorkflowDefinition for the given workflow from the corresponding
-        json structure config
+        prebuilt json structure config
         """
         if workflow_name is None or len(workflow_name.strip()) == 0:
             raise ValueError("workflow_name cannot be empty")
@@ -63,12 +64,21 @@ class StructureWrapperConfig:
 
         path = Directories.get_structure_config_dir() / f"conf_{workflow_name}.json"
 
+        return self.get_workflow_definition_from_config_file(path, workflow_name, prebuilt=True)
+
+    def get_workflow_definition_from_config_file(self, file_path: Path, workflow_name: str = None, prebuilt: bool = False) -> WorkflowDefinition:       
+        """
+        Get a WorkflowDefinition based off the given json configuration file
+        """        
+        if file_path.suffix.lower() != ".json":
+            raise ValueError(f"Workflow configuration file must be a json file with .json file extension.")
+
         try:
-            with open(path) as file:
+            with open(file_path) as file:
                 obj = json.load(file)
-                return self.workflow_decoder(obj, workflow_name)
+                return self._workflow_decoder(obj, workflow_name or file_path.name, prebuilt)
         except Exception as ex:
-            raise ConfigurationException(f"Error reading json configuration from {path}") from ex
+            raise ConfigurationException(f"Error reading json configuration from {file_path}") from ex        
 
     def _all_functions_decoder(self, obj: Dict) -> List[SegmenterFunction]:
         """
@@ -114,7 +124,7 @@ class StructureWrapperConfig:
 
         return functions
 
-    def workflow_decoder(self, obj: Dict, workflow_name: str, from_file: bool = False) -> WorkflowDefinition:
+    def _workflow_decoder(self, obj: Dict, workflow_name: str, prebuilt: bool = False) -> WorkflowDefinition:
         """
         Decode Workflow config (conf_{workflow_name}.json)
         """
@@ -123,9 +133,13 @@ class StructureWrapperConfig:
 
         for step_k, step_v in obj.items():
             step_number = int(step_k)
-            function = next(filter(lambda f: f.name == step_v["function"], functions))
+            function_id = step_v["function"]
+            function = next(filter(lambda f: f.name == function_id, functions), None)
 
-            if isinstance(step_v["parent"], list):  #
+            if function is None:
+                raise ConfigurationException(f"Could not find a Segmenter function matching the function identifier <{function_id}>.")
+
+            if isinstance(step_v["parent"], list):  
                 parent = step_v["parent"]
             else:
                 parent = [step_v["parent"]]
@@ -137,17 +151,17 @@ class StructureWrapperConfig:
                 parent=parent,
             )
 
-            if step_v.get("parameter_defaults") is not None and len(step_v["parameter_defaults"]) > 0:
+            if step_v.get("parameter_values") is not None and len(step_v["parameter_values"]) > 0:
                 param_defaults = dict()
 
-                for param_k, param_v in step_v["parameter_defaults"].items():
+                for param_k, param_v in step_v["parameter_values"].items():
                     param_name = param_k
                     param_defaults[param_name] = param_v
 
-                step.parameter_defaults = param_defaults
+                step.parameter_values = param_defaults
 
             steps.append(step)
-        if from_file:
-            return WorkflowDefinition(workflow_name, steps)
+        if prebuilt:
+            return PrebuiltWorkflowDefinition(workflow_name, steps)            
         else:
-            return PrebuiltWorkflowDefinition(workflow_name, steps)
+            return WorkflowDefinition(workflow_name, steps)

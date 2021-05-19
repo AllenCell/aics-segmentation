@@ -1,9 +1,9 @@
 import numpy as np
 
-from typing import List
+from typing import List, Union
 from .workflow import Workflow
 from .workflow_definition import WorkflowDefinition
-from .structure_wrapper_config import StructureWrapperConfig
+from .workflow_config import WorkflowConfig
 from pathlib import Path
 import json
 from json import JSONDecodeError
@@ -15,8 +15,8 @@ class WorkflowEngine:
     Use this class to access and execute aicssegmentation structure workflows
     """
 
-    def __init__(self, structure_config: StructureWrapperConfig = None):
-        self._structure_config = structure_config or StructureWrapperConfig()
+    def __init__(self, workflow_config: WorkflowConfig = None):
+        self._workflow_config = workflow_config or WorkflowConfig()
         self._workflow_definitions = self._load_workflow_definitions()
 
     @property
@@ -32,7 +32,7 @@ class WorkflowEngine:
 
         inputs:
             workflow_name (str): Name of the workflow to load
-            image (ndarray): input image for the workflow to execute on
+            input_image (ndarray): input image for the workflow to execute on
         """
         if input_image is None:
             raise ValueError("input_image")
@@ -45,29 +45,29 @@ class WorkflowEngine:
 
         return Workflow(definition, input_image)
 
-    def _load_workflow_def(self, file_path: Path) -> WorkflowDefinition:
-        if not file_path.exists():
-            raise FileNotFoundError(f"Did not find a file at {file_path}")
-        if file_path.suffix.lower() != ".json":
-            raise ValueError(f"The file at {file_path} is not a json file.")
+    def get_executable_workflow_from_config_file(self, file_path: Union[str, Path], input_image: np.ndarray) -> Workflow:
+        """
+        Get an executable workflow object from a configuration file
 
-        with open(file_path) as f:
-            try:
-                data = json.load(f)
-            except JSONDecodeError:
-                raise ValueError("Invalid json file given, please validate before using")
-        return self._structure_config.workflow_decoder(data, file_path.stem, from_file=True)
-
-    def get_executable_workflow_from_file(self, file_path: str, input_image: np.ndarray) -> Workflow:
+        inputs:
+            file_path (str|Path): Path to the workflow configuration file
+            input_image (ndarray): input image for the workflow to execute on
+        """                            
         if input_image is None:
             raise ValueError("input_image")
-        norm_path = Path(file_path)
-        definition = self._load_workflow_def(norm_path)
+        if isinstance(file_path, str):
+            norm_path = Path(file_path)
+        elif isinstance(file_path, Path):
+            norm_path = file_path
+        else:
+            raise ValueError("file_path")
+        
+        definition = self._workflow_config.get_workflow_definition_from_config_file(norm_path)
         return Workflow(definition, input_image)
 
     def _load_workflow_definitions(self) -> List[WorkflowDefinition]:
         definitions = list()
-        available_workflows = self._structure_config.get_available_workflows()
+        available_workflows = self._workflow_config.get_available_workflows()
         for name in available_workflows:
-            definitions.append(self._structure_config.get_workflow_definition(name))
+            definitions.append(self._workflow_config.get_workflow_definition(name))
         return definitions
