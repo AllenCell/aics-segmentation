@@ -1,7 +1,7 @@
 import numpy as np
 
 from typing import List
-from .workflow import Workflow
+from .workflow import Workflow, BatchWorkflow
 from .workflow_definition import WorkflowDefinition
 from .structure_wrapper_config import StructureWrapperConfig
 from pathlib import Path
@@ -45,6 +45,27 @@ class WorkflowEngine:
 
         return Workflow(definition, input_image)
 
+    def get_executable_batch_workflow(self, workflow_name: str, input_dir: str, output_dir: str, channel_index: int):
+        """
+        Get an executable BatchWorkflow object
+
+        inputs:
+            workflow_name (str): Name of the workflow to load
+            input_dir (str): input path where files to process are located
+            output_dir (str): output path to write results to
+            channel_index (int): index of selected channel
+        """
+
+
+        definition = next(filter(lambda d: d.name == workflow_name, self._workflow_definitions), None)
+        if definition is None:
+            raise ValueError(
+                f"No available workflow definition found for {workflow_name}. Specify a valid workflow name."
+            )
+
+        return BatchWorkflow(definition, input_dir, output_dir, channel_index)
+
+
     def load_workflow_def(self, file_path: Path) -> WorkflowDefinition:
         if not file_path.exists():
             raise FileNotFoundError(f"Did not find a file at {file_path}")
@@ -64,6 +85,14 @@ class WorkflowEngine:
         norm_path = Path(file_path)
         definition = self.load_workflow_def(norm_path)
         return Workflow(definition, input_image)
+
+    def get_executable_batch_workflow_from_file(self, file_path: str, input_image: np.ndarray, input_dir: str, output_dir: str, channel_index: int):
+        if input_image is None:
+            raise ValueError("input_image")
+        norm_path = Path(file_path)
+        definition = self.load_workflow_def(norm_path)
+        return BatchWorkflow(definition, input_dir, output_dir, channel_index)
+
 
     def _load_workflow_definitions(self) -> List[WorkflowDefinition]:
         definitions = list()

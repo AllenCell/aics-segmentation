@@ -11,6 +11,7 @@ from os import listdir
 
 log = logging.getLogger(__name__)
 
+SUPPORTED_FILE_EXTENSIONS = [".tiff", ".tif", ".czi"]
 
 class Workflow:
     """
@@ -19,18 +20,18 @@ class Workflow:
     according to the steps defined in its WorkflowDefinition.
     """
 
-    def __init__(self, workflow_definition: PrebuiltWorkflowDefinition, input_image: np.ndarray):
+    def __init__(self, workflow_definition: WorkflowDefinition, input_image: np.ndarray):
         if workflow_definition is None:
             raise ValueError("workflow_definition")
         if input_image is None:
             raise ValueError("image")
-        self._definition: PrebuiltWorkflowDefinition = workflow_definition
+        self._definition: WorkflowDefinition = workflow_definition
         self._starting_image: np.ndarray = input_image
         self._next_step: int = 0  # Next step to execute
         self._results: List = list()  # Store step results
 
     @property
-    def workflow_definition(self) -> PrebuiltWorkflowDefinition:
+    def workflow_definition(self) -> WorkflowDefinition:
         return self._definition
 
     def reset(self):
@@ -176,8 +177,7 @@ class BatchWorkflow:
     """
 
     def __init__(
-        self, workflow_definition: WorkflowDefinition, input_dir: str, output_dir: str, channel_index: int = 0
-    ):
+        self, workflow_definition: WorkflowDefinition, input_dir: str, output_dir: str, channel_index: int = 0):
         if workflow_definition is None:
             raise ValueError("workflow_definition")
         self._workflow_definition = workflow_definition
@@ -208,11 +208,7 @@ class BatchWorkflow:
         Returns:
             (bool): True if all images are .tiff
         """
-        if (
-            image_path.suffix.lower() == ".tiff"
-            or image_path.suffix.lower() == ".tif"
-            or image_path.suffix.lower() == ".czi"
-        ):
+        if (image_path.suffix.lower() in SUPPORTED_FILE_EXTENSIONS):
             return True
         else:
             return False
@@ -227,13 +223,13 @@ class BatchWorkflow:
         Returns:
             none
         """
+        files = [f for f in self.input_path.glob("**/*") if f.is_file]
         # Currently will save files in same format as they are in the input path
-        for f in listdir(self.input_path):
-            full_path = Path(self.input_path).joinpath(f)
+        for f in files:
             self.files_count += 1
-            if self.is_valid_image(full_path):
+            if self.is_valid_image(f):
                 # read and format image in the way we expect
-                image_from_path = imread(full_path).squeeze()
+                image_from_path = imread(f).squeeze()
                 if image_from_path.ndim > 4:
                     raise ValueError("Image is over 4 dims")
                 if image_from_path.ndim == 4:
@@ -244,12 +240,12 @@ class BatchWorkflow:
                     result = workflow.execute_all()
                 except Exception as e:
                     # Handle failures during workflow execution/save
-                    self.failed_files[full_path] = f"Failed during processing with error {e}"
+                    self.failed_files[f] = f"Failed during processing with error {e}"
             else:
-                self.failed_files[full_path] = f"Unsupported image type {full_path.suffix}"
-        self.write_log_file()
+                self.failed_files[f] = f"Unsupported image type {f.suffix}"
+        self._write_log_file()
 
-    def write_log_file(self):
+    def _write_log_file(self):
         """
         Write a log file to the output folder.
 
@@ -259,11 +255,14 @@ class BatchWorkflow:
         Returns:
             (bool): True if all images are .tiff
         """
-        if self.files_count == 0:
-            raise RuntimeError("process_all has not been run yet, no logs to write.")
+
+
 
         with open(self.output_path.joinpath("log.txt"), "w") as f:
-            files_processed = self.files_count - len(self.failed_files)
-            f.write(f"{files_processed}/{self.files_count} files were processed.\n")
-            for key, val in self.failed_files.items():
-                f.write(f"FAILED file at: {key}, Error: {val}\n")
+            if self.files_count == 0:
+                f.write("no files were processed")
+            else:
+                files_processed = self.files_count - len(self.failed_files)
+                f.write(f"{files_processed}/{self.files_count} files were processed.\n")
+                for key, val in self.failed_files.items():
+                    f.write(f"FAILED file at: {key}, Error: {val}\n")
