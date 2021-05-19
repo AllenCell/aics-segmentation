@@ -238,6 +238,7 @@ class BatchWorkflow:
                     # Run workflow on image
                     workflow = Workflow(self._workflow_definition, image_from_path)
                     result = workflow.execute_all()
+                    AICSImage(result).save(self.output_path.joinpath(f.name))
                 except Exception as e:
                     # Handle failures during workflow execution/save
                     self.failed_files[f] = f"Failed during processing with error {e}"
