@@ -55,8 +55,6 @@ class WorkflowEngine:
             output_dir (str): output path to write results to
             channel_index (int): index of selected channel
         """
-
-
         definition = next(filter(lambda d: d.name == workflow_name, self._workflow_definitions), None)
         if definition is None:
             raise ValueError(
@@ -66,7 +64,7 @@ class WorkflowEngine:
         return BatchWorkflow(definition, input_dir, output_dir, channel_index)
 
 
-    def _load_workflow_def(self, file_path: Path) -> WorkflowDefinition:
+    def load_workflow_def(self, file_path: Path) -> WorkflowDefinition:
         if not file_path.exists():
             raise FileNotFoundError(f"Did not find a file at {file_path}")
         if file_path.suffix.lower() != ".json":

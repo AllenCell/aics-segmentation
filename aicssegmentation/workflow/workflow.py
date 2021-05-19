@@ -30,6 +30,7 @@ class Workflow:
         self._next_step: int = 0  # Next step to execute
         self._results: List = list()  # Store step results
 
+
     @property
     def workflow_definition(self) -> WorkflowDefinition:
         return self._definition
@@ -194,9 +195,10 @@ class BatchWorkflow:
             else:
                 raise ValueError(f"Output directory does not exist, and cannot be created at {self.output_path.parent}")
 
-        self.files_count: int = 0
-        self.failed_files: Dict[Path, str] = dict()
+        self._files_count: int = 0
+        self._failed_files: int = 0
         self._channel_index = channel_index
+        self._log_file: Path = self.output_path.joinpath("log.txt")
 
     def is_valid_image(self, image_path: Path) -> bool:
         """
@@ -238,12 +240,16 @@ class BatchWorkflow:
                     AICSImage(result).save(self.output_path.joinpath(f.name))
                 except Exception as e:
                     # Handle failures during workflow execution/save
-                    self.failed_files[f] = f"Failed during processing with error {e}"
+                    self._failed_files += 1
+                    with open(self._log_file, "w") as log:
+                        log.write(f"FAILED: {f}, ERROR: {e}")
             else:
-                self.failed_files[f] = f"Unsupported image type {f.suffix}"
-        self._write_log_file()
+                self._failed_files += 1
+                with open(self._log_file, "w") as log:
+                    log.write(f"FAILED: {f}, ERROR: Unsupported Image Type {f.suffix}")
+        self._write_log_file_summary()
 
-    def _write_log_file(self) -> bool:
+    def _write_log_file_summary(self) -> bool:
         """
         Write a log file to the output folder.
 
@@ -253,14 +259,12 @@ class BatchWorkflow:
         Returns:
             (bool): True if all images are .tiff
         """
-        with open(self.output_path.joinpath("log.txt"), "w") as f:
-            if self.files_count == 0:
+        with open(self._log_file, "w") as f:
+            if self._files_count == 0:
                 f.write("no files were processed")
             else:
-                files_processed = self.files_count - len(self.failed_files)
-                f.write(f"{files_processed}/{self.files_count} files were processed.\n")
-                for key, val in self.failed_files.items():
-                    f.write(f"FAILED file at: {key}, Error: {val}\n")
+                files_processed = self._files_count - self._failed_files
+                f.write(f"{files_processed}/{self._files_count} files were processed.\n")
 
 
     def format_image_to_3d(self, image: AICSImage) -> np.ndarray:
@@ -273,19 +277,19 @@ class BatchWorkflow:
         Returns:
             (bool): True if all images are .tiff
         """
-        if len(image.dims) == 6:
+        if len(image.shape) == 6:
             return image.get_image_data("ZYX", C=self._channel_index, S=0, T=0)
-        elif len(image.dims) == 5:
-            if 'S' in image.dims:
+        elif len(image.shape) == 5:
+            if 'S' in image.dims.order:
                 return image.get_image_data("ZYX", C=self._channel_index, S=0)
             else:
                 return image.get_image_data("ZYX", C=self._channel_index, T=0)
-        elif len(image.dims) == 4:
+        elif len(image.shape) == 4:
             return image.get_image_data("ZYX", C=self._channel_index)
-        elif len(image.dims) == 4:
+        elif len(image.shape) == 4:
             return image.get_image_data("ZYX")
         else:
-            return TypeError("Unsupported image format.")
+            return TypeError(f"Unsupported image format {image.dims.order}")
 
 
 
