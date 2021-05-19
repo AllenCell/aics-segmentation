@@ -75,12 +75,12 @@ class WorkflowConfig:
         if file_path.suffix.lower() != ".json":
             raise ValueError("Workflow configuration file must be a json file with .json file extension.")
 
-        try:
-            with open(file_path) as file:
+        with open(file_path) as file:
+            try:
                 obj = json.load(file)
                 return self._workflow_decoder(obj, workflow_name or file_path.name, prebuilt)
-        except Exception as ex:
-            raise ConfigurationException(f"Error reading json configuration from {file_path}") from ex
+            except Exception as ex:
+                raise ConfigurationException(f"Error reading json configuration from {file_path}") from ex
 
     def save_workflow_definition_as_json(self, workflow_definition: WorkflowDefinition, output_file_path: Path):
         """
