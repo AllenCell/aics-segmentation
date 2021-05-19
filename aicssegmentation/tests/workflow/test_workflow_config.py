@@ -8,7 +8,7 @@ from aicssegmentation.workflow.workflow_definition import WorkflowDefinition, Pr
 from . import SUPPORTED_STRUCTURE_NAMES
 
 
-class TestStructureWrapperConfig:
+class TestWorkflowConfig:
     def setup_method(self):
         self._workflow_config = WorkflowConfig()
 
