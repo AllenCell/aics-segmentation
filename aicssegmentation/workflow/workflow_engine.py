@@ -4,6 +4,9 @@ from typing import List
 from .workflow import Workflow
 from .workflow_definition import WorkflowDefinition
 from .structure_wrapper_config import StructureWrapperConfig
+from pathlib import Path
+import json
+from json import JSONDecodeError
 
 
 class WorkflowEngine:
@@ -40,6 +43,26 @@ class WorkflowEngine:
                 f"No available workflow definition found for {workflow_name}. Specify a valid workflow name."
             )
 
+        return Workflow(definition, input_image)
+
+    def _load_workflow_def(self, file_path: Path) -> WorkflowDefinition:
+        if not file_path.exists():
+            raise FileNotFoundError(f"Did not find a file at {file_path}")
+        if file_path.suffix.lower() != ".json":
+            raise ValueError(f"The file at {file_path} is not a json file.")
+
+        with open(file_path) as f:
+            try:
+                data = json.load(f)
+            except JSONDecodeError:
+                raise ValueError("Invalid json file given, please validate before using")
+        return self._structure_config.workflow_decoder(data, file_path.stem, from_file=True)
+
+    def get_executable_workflow_from_file(self, file_path: str, input_image: np.ndarray) -> Workflow:
+        if input_image is None:
+            raise ValueError("input_image")
+        norm_path = Path(file_path)
+        definition = self._load_workflow_def(norm_path)
         return Workflow(definition, input_image)
 
     def _load_workflow_definitions(self) -> List[WorkflowDefinition]:

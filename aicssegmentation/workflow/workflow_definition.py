@@ -11,7 +11,7 @@ from .workflow_step import WorkflowStep
 @dataclass
 class WorkflowDefinition:
     """
-    Definition of an aics-segmentation Workflow
+    Definition of a custom aics-segmentation Workflow loaded from file.
 
     This class only defines the workflow (i.e. the workflow characteristics and steps)
     and is used either for building an executable Workflow object
@@ -20,6 +20,25 @@ class WorkflowDefinition:
 
     name: str
     steps: List[WorkflowStep]
+
+    def __init__(self, name: str, steps: List[WorkflowStep]):
+        self.name = name
+        self.steps = steps
+        self.from_file = True
+
+
+@dataclass
+class PrebuiltWorkflowDefinition(WorkflowDefinition):
+    """
+    Definition of a pre-built(default) aics-segmentation Workflow from our assets.
+
+    This class only defines the workflow (i.e. the workflow characteristics and steps)
+    and is used either for building an executable Workflow object
+    or to access information about the Workflow without needing to execute it
+    """
+
+    def __init__(self, name: str, steps: List[WorkflowStep]):
+        WorkflowDefinition.__init__(self, name=name, steps=steps)
 
     @lazy_property
     def thumbnail_pre(self) -> np.ndarray:
