@@ -5,8 +5,6 @@ from .workflow import Workflow
 from .workflow_definition import WorkflowDefinition
 from .workflow_config import WorkflowConfig
 from pathlib import Path
-import json
-from json import JSONDecodeError
 
 
 class WorkflowEngine:
@@ -35,7 +33,7 @@ class WorkflowEngine:
             input_image (ndarray): input image for the workflow to execute on
         """
         if input_image is None:
-            raise ValueError("input_image")
+            raise ValueError("input_image is None")
 
         definition = next(filter(lambda d: d.name == workflow_name, self._workflow_definitions), None)
         if definition is None:
@@ -45,25 +43,31 @@ class WorkflowEngine:
 
         return Workflow(definition, input_image)
 
-    def get_executable_workflow_from_config_file(self, file_path: Union[str, Path], input_image: np.ndarray) -> Workflow:
+    def get_executable_workflow_from_config_file(
+        self, file_path: Union[str, Path], input_image: np.ndarray
+    ) -> Workflow:
         """
         Get an executable workflow object from a configuration file
 
         inputs:
             file_path (str|Path): Path to the workflow configuration file
             input_image (ndarray): input image for the workflow to execute on
-        """                            
+        """
         if input_image is None:
-            raise ValueError("input_image")
-        if isinstance(file_path, str):
-            norm_path = Path(file_path)
-        elif isinstance(file_path, Path):
-            norm_path = file_path
-        else:
-            raise ValueError("file_path")
-        
-        definition = self._workflow_config.get_workflow_definition_from_config_file(norm_path)
+            raise ValueError("input_image is None")
+        if file_path is None:
+            raise ValueError("file_path is None")
+
+        definition = self._workflow_config.get_workflow_definition_from_config_file(Path(file_path))
         return Workflow(definition, input_image)
+
+    def save_workflow_definition(self, workflow_definition: WorkflowDefinition, output_file_path: Union[str, Path]):
+        if workflow_definition is None:
+            raise ValueError("workflow_definition is None")
+        if output_file_path is None:
+            raise ValueError("file_path is None")
+
+        self._workflow_config.save_workflow_definition_as_json(workflow_definition, output_file_path)
 
     def _load_workflow_definitions(self) -> List[WorkflowDefinition]:
         definitions = list()

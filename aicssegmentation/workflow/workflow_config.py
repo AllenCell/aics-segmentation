@@ -66,19 +66,31 @@ class WorkflowConfig:
 
         return self.get_workflow_definition_from_config_file(path, workflow_name, prebuilt=True)
 
-    def get_workflow_definition_from_config_file(self, file_path: Path, workflow_name: str = None, prebuilt: bool = False) -> WorkflowDefinition:       
+    def get_workflow_definition_from_config_file(
+        self, file_path: Path, workflow_name: str = None, prebuilt: bool = False
+    ) -> WorkflowDefinition:
         """
         Get a WorkflowDefinition based off the given json configuration file
-        """        
+        """
         if file_path.suffix.lower() != ".json":
-            raise ValueError(f"Workflow configuration file must be a json file with .json file extension.")
+            raise ValueError("Workflow configuration file must be a json file with .json file extension.")
 
         try:
             with open(file_path) as file:
                 obj = json.load(file)
                 return self._workflow_decoder(obj, workflow_name or file_path.name, prebuilt)
         except Exception as ex:
-            raise ConfigurationException(f"Error reading json configuration from {file_path}") from ex        
+            raise ConfigurationException(f"Error reading json configuration from {file_path}") from ex
+
+    def save_workflow_definition_as_json(self, workflow_definition: WorkflowDefinition, output_file_path: Path):
+        """
+        Save a WorkflowDefinition as a json config file
+        """
+        if output_file_path.suffix.lower() != ".json":
+            raise ValueError("Workflow configuration file save path must have a .json extension.")
+
+        with open(output_file_path, "w") as file:
+            json.dump(self._workflow_encoder(workflow_definition), file, indent=4, sort_keys=True)
 
     def _all_functions_decoder(self, obj: Dict) -> List[SegmenterFunction]:
         """
@@ -129,7 +141,7 @@ class WorkflowConfig:
         Decode Workflow config (conf_{workflow_name}.json)
         """
         functions = self.get_all_functions()
-        steps = list()
+        steps: List[WorkflowStep] = list()
 
         for step_k, step_v in obj.items():
             step_number = int(step_k)
@@ -137,9 +149,11 @@ class WorkflowConfig:
             function = next(filter(lambda f: f.name == function_id, functions), None)
 
             if function is None:
-                raise ConfigurationException(f"Could not find a Segmenter function matching the function identifier <{function_id}>.")
+                raise ConfigurationException(
+                    f"Could not find a Segmenter function matching the function identifier <{function_id}>."
+                )
 
-            if isinstance(step_v["parent"], list):  
+            if isinstance(step_v["parent"], list):
                 parent = step_v["parent"]
             else:
                 parent = [step_v["parent"]]
@@ -161,7 +175,31 @@ class WorkflowConfig:
                 step.parameter_values = param_defaults
 
             steps.append(step)
+
+        steps.sort(key=lambda s: s.step_number)
+
         if prebuilt:
-            return PrebuiltWorkflowDefinition(workflow_name, steps)            
+            return PrebuiltWorkflowDefinition(workflow_name, steps)
         else:
             return WorkflowDefinition(workflow_name, steps)
+
+    def _workflow_encoder(self, workflow_definition: WorkflowDefinition) -> Dict:
+        """
+        Encode a WorkflowDefinition to a json dictionary
+        """
+
+        # TODO add header / version ?
+        result = dict()
+        for step in workflow_definition.steps:
+            step_number = str(step.step_number)
+            parent = step.parent[0] if len(step.parent) == 1 else step.parent
+
+            step_dict = {
+                step_number: {"function": step.function.name, "category": step.category.value, "parent": parent}
+            }
+            if step.parameter_values is not None:
+                step_dict[step_number].update({"parameter_values": step.parameter_values})
+
+            result.update(step_dict)
+
+        return result
