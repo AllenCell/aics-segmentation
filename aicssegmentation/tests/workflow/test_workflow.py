@@ -3,7 +3,7 @@ import numpy as np
 from aicssegmentation.workflow.workflow import Workflow
 from aicssegmentation.workflow.structure_wrapper_config import StructureWrapperConfig
 from skimage import data
-from aicsimageio import imread
+from aicsimageio.writers import writer
 
 
 class TestWorkflow:
@@ -46,4 +46,5 @@ class TestWorkflow:
 
 class TestBatchWorkflow:
     def setup_method(self):
+        testing_directory =
 

@@ -2,6 +2,7 @@ from typing import Any, Dict, List
 import numpy as np
 import logging
 from aicsimageio import imread, AICSImage
+from aicsimageio.writers import OmeTiffWriter
 
 from .workflow_step import WorkflowStep
 from .workflow_definition import WorkflowDefinition, PrebuiltWorkflowDefinition
@@ -199,16 +200,18 @@ class BatchWorkflow:
         self._failed_files: int = 0
         self._channel_index = channel_index
         self._log_file: Path = self.output_path.joinpath("log.txt")
+        with open(self._log_file, "w") as log:
+            self.log = log
 
     def is_valid_image(self, image_path: Path) -> bool:
         """
-        Check if file at a given image_path is a valid image type we support (
+        Check if file at a given image_path is a valid image type we support.
 
         Params:
             image_path (Path): image to check
 
         Returns:
-            (bool): True if all images are .tiff
+            (bool): True if file has a supported file extension.
         """
         if (image_path.suffix.lower() in SUPPORTED_FILE_EXTENSIONS):
             return True
@@ -228,7 +231,7 @@ class BatchWorkflow:
         files = [f for f in self.input_path.glob("**/*") if f.is_file]
         # Currently will save files in same format as they are in the input path
         for f in files:
-            self.files_count += 1
+            self._files_count += 1
             if self.is_valid_image(f):
                 read_image = AICSImage(f)
                 # read and format image in the way we expect
@@ -237,7 +240,9 @@ class BatchWorkflow:
                     # Run workflow on image
                     workflow = Workflow(self._workflow_definition, image_from_path)
                     result = workflow.execute_all()
-                    AICSImage(result).save(self.output_path.joinpath(f.name))
+                    with OmeTiffWriter(self.output_path.joinpath(f.name), overwrite_file=True) as w:
+                        w.save(data=self.convert_bool_to_uint8(result), dimension_order="ZYX")
+
                 except Exception as e:
                     # Handle failures during workflow execution/save
                     self._failed_files += 1
@@ -249,19 +254,19 @@ class BatchWorkflow:
                     log.write(f"FAILED: {f}, ERROR: Unsupported Image Type {f.suffix}")
         self._write_log_file_summary()
 
-    def _write_log_file_summary(self) -> bool:
+    def _write_log_file_summary(self):
         """
         Write a log file to the output folder.
 
         Params:
-            image_path (Path): image to check
+            none
 
         Returns:
-            (bool): True if all images are .tiff
+            none
         """
         with open(self._log_file, "w") as f:
             if self._files_count == 0:
-                f.write("no files were processed")
+                f.write("There were no files to process in the input directory")
             else:
                 files_processed = self._files_count - self._failed_files
                 f.write(f"{files_processed}/{self._files_count} files were processed.\n")
@@ -272,10 +277,10 @@ class BatchWorkflow:
         Format images in the way that aics-segmention expects for most workflows (3d, zyx)
 
         Params:
-            image_path (Path): image to check
+            image_path (AICSImage): image to format
 
         Returns:
-            (bool): True if all images are .tiff
+            np.ndarray: segment-able image for aics-segmentation
         """
         if len(image.shape) == 6:
             return image.get_image_data("ZYX", C=self._channel_index, S=0, T=0)
@@ -286,11 +291,24 @@ class BatchWorkflow:
                 return image.get_image_data("ZYX", C=self._channel_index, T=0)
         elif len(image.shape) == 4:
             return image.get_image_data("ZYX", C=self._channel_index)
-        elif len(image.shape) == 4:
+        elif len(image.shape) == 3:
             return image.get_image_data("ZYX")
         else:
             return TypeError(f"Unsupported image format {image.dims.order}")
 
+    def convert_bool_to_uint8(self, image: np.ndarray):
+        """
+        Format segmented images to uint8 to save via AICSImage
+
+        Params:
+            image (np.ndarray): segmented image
+
+        Returns:
+            np.ndarray: image converted to uint8 for saving
+        """
+        image = image.astype(np.uint8)
+        image[image > 0] = 255
+        return image
 
 
 
