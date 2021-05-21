@@ -106,8 +106,20 @@ class TestBatchWorkflow:
         five_d_image = AICSImage(random.random((2, 3, 4, 5, 6)), known_dims="CTZYX")
         assert len(self.batch_workflow.format_image_to_3d(five_d_image).shape) == 3
 
-        four_d_image = AICSImage(random.random((2, 3, 4, 5)))
+        four_d_image = AICSImage(random.random((2, 3, 4, 5)), known_dims="CZYX")
+        assert len(self.batch_workflow.format_image_to_3d(four_d_image).shape) == 3
 
+        three_d_image = random.random((2,3,4))
+        three_d = AICSImage(three_d_image, known_dims="ZYX")
+        assert len(self.batch_workflow.format_image_to_3d(four_d_image).shape) == 3
+
+    def test_convert_bool_to_uint8(self):
+        array_to_test = np.zeros((5))
+        array_to_test.data[0] = 1
+        array_to_test.data[4] = 1
+        converted = self.batch_workflow.convert_bool_to_uint8(array_to_test)
+        print(converted)
+        assert np.array_equal(converted, [255, 0, 0, 0, 255])
 
 
 
