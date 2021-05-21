@@ -1,10 +1,12 @@
 import numpy as np
 
-from aicssegmentation.workflow.workflow import Workflow
+from aicssegmentation.workflow.workflow import Workflow, BatchWorkflow
 from aicssegmentation.workflow.structure_wrapper_config import StructureWrapperConfig
 from skimage import data
-from aicsimageio.writers import writer
+from aicsimageio.writers import OmeTiffWriter
 from pathlib import Path
+from aicsimageio import AICSImage
+from numpy import random
 
 
 class TestWorkflow:
@@ -47,22 +49,65 @@ class TestWorkflow:
 
 class TestBatchWorkflow:
     def setup_method(self):
+
+
+
+        print("setting up")
         testing_directory = Path(__file__).parent.joinpath("resources")
         #set up base folder
-        test_base = testing_directory.joinpath("test")
-        test_base.mkdir(parents=True, exist_ok=True)
-        files = [f for f in testing_directory.glob("**/*") if f.is_file]
+        self.test_base = testing_directory.joinpath("test")
+        self.test_base.mkdir(parents=True, exist_ok=True)
+        files = [f for f in self.test_base.glob("**/*") if f.is_file]
         # Currently will save files in same format as they are in the input path
         for f in files:
-            f.unlink()
+            f.unlink(missing_ok=True)
 
         #set up results folder
-        test_results = testing_directory.joinpath("test_results")
-        test_results.mkdir(parents=True, exist_ok=True)
-        files = [f for f in test_results.glob("**/*") if f.is_file]
+        self.test_results = testing_directory.joinpath("test_results")
+        self.test_results.mkdir(parents=True, exist_ok=True)
+        files = [f for f in self.test_results.glob("**/*") if f.is_file]
         # Currently will save files in same format as they are in the input path
         for f in files:
-            f.unlink()
+            f.unlink(missing_ok=True)
+
+        self.valid_images = []
+        three_d_image = random.random((3,4,5))
+        four_d_image = random.random((2,3,4,5))
+        with OmeTiffWriter(self.test_base.joinpath("three_d.tiff"), overwrite_file=True) as w:
+            w.save(data = three_d_image, dimension_order="ZYX")
+        self.valid_images.append(self.test_base.joinpath("three_d.tiff"))
+        with OmeTiffWriter(self.test_base.joinpath("four_d.tiff"), overwrite_file=True) as w:
+            w.save(data=three_d_image, dimension_order="ZYX")
+        self.valid_images.append(self.test_base.joinpath("four_d.tiff"))
+
+        definition = StructureWrapperConfig().get_workflow_definition("sec61b")
+        self.batch_workflow = BatchWorkflow(definition, self.test_base, self.test_results, channel_index=0)
+
+
+
+    def test_is_valid_image(self):
+
+        self.invalid_paths = [self.test_base.joinpath("non_existant_image.tiff"), self.test_base.joinpath("bad_extension.abc")]
+        for path in self.invalid_paths:
+            assert not self.batch_workflow.is_valid_image(path)
+        for path in self.valid_images:
+            assert self.batch_workflow.is_valid_image(path)
+
+    def test_format_iamge_to_3d(self):
+        six_d_image = AICSImage(random.random((2,3,4,5,6,7)))
+        assert len(self.batch_workflow.format_image_to_3d(six_d_image).shape) == 3
+
+        five_d_image = AICSImage(random.random((2, 3, 4, 5, 6)), known_dims="SCZYX")
+        assert len(self.batch_workflow.format_image_to_3d(five_d_image).shape) == 3
+
+        five_d_image = AICSImage(random.random((2, 3, 4, 5, 6)), known_dims="STZYX")
+        assert len(self.batch_workflow.format_image_to_3d(five_d_image).shape) == 3
+
+        five_d_image = AICSImage(random.random((2, 3, 4, 5, 6)), known_dims="CTZYX")
+        assert len(self.batch_workflow.format_image_to_3d(five_d_image).shape) == 3
+
+        four_d_image = AICSImage(random.random((2, 3, 4, 5)))
+
 
 
 

@@ -205,7 +205,7 @@ class BatchWorkflow:
 
     def is_valid_image(self, image_path: Path) -> bool:
         """
-        Check if file at a given image_path is a valid image type we support.
+        Check if file at a given image_path and is a valid image type we support.
 
         Params:
             image_path (Path): image to check
@@ -213,6 +213,8 @@ class BatchWorkflow:
         Returns:
             (bool): True if file has a supported file extension.
         """
+        if not image_path.exists():
+            return False
         if (image_path.suffix.lower() in SUPPORTED_FILE_EXTENSIONS):
             return True
         else:
@@ -283,12 +285,15 @@ class BatchWorkflow:
             np.ndarray: segment-able image for aics-segmentation
         """
         if len(image.shape) == 6:
+            #STCZYX
             return image.get_image_data("ZYX", C=self._channel_index, S=0, T=0)
         elif len(image.shape) == 5:
-            if 'S' in image.dims.order:
+            if 'S' in image.dims.order and 'C' in image.dims.order:
                 return image.get_image_data("ZYX", C=self._channel_index, S=0)
-            else:
+            elif 'T' in image.dims.order and 'C' in image.dims.order:
                 return image.get_image_data("ZYX", C=self._channel_index, T=0)
+            elif 'S' in image.dims.order and 'T':
+                return image.get_image_data("ZYX", S=0, T=0)
         elif len(image.shape) == 4:
             return image.get_image_data("ZYX", C=self._channel_index)
         elif len(image.shape) == 3:
