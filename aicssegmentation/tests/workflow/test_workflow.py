@@ -4,6 +4,7 @@ from aicssegmentation.workflow.workflow import Workflow
 from aicssegmentation.workflow.structure_wrapper_config import StructureWrapperConfig
 from skimage import data
 from aicsimageio.writers import writer
+from pathlib import Path
 
 
 class TestWorkflow:
@@ -46,5 +47,22 @@ class TestWorkflow:
 
 class TestBatchWorkflow:
     def setup_method(self):
-        testing_directory =
+        testing_directory = Path(__file__).parent.joinpath("resources")
+        #set up base folder
+        test_base = testing_directory.joinpath("test")
+        test_base.mkdir(parents=True, exist_ok=True)
+        files = [f for f in testing_directory.glob("**/*") if f.is_file]
+        # Currently will save files in same format as they are in the input path
+        for f in files:
+            f.unlink()
+
+        #set up results folder
+        test_results = testing_directory.joinpath("test_results")
+        test_results.mkdir(parents=True, exist_ok=True)
+        files = [f for f in test_results.glob("**/*") if f.is_file]
+        # Currently will save files in same format as they are in the input path
+        for f in files:
+            f.unlink()
+
+
 
