@@ -35,8 +35,8 @@ class TestConfig:
                 # check that the parameters in the config file match the parameters
                 # required in all_functions.json
                 reference_parameters = all_functions[function_key]["parameters"]
-                if "parameter_defaults" in cfg[step]:
-                    for param in cfg[step]["parameter_defaults"]:
+                if "parameter_values" in cfg[step]:
+                    for param in cfg[step]["parameter_values"]:
                         assert param in reference_parameters.keys(), (
                             f'Parameter "{param}" in {workflow_config} is' f"not defined for function {function_key}"
                         )

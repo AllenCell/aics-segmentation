@@ -14,6 +14,7 @@ log = logging.getLogger(__name__)
 
 SUPPORTED_FILE_EXTENSIONS = [".tiff", ".tif", ".czi"]
 
+
 class Workflow:
     """
     Represents an executable aics-segmentation workflow
@@ -30,7 +31,6 @@ class Workflow:
         self._starting_image: np.ndarray = input_image
         self._next_step: int = 0  # Next step to execute
         self._results: List = list()  # Store step results
-
 
     @property
     def workflow_definition(self) -> WorkflowDefinition:
@@ -92,7 +92,7 @@ class Workflow:
                 res = self.get_result(i - 1)  # parents are 1 indexed
                 image.append(res)
 
-        result: np.ndarray = self.get_next_step().execute(image, parameters or step.parameter_defaults)
+        result: np.ndarray = self.get_next_step().execute(image, parameters or step.parameter_values)
         self._results.append(result)
 
         # Only increment after running step
@@ -179,7 +179,8 @@ class BatchWorkflow:
     """
 
     def __init__(
-        self, workflow_definition: WorkflowDefinition, input_dir: str, output_dir: str, channel_index: int = 0):
+        self, workflow_definition: WorkflowDefinition, input_dir: str, output_dir: str, channel_index: int = 0
+    ):
         if workflow_definition is None:
             raise ValueError("workflow_definition")
         self._workflow_definition = workflow_definition
@@ -215,7 +216,7 @@ class BatchWorkflow:
         """
         if not image_path.exists():
             return False
-        if (image_path.suffix.lower() in SUPPORTED_FILE_EXTENSIONS):
+        if image_path.suffix.lower() in SUPPORTED_FILE_EXTENSIONS:
             return True
         else:
             return False
@@ -273,7 +274,6 @@ class BatchWorkflow:
                 files_processed = self._files_count - self._failed_files
                 f.write(f"{files_processed}/{self._files_count} files were processed.\n")
 
-
     def format_image_to_3d(self, image: AICSImage) -> np.ndarray:
         """
         Format images in the way that aics-segmention expects for most workflows (3d, zyx)
@@ -285,14 +285,14 @@ class BatchWorkflow:
             np.ndarray: segment-able image for aics-segmentation
         """
         if len(image.shape) == 6:
-            #STCZYX
+            # STCZYX
             return image.get_image_data("ZYX", C=self._channel_index, S=0, T=0)
         elif len(image.shape) == 5:
-            if 'S' in image.dims.order and 'C' in image.dims.order:
+            if "S" in image.dims.order and "C" in image.dims.order:
                 return image.get_image_data("ZYX", C=self._channel_index, S=0)
-            elif 'T' in image.dims.order and 'C' in image.dims.order:
+            elif "T" in image.dims.order and "C" in image.dims.order:
                 return image.get_image_data("ZYX", C=self._channel_index, T=0)
-            elif 'S' in image.dims.order and 'T':
+            elif "S" in image.dims.order and "T":
                 return image.get_image_data("ZYX", S=0, T=0)
         elif len(image.shape) == 4:
             return image.get_image_data("ZYX", C=self._channel_index)
@@ -314,6 +314,3 @@ class BatchWorkflow:
         image = image.astype(np.uint8)
         image[image > 0] = 255
         return image
-
-
-
