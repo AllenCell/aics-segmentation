@@ -80,7 +80,7 @@ class TestBatchWorkflow:
             w.save(data=three_d_image, dimension_order="ZYX")
         self.valid_images.append(self.test_base.joinpath("four_d.tiff"))
 
-        definition = StructureWrapperConfig().get_workflow_definition("sec61b")
+        definition = WorkflowConfig().get_workflow_definition("sec61b")
         self.batch_workflow = BatchWorkflow(definition, self.test_base, self.test_results, channel_index=0)
 
     def test_is_valid_image(self):
