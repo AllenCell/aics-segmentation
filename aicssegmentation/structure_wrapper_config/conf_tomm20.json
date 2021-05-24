@@ -2,7 +2,7 @@
     "1": {        
         "category": "preprocessing",        
         "function": "intensity_normalization",
-        "parameter_defaults": {
+        "parameter_values": {
             "scaling_param": [
                 3.5,
                 15
@@ -13,7 +13,7 @@
     "2": {        
         "category": "preprocessing",        
         "function": "gaussian_smoothing_3D",
-        "parameter_defaults": {
+        "parameter_values": {
             "sigma": 1
         },
         "parent": 1
@@ -21,7 +21,7 @@
     "3": {        
         "category": "core",        
         "function": "filament_filter_slice_by_slice",
-        "parameter_defaults": {
+        "parameter_values": {
             "sigmas": [
                 1.5
             ],
@@ -33,7 +33,7 @@
         "category": "postprocessing",        
         "function": "size_filter",
         "parent": 3,
-        "parameter_defaults": {
+        "parameter_values": {
             "min_size": 10,
             "method": "3D"
         }

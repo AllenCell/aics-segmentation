@@ -2,7 +2,7 @@
     "1": {        
         "category": "preprocessing",        
         "function": "intensity_normalization",
-        "parameter_defaults": {
+        "parameter_values": {
             "scaling_param": [
                 11,
                 8
@@ -18,7 +18,7 @@
     "3": {        
         "category": "core",        
         "function": "filament_filter_3D",
-        "parameter_defaults": {
+        "parameter_values": {
             "sigmas": [
                 1
             ],
@@ -29,7 +29,7 @@
     "4": {        
         "category": "postprocessing",        
         "function": "size_filter",
-        "parameter_defaults": {
+        "parameter_values": {
             "min_size": 4,
             "method": "slice_by_slice"
         },
@@ -38,7 +38,7 @@
     "5": {        
         "category": "postprocessing",        
         "function": "size_filter",
-        "parameter_defaults": {
+        "parameter_values": {
             "min_size": 15,
             "method": "3D"
         },

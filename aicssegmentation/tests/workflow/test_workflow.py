@@ -1,7 +1,7 @@
 import numpy as np
 
 from aicssegmentation.workflow.workflow import Workflow
-from aicssegmentation.workflow.structure_wrapper_config import StructureWrapperConfig
+from aicssegmentation.workflow.workflow_config import WorkflowConfig
 from skimage import data
 from aicsimageio import imread
 
@@ -9,7 +9,7 @@ from aicsimageio import imread
 class TestWorkflow:
     def setup_method(self):
         self._fake_image = np.asarray(data.astronaut())
-        definition = StructureWrapperConfig().get_workflow_definition("sec61b")  # TODO use mock workflow
+        definition = WorkflowConfig().get_workflow_definition("sec61b")  # TODO use mock workflow
         self._workflow = Workflow(definition, self._fake_image)
 
     def test_step_by_step_workflow_sec61b(self):

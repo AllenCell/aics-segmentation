@@ -35,7 +35,7 @@ class WorkflowStep:
     function: SegmenterFunction
     step_number: int
     parent: List[int]
-    parameter_defaults: Dict[str, List] = None
+    parameter_values: Dict[str, List] = None
 
     @property
     def name(self):

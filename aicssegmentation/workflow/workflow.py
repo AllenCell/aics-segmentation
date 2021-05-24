@@ -85,7 +85,7 @@ class Workflow:
                 res = self.get_result(i - 1)  # parents are 1 indexed
                 image.append(res)
 
-        result: np.ndarray = self.get_next_step().execute(image, parameters or step.parameter_defaults)
+        result: np.ndarray = self.get_next_step().execute(image, parameters or step.parameter_values)
         self._results.append(result)
 
         # Only increment after running step

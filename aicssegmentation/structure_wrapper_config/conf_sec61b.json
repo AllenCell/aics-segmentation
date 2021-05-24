@@ -2,7 +2,7 @@
     "1": {
         "category": "preprocessing",
         "function": "intensity_normalization",
-        "parameter_defaults": {
+        "parameter_values": {
             "scaling_param": [
                 2.5,
                 7.5
@@ -18,7 +18,7 @@
     "3": {        
         "category": "core",
         "function": "filament_filter_slice_by_slice",
-        "parameter_defaults": {
+        "parameter_values": {
             "sigmas": [
                 1
             ],
@@ -30,7 +30,7 @@
         "category": "postprocessing",
         "function": "size_filter",
         "parent": 3,
-        "parameter_defaults": {
+        "parameter_values": {
             "min_size": 15,
             "method": "3D"
         }
