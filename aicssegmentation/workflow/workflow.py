@@ -202,7 +202,7 @@ class BatchWorkflow:
         self._channel_index = channel_index
         self._log_file: Path = self.output_path.joinpath("log.txt")
         with open(self._log_file, "w") as log:
-            self.log = log
+            log.write("Log for batch processing run")
 
     def is_valid_image(self, image_path: Path) -> bool:
         """
@@ -231,6 +231,7 @@ class BatchWorkflow:
         Returns:
             none
         """
+
         files = [f for f in self.input_path.glob("**/*") if f.is_file]
         # Currently will save files in same format as they are in the input path
         for f in files:
@@ -249,11 +250,11 @@ class BatchWorkflow:
                 except Exception as e:
                     # Handle failures during workflow execution/save
                     self._failed_files += 1
-                    with open(self._log_file, "w") as log:
+                    with open(self._log_file, "a") as log:
                         log.write(f"FAILED: {f}, ERROR: {e}")
             else:
                 self._failed_files += 1
-                with open(self._log_file, "w") as log:
+                with open(self._log_file, "a") as log:
                     log.write(f"FAILED: {f}, ERROR: Unsupported Image Type {f.suffix}")
         self._write_log_file_summary()
 
@@ -267,7 +268,7 @@ class BatchWorkflow:
         Returns:
             none
         """
-        with open(self._log_file, "w") as f:
+        with open(self._log_file, "a") as f:
             if self._files_count == 0:
                 f.write("There were no files to process in the input directory")
             else:
