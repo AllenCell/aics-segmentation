@@ -9,6 +9,8 @@ from pathlib import Path
 from aicsimageio import AICSImage
 from numpy import random
 
+from unittest.mock import MagicMock, patch
+
 
 class TestWorkflow:
     def setup_method(self):
@@ -51,8 +53,6 @@ class TestWorkflow:
 
 class TestBatchWorkflow:
     def setup_method(self):
-
-        print("setting up")
         testing_directory = Path(__file__).parent.joinpath("resources")
         # set up base folder
         self.test_base = testing_directory.joinpath("test")
@@ -70,15 +70,13 @@ class TestBatchWorkflow:
         for f in files:
             f.unlink(missing_ok=True)
 
-        self.valid_images = []
-        three_d_image = random.random((3, 4, 5))
-        four_d_image = random.random((2, 3, 4, 5))
-        with OmeTiffWriter(self.test_base.joinpath("three_d.tiff"), overwrite_file=True) as w:
+        # to save a test image
+        three_d_image = np.zeros([2,2,2])
+        with OmeTiffWriter(self.test_base.joinpath("test.tiff"), overwrite_file=True) as w:
             w.save(data=three_d_image, dimension_order="ZYX")
-        self.valid_images.append(self.test_base.joinpath("three_d.tiff"))
-        with OmeTiffWriter(self.test_base.joinpath("four_d.tiff"), overwrite_file=True) as w:
-            w.save(data=three_d_image, dimension_order="ZYX")
-        self.valid_images.append(self.test_base.joinpath("four_d.tiff"))
+        self.valid_image = self.test_base.joinpath("test.tiff")
+
+
 
         definition = WorkflowConfig().get_workflow_definition("sec61b")
         self.batch_workflow = BatchWorkflow(definition, self.test_base, self.test_results, channel_index=0)
@@ -91,8 +89,8 @@ class TestBatchWorkflow:
         ]
         for path in self.invalid_paths:
             assert not self.batch_workflow.is_valid_image(path)
-        for path in self.valid_images:
-            assert self.batch_workflow.is_valid_image(path)
+
+        assert self.batch_workflow.is_valid_image()
 
     def test_format_iamge_to_3d(self):
         six_d_image = AICSImage(random.random((2, 3, 4, 5, 6, 7)))
@@ -121,3 +119,26 @@ class TestBatchWorkflow:
         converted = self.batch_workflow.convert_bool_to_uint8(array_to_test)
         print(converted)
         assert np.array_equal(converted, [255, 0, 0, 0, 255])
+
+    @patch('aicssegmentation.workflow.workflow.Workflow.execute_all')
+    def test_process_all(self, mock_workflow):
+        mock_workflow.return_value = np.zeros([2, 2, 2])
+        self.batch_workflow.process_all()
+        assert(self.test_results.exists())
+        assert(self.test_results.joinpath("log.txt").exists())
+        self.valid_image.unlink()
+        self.test_base.rmdir()
+        self.test_results.joinpath("test.tiff").unlink()
+        self.test_results.joinpath("log.txt").unlink()
+        self.test_results.rmdir()
+
+
+
+
+
+
+
+
+
+
+
