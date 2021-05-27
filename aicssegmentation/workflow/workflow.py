@@ -238,9 +238,11 @@ class BatchWorkflow:
             self._files_count += 1
             if self.is_valid_image(f):
                 read_image = AICSImage(f)
-                # read and format image in the way we expect
-                image_from_path = self.format_image_to_3d(read_image)
+
+
                 try:
+                    # read and format image in the way we expect
+                    image_from_path = self.format_image_to_3d(read_image)
                     # Run workflow on image
                     workflow = Workflow(self._workflow_definition, image_from_path)
                     result = workflow.execute_all()
@@ -287,16 +289,22 @@ class BatchWorkflow:
         """
         if len(image.shape) == 6:
             # STCZYX
-            return image.get_image_data("ZYX", C=self._channel_index, S=0, T=0)
+            return TypeError("6D images are unsupported.")
         elif len(image.shape) == 5:
-            if "S" in image.dims.order and "C" in image.dims.order:
-                return image.get_image_data("ZYX", C=self._channel_index, S=0)
-            elif "T" in image.dims.order and "C" in image.dims.order:
-                return image.get_image_data("ZYX", C=self._channel_index, T=0)
-            elif "S" in image.dims.order and "T":
-                return image.get_image_data("ZYX", S=0, T=0)
+            return TypeError("5D images are unsupported.")
+            # if "S" in image.dims.order and "C" in image.dims.order:
+            #     return image.get_image_data("ZYX", C=self._channel_index, S=0)
+            # elif "T" in image.dims.order and "C" in image.dims.order:
+            #     return image.get_image_data("ZYX", C=self._channel_index, T=0)
+            # elif "S" in image.dims.order and "T":
+            #     return image.get_image_data("ZYX", S=0, T=0)
         elif len(image.shape) == 4:
-            return image.get_image_data("ZYX", C=self._channel_index)
+            if "S" in image.dims.order:
+                return TypeError("Multi-Scene images are unsupported")
+            elif "T" in image.dims.order:
+                return TypeError("Timelapse images are unsupported.")
+            else:
+                return image.get_image_data("ZYX", C=self._channel_index)
         elif len(image.shape) == 3:
             return image.get_image_data("ZYX")
         else:
