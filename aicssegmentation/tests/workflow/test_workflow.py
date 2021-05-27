@@ -71,12 +71,10 @@ class TestBatchWorkflow:
             f.unlink(missing_ok=True)
 
         # to save a test image
-        three_d_image = np.zeros([2,2,2])
+        three_d_image = np.zeros([2, 2, 2])
         with OmeTiffWriter(self.test_base.joinpath("test.tiff"), overwrite_file=True) as w:
             w.save(data=three_d_image, dimension_order="ZYX")
         self.valid_image = self.test_base.joinpath("test.tiff")
-
-
 
         definition = WorkflowConfig().get_workflow_definition("sec61b")
         self.batch_workflow = BatchWorkflow(definition, self.test_base, self.test_results, channel_index=0)
@@ -93,20 +91,6 @@ class TestBatchWorkflow:
         assert self.batch_workflow.is_valid_image(self.test_base / "test.tiff")
 
     def test_format_image_to_3d(self):
-        six_d_image = AICSImage(random.random((2, 3, 4, 5, 6, 7)))
-        assert len(self.batch_workflow.format_image_to_3d(six_d_image).shape) == 3
-
-        five_d_image = AICSImage(random.random((2, 3, 4, 5, 6)), known_dims="SCZYX")
-        assert len(self.batch_workflow.format_image_to_3d(five_d_image).shape) == 3
-
-        five_d_image = AICSImage(random.random((2, 3, 4, 5, 6)), known_dims="STZYX")
-        assert len(self.batch_workflow.format_image_to_3d(five_d_image).shape) == 3
-
-        five_d_image = AICSImage(random.random((2, 3, 4, 5, 6)), known_dims="CTZYX")
-        assert len(self.batch_workflow.format_image_to_3d(five_d_image).shape) == 3
-
-        four_d_image = AICSImage(random.random((2, 3, 4, 5)), known_dims="CZYX")
-        assert len(self.batch_workflow.format_image_to_3d(four_d_image).shape) == 3
 
         three_d_image = AICSImage(random.random((2, 3, 4)), known_dims="ZYX")
         assert len(self.batch_workflow.format_image_to_3d(three_d_image).shape) == 3
@@ -118,25 +102,14 @@ class TestBatchWorkflow:
         converted = self.batch_workflow.convert_bool_to_uint8(array_to_test)
         assert np.array_equal(converted, [255, 0, 0, 0, 255])
 
-    @patch('aicssegmentation.workflow.workflow.Workflow.execute_all')
+    @patch("aicssegmentation.workflow.workflow.Workflow.execute_all")
     def test_process_all(self, mock_workflow_execute_all):
         mock_workflow_execute_all.return_value = np.zeros([2, 2, 2])
         self.batch_workflow.process_all()
-        assert(self.test_results.exists())
-        assert(self.test_results.joinpath("log.txt").exists())
+        assert self.test_results.exists()
+        assert self.test_results.joinpath("log.txt").exists()
         self.valid_image.unlink()
         self.test_base.rmdir()
         self.test_results.joinpath("test.tiff").unlink()
         self.test_results.joinpath("log.txt").unlink()
         self.test_results.rmdir()
-
-
-
-
-
-
-
-
-
-
-

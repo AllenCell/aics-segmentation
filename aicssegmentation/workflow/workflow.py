@@ -201,8 +201,7 @@ class BatchWorkflow:
         self._failed_files: int = 0
         self._channel_index = channel_index
         self._log_file: Path = self.output_path.joinpath("log.txt")
-        with open(self._log_file, "w") as log:
-            log.write("Log for batch processing run")
+        self.write_to_log_file("Log for batch processing run\n", True)
 
     def is_valid_image(self, image_path: Path) -> bool:
         """
@@ -239,7 +238,6 @@ class BatchWorkflow:
             if self.is_valid_image(f):
                 read_image = AICSImage(f)
 
-
                 try:
                     # read and format image in the way we expect
                     image_from_path = self.format_image_to_3d(read_image)
@@ -252,12 +250,10 @@ class BatchWorkflow:
                 except Exception as e:
                     # Handle failures during workflow execution/save
                     self._failed_files += 1
-                    with open(self._log_file, "a") as log:
-                        log.write(f"FAILED: {f}, ERROR: {e}")
+                    self.write_to_log_file(f"FAILED: {f}, ERROR: {e}\n")
             else:
                 self._failed_files += 1
-                with open(self._log_file, "a") as log:
-                    log.write(f"FAILED: {f}, ERROR: Unsupported Image Type {f.suffix}")
+                self.write_to_log_file(f"FAILED: {f}, ERROR: Unsupported Image Type {f.suffix}\n")
         self._write_log_file_summary()
 
     def _write_log_file_summary(self):
@@ -270,12 +266,13 @@ class BatchWorkflow:
         Returns:
             none
         """
-        with open(self._log_file, "a") as f:
-            if self._files_count == 0:
-                f.write("There were no files to process in the input directory")
-            else:
-                files_processed = self._files_count - self._failed_files
-                f.write(f"{files_processed}/{self._files_count} files were processed.\n")
+        if self._files_count == 0:
+            report = "There were no files to process in the input directory"
+        else:
+
+            files_processed = self._files_count - self._failed_files
+            report = f"{files_processed}/{self._files_count} files were processed.\n"
+        self.write_to_log_file(report + "\n")
 
     def format_image_to_3d(self, image: AICSImage) -> np.ndarray:
         """
@@ -287,10 +284,11 @@ class BatchWorkflow:
         Returns:
             np.ndarray: segment-able image for aics-segmentation
         """
-        if len(image.shape) == 6:
+        dims = len(image.shape) - image.shape.count(1)
+        if dims == 6:
             # STCZYX
             return TypeError("6D images are unsupported.")
-        elif len(image.shape) == 5:
+        elif dims == 5:
             return TypeError("5D images are unsupported.")
             # if "S" in image.dims.order and "C" in image.dims.order:
             #     return image.get_image_data("ZYX", C=self._channel_index, S=0)
@@ -298,14 +296,14 @@ class BatchWorkflow:
             #     return image.get_image_data("ZYX", C=self._channel_index, T=0)
             # elif "S" in image.dims.order and "T":
             #     return image.get_image_data("ZYX", S=0, T=0)
-        elif len(image.shape) == 4:
+        elif dims == 4:
             if "S" in image.dims.order:
                 return TypeError("Multi-Scene images are unsupported")
             elif "T" in image.dims.order:
                 return TypeError("Timelapse images are unsupported.")
             else:
                 return image.get_image_data("ZYX", C=self._channel_index)
-        elif len(image.shape) == 3:
+        elif dims == 3:
             return image.get_image_data("ZYX")
         else:
             return TypeError(f"Unsupported image format {image.dims.order}")
@@ -323,3 +321,12 @@ class BatchWorkflow:
         image = image.astype(np.uint8)
         image[image > 0] = 255
         return image
+
+    def write_to_log_file(self, write: str, new_file: bool = False):
+        if new_file:
+            with open(self._log_file, "w") as writer:
+                writer.write(write)
+        else:
+            # Append to old file
+            with open(self._log_file, "a") as writer:
+                writer.write(write)

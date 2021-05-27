@@ -1,0 +1,1 @@
+Log for batch processing run

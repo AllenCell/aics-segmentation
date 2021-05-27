@@ -43,7 +43,9 @@ class WorkflowEngine:
 
         return Workflow(definition, input_image)
 
-    def get_executable_batch_workflow(self, workflow_name: str, input_dir: str, output_dir: str, channel_index: int = 0):
+    def get_executable_batch_workflow(
+        self, workflow_name: str, input_dir: str, output_dir: str, channel_index: int = 0
+    ):
         """
         Get an executable BatchWorkflow object
 
@@ -76,7 +78,11 @@ class WorkflowEngine:
         return Workflow(definition, input_image)
 
     def get_executable_batch_workflow_from_config_file(
-        self, file_path: Union[str, Path], input_dir: Union[str, Path], output_dir: Union[str, Path], channel_index: int = 0
+        self,
+        file_path: Union[str, Path],
+        input_dir: Union[str, Path],
+        output_dir: Union[str, Path],
+        channel_index: int = 0,
     ):
         """
         Get an executable batch workflow object from a configuration file
@@ -86,10 +92,10 @@ class WorkflowEngine:
             input_dir (str|Path): Directory containing input files for the batch processing
             output_dir (str|Path): Output directory for the batch processing
             channel_index (int): Index of the channel to process in each image (usually a structure channel)
-        """    
+        """
         # TODO more input validations
         # TODO it's time for a ArgumentNullError Exception type
-        
+
         definition = self._workflow_config.get_workflow_definition_from_config_file(Path(file_path))
         return BatchWorkflow(definition, input_dir, output_dir, channel_index)
 
@@ -108,11 +114,11 @@ class WorkflowEngine:
             definitions.append(self._workflow_config.get_workflow_definition(name))
         return definitions
 
-    def _get_workflow_definition(self, workflow_name:str) -> WorkflowDefinition:
+    def _get_workflow_definition(self, workflow_name: str) -> WorkflowDefinition:
         definition = next(filter(lambda d: d.name == workflow_name, self._workflow_definitions), None)
         if definition is None:
             raise ValueError(
                 f"No available workflow definition found for {workflow_name}. Specify a valid workflow name."
-            )        
+            )
 
         return definition
