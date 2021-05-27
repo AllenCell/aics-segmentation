@@ -90,9 +90,9 @@ class TestBatchWorkflow:
         for path in self.invalid_paths:
             assert not self.batch_workflow.is_valid_image(path)
 
-        assert self.batch_workflow.is_valid_image()
+        assert self.batch_workflow.is_valid_image(self.test_base / "test.tiff")
 
-    def test_format_iamge_to_3d(self):
+    def test_format_image_to_3d(self):
         six_d_image = AICSImage(random.random((2, 3, 4, 5, 6, 7)))
         assert len(self.batch_workflow.format_image_to_3d(six_d_image).shape) == 3
 
@@ -108,21 +108,19 @@ class TestBatchWorkflow:
         four_d_image = AICSImage(random.random((2, 3, 4, 5)), known_dims="CZYX")
         assert len(self.batch_workflow.format_image_to_3d(four_d_image).shape) == 3
 
-        three_d_image = random.random((2, 3, 4))
-        three_d = AICSImage(three_d_image, known_dims="ZYX")
-        assert len(self.batch_workflow.format_image_to_3d(four_d_image).shape) == 3
+        three_d_image = AICSImage(random.random((2, 3, 4)), known_dims="ZYX")
+        assert len(self.batch_workflow.format_image_to_3d(three_d_image).shape) == 3
 
     def test_convert_bool_to_uint8(self):
         array_to_test = np.zeros((5))
         array_to_test.data[0] = 1
         array_to_test.data[4] = 1
         converted = self.batch_workflow.convert_bool_to_uint8(array_to_test)
-        print(converted)
         assert np.array_equal(converted, [255, 0, 0, 0, 255])
 
     @patch('aicssegmentation.workflow.workflow.Workflow.execute_all')
-    def test_process_all(self, mock_workflow):
-        mock_workflow.return_value = np.zeros([2, 2, 2])
+    def test_process_all(self, mock_workflow_execute_all):
+        mock_workflow_execute_all.return_value = np.zeros([2, 2, 2])
         self.batch_workflow.process_all()
         assert(self.test_results.exists())
         assert(self.test_results.joinpath("log.txt").exists())
