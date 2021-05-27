@@ -60,7 +60,7 @@ class TestBatchWorkflow:
         files = [f for f in self.test_base.glob("**/*") if f.is_file]
         # Currently will save files in same format as they are in the input path
         for f in files:
-            f.unlink(missing_ok=True)
+            f.unlink()
 
         # set up results folder
         self.test_results = testing_directory.joinpath("test_results")
@@ -68,7 +68,7 @@ class TestBatchWorkflow:
         files = [f for f in self.test_results.glob("**/*") if f.is_file]
         # Currently will save files in same format as they are in the input path
         for f in files:
-            f.unlink(missing_ok=True)
+            f.unlink()
 
         # to save a test image
         three_d_image = np.zeros([2, 2, 2])
