@@ -1,3 +1,4 @@
+from aicssegmentation.exceptions import ArgumentNullError
 from aicssegmentation.workflow.workflow import Workflow
 import pytest
 import numpy as np
@@ -27,7 +28,7 @@ class TestWorkflowEngine:
         assert self._workflow_engine.workflow_definitions == self.expected_workflow_definitions
 
     def test_get_executable_workflow_null_image_fails(self):
-        with pytest.raises(ValueError):
+        with pytest.raises(ArgumentNullError):
             self._workflow_engine.get_executable_workflow("sec61b", None)
 
     def test_get_executable_workflow_unsupported_workflow_fails(self):
@@ -41,11 +42,11 @@ class TestWorkflowEngine:
         assert workflow.workflow_definition.name == workflow_name
 
     def test_get_executable_workflow_from_config_file_null_path_fails(self):
-        with pytest.raises(ValueError):
+        with pytest.raises(ArgumentNullError):
             self._workflow_engine.get_executable_workflow_from_config_file(None, np.ones((1, 1, 1)))
 
     def test_get_executable_workflow_from_config_file_null_image_fails(self):
-        with pytest.raises(ValueError):
+        with pytest.raises(ArgumentNullError):
             self._workflow_engine.get_executable_workflow(
                 Directories.get_structure_config_dir() / "conf_actb.json", None
             )
