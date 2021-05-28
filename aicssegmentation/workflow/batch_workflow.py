@@ -48,6 +48,18 @@ class BatchWorkflow:
         self._failed_files: int = 0
         self._log_path: Path = self._output_dir / "log.txt"
 
+        # Create the output directory at output_dir if it does not exist already
+        if not self._output_dir.exists():
+            FileSystemUtilities.create_directory(self._output_dir)
+
+    @property
+    def input_dir(self) -> Path:
+        return self._input_dir
+
+    @property
+    def output_dir(self) -> Path:
+        return self._output_dir
+
     def is_valid_image(self, image_path: Path) -> bool:
         """
         Check if file at a given image_path and is a valid image type we support.
@@ -127,10 +139,10 @@ class BatchWorkflow:
             np.ndarray: segment-able image for aics-segmentation
         """
         if image.size_s > 1:
-            return TypeError("Multi-Scene images are unsupported")
+            raise ValueError("Multi-Scene images are unsupported")
 
         if image.size_t > 1:
-            return TypeError("Timelapse images are unsupported.")
+            raise ValueError("Timelapse images are unsupported.")
 
         if image.size_c > 1:
             return image.get_image_data("ZYX", C=self._channel_index)
@@ -152,9 +164,5 @@ class BatchWorkflow:
         return image
 
     def _write_to_log_file(self, text: str):
-        # Creating an the output directory at output_dir if it does not exist already
-        if not self._output_dir.exists():
-            FileSystemUtilities.create_directory(self._output_dir)
-
         with open(self._log_path, "a") as writer:
             writer.write(text)
