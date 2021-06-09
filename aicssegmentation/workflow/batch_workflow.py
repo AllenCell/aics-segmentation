@@ -1,7 +1,7 @@
 import numpy as np
 import logging
 
-from typing import Union
+from typing import List, Union
 from aicsimageio import AICSImage
 from aicsimageio.writers import OmeTiffWriter
 from pathlib import Path
@@ -12,7 +12,7 @@ from .workflow_definition import WorkflowDefinition
 
 log = logging.getLogger(__name__)
 
-SUPPORTED_FILE_EXTENSIONS = [".tiff", ".tif", ".czi"]
+SUPPORTED_FILE_EXTENSIONS = ["tiff", "tif", "czi"]
 
 
 class BatchWorkflow:
@@ -27,7 +27,7 @@ class BatchWorkflow:
         workflow_definition: WorkflowDefinition,
         input_dir: Union[str, Path],
         output_dir: Union[str, Path],
-        channel_index: int = 0,
+        channel_index: int = 0
     ):
         if workflow_definition is None:
             raise ArgumentNullError("workflow_definition")
@@ -44,14 +44,17 @@ class BatchWorkflow:
 
         self._output_dir = Path(output_dir)
         self._channel_index = channel_index
-        self._files_count: int = 0
+        self._processed_files: int = 0        
         self._failed_files: int = 0
-        self._log_path: Path = self._output_dir / "log.txt"
+        self._log_path: Path = self._output_dir / "log.txt" # TODO timestamp the file name
 
         # Create the output directory at output_dir if it does not exist already
         if not self._output_dir.exists():
             FileSystemUtilities.create_directory(self._output_dir)
-
+        
+        self._input_files = self._get_input_files(self._input_dir, SUPPORTED_FILE_EXTENSIONS)     
+        self._execute_generator = self._execute_generator_func()  
+    
     @property
     def input_dir(self) -> Path:
         return self._input_dir
@@ -60,75 +63,85 @@ class BatchWorkflow:
     def output_dir(self) -> Path:
         return self._output_dir
 
-    def is_valid_image(self, image_path: Path) -> bool:
+    def is_done(self) -> bool:
         """
-        Check if file at a given image_path and is a valid image type we support.
+        Indicates whether all files / steps have been executed
 
-        Params:
-            image_path (Path): image to check
+        Use this to know when the batch workflow is complete if manually executing the workflow
+        with execute_next()
 
         Returns:
-            (bool): True if file has a supported file extension.
-        """
-        if not image_path.exists():
-            return False
-        if image_path.suffix.lower() in SUPPORTED_FILE_EXTENSIONS:
-            return True
-        else:
-            return False
+            (bool): True if all files/steps have been executed, False if not
+        """        
+        return self._processed_files == len(self._input_files)
 
-    def process_all(self):
-        """
-        Process all images in the input_dir with the workflow_definition used to set up the BatchWorkflow
+    def execute_all(self):
+        log.info(f"Starting batch workflow...")
+        log.info(f"Found {len(self._input_files)} files to process.")
 
-        Params:
-            none
-
-        Returns:
-            none
-        """
-
-        self._write_to_log_file("Log for batch processing run\n")
-
-        files = [f for f in self._input_dir.glob("**/*") if f.is_file]
-        # Currently will save files in same format as they are in the input path
-        for f in files:
-            self._files_count += 1
-            if self.is_valid_image(f):
-                read_image = AICSImage(f)
-
-                try:
-                    # read and format image in the way we expect
-                    image_from_path = self.format_image_to_3d(read_image)
-                    # Run workflow on image
-                    workflow = Workflow(self._workflow_definition, image_from_path)
-                    result = workflow.execute_all()
-                    with OmeTiffWriter(self._output_dir.joinpath(f.name), overwrite_file=True) as w:
-                        w.save(data=self.convert_bool_to_uint8(result), dimension_order="ZYX")
-
-                except Exception as e:
-                    # Handle failures during workflow execution/save
-                    self._failed_files += 1
-                    self._write_to_log_file(f"FAILED: {f}, ERROR: {e}\n")
-            else:
-                self._failed_files += 1
-                self._write_to_log_file(f"FAILED: {f}, ERROR: Unsupported Image Type {f.suffix}\n")
+        while not self.is_done():
+            self.execute_next()
 
         self._write_log_file_summary()
 
+        log.info(f"Batch workflow complete. Check {self._log_path} for output log and summary.")
+            
+    def execute_next(self):
+        if self.is_done():    
+            log.info("Nothing to process")
+            return
+            
+        next(self._execute_generator)                    
+
+    def _execute_generator_func(self):
+        for f in self._input_files:        
+            try:
+                log.info(f"Start file {f.name}")
+
+                # read and format image in the way we expect
+                read_image = AICSImage(f)
+                image_from_path = self._format_image_to_3d(read_image)
+
+                # Run workflow on image
+                workflow = Workflow(self._workflow_definition, image_from_path)
+                while not workflow.is_done():                                     
+                    workflow.execute_next()
+                    yield
+
+                # Save output
+                output_path = self._output_dir / f"{f.stem}.segmentation.tiff"
+                result = workflow.get_most_recent_result()
+                with OmeTiffWriter(output_path, overwrite_file=True) as w:
+                    w.save(data=self._format_output(result), dimension_order="ZYX")
+                
+                msg = f"SUCCESS: {f}. Output saved at {output_path}"
+                log.info(msg)
+                self._write_to_log_file(msg)
+
+            except Exception as ex:
+                self._failed_files += 1                
+                msg = f"FAILED: {f}, ERROR: {ex}"
+                log.error(msg)
+                self._write_to_log_file(msg)
+            finally:
+                self._processed_files += 1      
+
+            yield
+
+    # TODO make public for manual version?
     def _write_log_file_summary(self):
         """
         Write a log file to the output folder.
         """
-        if self._files_count == 0:
+        if self._processed_files == 0:
             report = "There were no files to process in the input directory"
         else:
 
-            files_processed = self._files_count - self._failed_files
-            report = f"{files_processed}/{self._files_count} files were processed.\n"
-        self._write_to_log_file(report + "\n")
+            files_processed = self._processed_files - self._failed_files
+            report = f"{files_processed}/{self._processed_files} files were successfully processed."
+        self._write_to_log_file(report)
 
-    def format_image_to_3d(self, image: AICSImage) -> np.ndarray:
+    def _format_image_to_3d(self, image: AICSImage) -> np.ndarray:
         """
         Format images in the way that aics-segmention expects for most workflows (3d, zyx)
 
@@ -149,7 +162,7 @@ class BatchWorkflow:
 
         return image.get_image_data("ZYX")
 
-    def convert_bool_to_uint8(self, image: np.ndarray):
+    def _format_output(self, image: np.ndarray):
         """
         Format segmented images to uint8 to save via AICSImage
 
@@ -165,4 +178,10 @@ class BatchWorkflow:
 
     def _write_to_log_file(self, text: str):
         with open(self._log_path, "a") as writer:
-            writer.write(text)
+            writer.write(f"{text}\n")
+
+    def _get_input_files(self, input_dir: Path, extensions: List[str]) -> List[Path]:        
+        input_files = list()
+        for ext in extensions:
+            input_files.extend(input_dir.glob(f"*.{ext}"))
+        return input_files

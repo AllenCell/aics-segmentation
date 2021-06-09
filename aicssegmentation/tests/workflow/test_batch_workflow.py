@@ -41,23 +41,23 @@ class TestBatchWorkflow:
     def test_format_image_to_3d(self, batch_workflow: BatchWorkflow):
         three_d_image = AICSImage(random.random((2, 3, 4)), known_dims="ZYX")
 
-        assert len(batch_workflow.format_image_to_3d(three_d_image).shape) == 3
+        assert len(batch_workflow._format_image_to_3d(three_d_image).shape) == 3
 
     def test_format_image_to_3d_timeseries(self, batch_workflow: BatchWorkflow):
         image = AICSImage(np.ones((1, 5, 1, 10, 100, 100)), known_dims="STCZYX")
         with pytest.raises(ValueError):
-            batch_workflow.format_image_to_3d(image)
+            batch_workflow._format_image_to_3d(image)
 
     def test_format_image_to_3d_multiscene(self, batch_workflow: BatchWorkflow):
         image = AICSImage(np.ones((5, 1, 1, 10, 100, 100)), known_dims="STCZYX")
         with pytest.raises(ValueError):
-            batch_workflow.format_image_to_3d(image)
+            batch_workflow._format_image_to_3d(image)
 
     def test_convert_bool_to_uint8(self, batch_workflow: BatchWorkflow):
         array_to_test = np.zeros((5))
         array_to_test.data[0] = 1
         array_to_test.data[4] = 1
-        converted = batch_workflow.convert_bool_to_uint8(array_to_test)
+        converted = batch_workflow._format_output(array_to_test)
 
         assert np.array_equal(converted, [255, 0, 0, 0, 255])
 
