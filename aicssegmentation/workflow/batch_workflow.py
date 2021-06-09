@@ -1,6 +1,7 @@
 import numpy as np
 import logging
 
+from datetime import datetime
 from typing import List, Union
 from aicsimageio import AICSImage
 from aicsimageio.writers import OmeTiffWriter
@@ -46,7 +47,7 @@ class BatchWorkflow:
         self._channel_index = channel_index
         self._processed_files: int = 0        
         self._failed_files: int = 0
-        self._log_path: Path = self._output_dir / "log.txt" # TODO timestamp the file name
+        self._log_path: Path = self._output_dir / f"log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
 
         # Create the output directory at output_dir if it does not exist already
         if not self._output_dir.exists():
@@ -55,6 +56,18 @@ class BatchWorkflow:
         self._input_files = self._get_input_files(self._input_dir, SUPPORTED_FILE_EXTENSIONS)     
         self._execute_generator = self._execute_generator_func()  
     
+    @property
+    def total_files(self) -> int:
+        return len(self._input_files)
+
+    @property
+    def processed_files(self) -> int:
+        return self._processed_files
+
+    @property
+    def failed_files(self) -> int:
+        return self._failed_files
+
     @property
     def input_dir(self) -> Path:
         return self._input_dir
@@ -73,22 +86,26 @@ class BatchWorkflow:
         Returns:
             (bool): True if all files/steps have been executed, False if not
         """        
-        return self._processed_files == len(self._input_files)
+        return self._processed_files == self.total_files
 
     def execute_all(self):
+        if self.is_done():    
+            log.info("No files left to process")
+            return
+
         log.info(f"Starting batch workflow...")
-        log.info(f"Found {len(self._input_files)} files to process.")
+        log.info(f"Found {self.total_files} files to process.")
 
         while not self.is_done():
             self.execute_next()
 
-        self._write_log_file_summary()
+        self.write_log_file_summary()
 
         log.info(f"Batch workflow complete. Check {self._log_path} for output log and summary.")
             
     def execute_next(self):
         if self.is_done():    
-            log.info("Nothing to process")
+            log.info("No files left to process")
             return
             
         next(self._execute_generator)                    
@@ -127,9 +144,8 @@ class BatchWorkflow:
                 self._processed_files += 1      
 
             yield
-
-    # TODO make public for manual version?
-    def _write_log_file_summary(self):
+    
+    def write_log_file_summary(self):
         """
         Write a log file to the output folder.
         """
