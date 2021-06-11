@@ -64,7 +64,7 @@ class Workflow:
             result (np.ndarray): resultant image from running the
             next workflow step
         """
-        
+
         step = self.get_next_step()
 
         log.info(f"Executing step #{step.step_number}")

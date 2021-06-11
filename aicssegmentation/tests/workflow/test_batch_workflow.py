@@ -1,4 +1,3 @@
-from typing import Type
 import numpy as np
 import pytest
 
@@ -28,16 +27,6 @@ def batch_workflow(tmp_path: Path):
 
 
 class TestBatchWorkflow:
-    @pytest.mark.parametrize("file_name", ["non_existant_image.tiff", "bad_extension.abc"])
-    def test_is_valid_image(self, file_name, batch_workflow: BatchWorkflow):
-        # batch_workflow = self._get_batch_workflow(tmp_path)
-        input_dir = batch_workflow.input_dir
-
-        assert not batch_workflow.is_valid_image(input_dir / file_name)
-        assert batch_workflow.is_valid_image(input_dir / "test1.tiff")
-        assert batch_workflow.is_valid_image(input_dir / "test2.tiff")
-        assert batch_workflow.is_valid_image(input_dir / "test3.tiff")
-
     def test_format_image_to_3d(self, batch_workflow: BatchWorkflow):
         three_d_image = AICSImage(random.random((2, 3, 4)), known_dims="ZYX")
 
@@ -53,21 +42,13 @@ class TestBatchWorkflow:
         with pytest.raises(ValueError):
             batch_workflow._format_image_to_3d(image)
 
-    def test_convert_bool_to_uint8(self, batch_workflow: BatchWorkflow):
-        array_to_test = np.zeros((5))
-        array_to_test.data[0] = 1
-        array_to_test.data[4] = 1
-        converted = batch_workflow._format_output(array_to_test)
-
-        assert np.array_equal(converted, [255, 0, 0, 0, 255])
-
     @mock.patch("aicssegmentation.workflow.batch_workflow.Workflow.execute_all")
     def test_process_all(self, mock_workflow_execute_all, batch_workflow: BatchWorkflow):
         # Arrange
         mock_workflow_execute_all.return_value = np.zeros((10, 100, 100))
 
         # Act
-        batch_workflow.process_all()
+        batch_workflow.execute_all()
 
         # Assert
         assert batch_workflow.output_dir.exists()

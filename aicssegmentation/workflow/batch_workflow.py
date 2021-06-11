@@ -12,6 +12,7 @@ from .workflow import Workflow
 from .workflow_definition import WorkflowDefinition
 
 log = logging.getLogger(__name__)
+log.setLevel(logging.INFO)
 
 SUPPORTED_FILE_EXTENSIONS = ["tiff", "tif", "czi"]
 
@@ -28,7 +29,7 @@ class BatchWorkflow:
         workflow_definition: WorkflowDefinition,
         input_dir: Union[str, Path],
         output_dir: Union[str, Path],
-        channel_index: int = 0
+        channel_index: int = 0,
     ):
         if workflow_definition is None:
             raise ArgumentNullError("workflow_definition")
@@ -45,17 +46,17 @@ class BatchWorkflow:
 
         self._output_dir = Path(output_dir)
         self._channel_index = channel_index
-        self._processed_files: int = 0        
+        self._processed_files: int = 0
         self._failed_files: int = 0
         self._log_path: Path = self._output_dir / f"log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
 
         # Create the output directory at output_dir if it does not exist already
         if not self._output_dir.exists():
             FileSystemUtilities.create_directory(self._output_dir)
-        
-        self._input_files = self._get_input_files(self._input_dir, SUPPORTED_FILE_EXTENSIONS)     
-        self._execute_generator = self._execute_generator_func()  
-    
+
+        self._input_files = self._get_input_files(self._input_dir, SUPPORTED_FILE_EXTENSIONS)
+        self._execute_generator = self._execute_generator_func()
+
     @property
     def total_files(self) -> int:
         return len(self._input_files)
@@ -85,15 +86,15 @@ class BatchWorkflow:
 
         Returns:
             (bool): True if all files/steps have been executed, False if not
-        """        
+        """
         return self._processed_files == self.total_files
 
     def execute_all(self):
-        if self.is_done():    
+        if self.is_done():
             log.info("No files left to process")
             return
 
-        log.info(f"Starting batch workflow...")
+        log.info("Starting batch workflow...")
         log.info(f"Found {self.total_files} files to process.")
 
         while not self.is_done():
@@ -102,16 +103,16 @@ class BatchWorkflow:
         self.write_log_file_summary()
 
         log.info(f"Batch workflow complete. Check {self._log_path} for output log and summary.")
-            
+
     def execute_next(self):
-        if self.is_done():    
+        if self.is_done():
             log.info("No files left to process")
             return
-            
-        next(self._execute_generator)                    
+
+        next(self._execute_generator)
 
     def _execute_generator_func(self):
-        for f in self._input_files:        
+        for f in self._input_files:
             try:
                 log.info(f"Start file {f.name}")
 
@@ -121,7 +122,7 @@ class BatchWorkflow:
 
                 # Run workflow on image
                 workflow = Workflow(self._workflow_definition, image_from_path)
-                while not workflow.is_done():                                     
+                while not workflow.is_done():
                     workflow.execute_next()
                     yield
 
@@ -130,21 +131,21 @@ class BatchWorkflow:
                 result = workflow.get_most_recent_result()
                 with OmeTiffWriter(output_path, overwrite_file=True) as w:
                     w.save(data=self._format_output(result), dimension_order="ZYX")
-                
+
                 msg = f"SUCCESS: {f}. Output saved at {output_path}"
                 log.info(msg)
                 self._write_to_log_file(msg)
 
             except Exception as ex:
-                self._failed_files += 1                
+                self._failed_files += 1
                 msg = f"FAILED: {f}, ERROR: {ex}"
                 log.error(msg)
                 self._write_to_log_file(msg)
             finally:
-                self._processed_files += 1      
+                self._processed_files += 1
 
             yield
-    
+
     def write_log_file_summary(self):
         """
         Write a log file to the output folder.
@@ -196,7 +197,7 @@ class BatchWorkflow:
         with open(self._log_path, "a") as writer:
             writer.write(f"{text}\n")
 
-    def _get_input_files(self, input_dir: Path, extensions: List[str]) -> List[Path]:        
+    def _get_input_files(self, input_dir: Path, extensions: List[str]) -> List[Path]:
         input_files = list()
         for ext in extensions:
             input_files.extend(input_dir.glob(f"*.{ext}"))
