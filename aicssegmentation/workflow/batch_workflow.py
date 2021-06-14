@@ -1,5 +1,4 @@
 import numpy as np
-import logging
 
 from datetime import datetime
 from typing import List, Union
@@ -10,9 +9,6 @@ from aicssegmentation.util.filesystem import FileSystemUtilities
 from aicssegmentation.exceptions import ArgumentNullError
 from .workflow import Workflow
 from .workflow_definition import WorkflowDefinition
-
-log = logging.getLogger(__name__)
-log.setLevel(logging.INFO)
 
 SUPPORTED_FILE_EXTENSIONS = ["tiff", "tif", "czi"]
 
@@ -91,22 +87,22 @@ class BatchWorkflow:
 
     def execute_all(self):
         if self.is_done():
-            log.info("No files left to process")
+            print("No files left to process")
             return
 
-        log.info("Starting batch workflow...")
-        log.info(f"Found {self.total_files} files to process.")
+        print("Starting batch workflow...")
+        print(f"Found {self.total_files} files to process.")
 
         while not self.is_done():
             self.execute_next()
 
         self.write_log_file_summary()
 
-        log.info(f"Batch workflow complete. Check {self._log_path} for output log and summary.")
+        print(f"Batch workflow complete. Check {self._log_path} for output log and summary.")
 
     def execute_next(self):
         if self.is_done():
-            log.info("No files left to process")
+            print("No files left to process")
             return
 
         next(self._execute_generator)
@@ -114,7 +110,7 @@ class BatchWorkflow:
     def _execute_generator_func(self):
         for f in self._input_files:
             try:
-                log.info(f"Start file {f.name}")
+                print(f"Start file {f.name}")
 
                 # read and format image in the way we expect
                 read_image = AICSImage(f)
@@ -133,13 +129,13 @@ class BatchWorkflow:
                     w.save(data=self._format_output(result), dimension_order="ZYX")
 
                 msg = f"SUCCESS: {f}. Output saved at {output_path}"
-                log.info(msg)
+                print(msg)
                 self._write_to_log_file(msg)
 
             except Exception as ex:
                 self._failed_files += 1
                 msg = f"FAILED: {f}, ERROR: {ex}"
-                log.error(msg)
+                print(msg)
                 self._write_to_log_file(msg)
             finally:
                 self._processed_files += 1
