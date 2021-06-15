@@ -2,7 +2,7 @@
     "1": {        
         "category": "preprocessing",        
         "function": "intensity_normalization",
-        "parameter_defaults": {
+        "parameter_values": {
             "scaling_param": [
                 3,
                 19
@@ -13,7 +13,7 @@
     "2": {        
         "category": "preprocessing",        
         "function": "gaussian_smoothing_slice_by_slice",
-        "parameter_defaults": {
+        "parameter_values": {
             "sigma": 1
         },
         "parent": 1
@@ -21,7 +21,7 @@
     "3": {        
         "category": "core",        
         "function": "filament_filter_slice_by_slice",
-        "parameter_defaults": {
+        "parameter_values": {
             "sigmas": [
                 1
             ],
@@ -32,7 +32,7 @@
     "4": {        
         "category": "core",        
         "function": "spot_filter_slice_by_slice",
-        "parameter_defaults": {
+        "parameter_values": {
             "log_sigma": 5,
             "cutoff": 0.09
         },
@@ -41,7 +41,7 @@
     "5": {        
         "category": "core",        
         "function": "spot_filter_slice_by_slice",
-        "parameter_defaults": {
+        "parameter_values": {
             "log_sigma": 2.5,
             "cutoff": 0.07
         },
@@ -50,7 +50,7 @@
     "6": {        
         "category": "core",        
         "function": "spot_filter_slice_by_slice",
-        "parameter_defaults": {
+        "parameter_values": {
             "log_sigma": 1,
             "cutoff": 0.01
         },
@@ -69,7 +69,7 @@
     "8": {        
         "category": "postprocessing",        
         "function": "hole_filling",
-        "parameter_defaults": {
+        "parameter_values": {
             "hole_min": 0,
             "hole_max": 1600,
             "fill_2d": true
@@ -80,7 +80,7 @@
         "category": "postprocessing",        
         "function": "size_filter",
         "parent": 8,
-        "parameter_defaults": {
+        "parameter_values": {
             "min_size": 15,
             "method": "3D"
         }

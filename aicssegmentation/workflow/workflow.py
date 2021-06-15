@@ -1,7 +1,8 @@
-from typing import Any, Dict
 import numpy as np
 import logging
 
+from typing import Any, Dict, List
+from aicssegmentation.exceptions import ArgumentNullError
 from .workflow_step import WorkflowStep
 from .workflow_definition import WorkflowDefinition
 
@@ -17,13 +18,13 @@ class Workflow:
 
     def __init__(self, workflow_definition: WorkflowDefinition, input_image: np.ndarray):
         if workflow_definition is None:
-            raise ValueError("workflow_definition")
+            raise ArgumentNullError("workflow_definition")
         if input_image is None:
-            raise ValueError("image")
-        self._definition = workflow_definition
-        self._starting_image = input_image
+            raise ArgumentNullError("input_image")
+        self._definition: WorkflowDefinition = workflow_definition
+        self._starting_image: np.ndarray = input_image
         self._next_step: int = 0  # Next step to execute
-        self._results = list()  # Store step results
+        self._results: List = list()  # Store step results
 
     @property
     def workflow_definition(self) -> WorkflowDefinition:
@@ -63,9 +64,10 @@ class Workflow:
             result (np.ndarray): resultant image from running the
             next workflow step
         """
-        log.info(f"Executing step #{self._next_step}")
 
         step = self.get_next_step()
+
+        log.info(f"Executing step #{step.step_number}")
 
         # Pick which image to perform the workflow step on
         image: np.ndarray = None
@@ -85,7 +87,7 @@ class Workflow:
                 res = self.get_result(i - 1)  # parents are 1 indexed
                 image.append(res)
 
-        result: np.ndarray = self.get_next_step().execute(image, parameters or step.parameter_defaults)
+        result: np.ndarray = self.get_next_step().execute(image, parameters or step.parameter_values)
         self._results.append(result)
 
         # Only increment after running step
