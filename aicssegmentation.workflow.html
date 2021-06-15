@@ -109,6 +109,8 @@
 <li class="toctree-l4 current"><a class="current reference internal" href="#">aicssegmentation.workflow package</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="aicssegmentation.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aicssegmentation.html#module-aicssegmentation.exceptions">aicssegmentation.exceptions module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
 </ul>
 </li>
@@ -203,6 +205,71 @@
 <h1>aicssegmentation.workflow package<a class="headerlink" href="#aicssegmentation-workflow-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-aicssegmentation.workflow.batch_workflow">
+<span id="aicssegmentation-workflow-batch-workflow-module"></span><h2>aicssegmentation.workflow.batch_workflow module<a class="headerlink" href="#module-aicssegmentation.workflow.batch_workflow" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="aicssegmentation.workflow.batch_workflow.BatchWorkflow">
+<em class="property">class </em><code class="sig-prename descclassname">aicssegmentation.workflow.batch_workflow.</code><code class="sig-name descname">BatchWorkflow</code><span class="sig-paren">(</span><em class="sig-param">workflow_definition: aicssegmentation.workflow.workflow_definition.WorkflowDefinition, input_dir: Union[str, pathlib.Path], output_dir: Union[str, pathlib.Path], channel_index: int = 0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/batch_workflow.html#BatchWorkflow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.batch_workflow.BatchWorkflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a batch of workflows to process.
+This class provides the functionality to run batches of workflows using multiple image inputs from a input directory
+according to the steps defined in its WorkflowDefinition.</p>
+<dl class="method">
+<dt id="aicssegmentation.workflow.batch_workflow.BatchWorkflow.execute_all">
+<code class="sig-name descname">execute_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/batch_workflow.html#BatchWorkflow.execute_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.batch_workflow.BatchWorkflow.execute_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.batch_workflow.BatchWorkflow.execute_next">
+<code class="sig-name descname">execute_next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/batch_workflow.html#BatchWorkflow.execute_next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.batch_workflow.BatchWorkflow.execute_next" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.batch_workflow.BatchWorkflow.failed_files">
+<em class="property">property </em><code class="sig-name descname">failed_files</code><a class="headerlink" href="#aicssegmentation.workflow.batch_workflow.BatchWorkflow.failed_files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.batch_workflow.BatchWorkflow.input_dir">
+<em class="property">property </em><code class="sig-name descname">input_dir</code><a class="headerlink" href="#aicssegmentation.workflow.batch_workflow.BatchWorkflow.input_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.batch_workflow.BatchWorkflow.is_done">
+<code class="sig-name descname">is_done</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/aicssegmentation/workflow/batch_workflow.html#BatchWorkflow.is_done"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.batch_workflow.BatchWorkflow.is_done" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether all files / steps have been executed</p>
+<p>Use this to know when the batch workflow is complete if manually executing the workflow
+with execute_next()</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>(bool): True if all files/steps have been executed, False if not</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.batch_workflow.BatchWorkflow.output_dir">
+<em class="property">property </em><code class="sig-name descname">output_dir</code><a class="headerlink" href="#aicssegmentation.workflow.batch_workflow.BatchWorkflow.output_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.batch_workflow.BatchWorkflow.processed_files">
+<em class="property">property </em><code class="sig-name descname">processed_files</code><a class="headerlink" href="#aicssegmentation.workflow.batch_workflow.BatchWorkflow.processed_files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.batch_workflow.BatchWorkflow.total_files">
+<em class="property">property </em><code class="sig-name descname">total_files</code><a class="headerlink" href="#aicssegmentation.workflow.batch_workflow.BatchWorkflow.total_files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.batch_workflow.BatchWorkflow.write_log_file_summary">
+<code class="sig-name descname">write_log_file_summary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/batch_workflow.html#BatchWorkflow.write_log_file_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.batch_workflow.BatchWorkflow.write_log_file_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a log file to the output folder.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-aicssegmentation.workflow.segmenter_function">
 <span id="aicssegmentation-workflow-segmenter-function-module"></span><h2>aicssegmentation.workflow.segmenter_function module<a class="headerlink" href="#module-aicssegmentation.workflow.segmenter_function" title="Permalink to this headline">¶</a></h2>
@@ -301,42 +368,6 @@ to a python callable</p>
 <dt id="aicssegmentation.workflow.segmenter_function.WidgetType.from_str">
 <em class="property">static </em><code class="sig-name descname">from_str</code><span class="sig-paren">(</span><em class="sig-param">value: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/segmenter_function.html#WidgetType.from_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.segmenter_function.WidgetType.from_str" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-aicssegmentation.workflow.structure_wrapper_config">
-<span id="aicssegmentation-workflow-structure-wrapper-config-module"></span><h2>aicssegmentation.workflow.structure_wrapper_config module<a class="headerlink" href="#module-aicssegmentation.workflow.structure_wrapper_config" title="Permalink to this headline">¶</a></h2>
-<dl class="exception">
-<dt id="aicssegmentation.workflow.structure_wrapper_config.ConfigurationException">
-<em class="property">exception </em><code class="sig-prename descclassname">aicssegmentation.workflow.structure_wrapper_config.</code><code class="sig-name descname">ConfigurationException</code><a class="reference internal" href="_modules/aicssegmentation/workflow/structure_wrapper_config.html#ConfigurationException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.structure_wrapper_config.ConfigurationException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
-<p>Raised when errors are encountered reading from Configuration files</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="aicssegmentation.workflow.structure_wrapper_config.StructureWrapperConfig">
-<em class="property">class </em><code class="sig-prename descclassname">aicssegmentation.workflow.structure_wrapper_config.</code><code class="sig-name descname">StructureWrapperConfig</code><a class="reference internal" href="_modules/aicssegmentation/workflow/structure_wrapper_config.html#StructureWrapperConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.structure_wrapper_config.StructureWrapperConfig" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Provides access to structure wrapper configuration</p>
-<dl class="method">
-<dt id="aicssegmentation.workflow.structure_wrapper_config.StructureWrapperConfig.get_all_functions">
-<code class="sig-name descname">get_all_functions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[aicssegmentation.workflow.segmenter_function.SegmenterFunction]<a class="reference internal" href="_modules/aicssegmentation/workflow/structure_wrapper_config.html#StructureWrapperConfig.get_all_functions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.structure_wrapper_config.StructureWrapperConfig.get_all_functions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the list of all available Functions from configuration</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="aicssegmentation.workflow.structure_wrapper_config.StructureWrapperConfig.get_available_workflows">
-<code class="sig-name descname">get_available_workflows</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[str]<a class="reference internal" href="_modules/aicssegmentation/workflow/structure_wrapper_config.html#StructureWrapperConfig.get_available_workflows"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.structure_wrapper_config.StructureWrapperConfig.get_available_workflows" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the list of all workflows available through configuration</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="aicssegmentation.workflow.structure_wrapper_config.StructureWrapperConfig.get_workflow_definition">
-<code class="sig-name descname">get_workflow_definition</code><span class="sig-paren">(</span><em class="sig-param">workflow_name: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/structure_wrapper_config.html#StructureWrapperConfig.get_workflow_definition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.structure_wrapper_config.StructureWrapperConfig.get_workflow_definition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a WorkflowDefinition for the given workflow from the corresponding
-json structure config</p>
-</dd></dl>
 
 </dd></dl>
 
@@ -456,21 +487,99 @@ None if step has not been executed yet.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-aicssegmentation.workflow.workflow_config">
+<span id="aicssegmentation-workflow-workflow-config-module"></span><h2>aicssegmentation.workflow.workflow_config module<a class="headerlink" href="#module-aicssegmentation.workflow.workflow_config" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="aicssegmentation.workflow.workflow_config.ConfigurationException">
+<em class="property">exception </em><code class="sig-prename descclassname">aicssegmentation.workflow.workflow_config.</code><code class="sig-name descname">ConfigurationException</code><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_config.html#ConfigurationException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_config.ConfigurationException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Raised when errors are encountered reading from Configuration files</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="aicssegmentation.workflow.workflow_config.WorkflowConfig">
+<em class="property">class </em><code class="sig-prename descclassname">aicssegmentation.workflow.workflow_config.</code><code class="sig-name descname">WorkflowConfig</code><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_config.html#WorkflowConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_config.WorkflowConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Provides access to structure workflow configuration</p>
+<dl class="method">
+<dt id="aicssegmentation.workflow.workflow_config.WorkflowConfig.get_all_functions">
+<code class="sig-name descname">get_all_functions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[aicssegmentation.workflow.segmenter_function.SegmenterFunction]<a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_config.html#WorkflowConfig.get_all_functions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_config.WorkflowConfig.get_all_functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of all available Functions from configuration</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.workflow_config.WorkflowConfig.get_available_workflows">
+<code class="sig-name descname">get_available_workflows</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[str]<a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_config.html#WorkflowConfig.get_available_workflows"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_config.WorkflowConfig.get_available_workflows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of all workflows available through configuration</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.workflow_config.WorkflowConfig.get_workflow_definition">
+<code class="sig-name descname">get_workflow_definition</code><span class="sig-paren">(</span><em class="sig-param">workflow_name: str</em><span class="sig-paren">)</span> &#x2192; aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition<a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_config.html#WorkflowConfig.get_workflow_definition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_config.WorkflowConfig.get_workflow_definition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a WorkflowDefinition for the given workflow from the corresponding
+prebuilt json structure config</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.workflow_config.WorkflowConfig.get_workflow_definition_from_config_file">
+<code class="sig-name descname">get_workflow_definition_from_config_file</code><span class="sig-paren">(</span><em class="sig-param">file_path: pathlib.Path</em>, <em class="sig-param">workflow_name: str = None</em>, <em class="sig-param">prebuilt: bool = False</em><span class="sig-paren">)</span> &#x2192; aicssegmentation.workflow.workflow_definition.WorkflowDefinition<a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_config.html#WorkflowConfig.get_workflow_definition_from_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_config.WorkflowConfig.get_workflow_definition_from_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a WorkflowDefinition based off the given json configuration file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.workflow_config.WorkflowConfig.save_workflow_definition_as_json">
+<code class="sig-name descname">save_workflow_definition_as_json</code><span class="sig-paren">(</span><em class="sig-param">workflow_definition: aicssegmentation.workflow.workflow_definition.WorkflowDefinition</em>, <em class="sig-param">output_file_path: pathlib.Path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_config.html#WorkflowConfig.save_workflow_definition_as_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_config.WorkflowConfig.save_workflow_definition_as_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a WorkflowDefinition as a json config file</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-aicssegmentation.workflow.workflow_definition">
 <span id="aicssegmentation-workflow-workflow-definition-module"></span><h2>aicssegmentation.workflow.workflow_definition module<a class="headerlink" href="#module-aicssegmentation.workflow.workflow_definition" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="aicssegmentation.workflow.workflow_definition.WorkflowDefinition">
-<em class="property">class </em><code class="sig-prename descclassname">aicssegmentation.workflow.workflow_definition.</code><code class="sig-name descname">WorkflowDefinition</code><span class="sig-paren">(</span><em class="sig-param">name: str, steps: List[aicssegmentation.workflow.workflow_step.WorkflowStep]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_definition.html#WorkflowDefinition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.WorkflowDefinition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Definition of an aics-segmentation Workflow</p>
+<dt id="aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition">
+<em class="property">class </em><code class="sig-prename descclassname">aicssegmentation.workflow.workflow_definition.</code><code class="sig-name descname">PrebuiltWorkflowDefinition</code><span class="sig-paren">(</span><em class="sig-param">name: str, steps: List[aicssegmentation.workflow.workflow_step.WorkflowStep]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_definition.html#PrebuiltWorkflowDefinition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#aicssegmentation.workflow.workflow_definition.WorkflowDefinition" title="aicssegmentation.workflow.workflow_definition.WorkflowDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">aicssegmentation.workflow.workflow_definition.WorkflowDefinition</span></code></a></p>
+<p>Definition of a pre-built(default) aics-segmentation Workflow from our assets.</p>
 <p>This class only defines the workflow (i.e. the workflow characteristics and steps)
 and is used either for building an executable Workflow object
 or to access information about the Workflow without needing to execute it</p>
 <dl class="method">
-<dt id="aicssegmentation.workflow.workflow_definition.WorkflowDefinition.diagram_image">
-<em class="property">property </em><code class="sig-name descname">diagram_image</code><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.WorkflowDefinition.diagram_image" title="Permalink to this definition">¶</a></dt>
+<dt id="aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition.diagram_image">
+<em class="property">property </em><code class="sig-name descname">diagram_image</code><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition.diagram_image" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="attribute">
+<dt id="aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition.name">
+<code class="sig-name descname">name</code><em class="property"> = None</em><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition.steps">
+<code class="sig-name descname">steps</code><em class="property"> = None</em><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition.steps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition.thumbnail_post">
+<em class="property">property </em><code class="sig-name descname">thumbnail_post</code><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition.thumbnail_post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition.thumbnail_pre">
+<em class="property">property </em><code class="sig-name descname">thumbnail_pre</code><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition.thumbnail_pre" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="aicssegmentation.workflow.workflow_definition.WorkflowDefinition">
+<em class="property">class </em><code class="sig-prename descclassname">aicssegmentation.workflow.workflow_definition.</code><code class="sig-name descname">WorkflowDefinition</code><span class="sig-paren">(</span><em class="sig-param">name: str, steps: List[aicssegmentation.workflow.workflow_step.WorkflowStep]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_definition.html#WorkflowDefinition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.WorkflowDefinition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Definition of a custom aics-segmentation Workflow loaded from file.</p>
+<p>This class only defines the workflow (i.e. the workflow characteristics and steps)
+and is used either for building an executable Workflow object
+or to access information about the Workflow without needing to execute it</p>
 <dl class="attribute">
 <dt id="aicssegmentation.workflow.workflow_definition.WorkflowDefinition.name">
 <code class="sig-name descname">name</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.WorkflowDefinition.name" title="Permalink to this definition">¶</a></dt>
@@ -481,16 +590,6 @@ or to access information about the Workflow without needing to execute it</p>
 <code class="sig-name descname">steps</code><em class="property">: List[WorkflowStep]</em><em class="property"> = None</em><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.WorkflowDefinition.steps" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="aicssegmentation.workflow.workflow_definition.WorkflowDefinition.thumbnail_post">
-<em class="property">property </em><code class="sig-name descname">thumbnail_post</code><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.WorkflowDefinition.thumbnail_post" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="aicssegmentation.workflow.workflow_definition.WorkflowDefinition.thumbnail_pre">
-<em class="property">property </em><code class="sig-name descname">thumbnail_pre</code><a class="headerlink" href="#aicssegmentation.workflow.workflow_definition.WorkflowDefinition.thumbnail_pre" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 </div>
@@ -498,20 +597,62 @@ or to access information about the Workflow without needing to execute it</p>
 <span id="aicssegmentation-workflow-workflow-engine-module"></span><h2>aicssegmentation.workflow.workflow_engine module<a class="headerlink" href="#module-aicssegmentation.workflow.workflow_engine" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="aicssegmentation.workflow.workflow_engine.WorkflowEngine">
-<em class="property">class </em><code class="sig-prename descclassname">aicssegmentation.workflow.workflow_engine.</code><code class="sig-name descname">WorkflowEngine</code><span class="sig-paren">(</span><em class="sig-param">structure_config: aicssegmentation.workflow.structure_wrapper_config.StructureWrapperConfig = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_engine.html#WorkflowEngine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_engine.WorkflowEngine" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">aicssegmentation.workflow.workflow_engine.</code><code class="sig-name descname">WorkflowEngine</code><span class="sig-paren">(</span><em class="sig-param">workflow_config: aicssegmentation.workflow.workflow_config.WorkflowConfig = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_engine.html#WorkflowEngine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_engine.WorkflowEngine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>aicssegmentation workflow engine
 Use this class to access and execute aicssegmentation structure workflows</p>
+<dl class="method">
+<dt id="aicssegmentation.workflow.workflow_engine.WorkflowEngine.get_executable_batch_workflow">
+<code class="sig-name descname">get_executable_batch_workflow</code><span class="sig-paren">(</span><em class="sig-param">workflow_name: str</em>, <em class="sig-param">input_dir: str</em>, <em class="sig-param">output_dir: str</em>, <em class="sig-param">channel_index: int = 0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_engine.html#WorkflowEngine.get_executable_batch_workflow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_engine.WorkflowEngine.get_executable_batch_workflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an executable BatchWorkflow object</p>
+<dl class="simple">
+<dt>inputs:</dt><dd><p>workflow_name (str): Name of the workflow to load
+input_dir (str|Path): Directory containing input files for the batch processing
+output_dir (str|Path): Output directory for the batch processing
+channel_index (int): Index of the channel to process in each image (usually a structure channel)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.workflow_engine.WorkflowEngine.get_executable_batch_workflow_from_config_file">
+<code class="sig-name descname">get_executable_batch_workflow_from_config_file</code><span class="sig-paren">(</span><em class="sig-param">file_path: Union[str, pathlib.Path], input_dir: Union[str, pathlib.Path], output_dir: Union[str, pathlib.Path], channel_index: int = 0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_engine.html#WorkflowEngine.get_executable_batch_workflow_from_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_engine.WorkflowEngine.get_executable_batch_workflow_from_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an executable batch workflow object from a configuration file</p>
+<dl class="simple">
+<dt>inputs:</dt><dd><p>file_path (str|Path): Path to the workflow configuration file
+input_dir (str|Path): Directory containing input files for the batch processing
+output_dir (str|Path): Output directory for the batch processing
+channel_index (int): Index of the channel to process in each image (usually a structure channel)</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="method">
 <dt id="aicssegmentation.workflow.workflow_engine.WorkflowEngine.get_executable_workflow">
 <code class="sig-name descname">get_executable_workflow</code><span class="sig-paren">(</span><em class="sig-param">workflow_name: str</em>, <em class="sig-param">input_image: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; aicssegmentation.workflow.workflow.Workflow<a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_engine.html#WorkflowEngine.get_executable_workflow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_engine.WorkflowEngine.get_executable_workflow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get an executable workflow object</p>
 <dl class="simple">
 <dt>inputs:</dt><dd><p>workflow_name (str): Name of the workflow to load
-image (ndarray): input image for the workflow to execute on</p>
+input_image (ndarray): input image for the workflow to execute on</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.workflow_engine.WorkflowEngine.get_executable_workflow_from_config_file">
+<code class="sig-name descname">get_executable_workflow_from_config_file</code><span class="sig-paren">(</span><em class="sig-param">file_path: Union[str, pathlib.Path], input_image: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; aicssegmentation.workflow.workflow.Workflow<a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_engine.html#WorkflowEngine.get_executable_workflow_from_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_engine.WorkflowEngine.get_executable_workflow_from_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an executable workflow object from a configuration file</p>
+<dl class="simple">
+<dt>inputs:</dt><dd><p>file_path (str|Path): Path to the workflow configuration file
+input_image (ndarray): input image for the workflow to execute on</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="aicssegmentation.workflow.workflow_engine.WorkflowEngine.save_workflow_definition">
+<code class="sig-name descname">save_workflow_definition</code><span class="sig-paren">(</span><em class="sig-param">workflow_definition: aicssegmentation.workflow.workflow_definition.WorkflowDefinition, output_file_path: Union[str, pathlib.Path]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_engine.html#WorkflowEngine.save_workflow_definition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_engine.WorkflowEngine.save_workflow_definition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="aicssegmentation.workflow.workflow_engine.WorkflowEngine.workflow_definitions">
@@ -526,7 +667,7 @@ image (ndarray): input image for the workflow to execute on</p>
 <span id="aicssegmentation-workflow-workflow-step-module"></span><h2>aicssegmentation.workflow.workflow_step module<a class="headerlink" href="#module-aicssegmentation.workflow.workflow_step" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="aicssegmentation.workflow.workflow_step.WorkflowStep">
-<em class="property">class </em><code class="sig-prename descclassname">aicssegmentation.workflow.workflow_step.</code><code class="sig-name descname">WorkflowStep</code><span class="sig-paren">(</span><em class="sig-param">category: aicssegmentation.workflow.workflow_step.WorkflowStepCategory, function: aicssegmentation.workflow.segmenter_function.SegmenterFunction, step_number: int, parent: List[int], parameter_defaults: Dict[str, List] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_step.html#WorkflowStep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_step.WorkflowStep" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">aicssegmentation.workflow.workflow_step.</code><code class="sig-name descname">WorkflowStep</code><span class="sig-paren">(</span><em class="sig-param">category: aicssegmentation.workflow.workflow_step.WorkflowStepCategory, function: aicssegmentation.workflow.segmenter_function.SegmenterFunction, step_number: int, parent: List[int], parameter_values: Dict[str, List] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/workflow/workflow_step.html#WorkflowStep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow_step.WorkflowStep" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents a single step in an aicssegmentation Workflow</p>
 <dl class="attribute">
@@ -565,8 +706,8 @@ image (ndarray): input image for the workflow to execute on</p>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="aicssegmentation.workflow.workflow_step.WorkflowStep.parameter_defaults">
-<code class="sig-name descname">parameter_defaults</code><em class="property">: Dict[str, List]</em><em class="property"> = None</em><a class="headerlink" href="#aicssegmentation.workflow.workflow_step.WorkflowStep.parameter_defaults" title="Permalink to this definition">¶</a></dt>
+<dt id="aicssegmentation.workflow.workflow_step.WorkflowStep.parameter_values">
+<code class="sig-name descname">parameter_values</code><em class="property">: Dict[str, List]</em><em class="property"> = None</em><a class="headerlink" href="#aicssegmentation.workflow.workflow_step.WorkflowStep.parameter_values" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">

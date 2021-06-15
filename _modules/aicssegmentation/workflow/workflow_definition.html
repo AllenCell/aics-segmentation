@@ -107,6 +107,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.workflow.html">aicssegmentation.workflow package</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation.exceptions">aicssegmentation.exceptions module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
 </ul>
 </li>
@@ -198,7 +200,7 @@
 <div class="viewcode-block" id="WorkflowDefinition"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow_definition.WorkflowDefinition">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">WorkflowDefinition</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Definition of an aics-segmentation Workflow</span>
+<span class="sd">    Definition of a custom aics-segmentation Workflow loaded from file.</span>
 
 <span class="sd">    This class only defines the workflow (i.e. the workflow characteristics and steps)</span>
 <span class="sd">    and is used either for building an executable Workflow object</span>
@@ -207,6 +209,25 @@
 
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">steps</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">WorkflowStep</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">WorkflowStep</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">steps</span> <span class="o">=</span> <span class="n">steps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">from_file</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="PrebuiltWorkflowDefinition"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">PrebuiltWorkflowDefinition</span><span class="p">(</span><span class="n">WorkflowDefinition</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Definition of a pre-built(default) aics-segmentation Workflow from our assets.</span>
+
+<span class="sd">    This class only defines the workflow (i.e. the workflow characteristics and steps)</span>
+<span class="sd">    and is used either for building an executable Workflow object</span>
+<span class="sd">    or to access information about the Workflow without needing to execute it</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">WorkflowStep</span><span class="p">]):</span>
+        <span class="n">WorkflowDefinition</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="n">steps</span><span class="p">)</span>
 
     <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">thumbnail_pre</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>

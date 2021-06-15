@@ -107,6 +107,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.workflow.html">aicssegmentation.workflow package</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation.exceptions">aicssegmentation.exceptions module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
 </ul>
 </li>
@@ -187,10 +189,13 @@
   <h1>Source code for aicssegmentation.workflow.workflow_engine</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">aicssegmentation.exceptions</span> <span class="kn">import</span> <span class="n">ArgumentNullError</span>
 <span class="kn">from</span> <span class="nn">.workflow</span> <span class="kn">import</span> <span class="n">Workflow</span>
+<span class="kn">from</span> <span class="nn">.batch_workflow</span> <span class="kn">import</span> <span class="n">BatchWorkflow</span>
 <span class="kn">from</span> <span class="nn">.workflow_definition</span> <span class="kn">import</span> <span class="n">WorkflowDefinition</span>
-<span class="kn">from</span> <span class="nn">.structure_wrapper_config</span> <span class="kn">import</span> <span class="n">StructureWrapperConfig</span>
+<span class="kn">from</span> <span class="nn">.workflow_config</span> <span class="kn">import</span> <span class="n">WorkflowConfig</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 
 <div class="viewcode-block" id="WorkflowEngine"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow_engine.WorkflowEngine">[docs]</a><span class="k">class</span> <span class="nc">WorkflowEngine</span><span class="p">:</span>
@@ -199,8 +204,8 @@
 <span class="sd">    Use this class to access and execute aicssegmentation structure workflows</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure_config</span><span class="p">:</span> <span class="n">StructureWrapperConfig</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_structure_config</span> <span class="o">=</span> <span class="n">structure_config</span> <span class="ow">or</span> <span class="n">StructureWrapperConfig</span><span class="p">()</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workflow_config</span><span class="p">:</span> <span class="n">WorkflowConfig</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_workflow_config</span> <span class="o">=</span> <span class="n">workflow_config</span> <span class="ow">or</span> <span class="n">WorkflowConfig</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_workflow_definitions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_workflow_definitions</span><span class="p">()</span>
 
     <span class="nd">@property</span>
@@ -216,25 +221,107 @@
 
 <span class="sd">        inputs:</span>
 <span class="sd">            workflow_name (str): Name of the workflow to load</span>
-<span class="sd">            image (ndarray): input image for the workflow to execute on</span>
+<span class="sd">            input_image (ndarray): input image for the workflow to execute on</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">workflow_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentNullError</span><span class="p">(</span><span class="s2">&quot;workflow_name&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">input_image</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentNullError</span><span class="p">(</span><span class="s2">&quot;input_image&quot;</span><span class="p">)</span>
+
+        <span class="n">definition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_workflow_definition</span><span class="p">(</span><span class="n">workflow_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">definition</span><span class="p">,</span> <span class="n">input_image</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkflowEngine.get_executable_batch_workflow"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow_engine.WorkflowEngine.get_executable_batch_workflow">[docs]</a>    <span class="k">def</span> <span class="nf">get_executable_batch_workflow</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">workflow_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an executable BatchWorkflow object</span>
+
+<span class="sd">        inputs:</span>
+<span class="sd">            workflow_name (str): Name of the workflow to load</span>
+<span class="sd">            input_dir (str|Path): Directory containing input files for the batch processing</span>
+<span class="sd">            output_dir (str|Path): Output directory for the batch processing</span>
+<span class="sd">            channel_index (int): Index of the channel to process in each image (usually a structure channel)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">workflow_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentNullError</span><span class="p">(</span><span class="s2">&quot;workflow_name&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">input_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentNullError</span><span class="p">(</span><span class="s2">&quot;input_dir&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">output_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentNullError</span><span class="p">(</span><span class="s2">&quot;output_dir&quot;</span><span class="p">)</span>
+
+        <span class="n">definition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_workflow_definition</span><span class="p">(</span><span class="n">workflow_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">BatchWorkflow</span><span class="p">(</span><span class="n">definition</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkflowEngine.get_executable_workflow_from_config_file"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow_engine.WorkflowEngine.get_executable_workflow_from_config_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_executable_workflow_from_config_file</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">input_image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Workflow</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an executable workflow object from a configuration file</span>
+
+<span class="sd">        inputs:</span>
+<span class="sd">            file_path (str|Path): Path to the workflow configuration file</span>
+<span class="sd">            input_image (ndarray): input image for the workflow to execute on</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">input_image</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;input_image&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ArgumentNullError</span><span class="p">(</span><span class="s2">&quot;input_image&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentNullError</span><span class="p">(</span><span class="s2">&quot;file_path&quot;</span><span class="p">)</span>
 
+        <span class="n">definition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workflow_config</span><span class="o">.</span><span class="n">get_workflow_definition_from_config_file</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">definition</span><span class="p">,</span> <span class="n">input_image</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkflowEngine.get_executable_batch_workflow_from_config_file"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow_engine.WorkflowEngine.get_executable_batch_workflow_from_config_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_executable_batch_workflow_from_config_file</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">file_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+        <span class="n">input_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+        <span class="n">output_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+        <span class="n">channel_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an executable batch workflow object from a configuration file</span>
+
+<span class="sd">        inputs:</span>
+<span class="sd">            file_path (str|Path): Path to the workflow configuration file</span>
+<span class="sd">            input_dir (str|Path): Directory containing input files for the batch processing</span>
+<span class="sd">            output_dir (str|Path): Output directory for the batch processing</span>
+<span class="sd">            channel_index (int): Index of the channel to process in each image (usually a structure channel)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentNullError</span><span class="p">(</span><span class="s2">&quot;file_path&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">input_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentNullError</span><span class="p">(</span><span class="s2">&quot;input_dir&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">output_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentNullError</span><span class="p">(</span><span class="s2">&quot;output_dir&quot;</span><span class="p">)</span>
+
+        <span class="n">definition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workflow_config</span><span class="o">.</span><span class="n">get_workflow_definition_from_config_file</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">BatchWorkflow</span><span class="p">(</span><span class="n">definition</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">channel_index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkflowEngine.save_workflow_definition"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow_engine.WorkflowEngine.save_workflow_definition">[docs]</a>    <span class="k">def</span> <span class="nf">save_workflow_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workflow_definition</span><span class="p">:</span> <span class="n">WorkflowDefinition</span><span class="p">,</span> <span class="n">output_file_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">workflow_definition</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentNullError</span><span class="p">(</span><span class="s2">&quot;workflow_definition&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">output_file_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArgumentNullError</span><span class="p">(</span><span class="s2">&quot;file_path&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_workflow_config</span><span class="o">.</span><span class="n">save_workflow_definition_as_json</span><span class="p">(</span><span class="n">workflow_definition</span><span class="p">,</span> <span class="n">output_file_path</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_load_workflow_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WorkflowDefinition</span><span class="p">]:</span>
+        <span class="n">definitions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">available_workflows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workflow_config</span><span class="o">.</span><span class="n">get_available_workflows</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">available_workflows</span><span class="p">:</span>
+            <span class="n">definitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_workflow_config</span><span class="o">.</span><span class="n">get_workflow_definition</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">definitions</span>
+
+    <span class="k">def</span> <span class="nf">_get_workflow_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workflow_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WorkflowDefinition</span><span class="p">:</span>
         <span class="n">definition</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">workflow_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workflow_definitions</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">definition</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;No available workflow definition found for </span><span class="si">{</span><span class="n">workflow_name</span><span class="si">}</span><span class="s2">. Specify a valid workflow name.&quot;</span>
             <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">definition</span><span class="p">,</span> <span class="n">input_image</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_load_workflow_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WorkflowDefinition</span><span class="p">]:</span>
-        <span class="n">definitions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-        <span class="n">available_workflows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_structure_config</span><span class="o">.</span><span class="n">get_available_workflows</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">available_workflows</span><span class="p">:</span>
-            <span class="n">definitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_structure_config</span><span class="o">.</span><span class="n">get_workflow_definition</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">definitions</span></div>
+        <span class="k">return</span> <span class="n">definition</span></div>
 </pre></div>
 
            </div>

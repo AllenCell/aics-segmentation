@@ -4,6 +4,14 @@ aicssegmentation.workflow package
 Submodules
 ----------
 
+aicssegmentation.workflow.batch\_workflow module
+------------------------------------------------
+
+.. automodule:: aicssegmentation.workflow.batch_workflow
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 aicssegmentation.workflow.segmenter\_function module
 ----------------------------------------------------
 
@@ -12,18 +20,18 @@ aicssegmentation.workflow.segmenter\_function module
    :undoc-members:
    :show-inheritance:
 
-aicssegmentation.workflow.structure\_wrapper\_config module
------------------------------------------------------------
-
-.. automodule:: aicssegmentation.workflow.structure_wrapper_config
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 aicssegmentation.workflow.workflow module
 -----------------------------------------
 
 .. automodule:: aicssegmentation.workflow.workflow
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.workflow.workflow\_config module
+-------------------------------------------------
+
+.. automodule:: aicssegmentation.workflow.workflow_config
    :members:
    :undoc-members:
    :show-inheritance:

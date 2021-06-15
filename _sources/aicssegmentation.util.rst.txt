@@ -12,6 +12,14 @@ aicssegmentation.util.directories module
    :undoc-members:
    :show-inheritance:
 
+aicssegmentation.util.filesystem module
+---------------------------------------
+
+.. automodule:: aicssegmentation.util.filesystem
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 aicssegmentation.util.lazy module
 ---------------------------------
 
