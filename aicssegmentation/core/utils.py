@@ -3,7 +3,7 @@ from typing import List
 import numpy as np
 from scipy.ndimage import distance_transform_edt
 from skimage.measure import label, regionprops
-from skimage.morphology import ball, erosion, medial_axis, remove_small_objects
+from skimage.morphology import ball, disk, dilation, erosion, medial_axis, remove_small_objects
 
 
 def hole_filling(bw: np.ndarray, hole_min: int, hole_max: int, fill_2d: bool = True) -> np.ndarray:
@@ -312,6 +312,9 @@ def remove_hot_pixel(seg: np.ndarray) -> np.ndarray:
 
     # find hot pixels
     hot_pixel = seg_proj >= seg.shape[0] - 2
+
+    # dilate the area to cover the surrounding pixels
+    hot_pixel = dilation(hot_pixel, disk(1))
 
     # clean up every z
     for z in range(seg.shape[0]):
