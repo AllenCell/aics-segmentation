@@ -314,7 +314,7 @@ def remove_hot_pixel(seg: np.ndarray) -> np.ndarray:
     hot_pixel = seg_proj >= seg.shape[0] - 2
 
     # dilate the area to cover the surrounding pixels
-    hot_pixel = dilation(hot_pixel, disk(1))
+    hot_pixel = dilation(hot_pixel, disk(2))
 
     # clean up every z
     for z in range(seg.shape[0]):
