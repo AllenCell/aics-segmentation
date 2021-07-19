@@ -80,7 +80,9 @@ def Workflow_terf2(
     ###################
     # core algorithm
     ###################
-    response_f3 = vesselness3D(structure_img_smooth, sigmas=vesselness_sigma, tau=1, whiteonblack=True)
+    response_f3 = vesselness3D(
+        structure_img_smooth, sigmas=vesselness_sigma, tau=1, whiteonblack=True
+    )
     response_f3 = response_f3 > vesselness_cutoff
 
     response_s3_1 = dot_3d(structure_img_smooth, log_sigma=dot_3d_sigma)
@@ -98,12 +100,14 @@ def Workflow_terf2(
     ###################
     bw = remove_small_objects(bw > 0, min_size=minArea, connectivity=1, in_place=False)
     for zz in range(bw.shape[0]):
-        bw[zz, :, :] = remove_small_objects(bw[zz, :, :], min_size=3, connectivity=1, in_place=False)
+        bw[zz, :, :] = remove_small_objects(
+            bw[zz, :, :], min_size=3, connectivity=1, in_place=False
+        )
 
     seg = remove_small_objects(bw > 0, min_size=minArea, connectivity=1, in_place=False)
 
     from aicssegmentation.core.utils import remove_hot_pixel
-   
+
     seg = seg > 0
     seg_clean = remove_hot_pixel(seg)
     seg = seg_clean.astype(np.uint8)
