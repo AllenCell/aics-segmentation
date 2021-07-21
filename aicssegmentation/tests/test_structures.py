@@ -50,6 +50,7 @@ ALL_STRUCTURE_NAMES = [
     "tomm20",
     "tuba1b",
     "ubtf",
+    "terf2",
 ]
 
 
