@@ -300,6 +300,14 @@ aicssegmentation.structure\_wrapper.seg\_template module
    :undoc-members:
    :show-inheritance:
 
+aicssegmentation.structure\_wrapper.seg\_terf2 module
+-----------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_terf2
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 aicssegmentation.structure\_wrapper.seg\_tjp1 module
 ----------------------------------------------------
 

@@ -1571,6 +1571,42 @@ original filename (without extension) will be passed in to output_func.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-aicssegmentation.structure_wrapper.seg_terf2">
+<span id="aicssegmentation-structure-wrapper-seg-terf2-module"></span><h2>aicssegmentation.structure_wrapper.seg_terf2 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_terf2" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aicssegmentation.structure_wrapper.seg_terf2.Workflow_terf2">
+<code class="sig-prename descclassname">aicssegmentation.structure_wrapper.seg_terf2.</code><code class="sig-name descname">Workflow_terf2</code><span class="sig-paren">(</span><em class="sig-param">struct_img: numpy.ndarray</em>, <em class="sig-param">rescale_ratio: float = -1</em>, <em class="sig-param">output_type: str = 'default'</em>, <em class="sig-param">output_path: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">fn: Union[str</em>, <em class="sig-param">pathlib.Path] = None</em>, <em class="sig-param">output_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicssegmentation/structure_wrapper/seg_terf2.html#Workflow_terf2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.structure_wrapper.seg_terf2.Workflow_terf2" title="Permalink to this definition">¶</a></dt>
+<dd><p>classic segmentation workflow wrapper for structure TERF2</p>
+<dl>
+<dt>struct_img: np.ndarray</dt><dd><p>the 3D image to be segmented</p>
+</dd>
+<dt>rescale_ratio: float</dt><dd><p>an optional parameter to allow rescale the image before running the
+segmentation functions, default is no rescaling</p>
+</dd>
+<dt>output_type: str</dt><dd><p>select how to handle output. Currently, four types are supported:
+1. default: the result will be saved at output_path whose filename is</p>
+<blockquote>
+<div><p>original name without extention + “_struct_segmentaiton.tiff”</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>array: the segmentation result will be simply returned as a numpy array</p></li>
+<li><dl class="simple">
+<dt>array_with_contour: segmentation result will be returned together with</dt><dd><p>the contour of the segmentation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>customize: pass in an extra output_func to do a special save. All the</dt><dd><p>intermediate results, names of these results, the output_path, and the
+original filename (without extension) will be passed in to output_func.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 <div class="section" id="module-aicssegmentation.structure_wrapper.seg_tjp1">
 <span id="aicssegmentation-structure-wrapper-seg-tjp1-module"></span><h2>aicssegmentation.structure_wrapper.seg_tjp1 module<a class="headerlink" href="#module-aicssegmentation.structure_wrapper.seg_tjp1" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
