@@ -205,6 +205,7 @@
 <span class="c1"># Global Objects</span>
 <span class="n">PER_IMAGE</span> <span class="o">=</span> <span class="s2">&quot;per_img&quot;</span>
 <span class="n">PER_DIR</span> <span class="o">=</span> <span class="s2">&quot;per_dir&quot;</span>
+<span class="n">PER_CSV</span> <span class="o">=</span> <span class="s2">&quot;per_csv&quot;</span>
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;[</span><span class="si">%(levelname)4s</span><span class="s2">:</span><span class="si">%(lineno)4s</span><span class="s2"> </span><span class="si">%(asctime)s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -341,6 +342,13 @@
             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the image type to be processed, e.g., .czi (default) or .tiff&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
+        <span class="n">parser_dir</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="n">PER_CSV</span><span class="p">)</span>
+        <span class="n">parser_dir</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--csv&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;csv_dir&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;csv file&quot;</span><span class="p">)</span>
+        <span class="n">parser_dir</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--column&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the column to load file path&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">__no_args_print_help</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">namespace</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
@@ -453,6 +461,7 @@
             <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
 
         <span class="c1">##########################################################################</span>
+        <span class="n">batch_mode</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">PER_IMAGE</span><span class="p">:</span>
 
             <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_fname</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
@@ -490,7 +499,16 @@
             <span class="c1">#             for f in os.listdir(args.input_dir)</span>
             <span class="c1">#             if f.endswith(args.data_type)]</span>
             <span class="n">filenames</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+            <span class="n">batch_mode</span> <span class="o">=</span> <span class="kc">True</span>
 
+        <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">PER_CSV</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">csv_dir</span><span class="p">)</span>
+            <span class="n">filenames</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+            <span class="n">batch_mode</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">batch_mode</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dask</span><span class="p">:</span>
                 <span class="c1"># using dask offers ~6x speedup on the template segmentation.</span>
                 <span class="kn">import</span> <span class="nn">dask</span>
