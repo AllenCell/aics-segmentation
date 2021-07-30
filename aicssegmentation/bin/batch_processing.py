@@ -16,6 +16,7 @@ import aicsimageio
 # Global Objects
 PER_IMAGE = "per_img"
 PER_DIR = "per_dir"
+PER_CSV = "per_csv"
 
 log = logging.getLogger()
 logging.basicConfig(level=logging.INFO, format="[%(levelname)4s:%(lineno)4s %(asctime)s] %(message)s")
@@ -152,6 +153,13 @@ class Args(object):
             help="the image type to be processed, e.g., .czi (default) or .tiff",
         )
 
+        parser_dir = subparsers.add_parser(PER_CSV)
+        parser_dir.add_argument("--csv", dest="csv_dir", help="csv file")
+        parser_dir.add_argument(
+            "--column",
+            help="the column to load file path",
+        )
+
         self.__no_args_print_help(p)
         p.parse_args(namespace=self)
 
@@ -264,6 +272,7 @@ class Executor(object):
             os.mkdir(output_path)
 
         ##########################################################################
+        batch_mode = False
         if args.mode == PER_IMAGE:
 
             fname = os.path.basename(os.path.splitext(args.input_fname)[0])
@@ -301,7 +310,16 @@ class Executor(object):
             #             for f in os.listdir(args.input_dir)
             #             if f.endswith(args.data_type)]
             filenames.sort()
+            batch_mode = True
 
+        elif args.mode == PER_CSV:
+            import pandas as pd
+
+            df = pd.read_csv(args.csv_dir)
+            filenames = df[args.column].unique()
+            batch_mode = True
+
+        if batch_mode:
             if args.dask:
                 # using dask offers ~6x speedup on the template segmentation.
                 import dask
