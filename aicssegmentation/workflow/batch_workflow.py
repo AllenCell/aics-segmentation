@@ -125,8 +125,7 @@ class BatchWorkflow:
                 # Save output
                 output_path = self._output_dir / f"{f.stem}.segmentation.tiff"
                 result = workflow.get_most_recent_result()
-                with OmeTiffWriter(output_path, overwrite_file=True) as w:
-                    w.save(data=self._format_output(result), dimension_order="ZYX")
+                OmeTiffWriter.save(data=self._format_output(result), uri=output_path, dim_order="ZYX")
 
                 msg = f"SUCCESS: {f}. Output saved at {output_path}"
                 print(msg)
@@ -164,13 +163,13 @@ class BatchWorkflow:
         Returns:
             np.ndarray: segment-able image for aics-segmentation
         """
-        if image.size_s > 1:
+        if len(image.scenes) > 1:
             raise ValueError("Multi-Scene images are unsupported")
 
-        if image.size_t > 1:
+        if image.dims.T > 1:
             raise ValueError("Timelapse images are unsupported.")
 
-        if image.size_c > 1:
+        if image.dims.C > 1:
             return image.get_image_data("ZYX", C=self._channel_index)
 
         return image.get_image_data("ZYX")

@@ -62,8 +62,7 @@ def create_random_source_image():
     random_array = np.random.rand(*BASE_IMAGE_DIM)
 
     # write numpy array to .tiff file
-    with OmeTiffWriter(TEST_IMG_DIR / "random_input.tiff") as writer:
-        writer.save(random_array)
+    OmeTiffWriter.save(data=random_array, uri=TEST_IMG_DIR / "random_input.tiff")
 
 
 def create_all_test_images():

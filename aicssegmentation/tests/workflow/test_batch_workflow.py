@@ -19,8 +19,7 @@ def batch_workflow(tmp_path: Path):
 
     for i in range(0, 10):
         three_d_image = np.zeros((10, 100, 100))
-        with OmeTiffWriter(input_dir / f"test{i}.tiff", overwrite_file=True) as w:
-            w.save(data=three_d_image, dimension_order="ZYX")
+        OmeTiffWriter.save(data=three_d_image, uri=input_dir / f"test{i}.tiff", dim_order="ZYX")
 
     definition = WorkflowConfig().get_workflow_definition("sec61b")
     return BatchWorkflow(definition, input_dir, output_dir, channel_index=0)
