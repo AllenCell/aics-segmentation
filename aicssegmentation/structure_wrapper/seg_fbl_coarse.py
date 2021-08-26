@@ -1,7 +1,7 @@
 import numpy as np
 from typing import Union
 from pathlib import Path
-from skimage.morphology import remove_small_objects
+from skimage.morphology import remove_small_objects, erosion
 from aicssegmentation.core.pre_processing_utils import (
     intensity_normalization,
     image_smoothing_gaussian_3d,
@@ -16,7 +16,7 @@ from aicssegmentation.core.output_utils import (
 from scipy.ndimage import zoom
 
 
-def Workflow_fbl(
+def Workflow_fbl_coarse(
     struct_img: np.ndarray,
     rescale_ratio: float = -1,
     output_type: str = "default",
@@ -115,6 +115,11 @@ def Workflow_fbl(
     # step 3: finer segmentation
     response2d = dot_slice_by_slice(structure_img_smooth, log_sigma=dot_2d_sigma)
     bw_finer = remove_small_objects(response2d > dot_2d_cutoff, min_size=minArea, connectivity=1, in_place=True)
+
+    se = np.zeros((5,5,5), dtype=np.uint8)
+    se[:,2,2]=1
+
+    bw_finer = erosion(bw_finer, selem=se)
 
     out_img_list.append(bw_finer.copy())
     out_name_list.append("bw_fine")
