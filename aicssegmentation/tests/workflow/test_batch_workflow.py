@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from unittest import mock
-from aicsimageio.writers import OmeTiffWriter
+from aicsimageio.writers.ome_tiff_writer import OmeTiffWriter
 from pathlib import Path
 from aicsimageio import AICSImage
 from numpy import random
@@ -27,17 +27,18 @@ def batch_workflow(tmp_path: Path):
 
 class TestBatchWorkflow:
     def test_format_image_to_3d(self, batch_workflow: BatchWorkflow):
-        three_d_image = AICSImage(random.random((2, 3, 4)), known_dims="ZYX")
+        three_d_image = AICSImage(random.random((2, 3, 4)), dim_order="ZYX")
 
         assert len(batch_workflow._format_image_to_3d(three_d_image).shape) == 3
 
     def test_format_image_to_3d_timeseries(self, batch_workflow: BatchWorkflow):
-        image = AICSImage(np.ones((1, 5, 1, 10, 100, 100)), known_dims="STCZYX")
+        image = AICSImage(np.ones((5, 1, 10, 100, 100)), dim_order="TCZYX")
         with pytest.raises(ValueError):
             batch_workflow._format_image_to_3d(image)
 
     def test_format_image_to_3d_multiscene(self, batch_workflow: BatchWorkflow):
-        image = AICSImage(np.ones((5, 1, 1, 10, 100, 100)), known_dims="STCZYX")
+        # Two scenes
+        image = AICSImage([np.ones((5, 1, 10, 100, 100)), np.ones((5, 1, 10, 100, 100))], known_dims="TCZYX")
         with pytest.raises(ValueError):
             batch_workflow._format_image_to_3d(image)
 
