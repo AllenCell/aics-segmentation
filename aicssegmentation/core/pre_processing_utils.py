@@ -37,14 +37,12 @@ def intensity_normalization(struct_img: np.ndarray, scaling_param: List):
             struct_img[struct_img > scaling_param[0]] = struct_img.min()
         strech_min = struct_img.min()
         strech_max = struct_img.max()
-        struct_img = (struct_img - strech_min + 1e-8) / (strech_max - strech_min + 1e-8)
     elif len(scaling_param) == 2:
         m, s = norm.fit(struct_img.flat)
         strech_min = max(m - scaling_param[0] * s, struct_img.min())
         strech_max = min(m + scaling_param[1] * s, struct_img.max())
         struct_img[struct_img > strech_max] = strech_max
         struct_img[struct_img < strech_min] = strech_min
-        struct_img = (struct_img - strech_min + 1e-8) / (strech_max - strech_min + 1e-8)
     elif len(scaling_param) == 4:
         img_valid = struct_img[np.logical_and(struct_img > scaling_param[2], struct_img < scaling_param[3])]
         m, s = norm.fit(img_valid.flat)
@@ -52,7 +50,10 @@ def intensity_normalization(struct_img: np.ndarray, scaling_param: List):
         strech_max = min(scaling_param[3] + scaling_param[1] * s, struct_img.max())
         struct_img[struct_img > strech_max] = strech_max
         struct_img[struct_img < strech_min] = strech_min
-        struct_img = (struct_img - strech_min + 1e-8) / (strech_max - strech_min + 1e-8)
+    assert (
+        strech_min < strech_max
+    ), f"Please adjust intensity normalization parameters so that {strech_min}<{strech_max}"
+    struct_img = (struct_img - strech_min + 1e-8) / (strech_max - strech_min + 1e-8)
 
     # print('intensity normalization completes')
     return struct_img
