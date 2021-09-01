@@ -45,14 +45,17 @@ def intensity_normalization(struct_img: np.ndarray, scaling_param: List):
         struct_img[struct_img < strech_min] = strech_min
     elif len(scaling_param) == 4:
         img_valid = struct_img[np.logical_and(struct_img > scaling_param[2], struct_img < scaling_param[3])]
+        assert (
+            img_valid.size > 0
+        ), f"Adjust intensity normalization parameters {scaling_param[2]} and {scaling_param[3]} to include the image with range {struct_img.min()}:{struct_img.max()}"  # noqa: E501
         m, s = norm.fit(img_valid.flat)
         strech_min = max(scaling_param[2] - scaling_param[0] * s, struct_img.min())
         strech_max = min(scaling_param[3] + scaling_param[1] * s, struct_img.max())
         struct_img[struct_img > strech_max] = strech_max
         struct_img[struct_img < strech_min] = strech_min
     assert (
-        strech_min < strech_max
-    ), f"Please adjust intensity normalization parameters so that {strech_min}<{strech_max}"
+        strech_min <= strech_max
+    ), f"Please adjust intensity normalization parameters so that {strech_min}<={strech_max}"
     struct_img = (struct_img - strech_min + 1e-8) / (strech_max - strech_min + 1e-8)
 
     # print('intensity normalization completes')
