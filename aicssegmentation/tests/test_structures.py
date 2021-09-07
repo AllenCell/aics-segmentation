@@ -50,7 +50,6 @@ ALL_STRUCTURE_NAMES = [
     "tomm20",
     "tuba1b",
     "ubtf",
-    # "terf2",
 ]
 
 IMG_SCALING = {"cetn2": 5100}

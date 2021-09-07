@@ -48,7 +48,7 @@ Ready to contribute? Here's how to set up `aicssegmentation` for local developme
 7. Submit a pull request through the GitHub website.
 
 ## Adding a new workflow
-New workflows should be added to the [`structure_wrapper` directory](aicssegmentation/structure_wrapper) and be named `seg_structurename.py`. Each of these files must define a function called `Worfklow_structurename`. To ensure that the new structure is included in our tests, please include an image in the [`resources` folder](aicssegmentation\tests\resources\images) that shows the expected result of the segmentation. This can be done with the [`run_segmentation()` function ](aicssegmentation\tests\test_structures.py). Please also add the name of the new structure to the `ALL_STRUCTURE_NAMES` list [here](aicssegmentation\tests\test_structures.py). 
+New workflows should be added to the [`structure_wrapper` directory](aicssegmentation/structure_wrapper) and be named `seg_structurename.py`. Each of these files must define a function called `Workflow_structurename`. To ensure that the new structure is included in our tests, please include an image in the [`resources` folder](aicssegmentation\tests\resources\images) that shows the expected result of the segmentation. This can be done with the [`run_segmentation()` function ](aicssegmentation\tests\test_structures.py). Please also add the name of the new structure to the `ALL_STRUCTURE_NAMES` list [here](aicssegmentation\tests\test_structures.py). 
 
 ## Deploying
 
