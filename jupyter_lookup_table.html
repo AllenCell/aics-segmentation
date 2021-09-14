@@ -1,73 +1,34 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Documentation for Users &mdash; aicssegmentation 0.3.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Documentation for Users &mdash; aicssegmentation 0.3.0 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="index.html" class="icon icon-home"> aicssegmentation
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 0.3.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -75,19 +36,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
@@ -121,76 +71,35 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">aicssegmentation</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Documentation for Users</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/jupyter_lookup_table.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="documentation-for-users">
+             
+  <section id="documentation-for-users">
 <h1>Documentation for Users<a class="headerlink" href="#documentation-for-users" title="Permalink to this headline">¶</a></h1>
 <p>We recommend that users start by</p>
 <p>Identifying a structure in the <a class="reference external" href="https://www.allencell.org/segmenter.html#lookup-table">lookup table</a> that looks most similar to the segmentation task that you are faced with. Once you have identified this structure, open the correspoinding Jupyter Notebook and follow the instructions in the notebook to tune the workflow for your particular task. Finally, after finalizing the algorithms and parameters in the workflow, modify batch_processing.py to batch process all data (file by file or folder by folder).</p>
-<div class="section" id="step-1-find-the-entry-in-the-lookup-table-with-most-similar-morphology-to-your-data">
+<section id="step-1-find-the-entry-in-the-lookup-table-with-most-similar-morphology-to-your-data">
 <h2>Step 1: Find the entry in the lookup table with most similar morphology to your data<a class="headerlink" href="#step-1-find-the-entry-in-the-lookup-table-with-most-similar-morphology-to-your-data" title="Permalink to this headline">¶</a></h2>
 <p>List of “playgrounds” accomoanying the lookup table:</p>
 <ol class="arabic simple">
@@ -207,8 +116,8 @@
 <p>For example, if your structure is localized to endosomes (such as Ras-related protein Rab-5A)</p>
 <a class="reference external image-reference" href="./rab5a_raw.jpg"><img alt="rab5a raw" src="_images/rab5a_raw.jpg" /></a>
 <p>Visually, it has similar morphology to peroxisomes (peroxisomal membrane protein PMP34). Thusm the most applicable Jupyter Notebook is playground_dots.ipynb</p>
-</div>
-<div class="section" id="step-2-go-to-the-jupyter-notebook-and-tune-the-workflow">
+</section>
+<section id="step-2-go-to-the-jupyter-notebook-and-tune-the-workflow">
 <h2>Step 2: Go to the Jupyter Notebook and tune the workflow<a class="headerlink" href="#step-2-go-to-the-jupyter-notebook-and-tune-the-workflow" title="Permalink to this headline">¶</a></h2>
 <p>First, start your Jupyter Notebook App.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> activate segmentation
@@ -220,12 +129,12 @@ jupyter notebook
 <p>Now, your Jupyter should have started in your default brower and you can open <code class="docutils literal notranslate"><span class="pre">playground_dots.ipynb</span></code></p>
 <p>(A quick start guide on how executing a notebook can be found <a class="reference external" href="https://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/execute.html#executing-a-notebook">here</a>)</p>
 <p>Follow the instruct embedded in the notebook to tune the workflow for segmenting your images</p>
-</div>
-<div class="section" id="step-3-build-a-batch-processing-scripts-using-the-segmentation-workflow-you-just-tuned">
+</section>
+<section id="step-3-build-a-batch-processing-scripts-using-the-segmentation-workflow-you-just-tuned">
 <h2>Step 3: build a batch processing scripts using the segmentation workflow you just tuned<a class="headerlink" href="#step-3-build-a-batch-processing-scripts-using-the-segmentation-workflow-you-just-tuned" title="Permalink to this headline">¶</a></h2>
 <p>If you need to consistently segment more than a few images similar to the one you just experimented with, you can easily build a batch processing program following the steps below.</p>
 <p>For example, you have finalize your segmentation workflow for Rab-5A.</p>
-<div class="section" id="basic-steps">
+<section id="basic-steps">
 <h3>Basic steps<a class="headerlink" href="#basic-steps" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>duplicate the template file in <code class="docutils literal notranslate"><span class="pre">/aics-segmentation/aicssegmentation/structure_wrapper/seg_template.py</span></code> as <code class="docutils literal notranslate"><span class="pre">/aics-segmentation/aicssegmentation/structure_wrapper/seg_RAB5A.py</span></code></p></li>
@@ -241,10 +150,10 @@ jupyter notebook
 ./run_toolkit.sh
 </pre></div>
 </div>
-</div>
-<div class="section" id="optional-functions">
+</section>
+<section id="optional-functions">
 <h3>Optional functions:<a class="headerlink" href="#optional-functions" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="of1-by-default-only-the-final-segmentation-output-will-be-saved-into-the-specified-output-path-there-is-an-option-for-you-to-output-intermediate-results-or-anything-is-a-customized-way-to-do-this-you-can">
+<section id="of1-by-default-only-the-final-segmentation-output-will-be-saved-into-the-specified-output-path-there-is-an-option-for-you-to-output-intermediate-results-or-anything-is-a-customized-way-to-do-this-you-can">
 <h4>OF1: By default, only the final segmentation output will be saved into the specified output path. There is an option for you to output intermediate results or anything is a customized way. To do this, you can<a class="headerlink" href="#of1-by-default-only-the-final-segmentation-output-will-be-saved-into-the-specified-output-path-there-is-an-option-for-you-to-output-intermediate-results-or-anything-is-a-customized-way-to-do-this-you-can" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li><p>Go to line 55 in /aicssegmentation/core/output_utils.py. Customize the function <code class="docutils literal notranslate"><span class="pre">template_output()</span></code>. All intermediate results are saved in <code class="docutils literal notranslate"><span class="pre">out_img_list</span></code> with their corresponding name in <code class="docutils literal notranslate"><span class="pre">out_name_list</span></code>. You simply select which variable to save using the corresponding default name or the name you prefer.</p></li>
@@ -258,8 +167,8 @@ jupyter notebook
 </li>
 <li><p>Then, before you run your script <code class="docutils literal notranslate"><span class="pre">./run_toolkit.sh</span></code>, make sure you set your <code class="docutils literal notranslate"><span class="pre">output_type</span></code> as your new name, e.g. <code class="docutils literal notranslate"><span class="pre">MyLab</span></code>.</p></li>
 </ol>
-</div>
-<div class="section" id="of2-by-defalt-your-input-image-orginal-file-like-czi-will-not-be-resized-but-when-you-process-different-images-of-the-same-intracellular-structure-and-the-images-are-of-slighlty-different-resolution-you-may-need-to-first-resize-all-the-image-into-the-same-resolution-as-the-images-you-tuned-your-parameters-on-the-reason-is-that-parameters-tuned-on-image-of-one-resolution-may-yield-different-results-on-images-of-a-very-different-resolution">
+</section>
+<section id="of2-by-defalt-your-input-image-orginal-file-like-czi-will-not-be-resized-but-when-you-process-different-images-of-the-same-intracellular-structure-and-the-images-are-of-slighlty-different-resolution-you-may-need-to-first-resize-all-the-image-into-the-same-resolution-as-the-images-you-tuned-your-parameters-on-the-reason-is-that-parameters-tuned-on-image-of-one-resolution-may-yield-different-results-on-images-of-a-very-different-resolution">
 <h4>OF2: By defalt, your input image (orginal file, like .czi) will not be resized. But, when you process different images of the same intracellular structure and the images are of slighlty different resolution, you may need to first resize all the image into the same resolution as the images you tuned your parameters on. The reason is that parameters tuned on image of one resolution may yield different results on images of a very different resolution.<a class="headerlink" href="#of2-by-defalt-your-input-image-orginal-file-like-czi-will-not-be-resized-but-when-you-process-different-images-of-the-same-intracellular-structure-and-the-images-are-of-slighlty-different-resolution-you-may-need-to-first-resize-all-the-image-into-the-same-resolution-as-the-images-you-tuned-your-parameters-on-the-reason-is-that-parameters-tuned-on-image-of-one-resolution-may-yield-different-results-on-images-of-a-very-different-resolution" title="Permalink to this headline">¶</a></h4>
 <p>Case 1: Only xy resolution varies</p>
 <p>Go to <code class="docutils literal notranslate"><span class="pre">batch_pipeline.py</span></code> line 151-156, give your case a name and a standard resolution. Assuming you are dealing with images of super resolution with xy-resolution as 0.23 micron x 0.23 micron /pixel, then you may use</p>
@@ -270,53 +179,37 @@ jupyter notebook
 <p>In this case, your structure name in <code class="docutils literal notranslate"><span class="pre">run_toolkit.sh</span></code> needs to be <code class="docutils literal notranslate"><span class="pre">'RAB5_SuperRes'</span></code>. (We treat <code class="docutils literal notranslate"><span class="pre">'RAB5'</span></code> and <code class="docutils literal notranslate"><span class="pre">'RAB5_SuperRes'</span></code> as two different tasks programaticaly.) Whenever your want to process an image, if <code class="docutils literal notranslate"><span class="pre">XY=0.23</span></code> in <code class="docutils literal notranslate"><span class="pre">run_toolkit.sh</span></code>, then the image will not be resized. Otherwise, for example, <code class="docutils literal notranslate"><span class="pre">XY=0.20</span></code>, the image will be first resized in xy dimention.</p>
 <p>Case 2: xyz resolution may all vary</p>
 <p>In this case, you need to modify line 37-39 in your <code class="docutils literal notranslate"><span class="pre">seg_template.py</span></code> to do resizing in all dimensions into a standard resolution.</p>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, Jianxu Chen.
-
-    </p>
+    <p>&#169; Copyright 2020, Jianxu Chen.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
