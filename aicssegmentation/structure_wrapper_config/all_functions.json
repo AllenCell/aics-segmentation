@@ -8,16 +8,16 @@
                 {
                     "widget_type": "slider",
                     "data_type": "float",
-                    "min": 0.5,
+                    "min": -10,
                     "max": 30,
-                    "increment": 0.5
+                    "increment": 0.005
                 },
                 {
                     "widget_type": "slider",
                     "data_type": "float",
-                    "min": 0.5,
+                    "min": -10,
                     "max": 200,
-                    "increment": 0.5
+                    "increment": 0.005
                 }
             ]
         }
@@ -31,16 +31,16 @@
                 {
                     "widget_type": "slider",
                     "data_type": "float",
-                    "min": 0.5,
+                    "min": -10,
                     "max": 30,
-                    "increment": 0.5
+                    "increment": 0.005
                 },
                 {
                     "widget_type": "slider",
                     "data_type": "float",
-                    "min": 0.5,
+                    "min": -10,
                     "max": 200,
-                    "increment": 0.5
+                    "increment": 0.005
                 },
                 {
                     "widget_type": "slider",
@@ -192,7 +192,7 @@
                 "data_type": "float",
                 "min": 0,
                 "max": 10,
-                "increment":0.5
+                "increment": 0.5
             }
         }
     },
