@@ -67,6 +67,7 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-new-workflow">Adding a new workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deploying">Deploying</a></li>
 </ul>
 </li>
@@ -141,6 +142,10 @@ git push origin <span class="o">{</span>your_development_type<span class="o">}</
 </li>
 <li><p>Submit a pull request through the GitHub website.</p></li>
 </ol>
+</section>
+<section id="adding-a-new-workflow">
+<h2>Adding a new workflow<a class="headerlink" href="#adding-a-new-workflow" title="Permalink to this headline">¶</a></h2>
+<p>New workflows should be added to the <cite>``structure_wrapper`</cite> directory &lt;aicssegmentation/structure_wrapper&gt;`_ and be named <code class="docutils literal notranslate"><span class="pre">seg_structurename.py</span></code>. Each of these files must define a function called <code class="docutils literal notranslate"><span class="pre">Workflow_structurename</span></code>. To ensure that the new structure is included in our tests, please include an image in the <cite>``resources`</cite> folder &lt;aicssegmentationtestsresourcesimages&gt;`_ that shows the expected result of the segmentation. This can be done with the <cite>``run_segmentation()`</cite> function  &lt;aicssegmentationteststest_structures.py&gt;`_. Please also add the name of the new structure to the <code class="docutils literal notranslate"><span class="pre">ALL_STRUCTURE_NAMES</span></code> list <a class="reference external" href="aicssegmentationteststest_structures.py">here</a>.</p>
 </section>
 <section id="deploying">
 <h2>Deploying<a class="headerlink" href="#deploying" title="Permalink to this headline">¶</a></h2>
