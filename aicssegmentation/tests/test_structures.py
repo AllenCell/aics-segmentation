@@ -52,6 +52,7 @@ ALL_STRUCTURE_NAMES = [
     "ubtf",
 ]
 
+IMG_SCALING = {"cetn2": 5100}
 
 BASE_IMAGE_DIM = (128, 128, 128)
 RESCALE_RATIO = 0.7
@@ -87,6 +88,7 @@ def run_segmentation(structure_name: str, output_type: str = "default"):
 
     # load stock random image
     random_array = imread(TEST_IMG_DIR / "random_input.tiff").reshape(*BASE_IMAGE_DIM)
+    random_array *= IMG_SCALING.get(structure_name, 1)
 
     # conduct segmentation
     output_array = SegModuleFunction(
