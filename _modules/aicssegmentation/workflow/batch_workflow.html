@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aicssegmentation.workflow.batch_workflow &mdash; aicssegmentation 0.3.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <title>aicssegmentation.workflow.batch_workflow &mdash; aicssegmentation 0.4.1 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
@@ -26,7 +26,7 @@
             <a href="../../../index.html" class="icon icon-home"> aicssegmentation
           </a>
               <div class="version">
-                0.3.0
+                0.4.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -245,11 +245,17 @@
 <span class="sd">        Write a log file to the output folder.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_processed_files</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">report</span> <span class="o">=</span> <span class="s2">&quot;There were no files to process in the input directory&quot;</span>
+            <span class="n">report</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;There were no files to process in the input directory to process </span><span class="se">\n</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Using the Workflow: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_workflow_definition</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
 
             <span class="n">files_processed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_processed_files</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_failed_files</span>
-            <span class="n">report</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">files_processed</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_processed_files</span><span class="si">}</span><span class="s2"> files were successfully processed.&quot;</span>
+            <span class="n">report</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">files_processed</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_processed_files</span><span class="si">}</span><span class="s2"> files were successfully processed </span><span class="se">\n</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Using the Workflow: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_workflow_definition</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_write_to_log_file</span><span class="p">(</span><span class="n">report</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_format_image_to_3d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">AICSImage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
