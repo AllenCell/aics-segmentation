@@ -146,11 +146,17 @@ class BatchWorkflow:
         Write a log file to the output folder.
         """
         if self._processed_files == 0:
-            report = "There were no files to process in the input directory"
+            report = (
+                f"There were no files to process in the input directory to process \n "
+                f"Using the Workflow: {self._workflow_definition.name}"
+            )
         else:
 
             files_processed = self._processed_files - self._failed_files
-            report = f"{files_processed}/{self._processed_files} files were successfully processed."
+            report = (
+                f"{files_processed}/{self._processed_files} files were successfully processed \n "
+                f"Using the Workflow: {self._workflow_definition.name}"
+            )
         self._write_to_log_file(report)
 
     def _format_image_to_3d(self, image: AICSImage) -> np.ndarray:
