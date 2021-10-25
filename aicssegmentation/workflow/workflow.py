@@ -153,6 +153,35 @@ class Workflow:
             self.execute_next()
         return self.get_most_recent_result()
 
+    def run_step(self, i: int, parameters: Dict[str, Any] = None) -> np.ndarray:
+        """
+
+        Args:
+            i: step number (0 indexed) that you want to run
+
+        Returns:
+
+        """
+        image: np.ndarray = None
+        if i == 0:
+            image = self._starting_image
+        elif i > 0 and i <= len(self._definition.steps):
+            image = self.get_result(i - 1)
+        else:
+            raise ValueError("invalid step number for run_step")
+
+        step_to_run = self._definition.steps[i]
+        result: np.ndarray = step_to_run.execute(image, parameters or step_to_run.parameter_values)
+
+        if len(self._results <= i):
+            # this is the first time running this step
+            self._results.append(result)
+        else:
+            # this step has been run before so replacing old value
+            self._results[i] = result
+
+        return result
+
     def is_done(self) -> bool:
         """
         Check if all WorkflowSteps have been executed.
