@@ -153,7 +153,7 @@ class Workflow:
             self.execute_next()
         return self.get_most_recent_result()
 
-    def run_step(self, i: int, parameters: Dict[str, Any] = None) -> np.ndarray:
+    def execute_step(self, i: int, parameters: Dict[str, Any] = None) -> np.ndarray:
         """
 
         Args:
