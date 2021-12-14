@@ -228,6 +228,22 @@ aicssegmentation.structure\_wrapper.seg\_nup153 module
    :undoc-members:
    :show-inheritance:
 
+aicssegmentation.structure\_wrapper.seg\_polr2a module
+------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_polr2a
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_polr2a\_blob module
+------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_polr2a_blob
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 aicssegmentation.structure\_wrapper.seg\_pxn module
 ---------------------------------------------------
 
