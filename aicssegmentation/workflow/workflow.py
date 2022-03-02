@@ -5,6 +5,7 @@ from typing import Any, Dict, List
 from aicssegmentation.exceptions import ArgumentNullError
 from .workflow_step import WorkflowStep
 from .workflow_definition import WorkflowDefinition
+from napari.layers import Image
 
 log = logging.getLogger(__name__)
 
@@ -24,7 +25,7 @@ class Workflow:
         self._definition: WorkflowDefinition = workflow_definition
         self._starting_image: np.ndarray = input_image
         self._next_step: int = 0  # Next step to execute
-        self._results: List = list()  # Store step results
+        self._results: List = list()  # Store most recent step results
 
     @property
     def workflow_definition(self) -> WorkflowDefinition:
@@ -153,7 +154,7 @@ class Workflow:
             self.execute_next()
         return self.get_most_recent_result()
 
-    def execute_step(self, i: int, parameters: Dict[str, Any] = None) -> np.ndarray:
+    def execute_step(self, i: int, parameters: Dict[str, Any], selected_image: List[Image]) -> np.ndarray:
         """
 
         Args:
@@ -162,18 +163,13 @@ class Workflow:
         Returns:
 
         """
-        image: np.ndarray = None
-        if i == 0:
-            image = self._starting_image
-        elif i > 0 and i <= len(self._definition.steps):
-            image = self.get_result(i - 1)
-        else:
-            raise ValueError("invalid step number for run_step")
-
+        # TODO: discuss using selected layer for all types
         step_to_run = self._definition.steps[i]
+
+        image = [i.data for i in selected_image]
         result: np.ndarray = step_to_run.execute(image, parameters or step_to_run.parameter_values)
 
-        if len(self._results <= i):
+        if len(self._results) <= i:
             # this is the first time running this step
             self._results.append(result)
         else:
