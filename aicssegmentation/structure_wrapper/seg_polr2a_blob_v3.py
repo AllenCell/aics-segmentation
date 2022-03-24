@@ -58,7 +58,7 @@ def Workflow_polr2a_blob_v3(
     gaussian_smoothing_sigma = 1
     gaussian_smoothing_truncate_range = 3.0
     dot_3d_sigma = 1
-    dot_3d_cutoff = 0.050
+    dot_3d_cutoff = 0.055
     min_area = 15
     otsumask_min_area = 50
     ##########################################################################
