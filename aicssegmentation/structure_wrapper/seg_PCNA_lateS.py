@@ -17,7 +17,7 @@ from aicssegmentation.core.output_utils import (
 from skimage.filters import threshold_otsu
 
 
-def Workflow_pcna_OTSUMasked_30_50MinArea_Medium_0_05_Only(
+def Workflow_PCNA_lateS(
     struct_img: np.ndarray,
     rescale_ratio: float = -1,
     output_type: str = "default",

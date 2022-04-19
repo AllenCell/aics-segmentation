@@ -17,7 +17,7 @@ from aicssegmentation.core.output_utils import (
 from skimage.filters import threshold_otsu
 
 
-def Workflow_pcna(
+def Workflow_PCNA_earlyS_midS(
     struct_img: np.ndarray,
     rescale_ratio: float = -1,
     output_type: str = "default",
