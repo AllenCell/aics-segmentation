@@ -76,12 +76,8 @@ def Workflow_polr2a_blob(
     if rescale_ratio > 0:
         struct_img = zoom(struct_img, (1, rescale_ratio, rescale_ratio), order=2)
 
-        struct_img = (struct_img - struct_img.min() + 1e-8) / (
-            struct_img.max() - struct_img.min() + 1e-8
-        )
-        gaussian_smoothing_truncate_range = (
-            gaussian_smoothing_truncate_range * rescale_ratio
-        )
+        struct_img = (struct_img - struct_img.min() + 1e-8) / (struct_img.max() - struct_img.min() + 1e-8)
+        gaussian_smoothing_truncate_range = gaussian_smoothing_truncate_range * rescale_ratio
 
     # smoothing with gaussian filter
     structure_img_smooth = image_smoothing_gaussian_slice_by_slice(
@@ -106,9 +102,7 @@ def Workflow_polr2a_blob(
     out_name_list.append("interm_mask")
 
     # step 2: 'local_maxi + watershed' for splitting objects
-    local_maxi = peak_local_max(
-        struct_img, labels=label(bw), min_distance=2, indices=False
-    )
+    local_maxi = peak_local_max(struct_img, labels=label(bw), min_distance=2, indices=False)
 
     out_img_list.append(local_maxi.copy())
     out_name_list.append("interm_local_max")
@@ -124,9 +118,7 @@ def Workflow_polr2a_blob(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(
-        im_watershed, min_size=min_area, connectivity=1, in_place=False
-    )
+    seg = remove_small_objects(im_watershed, min_size=min_area, connectivity=1, in_place=False)
 
     # remove hot pixels from segmentation output
     seg = seg > 0
