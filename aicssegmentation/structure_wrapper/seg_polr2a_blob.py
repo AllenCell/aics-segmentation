@@ -129,13 +129,10 @@ def Workflow_polr2a_blob(
     )
 
     # remove hot pixels from segmentation output
-    
-
     seg = seg > 0
     seg_clean = remove_hot_pixel(seg)
     seg = seg_clean.astype(np.uint8)
     seg[seg > 0] = 255
-
 
     out_img_list.append(seg.copy())
     out_name_list.append("bw_final")
