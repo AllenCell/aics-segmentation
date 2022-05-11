@@ -13,8 +13,7 @@ from aicssegmentation.core.utils import (
     hole_filling,
     get_3dseed_from_mid_frame,
 )
-from skimage.morphology import watershed
-from skimage.segmentation import find_boundaries
+from skimage.segmentation import find_boundaries, watershed
 from aicssegmentation.core.output_utils import (
     save_segmentation,
     generate_segmentation_contour,

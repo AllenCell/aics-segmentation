@@ -446,7 +446,8 @@ def peak_local_max_wrapper(struct_img_for_peak: np.ndarray, bw: np.ndarray) -> n
 def watershed_wrapper(bw: np.ndarray, local_maxi: np.ndarray) -> np.ndarray:
     from scipy.ndimage import distance_transform_edt
     from skimage.measure import label
-    from skimage.morphology import watershed, dilation, ball
+    from skimage.morphology import dilation, ball
+    from skimage.segmentation import watershed
 
     distance = distance_transform_edt(bw)
     im_watershed = watershed(
