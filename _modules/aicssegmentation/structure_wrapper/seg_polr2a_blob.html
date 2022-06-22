@@ -175,12 +175,8 @@
     <span class="k">if</span> <span class="n">rescale_ratio</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">struct_img</span> <span class="o">=</span> <span class="n">zoom</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">,</span> <span class="n">rescale_ratio</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-        <span class="n">struct_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct_img</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-            <span class="n">struct_img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span>
-        <span class="p">)</span>
-        <span class="n">gaussian_smoothing_truncate_range</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">gaussian_smoothing_truncate_range</span> <span class="o">*</span> <span class="n">rescale_ratio</span>
-        <span class="p">)</span>
+        <span class="n">struct_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct_img</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">struct_img</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+        <span class="n">gaussian_smoothing_truncate_range</span> <span class="o">=</span> <span class="n">gaussian_smoothing_truncate_range</span> <span class="o">*</span> <span class="n">rescale_ratio</span>
 
     <span class="c1"># smoothing with gaussian filter</span>
     <span class="n">structure_img_smooth</span> <span class="o">=</span> <span class="n">image_smoothing_gaussian_slice_by_slice</span><span class="p">(</span>
@@ -205,9 +201,7 @@
     <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;interm_mask&quot;</span><span class="p">)</span>
 
     <span class="c1"># step 2: &#39;local_maxi + watershed&#39; for splitting objects</span>
-    <span class="n">local_maxi</span> <span class="o">=</span> <span class="n">peak_local_max</span><span class="p">(</span>
-        <span class="n">struct_img</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">label</span><span class="p">(</span><span class="n">bw</span><span class="p">),</span> <span class="n">min_distance</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="kc">False</span>
-    <span class="p">)</span>
+    <span class="n">local_maxi</span> <span class="o">=</span> <span class="n">peak_local_max</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">label</span><span class="p">(</span><span class="n">bw</span><span class="p">),</span> <span class="n">min_distance</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">local_maxi</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
     <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;interm_local_max&quot;</span><span class="p">)</span>
@@ -223,18 +217,13 @@
     <span class="c1">###################</span>
     <span class="c1"># POST-PROCESSING</span>
     <span class="c1">###################</span>
-    <span class="n">seg</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span>
-        <span class="n">im_watershed</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">min_area</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">False</span>
-    <span class="p">)</span>
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">im_watershed</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">min_area</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># remove hot pixels from segmentation output</span>
-    
-
     <span class="n">seg</span> <span class="o">=</span> <span class="n">seg</span> <span class="o">&gt;</span> <span class="mi">0</span>
     <span class="n">seg_clean</span> <span class="o">=</span> <span class="n">remove_hot_pixel</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
     <span class="n">seg</span> <span class="o">=</span> <span class="n">seg_clean</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
     <span class="n">seg</span><span class="p">[</span><span class="n">seg</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">255</span>
-
 
     <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seg</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
     <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;bw_final&quot;</span><span class="p">)</span>

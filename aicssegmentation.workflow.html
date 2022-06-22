@@ -316,6 +316,16 @@ next workflow step</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="aicssegmentation.workflow.workflow.Workflow.execute_step">
+<code class="sig-name descname">execute_step</code><span class="sig-paren">(</span><em class="sig-param">i: int, parameters: Dict[str, Any], selected_image: List[napari.layers.image.image.Image]</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/workflow/workflow.html#Workflow.execute_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow.Workflow.execute_step" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>i: step number (0 indexed) that you want to run</p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="aicssegmentation.workflow.workflow.Workflow.get_most_recent_result">
 <code class="sig-name descname">get_most_recent_result</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/aicssegmentation/workflow/workflow.html#Workflow.get_most_recent_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicssegmentation.workflow.workflow.Workflow.get_most_recent_result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the result from the last executed WorkflowStep.</p>
