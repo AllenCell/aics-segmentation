@@ -20,6 +20,7 @@ test_requirements = [
     "pytest>=5.4.3",
     "pytest-cov>=2.9.0",
     "pytest-raises>=0.11",
+    "napari",
 ]
 
 dev_requirements = [
@@ -35,6 +36,7 @@ dev_requirements = [
     "tox>=3.15.2",
     "twine>=3.1.1",
     "wheel>=0.34.2",
+    "napari",
 ]
 
 requirements = [
@@ -48,6 +50,7 @@ requirements = [
     "jupyter",
     "matplotlib",
     "dask",
+    "napari",
 ]
 
 extra_requirements = {
