@@ -31,6 +31,7 @@ dev_requirements = [
     "ipython>=7.15.0",
     "m2r>=0.2.1",
     "pytest-runner>=5.2",
+    "jinja2==3.0.0",
     "Sphinx>=2.0.0b1,<3",
     "sphinx_rtd_theme>=0.4.3",
     "tox>=3.15.2",
