@@ -14,7 +14,7 @@ from aicssegmentation.core.output_utils import (
 )
 
 from skimage.filters import threshold_otsu
-
+from scipy import ndimage
 
 def Workflow_PCNA_lateS_hole_fill(
     struct_img: np.ndarray,
