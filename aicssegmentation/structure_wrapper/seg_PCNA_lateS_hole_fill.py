@@ -93,8 +93,6 @@ def Workflow_PCNA_lateS_hole_fill(
         bw_otsu_mask, min_size=otsumask_min_area, connectivity=1, in_place=False
     )
 
-    response_f3 = vesselness3D(structure_img_smooth, sigmas=vesselness_sigma, tau=1, whiteonblack=True)
-    response_f3 = response_f3 > vesselness_cutoff
 
     response_s3_1 = dot_3d(structure_img_smooth, log_sigma=dot_3d_sigma)
     response_s3_2 = dot_3d(structure_img_smooth, log_sigma=2)
