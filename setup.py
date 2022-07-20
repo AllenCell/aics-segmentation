@@ -20,7 +20,6 @@ test_requirements = [
     "pytest>=7.1.1",
     "pytest-cov>=2.9.0",
     "pytest-raises>=0.11",
-    "numpy",
     "napari",
 ]
 
@@ -44,7 +43,7 @@ dev_requirements = [
 requirements = [
     "aicsimageio>=4.0.5",
     "scipy>=1.1.0",
-    "numpy>=1.15.1",
+    "numpy>=1.15.1,<1.21.0",
     "scikit-image>=0.18.0,<0.19.0",
     "pandas>=0.23.4",
     "itk",
