@@ -109,9 +109,6 @@ def test_all_structures(structure_name):
     # segment stock random image with current semgentation versions
     output_array = run_segmentation(structure_name, output_type="array").ravel()
 
-    if structure_name == "dsp":
-        print("pause here")
-
     # get rid of STC dimensions from AICSImage format, resized to resize_ratio
     expected_output = imread(TEST_IMG_DIR / f"expected_{structure_name}_struct_segmentation.tiff").ravel()
 
