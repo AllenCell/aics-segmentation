@@ -192,7 +192,7 @@ def absolute_eigenvaluesh(nd_array):
     ]
 
 
-def sortbyabs(a, axis=0):
+def sortbyabs(a: np.ndarray, axis=0):
     """Sort array along a given axis by the absolute value
     modified from: http://stackoverflow.com/a/11253931/4067734
     """
