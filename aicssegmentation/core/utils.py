@@ -198,7 +198,7 @@ def sortbyabs(a: np.ndarray, axis=0):
     """
     index = list(np.ix_(*[np.arange(i) for i in a.shape]))
     index[axis] = np.abs(a).argsort(axis)
-    return a[index]
+    return a[tuple(index)]
 
 
 def get_middle_frame(struct_img: np.ndarray, method: str = "z") -> int:
