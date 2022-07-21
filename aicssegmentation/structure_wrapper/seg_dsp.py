@@ -105,7 +105,7 @@ def Workflow_dsp(
 
     # step 2: 'local_maxi + watershed' for cell cutting
     local_maxi = peak_local_max_wrapper(struct_img, bw)
-    
+
     out_img_list.append(local_maxi.copy())
     out_name_list.append("interm_local_max")
 
