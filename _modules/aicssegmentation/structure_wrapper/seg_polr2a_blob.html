@@ -101,7 +101,8 @@
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">remove_small_objects</span><span class="p">,</span> <span class="n">watershed</span><span class="p">,</span> <span class="n">dilation</span><span class="p">,</span> <span class="n">ball</span>
-<span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">peak_local_max</span>
+<span class="kn">from</span> <span class="nn">aicssegmentation.core.utils</span> <span class="kn">import</span> <span class="n">peak_local_max_wrapper</span>
+
 <span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">label</span>
 <span class="kn">from</span> <span class="nn">aicssegmentation.core.pre_processing_utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">intensity_normalization</span><span class="p">,</span>
@@ -201,7 +202,7 @@
     <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;interm_mask&quot;</span><span class="p">)</span>
 
     <span class="c1"># step 2: &#39;local_maxi + watershed&#39; for splitting objects</span>
-    <span class="n">local_maxi</span> <span class="o">=</span> <span class="n">peak_local_max</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">label</span><span class="p">(</span><span class="n">bw</span><span class="p">),</span> <span class="n">min_distance</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">local_maxi</span> <span class="o">=</span> <span class="n">peak_local_max_wrapper</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">bw</span><span class="p">)</span>
 
     <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">local_maxi</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
     <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;interm_local_max&quot;</span><span class="p">)</span>
