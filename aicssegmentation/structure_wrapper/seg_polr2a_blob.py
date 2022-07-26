@@ -2,7 +2,8 @@ from typing import Union
 from pathlib import Path
 import numpy as np
 from skimage.morphology import remove_small_objects, watershed, dilation, ball
-from skimage.feature import peak_local_max
+from aicssegmentation.core.utils import peak_local_max_wrapper
+
 from skimage.measure import label
 from aicssegmentation.core.pre_processing_utils import (
     intensity_normalization,
@@ -102,7 +103,7 @@ def Workflow_polr2a_blob(
     out_name_list.append("interm_mask")
 
     # step 2: 'local_maxi + watershed' for splitting objects
-    local_maxi = peak_local_max(struct_img, labels=label(bw), min_distance=2, indices=False)
+    local_maxi = peak_local_max_wrapper(struct_img, bw)
 
     out_img_list.append(local_maxi.copy())
     out_name_list.append("interm_local_max")
