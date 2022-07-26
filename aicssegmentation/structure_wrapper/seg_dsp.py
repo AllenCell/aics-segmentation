@@ -9,7 +9,8 @@ from aicssegmentation.core.pre_processing_utils import (
     image_smoothing_gaussian_slice_by_slice,
 )
 from aicssegmentation.core.seg_dot import dot_3d
-from skimage.feature import peak_local_max
+from aicssegmentation.core.utils import peak_local_max_wrapper
+
 from scipy.ndimage import distance_transform_edt
 from skimage.measure import label
 from aicssegmentation.core.output_utils import (
@@ -103,7 +104,7 @@ def Workflow_dsp(
     out_name_list.append("interm_mask")
 
     # step 2: 'local_maxi + watershed' for cell cutting
-    local_maxi = peak_local_max(struct_img, labels=label(bw), min_distance=2, indices=False)
+    local_maxi = peak_local_max_wrapper(struct_img, bw)
 
     out_img_list.append(local_maxi.copy())
     out_name_list.append("interm_local_max")

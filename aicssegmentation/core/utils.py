@@ -198,7 +198,7 @@ def sortbyabs(a: np.ndarray, axis=0):
     """
     index = list(np.ix_(*[np.arange(i) for i in a.shape]))
     index[axis] = np.abs(a).argsort(axis)
-    return a[index]
+    return a[tuple(index)]
 
 
 def get_middle_frame(struct_img: np.ndarray, method: str = "z") -> int:
@@ -439,8 +439,10 @@ def remove_index_object(label: np.ndarray, id_to_remove: List[int] = [1], in_pla
 def peak_local_max_wrapper(struct_img_for_peak: np.ndarray, bw: np.ndarray) -> np.ndarray:
     from skimage.feature import peak_local_max
 
-    local_maxi = peak_local_max(struct_img_for_peak, labels=label(bw), min_distance=2, indices=False)
-    return local_maxi
+    local_maxi = peak_local_max(struct_img_for_peak, labels=label(bw), min_distance=2)
+    local_maxi_image = np.zeros_like(struct_img_for_peak)
+    local_maxi_image[tuple(local_maxi.T)] = True
+    return local_maxi_image
 
 
 def watershed_wrapper(bw: np.ndarray, local_maxi: np.ndarray) -> np.ndarray:
