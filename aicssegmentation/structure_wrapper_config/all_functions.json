@@ -444,5 +444,11 @@
                 ]
             }
         }
+    },
+    "erosion": {
+        "name": "Erosion",
+        "python::module": "skimage.morphology",
+        "python::function": "erosion",
+        "parameters": null
     }
 }
