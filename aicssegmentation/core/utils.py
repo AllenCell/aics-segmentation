@@ -106,7 +106,7 @@ def topology_preserving_thinning(bw: np.ndarray, min_thickness: int = 1, thin: i
     --------------
     bw: np.ndarray
         the 3D binary image to be thinned
-    min_thinkness: int
+    min_thickness: int
         Half of the minimum width you want to keep from being thinned.
         For example, when the object width is smaller than 4, you don't
         want to make this part even thinner (may break the thin object
