@@ -499,6 +499,12 @@
             }
         }
     },
+    "erosion": {
+        "name": "Erosion",
+        "python::module": "skimage.morphology",
+        "python::function": "erosion",
+        "parameters": null
+    },
     "compute_3d_hessian_matrix": {
         "name": "Compute 3D Hessian Matrix",
         "python::module": "aicssegmentation.core.hessian",
