@@ -454,7 +454,7 @@ def watershed_wrapper(bw: np.ndarray, local_maxi: np.ndarray) -> np.ndarray:
     distance = distance_transform_edt(bw)
     im_watershed = watershed(
         -distance,
-        label(dilation(local_maxi, selem=ball(1))),
+        label(dilation(local_maxi, footprint=ball(1))),
         mask=bw,
         watershed_line=True,
     )
@@ -509,7 +509,7 @@ def cell_local_adaptive_threshold(structure_img_smooth: np.ndarray, cell_wise_mi
 
     bw_low_level = structure_img_smooth > th_low_level
     bw_low_level = remove_small_objects(bw_low_level, min_size=cell_wise_min_area, connectivity=1, in_place=True)
-    bw_low_level = dilation(bw_low_level, selem=ball(2))
+    bw_low_level = dilation(bw_low_level, footprint=ball(2))
 
     bw_high_level = np.zeros_like(bw_low_level)
     lab_low, num_obj = label(bw_low_level, return_num=True, connectivity=1)

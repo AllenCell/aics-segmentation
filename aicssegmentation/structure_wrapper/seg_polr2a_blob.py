@@ -111,7 +111,7 @@ def Workflow_polr2a_blob(
     distance = distance_transform_edt(bw)
     im_watershed = watershed(
         -distance,
-        label(dilation(local_maxi, selem=ball(1))),
+        label(dilation(local_maxi, footprint=ball(1))),
         mask=bw,
         watershed_line=True,
     )
