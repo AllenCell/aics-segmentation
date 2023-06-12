@@ -151,7 +151,6 @@ class BatchWorkflow:
                 f"Using the Workflow: {self._workflow_definition.name}"
             )
         else:
-
             files_processed = self._processed_files - self._failed_files
             report = (
                 f"{files_processed}/{self._processed_files} files were successfully processed \n "

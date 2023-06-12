@@ -14,7 +14,6 @@ class TestAllWorkflows:
 
     @pytest.mark.parametrize("workflow_name", SUPPORTED_STRUCTURE_NAMES)
     def test_execute_all_workflows(self, workflow_name, resources_dir):
-
         # Arrange
         img_path = resources_dir / "images" / "random_input.tiff"
         random_array = imread(img_path).reshape(*(128, 128, 128))
