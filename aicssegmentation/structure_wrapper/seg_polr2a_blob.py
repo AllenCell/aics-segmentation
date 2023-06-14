@@ -97,7 +97,7 @@ def Workflow_polr2a_blob(
     # step 1: LOG 3d
     response = dot_3d(structure_img_smooth, log_sigma=dot_3d_sigma)
     bw = response > dot_3d_cutoff
-    bw = remove_small_objects(bw > 0, min_size=min_area, connectivity=1, in_place=False)
+    bw = remove_small_objects(bw > 0, min_size=min_area, connectivity=1)
 
     out_img_list.append(bw.copy())
     out_name_list.append("interm_mask")
@@ -119,7 +119,7 @@ def Workflow_polr2a_blob(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(im_watershed, min_size=min_area, connectivity=1, in_place=False)
+    seg = remove_small_objects(im_watershed, min_size=min_area, connectivity=1)
 
     # remove hot pixels from segmentation output
     seg = seg > 0

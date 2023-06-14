@@ -132,7 +132,7 @@ def Workflow_lamp1(
 
     full_fill = np.logical_or(partial_fill, holes)
 
-    seg = remove_small_objects(full_fill, min_size=minArea, connectivity=1, in_place=False)
+    seg = remove_small_objects(full_fill, min_size=minArea, connectivity=1)
 
     # output
     seg = seg > 0

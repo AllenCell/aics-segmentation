@@ -94,9 +94,9 @@ def Workflow_pxn(
 
     seg = np.zeros_like(bw)
     for zz in range(bw.shape[0]):
-        seg[zz, :, :] = remove_small_objects(bw[zz, :, :] > 0, min_size=minArea2D, connectivity=1, in_place=False)
+        seg[zz, :, :] = remove_small_objects(bw[zz, :, :] > 0, min_size=minArea2D, connectivity=1)
 
-    seg = remove_small_objects(seg > 0, min_size=minArea3D, connectivity=1, in_place=False)
+    seg = remove_small_objects(seg > 0, min_size=minArea3D, connectivity=1)
 
     # determine z-range
     bw_z = np.zeros(bw.shape[0], dtype=np.uint16)

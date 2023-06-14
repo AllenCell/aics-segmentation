@@ -99,7 +99,7 @@ def Workflow_st6gal1(
     th_low_level = threshold_triangle(structure_img_smooth)
 
     bw_low_level = structure_img_smooth > th_low_level
-    bw_low_level = remove_small_objects(bw_low_level, min_size=cell_wise_min_area, connectivity=1, in_place=True)
+    bw_low_level = remove_small_objects(bw_low_level, min_size=cell_wise_min_area, connectivity=1)
     bw_low_level = dilation(bw_low_level, footprint=ball(2))
 
     bw_high_level = np.zeros_like(bw_low_level)
@@ -123,7 +123,7 @@ def Workflow_st6gal1(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(bw > 0, min_size=minArea, connectivity=1, in_place=False)
+    seg = remove_small_objects(bw > 0, min_size=minArea, connectivity=1)
 
     # output
     seg = seg > 0

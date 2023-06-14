@@ -95,7 +95,7 @@ def Workflow_ctnnb1(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(bw, min_size=minArea, connectivity=1, in_place=False)
+    seg = remove_small_objects(bw, min_size=minArea, connectivity=1)
 
     # output
     seg = seg > 0

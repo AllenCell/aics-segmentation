@@ -95,7 +95,7 @@ def Workflow_lmnb1_mitotic(
     ###################
     # POST-PROCESSING
     ###################
-    bw = remove_small_objects(bw > 0, min_size=minArea, connectivity=1, in_place=False)
+    bw = remove_small_objects(bw > 0, min_size=minArea, connectivity=1)
 
     # output
     seg = bw > 0
