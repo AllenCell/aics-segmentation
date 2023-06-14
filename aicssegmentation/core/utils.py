@@ -422,7 +422,7 @@ def segmentation_xor(seg: List) -> np.ndarray:
     return np.logical_xor.reduce(seg)
 
 
-def remove_index_object(label: np.ndarray, id_to_remove: List[int] = [1]):
+def remove_index_object(label: np.ndarray, id_to_remove: List[int] = [1], in_place: bool = False) -> np.ndarray:
     if in_place:
         img = label
     else:
