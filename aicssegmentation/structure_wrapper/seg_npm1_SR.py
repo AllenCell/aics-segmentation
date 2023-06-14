@@ -131,7 +131,7 @@ def Workflow_npm1_SR(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(bw_final, min_size=minArea, connectivity=1, out=seg)
+    seg = remove_small_objects(bw_final, min_size=minArea, connectivity=1)
 
     # output
     seg = seg > 0
