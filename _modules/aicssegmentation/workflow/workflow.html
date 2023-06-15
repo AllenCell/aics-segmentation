@@ -23,14 +23,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> aicssegmentation
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            aicssegmentation
           </a>
               <div class="version">
                 0.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -84,10 +88,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-          <li><a href="../../aicssegmentation.html">aicssegmentation</a> &raquo;</li>
-      <li>aicssegmentation.workflow.workflow</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../aicssegmentation.html">aicssegmentation</a></li>
+      <li class="breadcrumb-item active">aicssegmentation.workflow.workflow</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -110,7 +114,7 @@
 
 
 <div class="viewcode-block" id="Workflow"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow.Workflow">[docs]</a><span class="k">class</span> <span class="nc">Workflow</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents an executable aics-segmentation workflow</span>
 <span class="sd">    This class provides the functionality to run a workflow using an image input</span>
 <span class="sd">    according to the steps defined in its WorkflowDefinition.</span>
@@ -131,14 +135,14 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_definition</span>
 
 <div class="viewcode-block" id="Workflow.reset"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow.Workflow.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reset the workflow so it can be run again</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_next_step</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Workflow.get_next_step"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow.Workflow.get_next_step">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WorkflowStep</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the next step to be performed</span>
 
 <span class="sd">        Params:</span>
@@ -153,7 +157,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_definition</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_next_step</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Workflow.execute_next"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow.Workflow.execute_next">[docs]</a>    <span class="k">def</span> <span class="nf">execute_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Execute the next workflow step.</span>
 
 <span class="sd">        Params:</span>
@@ -197,7 +201,7 @@
     <span class="c1"># TODO maybe change this to match the step number instead?</span>
     <span class="c1">#      Review when we implement rerunning single workflow steps</span>
 <div class="viewcode-block" id="Workflow.get_result"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow.Workflow.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the result image for a workflow step.</span>
 
 <span class="sd">        You must call execute() on the workflow step in order to</span>
@@ -220,7 +224,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="p">[</span><span class="n">step_index</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Workflow.get_most_recent_result"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow.Workflow.get_most_recent_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_most_recent_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the result from the last executed WorkflowStep.</span>
 
 <span class="sd">        Params:</span>
@@ -237,7 +241,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_next_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Workflow.execute_all"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow.Workflow.execute_all">[docs]</a>    <span class="k">def</span> <span class="nf">execute_all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Execute all steps in the Workflow</span>
 <span class="sd">        Note: default parameters will be used to execute the steps. To execute a step</span>
 <span class="sd">              with user-provided parameters, use execute_next()</span>
@@ -254,7 +258,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_most_recent_result</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Workflow.execute_step"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow.Workflow.execute_step">[docs]</a>    <span class="k">def</span> <span class="nf">execute_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">selected_image</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Image</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            i: step number (0 indexed) that you want to run</span>
@@ -278,7 +282,7 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="Workflow.is_done"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow.Workflow.is_done">[docs]</a>    <span class="k">def</span> <span class="nf">is_done</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if all WorkflowSteps have been executed.</span>
 
 <span class="sd">        Params:</span>

@@ -23,14 +23,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> aicssegmentation
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            aicssegmentation
           </a>
               <div class="version">
                 0.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -84,10 +88,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-          <li><a href="../../aicssegmentation.html">aicssegmentation</a> &raquo;</li>
-      <li>aicssegmentation.workflow.workflow_definition</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../aicssegmentation.html">aicssegmentation</a></li>
+      <li class="breadcrumb-item active">aicssegmentation.workflow.workflow_definition</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -109,7 +113,7 @@
 
 <div class="viewcode-block" id="WorkflowDefinition"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow_definition.WorkflowDefinition">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">WorkflowDefinition</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Definition of a custom aics-segmentation Workflow loaded from file.</span>
 
 <span class="sd">    This class only defines the workflow (i.e. the workflow characteristics and steps)</span>
@@ -128,7 +132,7 @@
 
 <div class="viewcode-block" id="PrebuiltWorkflowDefinition"><a class="viewcode-back" href="../../../aicssegmentation.workflow.html#aicssegmentation.workflow.workflow_definition.PrebuiltWorkflowDefinition">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">PrebuiltWorkflowDefinition</span><span class="p">(</span><span class="n">WorkflowDefinition</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Definition of a pre-built(default) aics-segmentation Workflow from our assets.</span>
 
 <span class="sd">    This class only defines the workflow (i.e. the workflow characteristics and steps)</span>
@@ -141,21 +145,21 @@
 
     <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">thumbnail_pre</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The Pre-segmentation thumbnail related to this workflow, as a numpy array</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">imread</span><span class="p">(</span><span class="n">Directories</span><span class="o">.</span><span class="n">get_assets_dir</span><span class="p">()</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;thumbnails/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">_pre.png&quot;</span><span class="p">))</span>
 
     <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">thumbnail_post</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The Post-segmentation thumbnail related to this workflow, as a numpy array</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">imread</span><span class="p">(</span><span class="n">Directories</span><span class="o">.</span><span class="n">get_assets_dir</span><span class="p">()</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;thumbnails/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">_post.png&quot;</span><span class="p">))</span>
 
     <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">diagram_image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Diagram / flow chart image for this workflow, as a numpy array</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">imread</span><span class="p">(</span><span class="n">Directories</span><span class="o">.</span><span class="n">get_assets_dir</span><span class="p">()</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;diagrams/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">))</span></div>

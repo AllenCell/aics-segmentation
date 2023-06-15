@@ -26,14 +26,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> aicssegmentation
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            aicssegmentation
           </a>
               <div class="version">
                 0.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -87,10 +91,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">aicssegmentation</a> &raquo;</li>
-          <li><a href="aicssegmentation.html">aicssegmentation package</a> &raquo;</li>
-      <li>aicssegmentation.core package</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">aicssegmentation</a></li>
+          <li class="breadcrumb-item"><a href="aicssegmentation.html">aicssegmentation package</a></li>
+      <li class="breadcrumb-item active">aicssegmentation.core package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/aicssegmentation.core.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -679,7 +683,7 @@ modified from: <a class="reference external" href="http://stackoverflow.com/a/11
 <dl class="simple">
 <dt>bw: np.ndarray</dt><dd><p>the 3D binary image to be thinned</p>
 </dd>
-<dt>min_thinkness: int</dt><dd><p>Half of the minimum width you want to keep from being thinned.
+<dt>min_thickness: int</dt><dd><p>Half of the minimum width you want to keep from being thinned.
 For example, when the object width is smaller than 4, you don’t
 want to make this part even thinner (may break the thin object
 and alter the topology), you can set this value as 2.</p>

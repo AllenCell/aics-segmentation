@@ -23,14 +23,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> aicssegmentation
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            aicssegmentation
           </a>
               <div class="version">
                 0.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -84,10 +88,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-          <li><a href="../../aicssegmentation.html">aicssegmentation</a> &raquo;</li>
-      <li>aicssegmentation.cli.to_analysis</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../aicssegmentation.html">aicssegmentation</a></li>
+      <li class="breadcrumb-item active">aicssegmentation.cli.to_analysis</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -103,7 +107,7 @@
 
 
 <div class="viewcode-block" id="simple_builder"><a class="viewcode-back" href="../../../aicssegmentation.cli.html#aicssegmentation.cli.to_analysis.simple_builder">[docs]</a><span class="k">def</span> <span class="nf">simple_builder</span><span class="p">(</span><span class="n">bw</span><span class="p">,</span> <span class="n">se</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_dataframe</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;build object table based on connected component&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;build object table based on connected component&quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">se</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">obj_label</span><span class="p">,</span> <span class="n">obj_num</span> <span class="o">=</span> <span class="n">label</span><span class="p">(</span><span class="n">bw</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
@@ -120,7 +124,7 @@
 
 
 <div class="viewcode-block" id="masked_builder"><a class="viewcode-back" href="../../../aicssegmentation.cli.html#aicssegmentation.cli.to_analysis.masked_builder">[docs]</a><span class="k">def</span> <span class="nf">masked_builder</span><span class="p">(</span><span class="n">bw</span><span class="p">,</span> <span class="n">mask_label</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;build object table based on mask image&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;build object table based on mask image&quot;&quot;&quot;</span>
 
     <span class="k">assert</span> <span class="n">mask_label</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span>
 

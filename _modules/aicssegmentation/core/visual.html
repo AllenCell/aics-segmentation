@@ -23,14 +23,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> aicssegmentation
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            aicssegmentation
           </a>
               <div class="version">
                 0.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -84,10 +88,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-          <li><a href="../../aicssegmentation.html">aicssegmentation</a> &raquo;</li>
-      <li>aicssegmentation.core.visual</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../aicssegmentation.html">aicssegmentation</a></li>
+      <li class="breadcrumb-item active">aicssegmentation.core.visual</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -102,7 +106,7 @@
 
 
 <div class="viewcode-block" id="sliceViewer"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.sliceViewer">[docs]</a><span class="k">def</span> <span class="nf">sliceViewer</span><span class="p">(</span><span class="n">im</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">zz</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;simple wrapper to view one slice of a z-stack</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;simple wrapper to view one slice of a z-stack</span>
 
 
 <span class="sd">    Parameter</span>
@@ -134,7 +138,7 @@
 
 
 <div class="viewcode-block" id="random_colormap"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.random_colormap">[docs]</a><span class="k">def</span> <span class="nf">random_colormap</span><span class="p">(</span><span class="n">nn</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;generate a random colormap with nn different colors</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;generate a random colormap with nn different colors</span>
 
 <span class="sd">    Parameter:</span>
 <span class="sd">    ----------</span>
@@ -164,7 +168,7 @@
 
 
 <div class="viewcode-block" id="blob2dExplorer_single"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.blob2dExplorer_single">[docs]</a><span class="k">def</span> <span class="nf">blob2dExplorer_single</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">th</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;backend for trying 2D spot filter on a single Z slice</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;backend for trying 2D spot filter on a single Z slice</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -210,7 +214,7 @@
 
 
 <div class="viewcode-block" id="fila2dExplorer_single"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.fila2dExplorer_single">[docs]</a><span class="k">def</span> <span class="nf">fila2dExplorer_single</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">th</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;backend for trying 2D filament filter on a single Z slice</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;backend for trying 2D filament filter on a single Z slice</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -256,14 +260,14 @@
 
 
 <div class="viewcode-block" id="mipView"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.mipView">[docs]</a><span class="k">def</span> <span class="nf">mipView</span><span class="p">(</span><span class="n">im</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;simple wrapper to view maximum intensity projection&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;simple wrapper to view maximum intensity projection&quot;&quot;&quot;</span>
     <span class="n">mip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mip</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="img_seg_combine"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.img_seg_combine">[docs]</a><span class="k">def</span> <span class="nf">img_seg_combine</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Full&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;creating raw and segmentation side-by-side for visualizaiton&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;creating raw and segmentation side-by-side for visualizaiton&quot;&quot;&quot;</span>
     <span class="c1"># normalize to 0~1</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
     <span class="n">img</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span> <span class="o">-</span> <span class="n">img</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">img</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
@@ -285,14 +289,14 @@
 
 
 <div class="viewcode-block" id="seg_fluo_side_by_side"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.seg_fluo_side_by_side">[docs]</a><span class="k">def</span> <span class="nf">seg_fluo_side_by_side</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Full&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;wrapper for displaying raw and segmentation side by side&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;wrapper for displaying raw and segmentation side by side&quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">img_seg_combine</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">roi</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">out</span></div>
 
 
 <div class="viewcode-block" id="segmentation_quick_view"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.segmentation_quick_view">[docs]</a><span class="k">def</span> <span class="nf">segmentation_quick_view</span><span class="p">(</span><span class="n">seg</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;wrapper for visualizing segmentation in ITK viewer</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;wrapper for visualizing segmentation in ITK viewer</span>
 
 <span class="sd">    Parameter:</span>
 <span class="sd">    -----------</span>
@@ -318,7 +322,7 @@
 
 
 <div class="viewcode-block" id="single_fluorescent_view"><a class="viewcode-back" href="../../../aicssegmentation.core.html#aicssegmentation.core.visual.single_fluorescent_view">[docs]</a><span class="k">def</span> <span class="nf">single_fluorescent_view</span><span class="p">(</span><span class="n">im</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;wrapper for visualizing an image stack in ITK viewer</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;wrapper for visualizing an image stack in ITK viewer</span>
 
 <span class="sd">    Parameter:</span>
 <span class="sd">    -----------</span>
