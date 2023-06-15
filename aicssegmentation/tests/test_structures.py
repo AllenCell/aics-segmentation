@@ -6,7 +6,7 @@ from aicsimageio import imread
 from pathlib import Path
 from aicsimageio.writers import OmeTiffWriter
 
-AGREE_THRESH=0.999
+AGREE_THRESH = 0.999
 
 DEFAULT_MODULE_PATH = "aicssegmentation.structure_wrapper.seg_"
 
@@ -113,4 +113,6 @@ def test_all_structures(structure_name):
     # get rid of STC dimensions from AICSImage format, resized to resize_ratio
     expected_output = imread(TEST_IMG_DIR / f"expected_{structure_name}_struct_segmentation.tiff").ravel()
 
-    assert np.mean(np.isclose(output_array, expected_output))>AGREE_THRESH, "Tested and expected outputs differ for " + structure_name
+    assert np.mean(np.isclose(output_array, expected_output)) > AGREE_THRESH, (
+        "Tested and expected outputs differ for " + structure_name
+    )
