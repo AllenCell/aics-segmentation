@@ -202,7 +202,7 @@
 
     <span class="n">th_low_level</span> <span class="o">=</span> <span class="p">(</span><span class="n">global_tri</span> <span class="o">+</span> <span class="n">global_median</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
     <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">structure_img_smooth</span> <span class="o">&gt;</span> <span class="n">th_low_level</span>
-    <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw_low_level</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">low_level_min_size</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw_low_level</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">low_level_min_size</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">bw_low_level</span><span class="p">)</span>
 
     <span class="c1"># step 2: high level thresholding</span>
     <span class="n">bw_high_level</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">bw_low_level</span><span class="p">)</span>
@@ -217,7 +217,7 @@
 
     <span class="c1"># step 3: finer segmentation</span>
     <span class="n">response2d</span> <span class="o">=</span> <span class="n">dot_slice_by_slice</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">,</span> <span class="n">log_sigma</span><span class="o">=</span><span class="n">dot_2d_sigma</span><span class="p">)</span>
-    <span class="n">bw_finer</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">response2d</span> <span class="o">&gt;</span> <span class="n">dot_2d_cutoff</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">bw_finer</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">response2d</span> <span class="o">&gt;</span> <span class="n">dot_2d_cutoff</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bw_finer</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
     <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;bw_fine&quot;</span><span class="p">)</span>
@@ -229,7 +229,7 @@
     <span class="c1">###################</span>
     <span class="c1"># POST-PROCESSING</span>
     <span class="c1">###################</span>
-    <span class="n">seg</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw_high_level</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw_high_level</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="c1"># output</span>
     <span class="n">seg</span> <span class="o">=</span> <span class="n">seg</span> <span class="o">&gt;</span> <span class="mi">0</span>

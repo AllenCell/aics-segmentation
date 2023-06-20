@@ -209,8 +209,8 @@
     <span class="c1"># imsave(&#39;img_smooth.tiff&#39;, structure_img_smooth)</span>
 
     <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">structure_img_smooth</span> <span class="o">&gt;</span> <span class="n">th_low_level</span>
-    <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw_low_level</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">low_level_min_size</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">dilation</span><span class="p">(</span><span class="n">bw_low_level</span><span class="p">,</span> <span class="n">selem</span><span class="o">=</span><span class="n">ball</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw_low_level</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">low_level_min_size</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">bw_low_level</span><span class="p">)</span>
+    <span class="n">bw_low_level</span> <span class="o">=</span> <span class="n">dilation</span><span class="p">(</span><span class="n">bw_low_level</span><span class="p">,</span> <span class="n">footprint</span><span class="o">=</span><span class="n">ball</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 
     <span class="c1"># step 2: high level thresholding</span>
     <span class="n">local_cutoff</span> <span class="o">=</span> <span class="mf">0.333</span> <span class="o">*</span> <span class="n">threshold_otsu</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">)</span>
@@ -238,7 +238,7 @@
     <span class="c1">###################</span>
     <span class="c1"># POST-PROCESSING</span>
     <span class="c1">###################</span>
-    <span class="n">seg</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw_final</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw_final</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="c1"># output</span>
     <span class="n">seg</span> <span class="o">=</span> <span class="n">seg</span> <span class="o">&gt;</span> <span class="mi">0</span>
