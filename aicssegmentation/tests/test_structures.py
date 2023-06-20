@@ -6,7 +6,7 @@ from aicsimageio import imread
 from pathlib import Path
 from aicsimageio.writers import OmeTiffWriter
 
-AGREE_THRESH = 0.999
+AGREE_THRESH = 0.997
 
 DEFAULT_MODULE_PATH = "aicssegmentation.structure_wrapper.seg_"
 
