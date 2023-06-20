@@ -48,9 +48,9 @@ def compute_3d_hessian_matrix(
     if sigma > 0 and scale:
         # scale the elements of the hessian matrix
         if whiteonblack:
-            hessian_elements = [(sigma ** 2) * element for element in hessian_elements]
+            hessian_elements = [(sigma**2) * element for element in hessian_elements]
         else:
-            hessian_elements = [-1 * (sigma ** 2) * element for element in hessian_elements]
+            hessian_elements = [-1 * (sigma**2) * element for element in hessian_elements]
 
     # create hessian matrix from hessian elements
     hessian_full = [[()] * ndim for x in range(ndim)]

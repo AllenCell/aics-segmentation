@@ -99,7 +99,7 @@ def Workflow_cardio_fbl(
 
     th_low_level = (global_tri + global_median) / 2
     bw_low_level = structure_img_smooth > th_low_level
-    bw_low_level = remove_small_objects(bw_low_level, min_size=low_level_min_size, connectivity=1, in_place=True)
+    bw_low_level = remove_small_objects(bw_low_level, min_size=low_level_min_size, connectivity=1, out=bw_low_level)
 
     # step 2: high level thresholding
     local_cutoff = 0.333 * threshold_otsu(structure_img_smooth)
@@ -117,7 +117,7 @@ def Workflow_cardio_fbl(
     # step 3: finer segmentation
     response2d = dot_slice_by_slice(structure_img_smooth, log_sigma=dot_2d_sigma)
 
-    bw_finer = remove_small_objects(response2d > dot_2d_cutoff, min_size=minArea, connectivity=1, in_place=True)
+    bw_finer = remove_small_objects(response2d > dot_2d_cutoff, min_size=minArea, connectivity=1)
 
     out_img_list.append(bw_finer.copy())
     out_name_list.append("bw_fine")
@@ -129,7 +129,7 @@ def Workflow_cardio_fbl(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(bw_high_level > 0, min_size=minArea, connectivity=1, in_place=False)
+    seg = remove_small_objects(bw_high_level > 0, min_size=minArea, connectivity=1)
 
     # output
     seg = seg > 0

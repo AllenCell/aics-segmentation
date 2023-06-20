@@ -69,9 +69,9 @@ source_suffix = {
 master_doc = "index"
 
 # General information about the project.
-project = u"aicssegmentation"
-copyright = u"2020, Jianxu Chen"
-author = u"Jianxu Chen"
+project = "aicssegmentation"
+copyright = "2020, Jianxu Chen"
+author = "Jianxu Chen"
 
 # The version info for the project you"re documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -150,7 +150,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "aicssegmentation.tex", u"aicssegmentation Documentation", u"Jianxu Chen", "manual"),
+    (master_doc, "aicssegmentation.tex", "aicssegmentation Documentation", "Jianxu Chen", "manual"),
 ]
 
 
@@ -158,7 +158,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "aicssegmentation", u"aicssegmentation Documentation", [author], 1)]
+man_pages = [(master_doc, "aicssegmentation", "aicssegmentation Documentation", [author], 1)]
 
 
 # -- Options for Texinfo output ----------------------------------------
@@ -170,7 +170,7 @@ texinfo_documents = [
     (
         master_doc,
         "aicssegmentation",
-        u"aicssegmentation Documentation",
+        "aicssegmentation Documentation",
         author,
         "aicssegmentation",
         "One line description of project.",

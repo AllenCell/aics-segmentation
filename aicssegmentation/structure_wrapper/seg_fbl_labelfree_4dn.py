@@ -82,7 +82,7 @@ def Workflow_fbl_labelfree_4dn(
 
     th_low_level = (global_tri + global_median) / 2
     bw_low_level = struct_smooth > th_low_level
-    bw_low_level = remove_small_objects(bw_low_level, min_size=low_level_min_size, connectivity=1, in_place=True)
+    bw_low_level = remove_small_objects(bw_low_level, min_size=low_level_min_size, connectivity=1, out=bw_low_level)
 
     # step 2: high level thresholding
     bw_high_level = np.zeros_like(bw_low_level)
@@ -94,7 +94,7 @@ def Workflow_fbl_labelfree_4dn(
 
     # step 3: finer segmentation
     response2d = dot_2d_slice_by_slice_wrapper(struct_smooth, s2_param)
-    bw_finer = remove_small_objects(response2d, min_size=minArea, connectivity=1, in_place=True)
+    bw_finer = remove_small_objects(response2d, min_size=minArea, connectivity=1)
 
     # merge finer level detection into high level coarse segmentation
     # to include outside dim parts
@@ -104,7 +104,7 @@ def Workflow_fbl_labelfree_4dn(
     # POST-PROCESSING
     # make sure the variable name of final segmentation is 'seg'
     ###################
-    seg = remove_small_objects(bw_high_level, min_size=minArea, connectivity=1, in_place=True)
+    seg = remove_small_objects(bw_high_level, min_size=minArea, connectivity=1)
 
     # output
     seg = seg > 0

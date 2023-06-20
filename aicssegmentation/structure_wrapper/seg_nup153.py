@@ -94,7 +94,7 @@ def Workflow_nup153(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(bw > 0, min_size=minArea, connectivity=1, in_place=False)
+    seg = remove_small_objects(bw > 0, min_size=minArea, connectivity=1)
 
     # output
     seg = seg > 0

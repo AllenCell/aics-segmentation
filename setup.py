@@ -44,7 +44,7 @@ requirements = [
     "aicsimageio>=4.0.5",
     "scipy>=1.1.0",
     "numpy>=1.15.1",
-    "scikit-image>=0.18.0,<0.19.0",
+    "scikit-image",
     "pandas>=0.23.4",
     "itk",
     "itkwidgets",

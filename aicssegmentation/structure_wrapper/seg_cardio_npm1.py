@@ -106,8 +106,8 @@ def Workflow_cardio_npm1(
     # imsave('img_smooth.tiff', structure_img_smooth)
 
     bw_low_level = structure_img_smooth > th_low_level
-    bw_low_level = remove_small_objects(bw_low_level, min_size=low_level_min_size, connectivity=1, in_place=True)
-    bw_low_level = dilation(bw_low_level, selem=ball(2))
+    bw_low_level = remove_small_objects(bw_low_level, min_size=low_level_min_size, connectivity=1, out=bw_low_level)
+    bw_low_level = dilation(bw_low_level, footprint=ball(2))
 
     # step 2: high level thresholding
     local_cutoff = 0.333 * threshold_otsu(structure_img_smooth)
@@ -135,7 +135,7 @@ def Workflow_cardio_npm1(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(bw_final, min_size=minArea, connectivity=1, in_place=True)
+    seg = remove_small_objects(bw_final, min_size=minArea, connectivity=1)
 
     # output
     seg = seg > 0
