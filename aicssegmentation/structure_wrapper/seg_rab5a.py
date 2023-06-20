@@ -100,7 +100,7 @@ def Workflow_rab5a(
 
     # step 2: fill holes and remove small objects
     bw_filled = hole_filling(bw, hole_min, hole_max, True)
-    seg = remove_small_objects(bw_filled, min_size=minArea, connectivity=1, in_place=False)
+    seg = remove_small_objects(bw_filled, min_size=minArea, connectivity=1)
 
     # output
     seg = seg > 0

@@ -40,7 +40,7 @@ def save_segmentation(
 def generate_segmentation_contour(im):
     """generate the contour of the segmentation"""
 
-    bd = np.logical_xor(erosion(im > 0, selem=ball(1)), im > 0)
+    bd = np.logical_xor(erosion(im > 0, footprint=ball(1)), im > 0)
 
     bd = bd.astype(np.uint8)
     bd[bd > 0] = 255

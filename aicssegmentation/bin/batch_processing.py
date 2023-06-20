@@ -169,7 +169,7 @@ class Args(object):
         log.debug("Command Line:")
         log.debug("\t{}".format(" ".join(sys.argv)))
         log.debug("Args:")
-        for (k, v) in self.__dict__.items():
+        for k, v in self.__dict__.items():
             log.debug("\t{}: {}".format(k, v))
 
 
@@ -178,7 +178,6 @@ class Args(object):
 
 class Executor(object):
     def __init__(self, args):
-
         standard_xy = 0.108
 
         if args.rescale > 0:
@@ -274,7 +273,6 @@ class Executor(object):
         ##########################################################################
         batch_mode = False
         if args.mode == PER_IMAGE:
-
             fname = os.path.basename(os.path.splitext(args.input_fname)[0])
 
             image_reader = aicsimageio.AICSImage(args.input_fname)

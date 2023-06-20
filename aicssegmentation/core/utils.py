@@ -84,7 +84,7 @@ def size_filter(img: np.ndarray, min_size: int, method: str = "3D", connectivity
     """
     assert len(img.shape) == 3, "image has to be 3D"
     if method == "3D":
-        return remove_small_objects(img > 0, min_size=min_size, connectivity=connectivity, in_place=False)
+        return remove_small_objects(img > 0, min_size=min_size, connectivity=connectivity)
     elif method == "slice_by_slice":
         seg = np.zeros(img.shape, dtype=bool)
         for zz in range(img.shape[0]):
@@ -92,7 +92,6 @@ def size_filter(img: np.ndarray, min_size: int, method: str = "3D", connectivity
                 img[zz, :, :] > 0,
                 min_size=min_size,
                 connectivity=connectivity,
-                in_place=False,
             )
         return seg
     else:
@@ -106,7 +105,7 @@ def topology_preserving_thinning(bw: np.ndarray, min_thickness: int = 1, thin: i
     --------------
     bw: np.ndarray
         the 3D binary image to be thinned
-    min_thinkness: int
+    min_thickness: int
         Half of the minimum width you want to keep from being thinned.
         For example, when the object width is smaller than 4, you don't
         want to make this part even thinner (may break the thin object
@@ -423,8 +422,7 @@ def segmentation_xor(seg: List) -> np.ndarray:
     return np.logical_xor.reduce(seg)
 
 
-def remove_index_object(label: np.ndarray, id_to_remove: List[int] = [1], in_place=False):
-
+def remove_index_object(label: np.ndarray, id_to_remove: List[int] = [1], in_place: bool = False) -> np.ndarray:
     if in_place:
         img = label
     else:
@@ -454,7 +452,7 @@ def watershed_wrapper(bw: np.ndarray, local_maxi: np.ndarray) -> np.ndarray:
     distance = distance_transform_edt(bw)
     im_watershed = watershed(
         -distance,
-        label(dilation(local_maxi, selem=ball(1))),
+        label(dilation(local_maxi, footprint=ball(1))),
         mask=bw,
         watershed_line=True,
     )
@@ -508,8 +506,8 @@ def cell_local_adaptive_threshold(structure_img_smooth: np.ndarray, cell_wise_mi
     th_low_level = threshold_triangle(structure_img_smooth)
 
     bw_low_level = structure_img_smooth > th_low_level
-    bw_low_level = remove_small_objects(bw_low_level, min_size=cell_wise_min_area, connectivity=1, in_place=True)
-    bw_low_level = dilation(bw_low_level, selem=ball(2))
+    bw_low_level = remove_small_objects(bw_low_level, min_size=cell_wise_min_area, connectivity=1, out=bw_low_level)
+    bw_low_level = dilation(bw_low_level, footprint=ball(2))
 
     bw_high_level = np.zeros_like(bw_low_level)
     lab_low, num_obj = label(bw_low_level, return_num=True, connectivity=1)

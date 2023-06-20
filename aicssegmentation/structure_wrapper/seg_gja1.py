@@ -95,12 +95,12 @@ def Workflow_gja1(
     # step 1: LOG 3d
     response = dot_3d(structure_img_smooth, log_sigma=dot_3d_sigma)
     bw = response > dot_3d_cutoff
-    bw = remove_small_objects(bw > 0, min_size=minArea, connectivity=1, in_place=False)
+    bw = remove_small_objects(bw > 0, min_size=minArea, connectivity=1)
 
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(bw, min_size=minArea, connectivity=1, in_place=False)
+    seg = remove_small_objects(bw, min_size=minArea, connectivity=1)
 
     # output
     seg = seg > 0

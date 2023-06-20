@@ -107,7 +107,7 @@ def Workflow_cetn2(
     # step 1: LOG 3d
     response = dot_3d(structure_img_smooth_for_seg, log_sigma=dot_3d_sigma)
     bw = response > dot_3d_cutoff
-    bw = remove_small_objects(bw > 0, min_size=minArea, connectivity=1, in_place=False)
+    bw = remove_small_objects(bw > 0, min_size=minArea, connectivity=1)
 
     out_img_list.append(bw.copy())
     out_name_list.append("interm_mask")
@@ -121,7 +121,7 @@ def Workflow_cetn2(
     distance = distance_transform_edt(bw)
     im_watershed = watershed(
         -distance,
-        label(dilation(local_maxi, selem=ball(1))),
+        label(dilation(local_maxi, footprint=ball(1))),
         mask=bw,
         watershed_line=True,
     )
@@ -129,7 +129,7 @@ def Workflow_cetn2(
     ###################
     # POST-PROCESSING
     ###################
-    seg = remove_small_objects(im_watershed, min_size=minArea, connectivity=1, in_place=False)
+    seg = remove_small_objects(im_watershed, min_size=minArea, connectivity=1)
 
     # output
     seg = seg > 0

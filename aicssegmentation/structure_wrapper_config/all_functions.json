@@ -353,6 +353,60 @@
             }
         }
     },
+    "masked_object_treshold_combined": {
+        "name": "Masked Object Threshold - Combined",
+        "python::module": "aicssegmentation.core.MO_threshold",
+        "python::function": "MO",
+        "parameters": {
+             "global_thresh_method": {
+                "data_type": "str",
+                "widget_type": "drop-down",
+                "options": [
+                    "triangle",
+                    "median",
+                    "ave_tri_med"
+                ]
+            },
+            "object_minArea": {
+                "data_type": "int",
+                "widget_type": "slider",
+                "min": 0,
+                "max": 2000,
+                "increment": 50
+            },
+            "extra_criteria": {
+                "widget_type": "drop-down",
+                "data_type": "bool",
+                "options": [
+                    true,
+                    false
+                ]
+            },
+            "local_adjust": {
+                "data_type": "float",
+                "widget_type": "slider",
+                "min": 0,
+                "max": 2,
+                "increment": 0.02
+            },
+            "return_object": {
+                "widget_type": "drop-down",
+                "data_type": "bool",
+                "options": [
+                    true,
+                    false
+                ]
+            },
+            "dilate": {
+                "widget_type": "drop-down",
+                "data_type": "bool",
+                "options": [
+                    true,
+                    false
+                ]
+            }
+        }
+    },
     "invert_image": {
         "name": "Invert Image",
         "python::module": "aicssegmentation.core.utils",
@@ -444,5 +498,99 @@
                 ]
             }
         }
+    },
+    "erosion": {
+        "name": "Erosion",
+        "python::module": "skimage.morphology",
+        "python::function": "erosion",
+        "parameters": null
+    },
+    "compute_3d_hessian_matrix": {
+        "name": "Compute 3D Hessian Matrix",
+        "python::module": "aicssegmentation.core.hessian",
+        "python::function": "compute_3d_hessian_matrix",
+        "parameters": {
+            "sigma": {
+                    "widget_type": "slider",
+                    "data_type": "float",
+                    "min": 0,
+                    "max": 10,
+                    "increment": 0.5
+            },
+            "scale":{
+                "widget_type": "drop-down",
+                "data_type": "bool",
+                "options": [
+                    true,
+                    false
+                ]
+            },
+            "whiteonblack":{
+                "widget_type": "drop-down",
+                "data_type": "bool",
+                "options": [
+                    true,
+                    false
+                ]
+            }
+        }
+    },
+    "absolute_3d_hessian_eigenvalues": {
+        "name": "Absolute 3d hessian eigenvalues",
+        "python::module": "aicssegmentation.core.hessian",
+        "python::function": "absolute_3d_hessian_eigenvalues",
+        "parameters": {
+            "sigma": {
+                    "widget_type": "slider",
+                    "data_type": "float",
+                    "min": 0,
+                    "max": 10,
+                    "increment": 0.5
+            },
+            "scale": {
+                "widget_type": "drop-down",
+                "data_type": "bool",
+                "options": [
+                    true,
+                    false
+                ]
+            },
+            "whiteonblack":{
+                "widget_type": "drop-down",
+                "data_type": "bool",
+                "options": [
+                    true,
+                    false
+                ]
+            }
+        }
+    },
+    "topology_preserving_thinning": {
+        "name": "Topology Preserving Thinning",
+        "python::module": "aicssegmentation.core.utils",
+        "python::function": "topology_preserving_thinning",
+        "parameters": {
+            "min_thickness": {
+                    "widget_type": "slider",
+                    "data_type": "int",
+                    "min": 1,
+                    "max": 10,
+                    "increment": 1
+            },
+            "thin": {
+                "widget_type": "slider",
+                "data_type": "int",
+                "min": 1,
+                "max": 200,
+                "increment": 1
+            }
+        }
+    },
+    "remove_hot_pixel": {
+        "name": "Remove Hot Pixel",
+        "python::module": "aicssegmentation.core.utils",
+        "python::function": "remove_hot_pixel",
+        "parameters": {
+            }
     }
 }
