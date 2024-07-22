@@ -78,13 +78,11 @@ def Workflow_PCNA_lateS(
     # smoothing with boundary preserving smoothing
     structure_img_smooth = edge_preserving_smoothing_3d(struct_img)
     structure_img_smooth_otsu = edge_preserving_smoothing_3d(struct_img_otsu)
-   
 
     out_img_list.append(structure_img_smooth.copy())
     out_name_list.append("im_smooth")
     out_img_list.append(structure_img_smooth_otsu.copy())
     out_name_list.append("im_smooth_otsu")
-   
 
     ###################
     # core algorithm
@@ -102,16 +100,16 @@ def Workflow_PCNA_lateS(
     response_s3_1 = dot_3d(structure_img_smooth, log_sigma=dot_3d_sigma)
     response_s3_3 = dot_3d(structure_img_smooth, log_sigma=3)
 
-    #bw_small_inverse = remove_small_objects(response_s3_1 > 0.035, min_size=150)
-    #bw_small = np.logical_xor(bw_small_inverse, response_s3_1 > 0.025)
-    #bw_small = response_s3_1 > 0.12
+    # bw_small_inverse = remove_small_objects(response_s3_1 > 0.035, min_size=150)
+    # bw_small = np.logical_xor(bw_small_inverse, response_s3_1 > 0.025)
+    # bw_small = response_s3_1 > 0.12
     bw_medium = response_s3_1 > 0.05
-    #bw_large =  response_s3_3 > 0.45
-    #bw_large = np.logical_or(response_s3_3 > 0.45, response_f3 > 0.5)
-    #bw_dots = np.logical_or(bw_medium, bw_large)
-    #bw = np.logical_and(bw_dots, bw_otsu_mask_removesmallobjects)
+    # bw_large =  response_s3_3 > 0.45
+    # bw_large = np.logical_or(response_s3_3 > 0.45, response_f3 > 0.5)
+    # bw_dots = np.logical_or(bw_medium, bw_large)
+    # bw = np.logical_and(bw_dots, bw_otsu_mask_removesmallobjects)
     bw = np.logical_and(bw_medium, bw_otsu_mask_removesmallobjects)
-    
+
     out_img_list.append(bw_otsu_mask.copy())
     out_name_list.append("bw_otsu_mask")
     out_img_list.append(bw_otsu_mask_removesmallobjects.copy())
