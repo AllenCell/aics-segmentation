@@ -4,6 +4,30 @@ aicssegmentation.structure\_wrapper package
 Submodules
 ----------
 
+aicssegmentation.structure\_wrapper.seg\_PCNA\_earlyS\_midS module
+------------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_PCNA_earlyS_midS
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_PCNA\_lateS module
+-----------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_PCNA_lateS
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+aicssegmentation.structure\_wrapper.seg\_PCNA\_lateS\_hole\_fill module
+-----------------------------------------------------------------------
+
+.. automodule:: aicssegmentation.structure_wrapper.seg_PCNA_lateS_hole_fill
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 aicssegmentation.structure\_wrapper.seg\_actb module
 ----------------------------------------------------
 

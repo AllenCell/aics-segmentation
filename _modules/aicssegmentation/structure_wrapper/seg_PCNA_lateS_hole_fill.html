@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>aicssegmentation.structure_wrapper.seg_PCNA_lateS_hole_fill &mdash; aicssegmentation 0.5.2 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            aicssegmentation
+          </a>
+              <div class="version">
+                0.5.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../aicssegmentation.html">aicssegmentation package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.bin.html">aicssegmentation.bin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.cli.html">aicssegmentation.cli package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.core.html">aicssegmentation.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper.html">aicssegmentation.structure_wrapper package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.structure_wrapper_config.html">aicssegmentation.structure_wrapper_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.util.html">aicssegmentation.util package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../aicssegmentation.workflow.html">aicssegmentation.workflow package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation.exceptions">aicssegmentation.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../aicssegmentation.html#module-aicssegmentation">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#adding-a-new-workflow">Adding a new workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">aicssegmentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../aicssegmentation.html">aicssegmentation</a></li>
+      <li class="breadcrumb-item active">aicssegmentation.structure_wrapper.seg_PCNA_lateS_hole_fill</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for aicssegmentation.structure_wrapper.seg_PCNA_lateS_hole_fill</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">aicssegmentation.core.seg_dot</span> <span class="kn">import</span> <span class="n">dot_3d</span>
+<span class="kn">from</span> <span class="nn">aicssegmentation.core.pre_processing_utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">intensity_normalization</span><span class="p">,</span>
+    <span class="n">edge_preserving_smoothing_3d</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">remove_small_objects</span>
+<span class="kn">from</span> <span class="nn">aicssegmentation.core.output_utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">save_segmentation</span><span class="p">,</span>
+    <span class="n">generate_segmentation_contour</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">skimage.filters</span> <span class="kn">import</span> <span class="n">threshold_otsu</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">ndimage</span>
+
+<div class="viewcode-block" id="Workflow_PCNA_lateS_hole_fill"><a class="viewcode-back" href="../../../aicssegmentation.structure_wrapper.html#aicssegmentation.structure_wrapper.seg_PCNA_lateS_hole_fill.Workflow_PCNA_lateS_hole_fill">[docs]</a><span class="k">def</span> <span class="nf">Workflow_PCNA_lateS_hole_fill</span><span class="p">(</span>
+    <span class="n">struct_img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">rescale_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">output_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span>
+    <span class="n">output_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">output_func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    classic segmentation workflow wrapper for structure pcna</span>
+
+<span class="sd">    Parameter:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    struct_img: np.ndarray</span>
+<span class="sd">        the 3D image to be segmented</span>
+<span class="sd">    rescale_ratio: float</span>
+<span class="sd">        an optional parameter to allow rescale the image before running the</span>
+<span class="sd">        segmentation functions, default is no rescaling</span>
+<span class="sd">    output_type: str</span>
+<span class="sd">        select how to handle output. Currently, four types are supported:</span>
+<span class="sd">        1. default: the result will be saved at output_path whose filename is</span>
+<span class="sd">            original name without extention + &quot;_struct_segmentaiton.tiff&quot;</span>
+<span class="sd">        2. array: the segmentation result will be simply returned as a numpy array</span>
+<span class="sd">        3. array_with_contour: segmentation result will be returned together with</span>
+<span class="sd">            the contour of the segmentation</span>
+<span class="sd">        4. customize: pass in an extra output_func to do a special save. All the</span>
+<span class="sd">            intermediate results, names of these results, the output_path, and the</span>
+<span class="sd">            original filename (without extension) will be passed in to output_func.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">##########################################################################</span>
+    <span class="c1"># PARAMETERS:</span>
+    <span class="c1">#   note that these parameters are supposed to be fixed for the structure</span>
+    <span class="c1">#   and work well accross different datasets</span>
+    <span class="c1">##########################################################################</span>
+
+    <span class="n">intensity_norm_param</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">15</span><span class="p">]</span>
+    <span class="n">intensity_norm_param_otsu</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">15</span><span class="p">]</span>
+    <span class="n">scaling_factor</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">minArea</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">dot_3d_sigma</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">otsumask_min_area</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="c1">##########################################################################</span>
+
+    <span class="n">out_img_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">out_name_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1">###################</span>
+    <span class="c1"># PRE_PROCESSING</span>
+    <span class="c1">###################</span>
+    <span class="c1"># intenisty normalization (min/max)</span>
+    <span class="n">struct_img</span> <span class="o">=</span> <span class="n">intensity_normalization</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">scaling_param</span><span class="o">=</span><span class="n">intensity_norm_param</span><span class="p">)</span>
+    <span class="n">struct_img_otsu</span> <span class="o">=</span> <span class="n">intensity_normalization</span><span class="p">(</span><span class="n">struct_img</span><span class="p">,</span> <span class="n">scaling_param</span><span class="o">=</span><span class="n">intensity_norm_param_otsu</span><span class="p">)</span>
+
+    <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">struct_img</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;im_norm&quot;</span><span class="p">)</span>
+
+    <span class="c1"># smoothing with boundary preserving smoothing</span>
+    <span class="n">structure_img_smooth</span> <span class="o">=</span> <span class="n">edge_preserving_smoothing_3d</span><span class="p">(</span><span class="n">struct_img</span><span class="p">)</span>
+    <span class="n">structure_img_smooth_otsu</span> <span class="o">=</span> <span class="n">edge_preserving_smoothing_3d</span><span class="p">(</span><span class="n">struct_img_otsu</span><span class="p">)</span>
+   
+
+    <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;im_smooth&quot;</span><span class="p">)</span>
+    <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">structure_img_smooth_otsu</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;im_smooth_otsu&quot;</span><span class="p">)</span>
+   
+
+    <span class="c1">###################</span>
+    <span class="c1"># core algorithm</span>
+    <span class="c1">###################</span>
+    <span class="n">otsu_thresh</span> <span class="o">=</span> <span class="n">threshold_otsu</span><span class="p">(</span><span class="n">structure_img_smooth_otsu</span><span class="p">)</span>
+    <span class="n">global_thresh</span> <span class="o">=</span> <span class="n">otsu_thresh</span> <span class="o">*</span> <span class="n">scaling_factor</span>
+    <span class="n">bw_otsu_mask</span> <span class="o">=</span> <span class="n">structure_img_smooth_otsu</span> <span class="o">&gt;</span> <span class="n">global_thresh</span>
+    <span class="n">bw_otsu_mask_removesmallobjects</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span>
+        <span class="n">bw_otsu_mask</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">otsumask_min_area</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+
+
+    <span class="n">response_s3_1</span> <span class="o">=</span> <span class="n">dot_3d</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">,</span> <span class="n">log_sigma</span><span class="o">=</span><span class="n">dot_3d_sigma</span><span class="p">)</span>
+    <span class="n">response_s3_2</span> <span class="o">=</span> <span class="n">dot_3d</span><span class="p">(</span><span class="n">structure_img_smooth</span><span class="p">,</span> <span class="n">log_sigma</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">bw_medium</span> <span class="o">=</span> <span class="n">response_s3_1</span> <span class="o">&gt;</span> <span class="mf">0.05</span>
+    <span class="n">bw_large</span> <span class="o">=</span>  <span class="n">response_s3_2</span> <span class="o">&gt;</span> <span class="mf">0.095</span>
+    <span class="n">bw_dots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">bw_medium</span><span class="p">,</span> <span class="n">bw_large</span><span class="p">)</span>
+    <span class="n">bw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">bw_dots</span><span class="p">,</span> <span class="n">bw_otsu_mask_removesmallobjects</span><span class="p">)</span>
+    
+    <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bw_otsu_mask</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;bw_otsu_mask&quot;</span><span class="p">)</span>
+    <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bw_otsu_mask_removesmallobjects</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;bw_otsu_mask_removesmallobjects&quot;</span><span class="p">)</span>
+    <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;bw&quot;</span><span class="p">)</span>
+
+    <span class="c1">###################</span>
+    <span class="c1"># POST-PROCESSING</span>
+    <span class="c1">###################</span>
+    <span class="n">bw</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">zz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">bw</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw</span><span class="p">[</span><span class="n">zz</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">segwithholes</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">bw</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">minArea</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">binary_fill_holes</span><span class="p">(</span><span class="n">segwithholes</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="kn">from</span> <span class="nn">aicssegmentation.core.utils</span> <span class="kn">import</span> <span class="n">remove_hot_pixel</span>
+
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">seg</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">seg_clean</span> <span class="o">=</span> <span class="n">remove_hot_pixel</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">seg_clean</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">seg</span><span class="p">[</span><span class="n">seg</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">255</span>
+
+    <span class="n">out_img_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seg</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">out_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;bw_final&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">output_type</span> <span class="o">==</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span>
+        <span class="c1"># the default final output, simply save it to the output path</span>
+        <span class="n">save_segmentation</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_path</span><span class="p">),</span> <span class="n">fn</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">output_type</span> <span class="o">==</span> <span class="s2">&quot;customize&quot;</span><span class="p">:</span>
+        <span class="c1"># the hook for passing in a customized output function</span>
+        <span class="c1"># use &quot;out_img_list&quot; and &quot;out_name_list&quot; in your hook to</span>
+        <span class="c1"># customize your output functions</span>
+        <span class="n">output_func</span><span class="p">(</span><span class="n">out_img_list</span><span class="p">,</span> <span class="n">out_name_list</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_path</span><span class="p">),</span> <span class="n">fn</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">output_type</span> <span class="o">==</span> <span class="s2">&quot;array&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">seg</span>
+    <span class="k">elif</span> <span class="n">output_type</span> <span class="o">==</span> <span class="s2">&quot;array_with_contour&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="n">generate_segmentation_contour</span><span class="p">(</span><span class="n">seg</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;invalid output type: </span><span class="si">{output_type}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Jianxu Chen.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
