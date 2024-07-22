@@ -16,6 +16,7 @@ from aicssegmentation.core.output_utils import (
 from skimage.filters import threshold_otsu
 from scipy import ndimage
 
+
 def Workflow_PCNA_lateS_hole_fill(
     struct_img: np.ndarray,
     rescale_ratio: float = -1,
@@ -75,13 +76,11 @@ def Workflow_PCNA_lateS_hole_fill(
     # smoothing with boundary preserving smoothing
     structure_img_smooth = edge_preserving_smoothing_3d(struct_img)
     structure_img_smooth_otsu = edge_preserving_smoothing_3d(struct_img_otsu)
-   
 
     out_img_list.append(structure_img_smooth.copy())
     out_name_list.append("im_smooth")
     out_img_list.append(structure_img_smooth_otsu.copy())
     out_name_list.append("im_smooth_otsu")
-   
 
     ###################
     # core algorithm
@@ -93,15 +92,14 @@ def Workflow_PCNA_lateS_hole_fill(
         bw_otsu_mask, min_size=otsumask_min_area, connectivity=1, in_place=False
     )
 
-
     response_s3_1 = dot_3d(structure_img_smooth, log_sigma=dot_3d_sigma)
     response_s3_2 = dot_3d(structure_img_smooth, log_sigma=2)
 
     bw_medium = response_s3_1 > 0.05
-    bw_large =  response_s3_2 > 0.095
+    bw_large = response_s3_2 > 0.095
     bw_dots = np.logical_or(bw_medium, bw_large)
     bw = np.logical_and(bw_dots, bw_otsu_mask_removesmallobjects)
-    
+
     out_img_list.append(bw_otsu_mask.copy())
     out_name_list.append("bw_otsu_mask")
     out_img_list.append(bw_otsu_mask_removesmallobjects.copy())
