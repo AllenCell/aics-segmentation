@@ -10,7 +10,8 @@ import traceback
 import importlib
 import pathlib
 from glob import glob
-import aicsimageio
+from bioio import BioImage
+from bioio.writers import OmeTiffWriter
 
 ###############################################################################
 # Global Objects
@@ -189,37 +190,21 @@ class Executor(object):
                 self.rescale_ratio = -1
 
     def segment(self, fn, args, output_path):
-        if os.path.exists(str(output_path / (os.path.splitext(os.path.basename(fn))[0] + "_struct_segmentation.tiff"))):
+        output_filename = str(output_path / (os.path.splitext(os.path.basename(fn))[0] + "_struct_segmentation.tiff"))
+        if os.path.exists(output_filename):
             print(f"skipping {fn} ....")
             return
 
-        image_reader = aicsimageio.AICSImage(fn)
+        image_reader = BioImage(fn)
         img = image_reader.data
-        # import pdb; pdb.set_trace()
-
-        # fixing the image reading
-        if len(img.shape) == 6:
-            # when z and c is not in order
-            if img.shape[-3] < img.shape[-4]:
-                img = np.transpose(img, (0, 1, 3, 2, 4, 5))
-            struct_img = img[0, 0, args.struct_ch, :, :, :].astype(np.float32)
+        
+        if image_reader.dims.C > args.struct_ch:
+            struct_img = image_reader.get_image_data("ZYX", C=args.struct_ch, T=0).astype(np.float32)
         else:
-            # when z and c is not in order
-            if img.shape[-3] < img.shape[-4]:
-                img = np.transpose(
-                    img,
-                    (
-                        0,
-                        2,
-                        1,
-                        3,
-                        4,
-                    ),
-                )
-            struct_img = img[0, args.struct_ch, :, :, :].astype(np.float32)
-        # Check if the segmenation is mitotic stage specific
+            raise ValueError(f"Structure channel {args.struct_ch} is out of bounds for image with {image_reader.dims.C} channels.")
+
         if args.mitotic_stage is None:
-            return self.SegModule(
+            result_img = self.SegModule(
                 struct_img,
                 self.rescale_ratio,
                 args.output_type,
@@ -227,7 +212,7 @@ class Executor(object):
                 os.path.splitext(os.path.basename(fn))[0],
             )
         else:
-            return self.SegModule(
+            result_img = self.SegModule(
                 struct_img,
                 args.mitotic_stage,
                 self.rescale_ratio,
@@ -235,6 +220,10 @@ class Executor(object):
                 output_path,
                 fn,
             )
+        
+        if args.output_type == "array": # Assuming 'array' output_type implies direct image data
+            OmeTiffWriter.save(result_img, output_filename, dim_order="ZYX")
+
 
     def execute(self, args):
         if not args.struct_name == "skip":
@@ -275,20 +264,12 @@ class Executor(object):
         if args.mode == PER_IMAGE:
             fname = os.path.basename(os.path.splitext(args.input_fname)[0])
 
-            image_reader = aicsimageio.AICSImage(args.input_fname)
-            img = image_reader.data
-            if len(img.shape) == 6:
-                struct_img = img[0, 0, args.struct_ch, :, :, :].astype(np.float32)
+            image_reader = BioImage(args.input_fname)
+            
+            if image_reader.dims.C > args.struct_ch:
+                struct_img = image_reader.get_image_data("ZYX", C=args.struct_ch, T=0).astype(np.float32)
             else:
-                struct_img = img[0, args.struct_ch, :, :, :].astype(np.float32)
-
-            # if args.mitotic_label == 'y':
-            #     mitosis_seg = (args.input_fname).replace("raw", "mito_seg")
-            #     mito_seg_reader = aicsimageio.AICSImage(mitosis_seg)
-            #     mitosis_seg_img = mito_seg_reader.data
-
-            #     mseg_img = mitosis_seg_img[0,0,:, 0, :, :].astype(np.float32)
-            #     struct_img =struct_img * mseg_img
+                raise ValueError(f"Structure channel {args.struct_ch} is out of bounds for image with {image_reader.dims.C} channels.")
 
             if args.mitotic_stage is None:
                 self.SegModule(struct_img, self.rescale_ratio, args.output_type, output_path, fname)
@@ -304,9 +285,6 @@ class Executor(object):
 
         elif args.mode == PER_DIR:
             filenames = glob(args.input_dir + "/*" + args.data_type)
-            # [os.path.basename(os.path.splitext(f)[0])
-            #             for f in os.listdir(args.input_dir)
-            #             if f.endswith(args.data_type)]
             filenames.sort()
             batch_mode = True
 
@@ -319,7 +297,6 @@ class Executor(object):
 
         if batch_mode:
             if args.dask:
-                # using dask offers ~6x speedup on the template segmentation.
                 import dask
 
                 lazy_results = []
@@ -360,3 +337,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    

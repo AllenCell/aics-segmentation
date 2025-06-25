@@ -1,6 +1,6 @@
 import numpy as np
 
-from aicsimageio import imread
+from bioio import BioImage
 from typing import List
 from dataclasses import dataclass
 from aicssegmentation.util.lazy import lazy_property
@@ -45,18 +45,24 @@ class PrebuiltWorkflowDefinition(WorkflowDefinition):
         """
         The Pre-segmentation thumbnail related to this workflow, as a numpy array
         """
-        return np.squeeze(imread(Directories.get_assets_dir() / f"thumbnails/{self.name.lower()}_pre.png"))
+        # Load image data using BioImage and squeeze to remove singleton dimensions
+        img = BioImage(Directories.get_assets_dir() / f"thumbnails/{self.name.lower()}_pre.png")
+        return np.squeeze(img.data)
 
     @lazy_property
     def thumbnail_post(self) -> np.ndarray:
         """
         The Post-segmentation thumbnail related to this workflow, as a numpy array
         """
-        return np.squeeze(imread(Directories.get_assets_dir() / f"thumbnails/{self.name.lower()}_post.png"))
+        # Load image data using BioImage and squeeze to remove singleton dimensions
+        img = BioImage(Directories.get_assets_dir() / f"thumbnails/{self.name.lower()}_post.png")
+        return np.squeeze(img.data)
 
     @lazy_property
     def diagram_image(self) -> np.ndarray:
         """
         Diagram / flow chart image for this workflow, as a numpy array
         """
-        return np.squeeze(imread(Directories.get_assets_dir() / f"diagrams/{self.name.lower()}.png"))
+        # Load image data using BioImage and squeeze to remove singleton dimensions
+        img = BioImage(Directories.get_assets_dir() / f"diagrams/{self.name.lower()}.png")
+        return np.squeeze(img.data)

@@ -1,7 +1,7 @@
 from pathlib import Path
 import numpy as np
 from skimage.morphology import erosion, ball
-from aicsimageio.writers import OmeTiffWriter
+from bioio.writers import OmeTiffWriter
 
 
 def save_segmentation(
@@ -58,6 +58,8 @@ def output_hook(im, names, out_flag, output_path, fn):
                 segmentation_type = names[i]
                 bw = im[i].astype(np.uint8)
                 bw[bw > 0] = 255
-                OmeTiffWriter.save(data=bw, uri=str(output_path / (fn + "_bw_" + segmentation_type[3:] + ".tiff")))
+                OmeTiffWriter.save(
+                    data=bw, uri=str(output_path / (fn + "_bw_" + segmentation_type[3:] + ".tiff")), dim_order="ZYX"
+                )
             else:
-                OmeTiffWriter.save(data=im[i], uri=str(output_path / (fn + "_" + names[i] + ".tiff")))
+                OmeTiffWriter.save(data=im[i], uri=str(output_path / (fn + "_" + names[i] + ".tiff")), dim_order="ZYX")

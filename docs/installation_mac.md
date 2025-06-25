@@ -55,7 +55,7 @@ A message will be printed out on your screen. If you see a warning, like a newer
 #### Step 2.5: Create a new empty conda environment, which we will name "segmentation" (You can certainly choose a different name.)
 
 ``` bash 
-conda create -n segmentation python=3.7
+conda create -y -n segmentation -c conda-forge python=3.11
 ```
 
 ### Step 2.6: Activate your conda environment "segmentation"

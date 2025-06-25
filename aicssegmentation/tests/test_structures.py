@@ -2,9 +2,9 @@ import importlib
 import numpy as np
 import pytest
 
-from aicsimageio import imread
+from bioio import BioImage
 from pathlib import Path
-from aicsimageio.writers import OmeTiffWriter
+from bioio.writers import OmeTiffWriter
 
 AGREE_THRESH = 0.997
 
@@ -64,7 +64,7 @@ def create_random_source_image():
     random_array = np.random.rand(*BASE_IMAGE_DIM)
 
     # write numpy array to .tiff file
-    OmeTiffWriter.save(data=random_array, uri=TEST_IMG_DIR / "random_input.tiff")
+    OmeTiffWriter.save(data=random_array, uri=TEST_IMG_DIR / "random_input.tiff", dim_order="ZYX")
 
 
 def create_all_test_images():
@@ -88,7 +88,8 @@ def run_segmentation(structure_name: str, output_type: str = "default"):
         raise e
 
     # load stock random image
-    random_array = imread(TEST_IMG_DIR / "random_input.tiff").reshape(*BASE_IMAGE_DIM)
+    random_image_bioio = BioImage(TEST_IMG_DIR / "random_input.tiff")
+    random_array = random_image_bioio.data.reshape(*BASE_IMAGE_DIM)
     random_array *= IMG_SCALING.get(structure_name, 1)
 
     # conduct segmentation
@@ -111,8 +112,10 @@ def test_all_structures(structure_name):
     output_array = run_segmentation(structure_name, output_type="array").ravel()
 
     # get rid of STC dimensions from AICSImage format, resized to resize_ratio
-    expected_output = imread(TEST_IMG_DIR / f"expected_{structure_name}_struct_segmentation.tiff").ravel()
+    expected_image_bioio = BioImage(TEST_IMG_DIR / f"expected_{structure_name}_struct_segmentation.tiff")
+    expected_output = expected_image_bioio.data.ravel()
 
     assert np.mean(np.isclose(output_array, expected_output)) > AGREE_THRESH, (
         "Tested and expected outputs differ for " + structure_name
     )
+    

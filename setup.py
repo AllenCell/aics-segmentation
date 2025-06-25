@@ -29,7 +29,7 @@ dev_requirements = [
     "bumpversion>=0.6.0",
     "coverage>=5.1",
     "ipython>=7.15.0",
-    "m2r>=0.2.1",
+    "m2r2>=0.2.7",
     "pytest-runner>=5.2",
     "jinja2==3.0.0",
     "Sphinx>=2.0.0b1,<3",
@@ -40,8 +40,13 @@ dev_requirements = [
     "napari",
 ]
 
+
 requirements = [
-    "aicsimageio>=4.0.5",
+    "bioio==1.6.1",
+    "bioio-ome-tiff==1.1.0", 
+    "bioio-ome-zarr==1.2.0",
+    "bioio-tifffile==1.1.0",
+    "bioio-lif==1.1.0",
     "scipy>=1.1.0",
     "numpy>=1.15.1",
     "scikit-image",
@@ -63,6 +68,8 @@ extra_requirements = {
         *dev_requirements,
     ],
 }
+
+
 
 setup(
     author="Jianxu Chen",

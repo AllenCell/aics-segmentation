@@ -2,8 +2,8 @@ import numpy as np
 
 from datetime import datetime
 from typing import List, Union
-from aicsimageio import AICSImage
-from aicsimageio.writers import OmeTiffWriter
+from bioio import BioImage
+from bioio.writers import OmeTiffWriter
 from pathlib import Path
 from aicssegmentation.util.filesystem import FileSystemUtilities
 from aicssegmentation.exceptions import ArgumentNullError
@@ -113,7 +113,7 @@ class BatchWorkflow:
                 print(f"Start file {f.name}")
 
                 # read and format image in the way we expect
-                read_image = AICSImage(f)
+                read_image = BioImage(f)
                 image_from_path = self._format_image_to_3d(read_image)
 
                 # Run workflow on image
@@ -158,17 +158,17 @@ class BatchWorkflow:
             )
         self._write_to_log_file(report)
 
-    def _format_image_to_3d(self, image: AICSImage) -> np.ndarray:
+    def _format_image_to_3d(self, image: BioImage) -> np.ndarray:
         """
         Format images in the way that aics-segmention expects for most workflows (3d, zyx)
 
         Params:
-            image_path (AICSImage): image to format
+            image (BioImage): image to format
 
         Returns:
             np.ndarray: segment-able image for aics-segmentation
         """
-        if len(image.scenes) > 1:
+        if image.dims.S > 1:  # BioIO represents scenes with 'S'
             raise ValueError("Multi-Scene images are unsupported")
 
         if image.dims.T > 1:
@@ -181,7 +181,7 @@ class BatchWorkflow:
 
     def _format_output(self, image: np.ndarray):
         """
-        Format segmented images to uint8 to save via AICSImage
+        Format segmented images to uint8 to save via BioImage writers
 
         Params:
             image (np.ndarray): segmented image
